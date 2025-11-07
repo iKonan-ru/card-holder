@@ -1,0 +1,46 @@
+@import '@shared/assets/styles/variables.less';
+
+.add-card-button {
+  height: @card-height;
+  border: 0.125rem dashed var(--text-primary-15);
+  border-radius: @border-radius;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: @transition;
+  max-width: @card-max-width;
+  width: 100%;
+
+  &:hover {
+    border-color: var(--text-primary-25);
+    background: var(--white-05);
+  }
+
+  &:hover &__icon {
+    color: var(--text-primary-30);
+  }
+
+  &:active {
+    border-color: var(--text-primary-30);
+    background: var(--white-08);
+  }
+
+  &:active &__icon {
+    color: var(--text-primary-40);
+  }
+
+  @media (max-width: @tablet) {
+    height: @card-height-mobile;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__icon {
+    width: @size-4xl;
+    height: @size-4xl;
+    color: var(--text-primary-20);
+    transition: @transition;
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "name": "card-holder",
+  "private": false,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Secure offline PWA for managing bank card information with IndexedDB storage",
+  "keywords": [
+    "pwa",
+    "bank-cards",
+    "indexeddb",
+    "react",
+    "typescript",
+    "offline-first",
+    "card-manager"
+  ],
+  "author": "Card Holder Contributors",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/card-holder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/card-holder/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/card-holder#readme",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run fix && npm run test && tsc -b && vite build",
+    "build:no-test": "tsc -b && vite build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,less,md}\"",
+    "format:fix": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,less,md}\"",
+    "fix": "npm run format:fix && npm run lint:fix",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@dnd-kit/core": "^6.3.1",
+    "@dnd-kit/sortable": "^10.0.0",
+    "@dnd-kit/utilities": "^3.2.2",
+    "less": "^4.4.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-icons": "^5.5.0",
+    "zustand": "^5.0.8"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.36.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/less": "^3.0.8",
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@types/serviceworker": "^0.0.165",
+    "@vitejs/plugin-react": "^5.0.4",
+    "@vitest/coverage-v8": "^4.0.7",
+    "@vitest/ui": "^4.0.7",
+    "eslint": "^9.36.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "globals": "^16.4.0",
+    "happy-dom": "^20.0.10",
+    "jsdom": "^27.1.0",
+    "prettier": "^3.6.2",
+    "sharp": "^0.34.4",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.45.0",
+    "vite": "^7.1.7",
+    "vite-plugin-pwa": "^1.1.0",
+    "vitest": "^4.0.7",
+    "workbox-window": "^7.3.0"
+  }
+}

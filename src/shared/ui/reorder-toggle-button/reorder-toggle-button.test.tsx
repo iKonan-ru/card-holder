@@ -1,0 +1,102 @@
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { render, screen, cleanup } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { ReorderToggleButton } from './reorder-toggle-button';
+
+const TEST_PARENT_CLASS = 'test-parent';
+
+describe('ReorderToggleButton', () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  it('должна рендериться с неактивным состоянием', () => {
+    render(
+      <ReorderToggleButton
+        isActive={false}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('должна рендериться с активным состоянием', () => {
+    render(
+      <ReorderToggleButton
+        isActive={true}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const button = screen.getByRole('button');
+    expect(button).toBeInTheDocument();
+    expect(button).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('должна вызывать onClick при клике', async () => {
+    const user = userEvent.setup();
+    const handleClick = vi.fn();
+
+    render(
+      <ReorderToggleButton
+        isActive={false}
+        onClick={handleClick}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const button = screen.getByRole('button');
+    await user.click(button);
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('должна отображать только иконку без текста', () => {
+    const { container } = render(
+      <ReorderToggleButton
+        isActive={false}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const icon = container.querySelector('.reorder-toggle-button__icon');
+    expect(icon).toBeInTheDocument();
+
+    const text = container.querySelector('.reorder-toggle-button__text');
+    expect(text).not.toBeInTheDocument();
+  });
+
+  it('должна иметь класс active при isActive=true', () => {
+    const { container } = render(
+      <ReorderToggleButton
+        isActive={true}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const button = container.querySelector('.reorder-toggle-button_active');
+    expect(button).toBeInTheDocument();
+  });
+
+  it('должна иметь правильный класс родителя', () => {
+    const { container } = render(
+      <ReorderToggleButton
+        isActive={false}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const button = container.querySelector(
+      '.test-parent__reorder-toggle-button'
+    );
+    expect(button).toBeInTheDocument();
+  });
+});

@@ -1,0 +1,43 @@
+@import '@shared/assets/styles/variables.less';
+
+.reorder-toggle-button {
+  position: fixed;
+  bottom: @spacing-xl;
+  right: @spacing-xl;
+  padding: @spacing-md;
+  border-radius: 50%;
+  border: 0 none transparent;
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  transition: @transition;
+  font-size: @font-size-md;
+  color: var(--text-primary);
+
+  @media (max-width: @mobile) {
+    bottom: @spacing-md;
+    right: @spacing-md;
+  }
+
+  &:hover {
+    background: var(--bg-tertiary);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &_active {
+    background: var(--accent);
+    color: var(--text-on-accent);
+
+    &:hover {
+      background: var(--accent);
+    }
+  }
+
+  &__icon {
+    font-size: @font-size-xl;
+  }
+}

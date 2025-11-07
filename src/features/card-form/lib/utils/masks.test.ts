@@ -1,0 +1,121 @@
+import { describe, it, expect } from 'vitest';
+import {
+  formatPan,
+  formatExpires,
+  unformatValue,
+  filterDigitsOnly,
+  filterAlphanumeric,
+  formatName,
+} from './masks';
+
+describe('formatPan', () => {
+  it('должна форматировать номер карты с пробелами', () => {
+    expect(formatPan('1234567812345678')).toBe('1234 5678 1234 5678');
+  });
+
+  it('должна форматировать частичный номер карты', () => {
+    expect(formatPan('12345')).toBe('1234 5');
+  });
+
+  it('должна обрабатывать пустую строку', () => {
+    expect(formatPan('')).toBe('');
+  });
+
+  it('должна игнорировать нецифровые символы', () => {
+    expect(formatPan('1234abc5678')).toBe('1234 5678');
+  });
+});
+
+describe('formatExpires', () => {
+  it('должна форматировать дату истечения со слешем', () => {
+    expect(formatExpires('1225')).toBe('12/25');
+  });
+
+  it('должна форматировать частичную дату', () => {
+    expect(formatExpires('12')).toBe('12');
+  });
+
+  it('должна форматировать один символ', () => {
+    expect(formatExpires('1')).toBe('1');
+  });
+
+  it('должна обрабатывать пустую строку', () => {
+    expect(formatExpires('')).toBe('');
+  });
+
+  it('должна игнорировать нецифровые символы', () => {
+    expect(formatExpires('12ab25')).toBe('12/25');
+  });
+});
+
+describe('unformatValue', () => {
+  it('должна удалять все нецифровые символы', () => {
+    expect(unformatValue('1234 5678 9012 3456')).toBe('1234567890123456');
+  });
+
+  it('должна удалять слеш из даты', () => {
+    expect(unformatValue('12/25')).toBe('1225');
+  });
+
+  it('должна обрабатывать пустую строку', () => {
+    expect(unformatValue('')).toBe('');
+  });
+});
+
+describe('filterDigitsOnly', () => {
+  it('должна оставлять только цифры', () => {
+    expect(filterDigitsOnly('abc123def456')).toBe('123456');
+  });
+
+  it('должна обрабатывать только цифры', () => {
+    expect(filterDigitsOnly('123456')).toBe('123456');
+  });
+
+  it('должна обрабатывать пустую строку', () => {
+    expect(filterDigitsOnly('')).toBe('');
+  });
+});
+
+describe('filterAlphanumeric', () => {
+  it('должна оставлять только буквы и цифры', () => {
+    expect(filterAlphanumeric('abc123!@#')).toBe('abc123');
+  });
+
+  it('должна оставлять кириллицу', () => {
+    expect(filterAlphanumeric('Тест123')).toBe('Тест123');
+  });
+
+  it('должна удалять спецсимволы', () => {
+    expect(filterAlphanumeric('test-123_abc')).toBe('test123abc');
+  });
+
+  it('должна обрабатывать пустую строку', () => {
+    expect(filterAlphanumeric('')).toBe('');
+  });
+});
+
+describe('formatName', () => {
+  it('должна оставлять только латинские буквы и пробелы', () => {
+    expect(formatName('John123 Doe!@#')).toBe('JOHN DOE');
+  });
+
+  it('должна удалять кириллицу', () => {
+    expect(formatName('JohnИванDoe')).toBe('JOHNDOE');
+  });
+
+  it('должна приводить к верхнему регистру', () => {
+    expect(formatName('john doe')).toBe('JOHN DOE');
+  });
+
+  it('должна удалять цифры и спецсимволы', () => {
+    expect(formatName('John-123_Doe')).toBe('JOHNDOE');
+  });
+
+  it('должна сохранять пробелы', () => {
+    expect(formatName('john   doe')).toBe('JOHN   DOE');
+  });
+
+  it('должна обрабатывать пустую строку', () => {
+    expect(formatName('')).toBe('');
+  });
+});

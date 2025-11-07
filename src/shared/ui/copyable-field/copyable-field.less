@@ -1,0 +1,114 @@
+@import '@shared/assets/styles/variables.less';
+
+.copyable-field {
+  cursor: pointer;
+  position: relative;
+  transition: @transition-medium;
+
+  &:hover {
+    transform: translateY(-0.0625rem);
+  }
+
+  &__label {
+    font-size: @font-size-xs;
+    color: var(--white-70);
+    margin-bottom: @spacing-xs;
+  }
+
+  &__value {
+    padding: 0.1rem @border-radius-md;
+    border-radius: @border-radius-md;
+    background-color: var(--white-05);
+    position: relative;
+    cursor: pointer;
+    font-family: @font-family-mono;
+
+    &:hover {
+      background-color: var(--white-15);
+    }
+  }
+
+  &__indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
+    color: var(--white);
+    width: @size-sm;
+    height: @size-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: @font-size-xs;
+    font-weight: @font-weight-bold;
+  }
+
+  &_pan {
+    font-size: @font-size-xl;
+    font-weight: @font-weight-semibold;
+    letter-spacing: 0.125rem;
+    text-align: center;
+    align-self: flex-start;
+
+    .copyable-field__value {
+      padding-top: @spacing-xs;
+      padding-bottom: @spacing-xs;
+    }
+  }
+
+  &_name,
+  &_expires {
+    .copyable-field__value {
+      font-size: @font-size-lg;
+      font-weight: @font-weight-medium;
+      opacity: @opacity-very-high;
+      letter-spacing: 0.03125rem;
+      text-transform: uppercase;
+    }
+  }
+
+  &_cvv,
+  &_pin,
+  &_phrase {
+    display: flex;
+    flex-direction: column;
+
+    .copyable-field__label {
+      font-size: @font-size-sm;
+      opacity: @opacity-higher;
+      margin-bottom: @spacing-xs;
+      font-weight: @font-weight-semibold;
+    }
+
+    .copyable-field__value {
+      font-size: @font-size-lg;
+      font-weight: @font-weight-medium;
+      opacity: @opacity-very-high;
+    }
+  }
+
+  &_cvv {
+    align-items: flex-end;
+  }
+
+  &_phrase {
+    align-items: flex-start;
+  }
+
+  &_pin {
+    align-items: flex-end;
+    margin-left: auto;
+  }
+
+  &__sr-only {
+    position: absolute;
+    width: 0.0625rem;
+    height: 0.0625rem;
+    padding: 0;
+    margin: -0.0625rem;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+}

@@ -1,0 +1,58 @@
+@import '@shared/assets/styles/variables.less';
+
+@keyframes fadeInIndicator {
+  from {
+    opacity: 0;
+    transform: scale(0.5) translateX(50%);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes fadeInLogo {
+  from {
+    opacity: 0;
+    transform: translateY(20%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-preview {
+  display: flex;
+  align-items: center;
+  gap: @border-radius;
+  padding-right: @spacing-xs;
+  padding-left: @spacing-xs;
+
+  &__color-indicator {
+    position: absolute;
+    border-radius: @border-radius-full 0 0 @border-radius-full;
+    top: -3rem;
+    bottom: -5rem;
+    right: -@spacing-sm;
+    left: 0;
+    opacity: 1;
+    animation: fadeInIndicator @duration-medium @easing-ease-out;
+  }
+
+  &__icon {
+    width: @size-md;
+    height: @size-md;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+    animation: fadeInLogo @duration-medium @easing-ease-out;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}

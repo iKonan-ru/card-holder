@@ -1,0 +1,102 @@
+@import '@shared/assets/styles/variables.less';
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: @spacing-xs;
+
+  &__container {
+    position: relative;
+    overflow: hidden;
+    border-radius: @spacing-sm;
+  }
+
+  &__input {
+    width: 100%;
+    padding: 1.25rem @border-radius @spacing-sm;
+    border: 0.0625rem solid var(--border-color);
+    border-radius: @spacing-sm;
+    font-size: @font-size-lg;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    transition: @transition-fast;
+
+    &::placeholder {
+      opacity: 0;
+      transition: @transition-fast;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 0.1875rem var(--accent-10);
+    }
+
+    &:disabled {
+      background: var(--bg-tertiary);
+      cursor: not-allowed;
+      opacity: @opacity-high;
+    }
+
+    &:focus ~ .form-field__label,
+    &:not(:placeholder-shown) ~ .form-field__label {
+      transform: translateY(-0.8rem) scale(0.85);
+      color: var(--accent);
+    }
+  }
+
+  &_has-right-content &__input {
+    padding-right: 6rem;
+  }
+
+  &__label {
+    position: absolute;
+    left: @border-radius;
+    top: 0.875rem;
+    font-size: @font-size-base;
+    font-weight: @font-weight-medium;
+    color: var(--text-secondary);
+    pointer-events: none;
+    transition: @transition-fast;
+    transform-origin: left top;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: calc(100% + @spacing-md);
+  }
+
+  &_has-value &__label {
+    color: var(--accent) !important;
+  }
+
+  &_has-error &__input {
+    border-color: var(--error);
+
+    &:focus {
+      border-color: var(--error);
+      box-shadow: 0 0 0 0.1875rem var(--error-10);
+    }
+  }
+
+  &_has-error &__label {
+    color: var(--error) !important;
+  }
+
+  &_has-value &__label {
+    transform: translateY(-0.8rem) scale(0.85);
+  }
+
+  &__right-content {
+    position: absolute;
+    right: 0.0625rem;
+    top: 0.0625rem;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    bottom: 0.0625rem;
+    pointer-events: none;
+    border-radius: 0 0.4375rem 0.4375rem 0;
+    padding-left: @spacing-sm;
+    padding-right: @spacing-sm;
+  }
+}

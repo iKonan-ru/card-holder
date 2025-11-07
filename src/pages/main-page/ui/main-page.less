@@ -1,0 +1,23 @@
+@import '@shared/assets/styles/variables.less';
+
+.main-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: @transition;
+
+  &__content {
+    max-width: @container-max-width;
+    margin: 0 auto;
+    padding: @spacing-lg;
+  }
+
+  &__header {
+    display: flex;
+    margin-bottom: @spacing-xl;
+
+    &:empty {
+      display: none;
+    }
+  }
+}

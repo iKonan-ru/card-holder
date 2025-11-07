@@ -1,0 +1,216 @@
+import { describe, it, expect, vi, afterEach } from 'vitest';
+import { render, screen, cleanup } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
+import { ValidatedField } from './validated-field';
+
+describe('ValidatedField', () => {
+  afterEach(() => {
+    cleanup();
+  });
+
+  it('должен отображать поле с меткой', () => {
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        onChange={vi.fn()}
+      />
+    );
+
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
+    expect(screen.getByLabelText(/Тестовое поле/i)).toBeInTheDocument();
+  });
+
+  it('должен вызывать onChange с именем поля и значением', async () => {
+    const handleChange = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="testField"
+        label="Тестовое поле"
+        value=""
+        onChange={handleChange}
+      />
+    );
+
+    const input = screen.getByRole('textbox');
+    await user.type(input, 'a');
+
+    expect(handleChange).toHaveBeenCalledWith('testField', 'a');
+  });
+
+  it('должен применять форматтер к значению', async () => {
+    const handleChange = vi.fn();
+    const formatter = (value: string) => value.toUpperCase();
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        formatter={formatter}
+        onChange={handleChange}
+      />
+    );
+
+    const input = screen.getByRole('textbox');
+    await user.type(input, 'c');
+
+    expect(handleChange).toHaveBeenCalledWith('test', 'C');
+  });
+
+  it('должен применять валидатор при instantValidateLength', async () => {
+    const handleChange = vi.fn();
+    const handleValidate = vi.fn();
+    const validator = (value: string) =>
+      value.length === 3 ? undefined : 'Должно быть 3 символа';
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        validator={validator}
+        instantValidateLength={3}
+        onChange={handleChange}
+        onValidate={handleValidate}
+      />
+    );
+
+    const input = screen.getByRole('textbox');
+    await user.type(input, '123');
+
+    expect(handleValidate).toHaveBeenCalledWith('test', undefined);
+  });
+
+  it('должен очищать ошибку при неполном вводе', async () => {
+    const handleChange = vi.fn();
+    const handleValidate = vi.fn();
+    const validator = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        validator={validator}
+        instantValidateLength={4}
+        onChange={handleChange}
+        onValidate={handleValidate}
+      />
+    );
+
+    const input = screen.getByRole('textbox');
+    await user.type(input, '12');
+
+    expect(handleValidate).toHaveBeenCalledWith('test', undefined);
+    expect(validator).not.toHaveBeenCalled();
+  });
+
+  it('должен применять валидатор без instantValidateLength', async () => {
+    const handleChange = vi.fn();
+    const handleValidate = vi.fn();
+    const validator = (value: string) =>
+      value ? undefined : 'Обязательное поле';
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        validator={validator}
+        onChange={handleChange}
+        onValidate={handleValidate}
+      />
+    );
+
+    const input = screen.getByRole('textbox');
+    await user.type(input, 'a');
+
+    expect(handleValidate).toHaveBeenCalledWith('test', undefined);
+  });
+
+  it('не должен применять валидатор без onValidate', async () => {
+    const handleChange = vi.fn();
+    const validator = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        validator={validator}
+        onChange={handleChange}
+      />
+    );
+
+    const input = screen.getByRole('textbox');
+    await user.type(input, 'abc');
+
+    expect(validator).not.toHaveBeenCalled();
+  });
+
+  it('должен ограничивать длину по maxLength', () => {
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        maxLength={3}
+        onChange={vi.fn()}
+      />
+    );
+
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    expect(input.maxLength).toBe(3);
+  });
+
+  it('должен передавать disabled в FormField', () => {
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        disabled={true}
+        onChange={vi.fn()}
+      />
+    );
+
+    expect(screen.getByRole('textbox')).toBeDisabled();
+  });
+
+  it('должен передавать required в FormField', () => {
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        required={true}
+        onChange={vi.fn()}
+      />
+    );
+
+    expect(screen.getByText(/Тестовое поле \*/)).toBeInTheDocument();
+  });
+
+  it('должен отображать ошибку', () => {
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        error="Ошибка валидации"
+        onChange={vi.fn()}
+      />
+    );
+
+    expect(screen.getByText('Ошибка валидации')).toBeInTheDocument();
+  });
+});
