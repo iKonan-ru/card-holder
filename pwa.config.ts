@@ -54,6 +54,9 @@ export const pwaConfig: Partial<VitePWAOptions> = {
   },
   workbox: {
     globPatterns: WORKBOX_GLOB_PATTERNS,
+    cleanupOutdatedCaches: true,
+    clientsClaim: true,
+    skipWaiting: true,
     runtimeCaching: [
       {
         urlPattern: GOOGLE_FONTS_URL_PATTERN,

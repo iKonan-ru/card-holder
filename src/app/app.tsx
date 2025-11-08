@@ -1,6 +1,6 @@
 import { useEffect, type FC } from 'react';
 import { MainPage } from '@pages/main-page';
-import { ModalProvider } from '@shared/lib';
+import { ModalProvider, usePWAUpdate } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import {
   initGlobalErrorHandler,
@@ -9,6 +9,8 @@ import {
 import '@shared/assets/styles/index.less';
 
 export const App: FC = () => {
+  usePWAUpdate();
+
   useEffect(() => {
     initGlobalErrorHandler();
   }, []);
