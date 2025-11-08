@@ -6,7 +6,7 @@ import {
   ERROR_MODAL_CLOSE_TEXT,
   ERROR_MODAL_TITLE_ID,
   ERROR_MODAL_MESSAGE_ID,
-} from './constants';
+} from '../../lib/constants';
 import './error-modal.less';
 
 interface IErrorContentProps {

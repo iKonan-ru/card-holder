@@ -6,7 +6,7 @@ import {
   ERROR_MODAL_ID_PREFIX,
   ERROR_MODAL_TITLE_ID,
   ERROR_MODAL_MESSAGE_ID,
-} from '../ui/error-content/constants';
+} from './constants';
 
 let modalContextRef: IModalContextValue | null = null;
 
