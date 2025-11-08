@@ -62,7 +62,6 @@ export const checkIsValidBankCard = (
       card.expires &&
       card.name &&
       card.cvv &&
-      card.pin &&
       typeof card.order === 'number'
   );
 };

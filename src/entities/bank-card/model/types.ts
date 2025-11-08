@@ -3,7 +3,7 @@ export interface IBankCard {
   expires: string;
   name: string;
   cvv: string;
-  pin: string;
+  pin?: string;
   order: number;
   type?: string;
   phrase?: string;

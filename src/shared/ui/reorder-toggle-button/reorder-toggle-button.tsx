@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import { bem, createClassName } from '@shared/lib';
-import { MdDragIndicator } from 'react-icons/md';
+import { MdDragIndicator, MdOutlineDone } from 'react-icons/md';
 import { REORDER_TOGGLE_BUTTON_BLOCK } from './lib';
 import type { IReorderToggleButtonProps } from './model';
 import './reorder-toggle-button.less';
@@ -22,6 +22,8 @@ export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({
     parentClass,
   });
 
+  const IconComponent = isActive ? MdOutlineDone : MdDragIndicator;
+
   return (
     <button
       type="button"
@@ -29,7 +31,7 @@ export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({
       onClick={onClick}
       aria-pressed={isActive}
     >
-      <MdDragIndicator
+      <IconComponent
         className={bem(REORDER_TOGGLE_BUTTON_BLOCK, 'icon')}
         aria-hidden="true"
       />

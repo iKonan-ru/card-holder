@@ -99,4 +99,98 @@ describe('ReorderToggleButton', () => {
     );
     expect(button).toBeInTheDocument();
   });
+
+  it('не должна иметь класс active при isActive=false', () => {
+    const { container } = render(
+      <ReorderToggleButton
+        isActive={false}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const button = container.querySelector('.reorder-toggle-button_active');
+    expect(button).not.toBeInTheDocument();
+  });
+
+  it('должна иметь type="button"', () => {
+    render(
+      <ReorderToggleButton
+        isActive={false}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const button = screen.getByRole('button');
+    expect(button).toHaveAttribute('type', 'button');
+  });
+
+  it('должна иметь базовый класс блока', () => {
+    const { container } = render(
+      <ReorderToggleButton
+        isActive={false}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const button = container.querySelector('.reorder-toggle-button');
+    expect(button).toBeInTheDocument();
+  });
+
+  it('иконка должна иметь aria-hidden="true"', () => {
+    const { container } = render(
+      <ReorderToggleButton
+        isActive={false}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const icon = container.querySelector('.reorder-toggle-button__icon');
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
+  });
+
+  it('должна переключать иконку при изменении isActive', () => {
+    const { container, rerender } = render(
+      <ReorderToggleButton
+        isActive={false}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    let icon = container.querySelector('.reorder-toggle-button__icon');
+    expect(icon).toBeInTheDocument();
+
+    rerender(
+      <ReorderToggleButton
+        isActive={true}
+        onClick={vi.fn()}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    icon = container.querySelector('.reorder-toggle-button__icon');
+    expect(icon).toBeInTheDocument();
+  });
+
+  it('должна вызывать onClick при клике в активном состоянии', async () => {
+    const user = userEvent.setup();
+    const handleClick = vi.fn();
+
+    render(
+      <ReorderToggleButton
+        isActive={true}
+        onClick={handleClick}
+        parentClass={TEST_PARENT_CLASS}
+      />
+    );
+
+    const button = screen.getByRole('button');
+    await user.click(button);
+
+    expect(handleClick).toHaveBeenCalledTimes(1);
+  });
 });
