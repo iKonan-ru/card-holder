@@ -1,6 +1,6 @@
 # Card Holder
 
-[![CI](https://github.com/YOUR_USERNAME/card-holder/actions/workflows/ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/card-holder/actions/workflows/ci.yml)
+[![CI](https://github.com/iKonan-ru/card-holder/actions/workflows/ci.yml/badge.svg)](https://github.com/iKonan-ru/card-holder/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Test Coverage](https://img.shields.io/badge/coverage-98.44%25-brightgreen.svg)](./coverage)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)

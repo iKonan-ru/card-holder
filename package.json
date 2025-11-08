@@ -17,12 +17,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/YOUR_USERNAME/card-holder.git"
+    "url": "https://github.com/iKonan-ru/card-holder.git"
   },
   "bugs": {
-    "url": "https://github.com/YOUR_USERNAME/card-holder/issues"
+    "url": "https://github.com/iKonan-ru/card-holder/issues"
   },
-  "homepage": "https://github.com/YOUR_USERNAME/card-holder#readme",
+  "homepage": "https://github.com/iKonan-ru/card-holder#readme",
   "scripts": {
     "dev": "vite",
     "build": "npm run fix && npm run test && tsc -b && vite build",
