@@ -2,14 +2,17 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { CardList } from '.';
-import { useCardManagementStore } from '@features/card-management';
 import { ModalProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import type { IBankCard } from '@entities/bank-card';
 import type { FC, ReactNode } from 'react';
 
+const { mockUseCardManagementStore } = vi.hoisted(() => ({
+  mockUseCardManagementStore: vi.fn(),
+}));
+
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: vi.fn(),
+  useCardManagementStore: mockUseCardManagementStore,
 }));
 
 vi.mock('@entities/bank-card', () => ({
@@ -54,22 +57,35 @@ const TestWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
+const createMockStore = (overrides = {}) => ({
+  cards: [],
+  flippedPan: null,
+  isLoading: false,
+  isReorderMode: false,
+  flipCard: vi.fn(),
+  loadCards: vi.fn(),
+  addCard: vi.fn(),
+  updateCard: vi.fn(),
+  deleteCard: vi.fn(),
+  reorderCards: vi.fn(),
+  setCards: vi.fn(),
+  toggleReorderMode: vi.fn(),
+  unflipCards: vi.fn(),
+  enableReorderMode: vi.fn(),
+  disableReorderMode: vi.fn(),
+  ...overrides,
+});
+
 describe('CardList', () => {
   beforeEach(() => {
-    vi.mocked(useCardManagementStore).mockReturnValue({
-      cards: MOCK_CARDS,
-      flippedPan: null,
-      isLoading: false,
-      isReorderMode: false,
-      flipCard: vi.fn(),
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
-      updateCard: vi.fn(),
-      deleteCard: vi.fn(),
-      reorderCards: vi.fn(),
-      setCards: vi.fn(),
-      toggleReorderMode: vi.fn(),
-      unflipCards: vi.fn(),
+    const mockStoreValue = createMockStore({ cards: MOCK_CARDS });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
   });
 
@@ -100,19 +116,14 @@ describe('CardList', () => {
   });
 
   it('должна рендериться с пустым списком карт', () => {
-    vi.mocked(useCardManagementStore).mockReturnValue({
-      cards: [],
-      flippedPan: null,
-      isLoading: false,
-      isReorderMode: false,
-      flipCard: vi.fn(),
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
-      updateCard: vi.fn(),
-      deleteCard: vi.fn(),
-      reorderCards: vi.fn(),
-      setCards: vi.fn(),
-      toggleReorderMode: vi.fn(),
+    const mockStoreValue = createMockStore({ cards: [] });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
 
     render(<CardList />, { wrapper: TestWrapper });
@@ -157,19 +168,14 @@ describe('CardList', () => {
     expect(screen.getAllByText(/USER/)).toHaveLength(MOCK_CARDS.length);
 
     const updatedCards = [MOCK_CARDS[0]];
-    vi.mocked(useCardManagementStore).mockReturnValue({
-      cards: updatedCards,
-      flippedPan: null,
-      isLoading: false,
-      isReorderMode: false,
-      flipCard: vi.fn(),
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
-      updateCard: vi.fn(),
-      deleteCard: vi.fn(),
-      reorderCards: vi.fn(),
-      setCards: vi.fn(),
-      toggleReorderMode: vi.fn(),
+    const mockStoreValue = createMockStore({ cards: updatedCards });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
 
     rerender(<CardList />);

@@ -36,12 +36,17 @@ vi.mock('@shared/lib', async () => {
 
 describe('useCardManagementStore', () => {
   beforeEach(async () => {
-    const { loadCards, flippedPan } = useCardManagementStore.getState();
+    const { loadCards, flippedPan, isReorderMode, disableReorderMode } =
+      useCardManagementStore.getState();
 
     await loadCards();
 
     if (flippedPan) {
       useCardManagementStore.getState().flipCard(flippedPan);
+    }
+
+    if (isReorderMode) {
+      disableReorderMode();
     }
   });
 
@@ -367,6 +372,129 @@ describe('useCardManagementStore', () => {
     expect(sharedLib.updateCard).toHaveBeenCalledWith({
       ...mockCard,
       order: 5,
+    });
+  });
+
+  describe('enableReorderMode', () => {
+    it('должна включать режим переупорядочивания', () => {
+      const { enableReorderMode, isReorderMode } =
+        useCardManagementStore.getState();
+
+      expect(isReorderMode).toBe(false);
+
+      enableReorderMode();
+
+      expect(useCardManagementStore.getState().isReorderMode).toBe(true);
+    });
+
+    it('должна сбрасывать flippedPan при включении режима', () => {
+      const { cards, flipCard, enableReorderMode } =
+        useCardManagementStore.getState();
+      const firstCardPan = cards[0].pan;
+
+      flipCard(firstCardPan);
+      expect(useCardManagementStore.getState().flippedPan).toBe(firstCardPan);
+
+      enableReorderMode();
+
+      expect(useCardManagementStore.getState().flippedPan).toBeNull();
+      expect(useCardManagementStore.getState().isReorderMode).toBe(true);
+    });
+
+    it('не должна изменять состояние если режим уже включен', () => {
+      const { enableReorderMode } = useCardManagementStore.getState();
+
+      enableReorderMode();
+      const stateAfterFirst = useCardManagementStore.getState();
+
+      enableReorderMode();
+      const stateAfterSecond = useCardManagementStore.getState();
+
+      expect(stateAfterFirst).toBe(stateAfterSecond);
+    });
+  });
+
+  describe('disableReorderMode', () => {
+    it('должна отключать режим переупорядочивания', () => {
+      const { enableReorderMode, disableReorderMode } =
+        useCardManagementStore.getState();
+
+      enableReorderMode();
+      expect(useCardManagementStore.getState().isReorderMode).toBe(true);
+
+      disableReorderMode();
+
+      expect(useCardManagementStore.getState().isReorderMode).toBe(false);
+    });
+
+    it('должна сбрасывать flippedPan при отключении режима', () => {
+      const { cards, flipCard, enableReorderMode, disableReorderMode } =
+        useCardManagementStore.getState();
+      const firstCardPan = cards[0].pan;
+
+      enableReorderMode();
+      flipCard(firstCardPan);
+      expect(useCardManagementStore.getState().flippedPan).toBe(firstCardPan);
+
+      disableReorderMode();
+
+      expect(useCardManagementStore.getState().flippedPan).toBeNull();
+      expect(useCardManagementStore.getState().isReorderMode).toBe(false);
+    });
+
+    it('не должна изменять состояние если режим уже отключен', () => {
+      const { disableReorderMode } = useCardManagementStore.getState();
+
+      const stateAfterFirst = useCardManagementStore.getState();
+      disableReorderMode();
+      const stateAfterSecond = useCardManagementStore.getState();
+
+      expect(stateAfterFirst).toBe(stateAfterSecond);
+    });
+  });
+
+  describe('toggleReorderMode с enableReorderMode и disableReorderMode', () => {
+    it('должна использовать enableReorderMode при включении', () => {
+      const { toggleReorderMode, isReorderMode } =
+        useCardManagementStore.getState();
+
+      expect(isReorderMode).toBe(false);
+
+      toggleReorderMode();
+
+      expect(useCardManagementStore.getState().isReorderMode).toBe(true);
+    });
+
+    it('должна использовать disableReorderMode при отключении', () => {
+      const { toggleReorderMode, enableReorderMode } =
+        useCardManagementStore.getState();
+
+      enableReorderMode();
+      expect(useCardManagementStore.getState().isReorderMode).toBe(true);
+
+      toggleReorderMode();
+
+      expect(useCardManagementStore.getState().isReorderMode).toBe(false);
+    });
+
+    it('должна сбрасывать flippedPan при переключении в оба режима', () => {
+      const { cards, flipCard, toggleReorderMode } =
+        useCardManagementStore.getState();
+      const firstCardPan = cards[0].pan;
+
+      flipCard(firstCardPan);
+      expect(useCardManagementStore.getState().flippedPan).toBe(firstCardPan);
+
+      toggleReorderMode();
+      expect(useCardManagementStore.getState().flippedPan).toBeNull();
+      expect(useCardManagementStore.getState().isReorderMode).toBe(true);
+
+      flipCard(firstCardPan);
+      expect(useCardManagementStore.getState().flippedPan).toBe(firstCardPan);
+
+      toggleReorderMode();
+      expect(useCardManagementStore.getState().flippedPan).toBeNull();
+      expect(useCardManagementStore.getState().isReorderMode).toBe(false);
     });
   });
 });

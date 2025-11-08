@@ -1,11 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useCardForm } from './use-card-form';
-import * as cardManagementStore from '@features/card-management';
 import * as sharedLib from '@shared/lib';
 
+const { mockUseCardManagementStore } = vi.hoisted(() => ({
+  mockUseCardManagementStore: vi.fn(),
+}));
+
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: vi.fn(),
+  useCardManagementStore: mockUseCardManagementStore,
 }));
 
 vi.mock('@shared/lib', async () => {
@@ -17,21 +20,41 @@ vi.mock('@shared/lib', async () => {
   };
 });
 
+const createMockStore = (overrides = {}) => ({
+  cards: [],
+  isLoading: false,
+  flippedPan: null,
+  isReorderMode: false,
+  loadCards: vi.fn(),
+  addCard: vi.fn(),
+  updateCard: vi.fn(),
+  deleteCard: vi.fn(),
+  flipCard: vi.fn(),
+  unflipCards: vi.fn(),
+  setCards: vi.fn(),
+  reorderCards: vi.fn(),
+  enableReorderMode: vi.fn(),
+  disableReorderMode: vi.fn(),
+  toggleReorderMode: vi.fn(),
+  ...overrides,
+});
+
 describe('useCardForm', () => {
   const mockAddCard = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(cardManagementStore.useCardManagementStore).mockReturnValue({
-      cards: [],
-      isLoading: false,
-      flippedPan: null,
-      loadCards: vi.fn(),
-      addCard: mockAddCard,
-      updateCard: vi.fn(),
-      deleteCard: vi.fn(),
-      flipCard: vi.fn(),
+
+    const mockStoreValue = createMockStore({ addCard: mockAddCard });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
+
     vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
   });
 
@@ -289,15 +312,17 @@ describe('useCardForm', () => {
 
   it('должен обновлять карту в режиме редактирования без изменения PAN', async () => {
     const mockUpdateCard = vi.fn();
-    vi.mocked(cardManagementStore.useCardManagementStore).mockReturnValue({
-      cards: [],
-      isLoading: false,
-      flippedPan: null,
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
+    const mockStoreValue = createMockStore({
+      addCard: mockAddCard,
       updateCard: mockUpdateCard,
-      deleteCard: vi.fn(),
-      flipCard: vi.fn(),
+    });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
 
     const initialCard = {
@@ -336,15 +361,18 @@ describe('useCardForm', () => {
   it('должен обновлять карту с изменением PAN', async () => {
     const mockUpdateCard = vi.fn();
     const mockDeleteCard = vi.fn();
-    vi.mocked(cardManagementStore.useCardManagementStore).mockReturnValue({
-      cards: [],
-      isLoading: false,
-      flippedPan: null,
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
+    const mockStoreValue = createMockStore({
+      addCard: mockAddCard,
       updateCard: mockUpdateCard,
       deleteCard: mockDeleteCard,
-      flipCard: vi.fn(),
+    });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
 
     const initialCard = {
@@ -414,15 +442,17 @@ describe('useCardForm', () => {
     const mockDeleteCard = vi.fn();
     const mockOnSuccess = vi.fn();
 
-    vi.mocked(cardManagementStore.useCardManagementStore).mockReturnValue({
-      cards: [],
-      isLoading: false,
-      flippedPan: null,
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
-      updateCard: vi.fn(),
+    const mockStoreValue = createMockStore({
+      addCard: mockAddCard,
       deleteCard: mockDeleteCard,
-      flipCard: vi.fn(),
+    });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
 
     const initialCard = {
@@ -457,15 +487,17 @@ describe('useCardForm', () => {
   it('handleDelete не должна удалять если нет originalPan', async () => {
     const mockDeleteCard = vi.fn();
 
-    vi.mocked(cardManagementStore.useCardManagementStore).mockReturnValue({
-      cards: [],
-      isLoading: false,
-      flippedPan: null,
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
-      updateCard: vi.fn(),
+    const mockStoreValue = createMockStore({
+      addCard: mockAddCard,
       deleteCard: mockDeleteCard,
-      flipCard: vi.fn(),
+    });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
 
     const { result } = renderHook(() => useCardForm());
@@ -484,15 +516,17 @@ describe('useCardForm', () => {
     const mockError = new Error('Delete error');
     const mockDeleteCard = vi.fn().mockRejectedValueOnce(mockError);
 
-    vi.mocked(cardManagementStore.useCardManagementStore).mockReturnValue({
-      cards: [],
-      isLoading: false,
-      flippedPan: null,
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
-      updateCard: vi.fn(),
+    const mockStoreValue = createMockStore({
+      addCard: mockAddCard,
       deleteCard: mockDeleteCard,
-      flipCard: vi.fn(),
+    });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
 
     const initialCard = {

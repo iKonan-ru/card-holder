@@ -16,5 +16,7 @@ export interface ICardManagementActions {
   deleteCard: (pan: IBankCard['pan']) => Promise<void>;
   reorderCards: (cards: IBankCard[]) => Promise<void>;
   setCards: (cards: IBankCard[]) => void;
+  enableReorderMode: () => void;
+  disableReorderMode: () => void;
   toggleReorderMode: () => void;
 }

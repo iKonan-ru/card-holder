@@ -2,14 +2,17 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { CardForm } from './card-form';
-import * as cardManagementStore from '@features/card-management';
 import * as sharedLib from '@shared/lib';
 import { ModalProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import type { FC, ReactNode } from 'react';
 
+const { mockUseCardManagementStore } = vi.hoisted(() => ({
+  mockUseCardManagementStore: vi.fn(),
+}));
+
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: vi.fn(),
+  useCardManagementStore: mockUseCardManagementStore,
 }));
 
 vi.mock('@shared/lib', async () => {
@@ -34,21 +37,41 @@ const TestWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
+const createMockStore = (overrides = {}) => ({
+  cards: [],
+  isLoading: false,
+  flippedPan: null,
+  isReorderMode: false,
+  loadCards: vi.fn(),
+  addCard: vi.fn(),
+  updateCard: vi.fn(),
+  deleteCard: vi.fn(),
+  flipCard: vi.fn(),
+  unflipCards: vi.fn(),
+  setCards: vi.fn(),
+  reorderCards: vi.fn(),
+  enableReorderMode: vi.fn(),
+  disableReorderMode: vi.fn(),
+  toggleReorderMode: vi.fn(),
+  ...overrides,
+});
+
 describe('CardForm', () => {
   const mockAddCard = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(cardManagementStore.useCardManagementStore).mockReturnValue({
-      cards: [],
-      isLoading: false,
-      flippedPan: null,
-      loadCards: vi.fn(),
-      addCard: mockAddCard,
-      updateCard: vi.fn(),
-      deleteCard: vi.fn(),
-      flipCard: vi.fn(),
+
+    const mockStoreValue = createMockStore({ addCard: mockAddCard });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
+
     vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
   });
 
@@ -193,15 +216,17 @@ describe('CardForm', () => {
       pin: '1234',
     };
 
-    vi.mocked(cardManagementStore.useCardManagementStore).mockReturnValue({
-      cards: [],
-      isLoading: false,
-      flippedPan: null,
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
-      updateCard: vi.fn(),
+    const mockStoreValue = createMockStore({
+      addCard: mockAddCard,
       deleteCard: mockDeleteCard,
-      flipCard: vi.fn(),
+    });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
 
     render(<CardForm initialCard={mockCard} />, { wrapper: TestWrapper });

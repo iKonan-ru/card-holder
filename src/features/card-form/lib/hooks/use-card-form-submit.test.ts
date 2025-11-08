@@ -10,9 +10,21 @@ const mockDeleteCard = vi.fn();
 
 vi.mock('@features/card-management', () => ({
   useCardManagementStore: () => ({
+    cards: [],
+    isLoading: false,
+    flippedPan: null,
+    isReorderMode: false,
     addCard: mockAddCard,
     updateCard: mockUpdateCard,
     deleteCard: mockDeleteCard,
+    loadCards: vi.fn(),
+    flipCard: vi.fn(),
+    unflipCards: vi.fn(),
+    setCards: vi.fn(),
+    reorderCards: vi.fn(),
+    enableReorderMode: vi.fn(),
+    disableReorderMode: vi.fn(),
+    toggleReorderMode: vi.fn(),
   }),
 }));
 

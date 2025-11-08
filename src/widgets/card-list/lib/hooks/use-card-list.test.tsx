@@ -1,13 +1,16 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, waitFor, act, cleanup } from '@testing-library/react';
 import { useCardList } from './use-card-list';
-import { useCardManagementStore } from '@features/card-management';
 import type { IBankCard } from '@entities/bank-card';
 import type { ReactNode, FC } from 'react';
 import { ModalProvider } from '@shared/lib';
 
+const { mockUseCardManagementStore } = vi.hoisted(() => ({
+  mockUseCardManagementStore: vi.fn(),
+}));
+
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: vi.fn(),
+  useCardManagementStore: mockUseCardManagementStore,
 }));
 
 const MOCK_CARD: IBankCard = {
@@ -23,6 +26,25 @@ const TestWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   return <ModalProvider>{children}</ModalProvider>;
 };
 
+const createMockStore = (overrides = {}) => ({
+  cards: [],
+  flippedPan: null,
+  isLoading: false,
+  isReorderMode: false,
+  flipCard: vi.fn(),
+  loadCards: vi.fn(),
+  addCard: vi.fn(),
+  updateCard: vi.fn(),
+  deleteCard: vi.fn(),
+  reorderCards: vi.fn(),
+  setCards: vi.fn(),
+  toggleReorderMode: vi.fn(),
+  unflipCards: vi.fn(),
+  enableReorderMode: vi.fn(),
+  disableReorderMode: vi.fn(),
+  ...overrides,
+});
+
 describe('useCardList', () => {
   const mockLoadCards = vi.fn();
   const mockReorderCards = vi.fn();
@@ -33,20 +55,21 @@ describe('useCardList', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    vi.mocked(useCardManagementStore).mockReturnValue({
+    const mockStoreValue = createMockStore({
       cards: [MOCK_CARD],
-      flippedPan: null,
-      isLoading: false,
-      isReorderMode: false,
-      flipCard: vi.fn(),
       loadCards: mockLoadCards,
-      addCard: vi.fn(),
-      updateCard: vi.fn(),
-      deleteCard: vi.fn(),
       reorderCards: mockReorderCards,
       setCards: mockSetCards,
       toggleReorderMode: mockToggleReorderMode,
       unflipCards: mockUnflipCards,
+    });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
     });
   });
 

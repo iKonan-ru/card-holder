@@ -21,7 +21,7 @@ import { executeCardOperation } from '../lib';
 
 export const useCardManagementStore = create<
   ICardManagementState & ICardManagementActions
->((set) => ({
+>((set, get) => ({
   cards: [],
   flippedPan: null,
   isLoading: false,
@@ -39,11 +39,46 @@ export const useCardManagementStore = create<
     }));
   },
 
+  enableReorderMode: () => {
+    set((state) => {
+      const shouldEnable = !state.isReorderMode;
+
+      if (!shouldEnable) {
+        return state;
+      }
+
+      return {
+        isReorderMode: true,
+        flippedPan: null,
+      };
+    });
+  },
+
+  disableReorderMode: () => {
+    set((state) => {
+      const shouldDisable = state.isReorderMode;
+
+      if (!shouldDisable) {
+        return state;
+      }
+
+      return {
+        isReorderMode: false,
+        flippedPan: null,
+      };
+    });
+  },
+
   toggleReorderMode: () => {
-    set((state) => ({
-      isReorderMode: !state.isReorderMode,
-      flippedPan: !state.isReorderMode ? null : state.flippedPan,
-    }));
+    const { isReorderMode, enableReorderMode, disableReorderMode } = get();
+
+    if (isReorderMode) {
+      disableReorderMode();
+
+      return;
+    }
+
+    enableReorderMode();
   },
 
   loadCards: async () => {
