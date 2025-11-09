@@ -1,35 +1,34 @@
-import alfabankRaw from './alfabank.svg?raw';
-import citibankRaw from './citibank.svg?raw';
-import domrfRaw from './domrf.svg?raw';
-import gazprombankRaw from './gazprombank.svg?raw';
-import ibtRaw from './ibt.svg?raw';
-import mkbRaw from './mkb.svg?raw';
-import openRaw from './open.svg?raw';
-import psbbankRaw from './psbbank.svg?raw';
-import raiffeisenRaw from './raiffeisen.svg?raw';
-import rosbankRaw from './rosbank.svg?raw';
-import sberbankRaw from './sberbank.svg?raw';
-import tbankRaw from './tbank.svg?raw';
-import unicreditRaw from './unicredit.svg?raw';
-import uralsibRaw from './uralsib.svg?raw';
-import vtb24Raw from './vtb24.svg?raw';
-import { svgToDataUrl } from '@shared/lib';
+import alfabank from './alfabank.svg';
+import citibank from './citibank.svg';
+import domrf from './domrf.svg';
+import gazprombank from './gazprombank.svg';
+import ibt from './ibt.svg';
+import mkb from './mkb.svg';
+import open from './open.svg';
+import psbbank from './psbbank.svg';
+import raiffeisen from './raiffeisen.svg';
+import rosbank from './rosbank.svg';
+import sberbank from './sberbank.svg';
+import tbank from './tbank.svg';
+import unicredit from './unicredit.svg';
+import uralsib from './uralsib.svg';
+import vtb24 from './vtb24.svg';
 import type { TBankKeys } from '@shared/data';
 
 export const bankLogos: Partial<Record<TBankKeys, string>> = {
-  alfabank: svgToDataUrl(alfabankRaw),
-  citibank: svgToDataUrl(citibankRaw),
-  domrf: svgToDataUrl(domrfRaw),
-  gazprombank: svgToDataUrl(gazprombankRaw),
-  ibt: svgToDataUrl(ibtRaw),
-  mkb: svgToDataUrl(mkbRaw),
-  open: svgToDataUrl(openRaw),
-  psbbank: svgToDataUrl(psbbankRaw),
-  raiffeisen: svgToDataUrl(raiffeisenRaw),
-  rosbank: svgToDataUrl(rosbankRaw),
-  sberbank: svgToDataUrl(sberbankRaw),
-  tbank: svgToDataUrl(tbankRaw),
-  unicredit: svgToDataUrl(unicreditRaw),
-  uralsib: svgToDataUrl(uralsibRaw),
-  vtb24: svgToDataUrl(vtb24Raw),
+  alfabank,
+  citibank,
+  domrf,
+  gazprombank,
+  ibt,
+  mkb,
+  open,
+  psbbank,
+  raiffeisen,
+  rosbank,
+  sberbank,
+  tbank,
+  unicredit,
+  uralsib,
+  vtb24,
 };
