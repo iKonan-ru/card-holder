@@ -67,15 +67,15 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
     setPasswordError(undefined);
     setConfirmError(undefined);
 
-    const isPasswordValid = password.length >= MIN_PASSWORD_LENGTH;
-
-    if (!isPasswordValid) {
-      setPasswordError(ERROR_PASSWORD_TOO_SHORT);
-
-      return;
-    }
-
     if (isExportMode) {
+      const isPasswordValid = password.length >= MIN_PASSWORD_LENGTH;
+
+      if (!isPasswordValid) {
+        setPasswordError(ERROR_PASSWORD_TOO_SHORT);
+
+        return;
+      }
+
       const doPasswordsMatch = password === confirmPassword;
 
       if (!doPasswordsMatch) {

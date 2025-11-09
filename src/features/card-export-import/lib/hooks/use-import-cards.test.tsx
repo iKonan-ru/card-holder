@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { ModalProvider } from '@shared/lib';
 import { useImportCards } from './use-import-cards';
@@ -122,7 +122,7 @@ describe('useImportCards', () => {
     expect(typeof result.current.importCards).toBe('function');
   });
 
-  it('importCards должна быть async функцией', () => {
+  it('importCards должна быть async функцией', async () => {
     const { result } = renderHook(
       () =>
         useImportCards({
@@ -133,7 +133,11 @@ describe('useImportCards', () => {
       { wrapper }
     );
 
-    const returnValue = result.current.importCards();
+    let returnValue: Promise<void> | undefined;
+
+    await act(async () => {
+      returnValue = result.current.importCards();
+    });
 
     expect(returnValue).toBeInstanceOf(Promise);
   });

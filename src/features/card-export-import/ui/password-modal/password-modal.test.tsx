@@ -292,7 +292,7 @@ describe('PasswordModal', () => {
       ).toBeInTheDocument();
     });
 
-    it('должен показывать ошибку при пустом пароле', async () => {
+    it('должен разрешать пустой пароль', async () => {
       const user = userEvent.setup();
       render(
         <PasswordModal
@@ -308,11 +308,10 @@ describe('PasswordModal', () => {
 
       await user.click(submitButton);
 
-      expect(screen.getByText(ERROR_PASSWORD_TOO_SHORT)).toBeInTheDocument();
-      expect(mockOnConfirm).not.toHaveBeenCalled();
+      expect(mockOnConfirm).toHaveBeenCalledWith('');
     });
 
-    it('должен показывать ошибку при коротком пароле', async () => {
+    it('должен разрешать короткий пароль', async () => {
       const user = userEvent.setup();
       render(
         <PasswordModal
@@ -327,11 +326,10 @@ describe('PasswordModal', () => {
         name: new RegExp(PASSWORD_MODAL_BUTTON_IMPORT, 'i'),
       });
 
-      await user.type(passwordInput, '1234567');
+      await user.type(passwordInput, '123');
       await user.click(submitButton);
 
-      expect(screen.getByText(ERROR_PASSWORD_TOO_SHORT)).toBeInTheDocument();
-      expect(mockOnConfirm).not.toHaveBeenCalled();
+      expect(mockOnConfirm).toHaveBeenCalledWith('123');
     });
 
     it('должен вызывать onConfirm с паролем при валидном пароле', async () => {

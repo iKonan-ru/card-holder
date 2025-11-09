@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react';
 import type { ReactNode } from 'react';
 import { ModalProvider } from '@shared/lib';
 import { useExportCards } from './use-export-cards';
@@ -79,12 +79,16 @@ describe('useExportCards', () => {
     expect(typeof result.current.exportCards).toBe('function');
   });
 
-  it('exportCards должна быть async функцией', () => {
+  it('exportCards должна быть async функцией', async () => {
     const { result } = renderHook(() => useExportCards({ cards: mockCards }), {
       wrapper,
     });
 
-    const returnValue = result.current.exportCards();
+    let returnValue: Promise<void> | undefined;
+
+    await act(async () => {
+      returnValue = result.current.exportCards();
+    });
 
     expect(returnValue).toBeInstanceOf(Promise);
   });
