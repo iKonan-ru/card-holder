@@ -28,17 +28,16 @@ const PWA_ICONS = [
   },
 ];
 
-const WORKBOX_GLOB_PATTERNS = ['**/*.{js,css,html,ico,png,svg,woff,woff2}'];
-
-const GOOGLE_FONTS_CACHE_NAME = 'google-fonts-cache';
-const GOOGLE_FONTS_URL_PATTERN = /^https:\/\/fonts\.googleapis\.com\/.*/i;
-const CACHE_MAX_ENTRIES = 10;
-const CACHE_MAX_AGE_SECONDS = 60 * 60 * 24 * 365;
-const CACHE_STATUSES = [0, 200];
+const WORKBOX_GLOB_PATTERNS = ['**/*.{js,css,html,ico,png,svg,woff,woff2,ttf}'];
 
 export const pwaConfig: Partial<VitePWAOptions> = {
   registerType: 'autoUpdate',
-  includeAssets: ['icon.svg', 'banks/**/*', 'payment-systems/**/*'],
+  includeAssets: [
+    'icon.svg',
+    'banks/**/*',
+    'payment-systems/**/*',
+    'fonts/**/*',
+  ],
   manifest: {
     name: 'Card Holder',
     short_name: 'Card Holder',
@@ -57,22 +56,6 @@ export const pwaConfig: Partial<VitePWAOptions> = {
     cleanupOutdatedCaches: true,
     clientsClaim: true,
     skipWaiting: true,
-    runtimeCaching: [
-      {
-        urlPattern: GOOGLE_FONTS_URL_PATTERN,
-        handler: 'CacheFirst',
-        options: {
-          cacheName: GOOGLE_FONTS_CACHE_NAME,
-          expiration: {
-            maxEntries: CACHE_MAX_ENTRIES,
-            maxAgeSeconds: CACHE_MAX_AGE_SECONDS,
-          },
-          cacheableResponse: {
-            statuses: CACHE_STATUSES,
-          },
-        },
-      },
-    ],
   },
   devOptions: {
     enabled: true,
