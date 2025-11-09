@@ -18,7 +18,11 @@ export const usePWAUpdate = (): void => {
           return;
         }
 
-        await registration.update();
+        try {
+          await registration.update();
+        } catch (error) {
+          console.error('SW update check error', error);
+        }
       }, UPDATE_CHECK_INTERVAL);
     },
     onRegisterError(error) {

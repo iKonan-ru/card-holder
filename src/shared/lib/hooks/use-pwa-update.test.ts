@@ -314,4 +314,58 @@ describe('usePWAUpdate', () => {
       Object.defineProperty(navigator, 'onLine', originalOnLine);
     }
   });
+
+  it('должен обрабатывать ошибки при проверке обновлений', async () => {
+    const mockConsoleError = vi
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    const testError = new Error('Update check failed');
+    const mockUpdate = vi.fn().mockRejectedValue(testError);
+    const mockRegistration = {
+      installing: false,
+      update: mockUpdate,
+    } as unknown as ServiceWorkerRegistration;
+
+    const originalOnLine = Object.getOwnPropertyDescriptor(navigator, 'onLine');
+
+    Object.defineProperty(navigator, 'onLine', {
+      writable: true,
+      value: true,
+    });
+
+    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+
+    mockUseRegisterSW.mockImplementation(
+      (config?: RegisterSWConfig): RegisterSWReturn => {
+        if (config?.onRegisteredSW) {
+          capturedOnRegisteredSW = config.onRegisteredSW;
+        }
+
+        return {
+          needRefresh: [false, vi.fn()],
+          updateServiceWorker: mockUpdateServiceWorker,
+        };
+      }
+    );
+
+    renderHook(() => usePWAUpdate());
+
+    if (capturedOnRegisteredSW) {
+      capturedOnRegisteredSW('/sw.js', mockRegistration);
+    }
+
+    await vi.advanceTimersByTimeAsync(60 * 60 * 1000);
+
+    expect(mockUpdate).toHaveBeenCalled();
+    expect(mockConsoleError).toHaveBeenCalledWith(
+      'SW update check error',
+      testError
+    );
+
+    mockConsoleError.mockRestore();
+
+    if (originalOnLine) {
+      Object.defineProperty(navigator, 'onLine', originalOnLine);
+    }
+  });
 });
