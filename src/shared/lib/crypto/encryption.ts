@@ -4,11 +4,9 @@ import {
   ENCRYPTION_ALGORITHM,
   IV_LENGTH,
   FILE_FORMAT_VERSION,
-} from './constants';
-import {
   ERROR_ENCRYPTION_FAILED,
   ERROR_DECRYPTION_FAILED,
-} from '../constants/errors';
+} from './constants';
 
 const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
   const bytes = new Uint8Array(buffer);

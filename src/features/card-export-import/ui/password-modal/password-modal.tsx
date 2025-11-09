@@ -1,11 +1,10 @@
 import { useState, type FC, type FormEvent, type ChangeEvent } from 'react';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { bem, createClassName } from '@shared/lib';
 import {
-  bem,
-  createClassName,
   ERROR_PASSWORD_TOO_SHORT,
   ERROR_PASSWORD_MISMATCH,
-} from '@shared/lib';
+} from '../../model/constants';
 import { FormField } from '@shared/ui';
 import type { IPasswordModalProps } from '../../model';
 import { MIN_PASSWORD_LENGTH } from '../../model/constants';

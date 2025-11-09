@@ -35,6 +35,7 @@ export const FabButton: FC<IFabButtonProps> = ({
       className={className}
       onClick={onClick}
       disabled={disabled}
+      title={ariaLabel}
       aria-label={ariaLabel}
       aria-pressed={ariaPressed}
     >

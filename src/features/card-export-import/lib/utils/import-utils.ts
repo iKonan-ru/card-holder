@@ -5,7 +5,7 @@ import { FILE_FORMAT_VERSION } from '@shared/lib';
 import {
   ERROR_CORRUPTED_FILE,
   ERROR_UNSUPPORTED_VERSION,
-} from '@shared/lib/constants/errors';
+} from '../../model/constants';
 
 export const parseImportedFile = (fileContent: string): IEncryptedPayload => {
   if (!fileContent || fileContent.trim().length === 0) {
