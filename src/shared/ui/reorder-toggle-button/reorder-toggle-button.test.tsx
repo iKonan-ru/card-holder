@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ReorderToggleButton } from './reorder-toggle-button';
+import { ParentClassProvider } from '@shared/lib';
 
 const TEST_PARENT_CLASS = 'test-parent';
 
@@ -15,7 +16,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -29,7 +29,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={true}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -46,7 +45,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={handleClick}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -61,7 +59,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -77,7 +74,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={true}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -85,13 +81,14 @@ describe('ReorderToggleButton', () => {
     expect(button).toBeInTheDocument();
   });
 
-  it('должна иметь правильный класс родителя', () => {
+  it('должна иметь правильный класс родителя из контекста', () => {
     const { container } = render(
-      <ReorderToggleButton
-        isActive={false}
-        onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <ReorderToggleButton
+          isActive={false}
+          onClick={vi.fn()}
+        />
+      </ParentClassProvider>
     );
 
     const button = container.querySelector('.test-parent__fab-button');
@@ -103,7 +100,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -116,7 +112,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -129,7 +124,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -142,7 +136,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -155,7 +148,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -166,7 +158,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={true}
         onClick={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 
@@ -182,7 +173,6 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={true}
         onClick={handleClick}
-        parentClass={TEST_PARENT_CLASS}
       />
     );
 

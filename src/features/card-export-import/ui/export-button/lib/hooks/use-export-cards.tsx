@@ -7,19 +7,15 @@ import {
   downloadFile,
   useModalContext,
 } from '@shared/lib';
-import {
-  validateCardsForExport,
-  prepareCardsForExport,
-  handleError,
-} from '../utils';
-import { PasswordModal } from '../../ui/password-modal';
+import { validateCardsForExport, prepareCardsForExport } from '../utils';
+import { handleError } from '../../../../lib/utils';
+import { PasswordModal } from '../../../password-modal';
 import {
   PASSWORD_MODAL_TITLE_ID,
   PASSWORD_MODAL_DESCRIPTION_ID,
-} from '../../ui/password-modal/lib/constants';
-import { FALLBACK_ERROR_EXPORT } from '../../model/constants';
-
-const PASSWORD_MODAL_ID = 'password-modal-export';
+} from '../../../password-modal/lib/constants';
+import { PASSWORD_MODAL_ID } from '../constants';
+import { FALLBACK_ERROR_EXPORT } from '../../../../model/constants';
 
 interface IUseExportCardsParams {
   cards: IBankCard[];

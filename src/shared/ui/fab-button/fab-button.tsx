@@ -1,5 +1,5 @@
-import { type FC } from 'react';
-import { bem, createClassName } from '@shared/lib';
+import { type FC, useMemo } from 'react';
+import { bem, useClassName } from '@shared/lib';
 import type { IFabButtonProps } from './model';
 import { FAB_BUTTON_BLOCK } from './lib';
 import './fab-button.less';
@@ -11,22 +11,18 @@ export const FabButton: FC<IFabButtonProps> = ({
   disabled,
   isActive,
   ariaPressed,
-  parentClass,
 }) => {
-  const modifiers = [];
+  const modifiers = useMemo(
+    () =>
+      [isActive && 'active', disabled && 'disabled'].filter(
+        Boolean
+      ) as string[],
+    [isActive, disabled]
+  );
 
-  if (isActive) {
-    modifiers.push('active');
-  }
-
-  if (disabled) {
-    modifiers.push('disabled');
-  }
-
-  const className = createClassName({
+  const className = useClassName({
     blockName: FAB_BUTTON_BLOCK,
     modifiers,
-    parentClass,
   });
 
   return (

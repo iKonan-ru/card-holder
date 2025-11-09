@@ -1,15 +1,15 @@
 import type { ReactNode } from 'react';
-import type { PropsWithParentClass } from '@shared/types';
 
 export type TFieldFormatter = (value: string) => string;
 export type TFieldValidator = (value: string) => string | undefined;
 
-export interface IValidatedFieldProps extends PropsWithParentClass {
+export interface IValidatedFieldProps {
   name: string;
   label: string;
   value: string;
   error?: string;
   maxLength?: number;
+  parentClass?: string;
   disabled?: boolean;
   required?: boolean;
   rightContent?: ReactNode;

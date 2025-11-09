@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
-import type { PropsWithParentClass } from '@shared/types';
 
-export interface IModalProps extends PropsWithParentClass {
+export interface IModalProps {
   children: ReactNode;
   onClose: () => void;
   isTopModal: boolean;

@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { bem, createClassName } from '@shared/lib';
+import { bem, useClassName } from '@shared/lib';
 import type { ISuccessModalProps } from './model';
 import {
   SUCCESS_MODAL_BLOCK,
@@ -14,7 +14,7 @@ export const SuccessModal: FC<ISuccessModalProps> = ({
   message,
   onClose,
 }) => {
-  const className = createClassName({
+  const className = useClassName({
     blockName: SUCCESS_MODAL_BLOCK,
   });
 

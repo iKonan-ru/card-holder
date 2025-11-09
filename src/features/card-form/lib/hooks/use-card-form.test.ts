@@ -33,8 +33,7 @@ const createMockStore = (overrides = {}) => ({
   unflipCards: vi.fn(),
   setCards: vi.fn(),
   reorderCards: vi.fn(),
-  enableReorderMode: vi.fn(),
-  disableReorderMode: vi.fn(),
+  setReorderMode: vi.fn(),
   toggleReorderMode: vi.fn(),
   ...overrides,
 });

@@ -1,0 +1,17 @@
+@import '@shared/assets/styles/variables.less';
+
+.card-list-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+  gap: @spacing-lg;
+
+  @media (max-width: @mobile) {
+    gap: @spacing-md;
+  }
+
+  &__sortable-card-item {
+  }
+
+  &__add-card-button {
+  }
+}

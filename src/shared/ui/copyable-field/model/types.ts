@@ -1,6 +1,4 @@
-import type { PropsWithParentClass } from '@shared/types';
-
-export interface ICopyableFieldProps extends PropsWithParentClass {
+export interface ICopyableFieldProps {
   value: string;
   title?: string;
   label?: string;

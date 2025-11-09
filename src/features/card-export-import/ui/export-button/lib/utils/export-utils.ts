@@ -1,5 +1,5 @@
 import type { IBankCard } from '@entities/bank-card';
-import { ERROR_NO_CARDS_TO_EXPORT } from '../../model/constants';
+import { ERROR_NO_CARDS_TO_EXPORT } from '../constants';
 
 export const validateCardsForExport = (cards: IBankCard[]): void => {
   const hasCards = cards.length > 0;

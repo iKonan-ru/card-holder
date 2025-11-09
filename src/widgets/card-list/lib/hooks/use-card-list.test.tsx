@@ -5,12 +5,25 @@ import type { IBankCard } from '@entities/bank-card';
 import type { ReactNode, FC } from 'react';
 import { ModalProvider } from '@shared/lib';
 
-const { mockUseCardManagementStore } = vi.hoisted(() => ({
+const {
+  mockUseCardManagementStore,
+  mockOpenAddCardForm,
+  mockOpenEditCardForm,
+} = vi.hoisted(() => ({
   mockUseCardManagementStore: vi.fn(),
+  mockOpenAddCardForm: vi.fn(),
+  mockOpenEditCardForm: vi.fn(),
 }));
 
 vi.mock('@features/card-management', () => ({
   useCardManagementStore: mockUseCardManagementStore,
+}));
+
+vi.mock('@features/card-form', () => ({
+  useCardFormModal: () => ({
+    openAddCardForm: mockOpenAddCardForm,
+    openEditCardForm: mockOpenEditCardForm,
+  }),
 }));
 
 const MOCK_CARD: IBankCard = {
@@ -40,8 +53,7 @@ const createMockStore = (overrides = {}) => ({
   setCards: vi.fn(),
   toggleReorderMode: vi.fn(),
   unflipCards: vi.fn(),
-  enableReorderMode: vi.fn(),
-  disableReorderMode: vi.fn(),
+  setReorderMode: vi.fn(),
   ...overrides,
 });
 
@@ -124,7 +136,7 @@ describe('useCardList', () => {
       result.current.handleShowForm();
     });
 
-    expect(mockUnflipCards).toHaveBeenCalledTimes(1);
+    expect(mockOpenAddCardForm).toHaveBeenCalled();
   });
 
   it('handleEditCard должен открывать модальное окно с карточкой', () => {

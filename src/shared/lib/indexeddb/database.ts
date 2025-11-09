@@ -15,12 +15,6 @@ const checkIsIDBOpenDBRequest = (
   return target !== null && 'result' in target && 'transaction' in target;
 };
 
-/**
- * Инициализирует подключение к IndexedDB базе данных
- * Создаёт object store для карт при первом запуске
- * @returns Промис с экземпляром базы данных
- * @throws Ошибка если не удалось открыть базу данных
- */
 export const initDatabase = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
     if (databaseInstance) {
@@ -92,12 +86,6 @@ export const initDatabase = (): Promise<IDBDatabase> => {
   });
 };
 
-/**
- * Получает экземпляр базы данных
- * Инициализирует базу если она ещё не открыта
- * @returns Промис с экземпляром базы данных
- * @throws Ошибка если не удалось открыть базу данных
- */
 export const getDatabase = async (): Promise<IDBDatabase> => {
   if (!databaseInstance) {
     return initDatabase();

@@ -7,12 +7,25 @@ import { ModalContainer } from '@shared/ui';
 import type { IBankCard } from '@entities/bank-card';
 import type { FC, ReactNode } from 'react';
 
-const { mockUseCardManagementStore } = vi.hoisted(() => ({
+const {
+  mockUseCardManagementStore,
+  mockOpenAddCardForm,
+  mockOpenEditCardForm,
+} = vi.hoisted(() => ({
   mockUseCardManagementStore: vi.fn(),
+  mockOpenAddCardForm: vi.fn(),
+  mockOpenEditCardForm: vi.fn(),
 }));
 
 vi.mock('@features/card-management', () => ({
   useCardManagementStore: mockUseCardManagementStore,
+}));
+
+vi.mock('@features/card-form', () => ({
+  useCardFormModal: () => ({
+    openAddCardForm: mockOpenAddCardForm,
+    openEditCardForm: mockOpenEditCardForm,
+  }),
 }));
 
 vi.mock('@entities/bank-card', () => ({
@@ -71,8 +84,7 @@ const createMockStore = (overrides = {}) => ({
   setCards: vi.fn(),
   toggleReorderMode: vi.fn(),
   unflipCards: vi.fn(),
-  enableReorderMode: vi.fn(),
-  disableReorderMode: vi.fn(),
+  setReorderMode: vi.fn(),
   ...overrides,
 });
 
@@ -138,7 +150,7 @@ describe('CardList', () => {
   it('должна содержать grid контейнер', () => {
     render(<CardList />, { wrapper: TestWrapper });
 
-    const gridElement = document.querySelector('.card-list__grid');
+    const gridElement = document.querySelector('.card-list-grid');
     expect(gridElement).toBeInTheDocument();
   });
 
@@ -197,19 +209,17 @@ describe('CardList', () => {
     const addButton = document.querySelector('.add-card-button') as HTMLElement;
     await user.click(addButton);
 
-    expect(screen.getByText('Добавление карты')).toBeInTheDocument();
+    expect(mockOpenAddCardForm).toHaveBeenCalled();
   });
 
-  it('должна закрывать форму при клике на кнопку отмены', async () => {
+  it('должна использовать openAddCardForm при добавлении карты', async () => {
+    vi.clearAllMocks();
     const user = userEvent.setup();
     render(<CardList />, { wrapper: TestWrapper });
 
     const addButton = document.querySelector('.add-card-button') as HTMLElement;
     await user.click(addButton);
 
-    const cancelButton = screen.getByRole('button', { name: 'Отмена' });
-    await user.click(cancelButton);
-
-    expect(screen.queryByText('Добавление карты')).not.toBeInTheDocument();
+    expect(mockOpenAddCardForm).toHaveBeenCalled();
   });
 });

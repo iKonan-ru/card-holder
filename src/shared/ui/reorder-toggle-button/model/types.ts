@@ -1,6 +1,4 @@
-import type { PropsWithParentClass } from '@shared/types';
-
-export interface IReorderToggleButtonProps extends PropsWithParentClass {
+export interface IReorderToggleButtonProps {
   isActive: boolean;
   onClick: () => void;
 }

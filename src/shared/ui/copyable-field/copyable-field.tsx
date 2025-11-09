@@ -1,6 +1,6 @@
-import { useState, useRef, type FC } from 'react';
+import { useState, useRef, useMemo, type FC } from 'react';
 import { FiCheck } from 'react-icons/fi';
-import { bem, logError, ERROR_FAILED_TO_COPY } from '@shared/lib';
+import { bem, logError, ERROR_FAILED_TO_COPY, useClassName } from '@shared/lib';
 import type { ICopyableFieldProps } from './model';
 import {
   COPY_INDICATOR_DURATION,
@@ -11,7 +11,6 @@ import './copyable-field.less';
 
 export const CopyableField: FC<ICopyableFieldProps> = ({
   value,
-  parentClass,
   label,
   title = COPY_TITLE_TEXT,
   maskFn,
@@ -56,10 +55,12 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
     }
   };
 
-  const modifiers = modifier ? [modifier] : [];
-  const blockClass = bem(COPYABLE_FIELD_BLOCK, modifiers);
-  const elementClass = parentClass ? bem(parentClass, 'copyable-field') : '';
-  const wrapperClassName = [blockClass, elementClass].filter(Boolean).join(' ');
+  const modifiers = useMemo(() => (modifier ? [modifier] : []), [modifier]);
+
+  const wrapperClassName = useClassName({
+    blockName: COPYABLE_FIELD_BLOCK,
+    modifiers,
+  });
 
   const ariaLabel = label
     ? `${title}: ${label}`

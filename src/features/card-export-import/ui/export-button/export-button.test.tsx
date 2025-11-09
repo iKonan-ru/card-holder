@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import type { ReactNode } from 'react';
-import { ModalProvider } from '@shared/lib';
+import { ModalProvider, ParentClassProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import { ExportButton } from './export-button';
 import type { IBankCard } from '@entities/bank-card';
@@ -101,11 +101,13 @@ describe('ExportButton', () => {
     expect(icon).toBeInTheDocument();
   });
 
-  it('должен применять parentClass', () => {
+  it('должен применять parentClass из контекста', () => {
     render(
-      <TestWrapper>
-        <ExportButton parentClass="custom-class" />
-      </TestWrapper>
+      <ParentClassProvider parentClass="custom-class">
+        <TestWrapper>
+          <ExportButton />
+        </TestWrapper>
+      </ParentClassProvider>
     );
 
     const button = screen.getByRole('button', {

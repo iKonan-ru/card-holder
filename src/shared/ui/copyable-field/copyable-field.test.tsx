@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
+import { ParentClassProvider } from '@shared/lib';
 import { CopyableField } from './copyable-field';
 
 const TEST_VALUE = 'test-value';
@@ -41,10 +42,9 @@ describe('CopyableField', () => {
 
   it('должна рендериться с базовыми пропсами', () => {
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
     );
 
     expect(screen.getByText(TEST_VALUE)).toBeInTheDocument();
@@ -52,11 +52,12 @@ describe('CopyableField', () => {
 
   it('должна отображать label если он передан', () => {
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-        label={TEST_LABEL}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField
+          value={TEST_VALUE}
+          label={TEST_LABEL}
+        />
+      </ParentClassProvider>
     );
 
     expect(screen.getByText(TEST_LABEL)).toBeInTheDocument();
@@ -64,10 +65,9 @@ describe('CopyableField', () => {
 
   it('должна не отображать label если он не передан', () => {
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
     );
 
     expect(screen.queryByText(TEST_LABEL)).not.toBeInTheDocument();
@@ -75,11 +75,12 @@ describe('CopyableField', () => {
 
   it('должна использовать кастомный title', () => {
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-        title={TEST_TITLE}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField
+          value={TEST_VALUE}
+          title={TEST_TITLE}
+        />
+      </ParentClassProvider>
     );
 
     const element = screen.getByTitle(TEST_TITLE);
@@ -90,10 +91,9 @@ describe('CopyableField', () => {
     clipboardWriteTextMock.mockResolvedValue(undefined);
 
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
     );
 
     const element = screen.getByText(TEST_VALUE);
@@ -108,10 +108,9 @@ describe('CopyableField', () => {
     clipboardWriteTextMock.mockResolvedValue(undefined);
 
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
     );
 
     const element = screen.getByText(TEST_VALUE);
@@ -127,11 +126,12 @@ describe('CopyableField', () => {
     const maskFn = (value: string) => `masked-${value}`;
 
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-        maskFn={maskFn}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField
+          value={TEST_VALUE}
+          maskFn={maskFn}
+        />
+      </ParentClassProvider>
     );
 
     expect(screen.getByText(`masked-${TEST_VALUE}`)).toBeInTheDocument();
@@ -144,11 +144,12 @@ describe('CopyableField', () => {
     clipboardWriteTextMock.mockResolvedValue(undefined);
 
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-        maskFn={maskFn}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField
+          value={TEST_VALUE}
+          maskFn={maskFn}
+        />
+      </ParentClassProvider>
     );
 
     const element = screen.getByText(`masked-${TEST_VALUE}`);
@@ -165,10 +166,9 @@ describe('CopyableField', () => {
 
     render(
       <div onClick={onContainerClick}>
-        <CopyableField
-          value={TEST_VALUE}
-          parentClass={TEST_PARENT_CLASS}
-        />
+        <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+          <CopyableField value={TEST_VALUE} />
+        </ParentClassProvider>
       </div>
     );
 
@@ -190,10 +190,9 @@ describe('CopyableField', () => {
     clipboardWriteTextMock.mockRejectedValue(new Error(errorMessage));
 
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
     );
 
     const element = screen.getByText(TEST_VALUE);
@@ -210,10 +209,9 @@ describe('CopyableField', () => {
     clipboardWriteTextMock.mockResolvedValue(undefined);
 
     const { unmount } = render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
     );
 
     const element = screen.getByText(TEST_VALUE);
@@ -235,10 +233,9 @@ describe('CopyableField', () => {
     clipboardWriteTextMock.mockResolvedValue(undefined);
 
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
     );
 
     const element = screen.getByText(TEST_VALUE);
@@ -267,10 +264,9 @@ describe('CopyableField', () => {
     clipboardWriteTextMock.mockResolvedValue(undefined);
 
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
     );
 
     const element = screen.getByText(TEST_VALUE);
@@ -285,10 +281,9 @@ describe('CopyableField', () => {
     clipboardWriteTextMock.mockResolvedValue(undefined);
 
     render(
-      <CopyableField
-        value={TEST_VALUE}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
     );
 
     const element = screen.getByText(TEST_VALUE);

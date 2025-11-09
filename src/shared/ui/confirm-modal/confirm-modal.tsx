@@ -1,5 +1,5 @@
-import type { FC } from 'react';
-import { bem, createClassName } from '@shared/lib';
+import { type FC } from 'react';
+import { bem, useClassName } from '@shared/lib';
 import type { IConfirmModalProps } from './model';
 import {
   CONFIRM_MODAL_BLOCK,
@@ -17,11 +17,9 @@ export const ConfirmModal: FC<IConfirmModalProps> = ({
   cancelText = DEFAULT_CANCEL_TEXT,
   onConfirm,
   onCancel,
-  parentClass,
 }) => {
-  const className = createClassName({
+  const className = useClassName({
     blockName: CONFIRM_MODAL_BLOCK,
-    parentClass,
   });
 
   return (

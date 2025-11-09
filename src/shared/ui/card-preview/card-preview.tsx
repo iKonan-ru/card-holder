@@ -1,11 +1,11 @@
-import type { FC } from 'react';
+import { type FC } from 'react';
 import type { ICardPreviewProps } from './model';
 import { BANKS_LIST, DEFAULT_BANK, type TBankKeys } from '@shared/data';
 import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
 import {
   bem,
-  createClassName,
+  useClassName,
   getBankByCardNumber,
   getPaymentSystem,
   SPACE_REMOVAL_PATTERN,
@@ -14,7 +14,7 @@ import {
 import { CARD_PREVIEW_BLOCK } from './lib/constants';
 import './card-preview.less';
 
-export const CardPreview: FC<ICardPreviewProps> = ({ pan, parentClass }) => {
+export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {
   const cleanPan = pan.replace(SPACE_REMOVAL_PATTERN, EMPTY_STRING);
   const paymentSystem = getPaymentSystem(cleanPan);
   const bankId = getBankByCardNumber(cleanPan);
@@ -24,20 +24,19 @@ export const CardPreview: FC<ICardPreviewProps> = ({ pan, parentClass }) => {
   const hasBank = Boolean(bankId);
   const hasAnyInfo = hasPaymentSystem || hasBank;
 
-  if (!hasAnyInfo) {
-    return null;
-  }
-
   const paymentSystemLogoUrl = paymentSystem
     ? paymentSystemLogos[paymentSystem]
     : null;
   const bankLogoUrl =
     bankId && bankId in bankLogos ? bankLogos[bankId as TBankKeys] : null;
 
-  const className = createClassName({
+  const className = useClassName({
     blockName: CARD_PREVIEW_BLOCK,
-    parentClass,
   });
+
+  if (!hasAnyInfo) {
+    return null;
+  }
 
   return (
     <div

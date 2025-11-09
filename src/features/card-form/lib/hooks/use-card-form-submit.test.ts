@@ -22,8 +22,7 @@ vi.mock('@features/card-management', () => ({
     unflipCards: vi.fn(),
     setCards: vi.fn(),
     reorderCards: vi.fn(),
-    enableReorderMode: vi.fn(),
-    disableReorderMode: vi.fn(),
+    setReorderMode: vi.fn(),
     toggleReorderMode: vi.fn(),
   }),
 }));
@@ -249,6 +248,200 @@ describe('useCardFormSubmit', () => {
 
       expect(mockSetIsSubmitting).toHaveBeenCalledWith(true);
       expect(mockSetIsSubmitting).toHaveBeenCalledWith(false);
+    });
+  });
+
+  describe('handleSubmit - добавление карты', () => {
+    it('должен добавлять карту при валидных данных', async () => {
+      const formData: Partial<IBankCard> = {
+        pan: '5559494202595236',
+        expires: '1230',
+        name: 'TEST USER',
+        cvv: '123',
+        pin: '1234',
+      };
+
+      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
+      mockAddCard.mockResolvedValue(undefined);
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: false,
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+          onSuccess: mockOnSuccess,
+        })
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as React.FormEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockAddCard).toHaveBeenCalled();
+      expect(mockResetForm).toHaveBeenCalled();
+      expect(mockResetErrors).toHaveBeenCalled();
+      expect(mockOnSuccess).toHaveBeenCalled();
+    });
+
+    it('должен показать ошибку если карта уже существует', async () => {
+      const formData: Partial<IBankCard> = {
+        pan: '5559494202595236',
+        expires: '1230',
+        name: 'TEST USER',
+        cvv: '123',
+        pin: '1234',
+      };
+
+      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(true);
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: false,
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+        })
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as React.FormEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockSetErrors).toHaveBeenCalledWith({
+        pan: 'Такая карта уже существует',
+      });
+      expect(mockAddCard).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('handleSubmit - редактирование карты', () => {
+    it('должен обновлять карту при валидных данных', async () => {
+      const formData: Partial<IBankCard> = {
+        pan: '5559494202595236',
+        expires: '1230',
+        name: 'UPDATED USER',
+        cvv: '123',
+        pin: '1234',
+        order: 0,
+      };
+
+      mockUpdateCard.mockResolvedValue(undefined);
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: true,
+          originalPan: '5559494202595236',
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+          onSuccess: mockOnSuccess,
+        })
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as React.FormEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockUpdateCard).toHaveBeenCalled();
+      expect(mockResetForm).toHaveBeenCalled();
+      expect(mockResetErrors).toHaveBeenCalled();
+      expect(mockOnSuccess).toHaveBeenCalled();
+    });
+
+    it('должен удалять старую карту при изменении PAN', async () => {
+      const formData: Partial<IBankCard> = {
+        pan: '4377723769243191',
+        expires: '1230',
+        name: 'UPDATED USER',
+        cvv: '123',
+        pin: '1234',
+        order: 0,
+      };
+
+      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
+      mockDeleteCard.mockResolvedValue(undefined);
+      mockUpdateCard.mockResolvedValue(undefined);
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: true,
+          originalPan: '5559494202595236',
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+          onSuccess: mockOnSuccess,
+        })
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as React.FormEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockDeleteCard).toHaveBeenCalledWith('5559494202595236');
+      expect(mockUpdateCard).toHaveBeenCalled();
+    });
+
+    it('должен показать ошибку если новый PAN уже существует', async () => {
+      const formData: Partial<IBankCard> = {
+        pan: '4377723769243191',
+        expires: '1230',
+        name: 'UPDATED USER',
+        cvv: '123',
+        pin: '1234',
+        order: 0,
+      };
+
+      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(true);
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: true,
+          originalPan: '5559494202595236',
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+        })
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as React.FormEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockSetErrors).toHaveBeenCalledWith({
+        pan: 'Такая карта уже существует',
+      });
+      expect(mockUpdateCard).not.toHaveBeenCalled();
     });
   });
 

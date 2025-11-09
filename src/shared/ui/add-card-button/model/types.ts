@@ -1,5 +1,3 @@
-import type { PropsWithParentClass } from '@shared/types';
-
-export interface IAddCardButtonProps extends PropsWithParentClass {
+export interface IAddCardButtonProps {
   onClick: () => void;
 }

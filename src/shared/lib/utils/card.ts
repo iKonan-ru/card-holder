@@ -55,11 +55,6 @@ const EXPIRES_FORMAT_PATTERN = /(\d{2})(\d{2})/;
 const EXPIRES_FORMAT_REPLACEMENT = '$1/$2';
 const MASK_CHAR = '•';
 
-/**
- * Определяет платежную систему по номеру карты
- * @param pan - номер карты (PAN)
- * @returns тип платежной системы или null, если не удалось определить
- */
 export function getPaymentSystem(pan: string): PaymentSystem | null {
   if (!pan) {
     return null;
@@ -72,11 +67,6 @@ export function getPaymentSystem(pan: string): PaymentSystem | null {
   return matchedRule ? matchedRule.system : null;
 }
 
-/**
- * Определяет банк по номеру карты используя BIN (первые 6 цифр)
- * @param cardNumber - номер карты
- * @returns идентификатор банка или null, если банк не определен
- */
 export function getBankByCardNumber(cardNumber: string): string | null {
   const isCardNumberTooShort =
     !cardNumber || cardNumber.length < MIN_CARD_PREFIX_LENGTH;
@@ -101,33 +91,16 @@ export function getBankByCardNumber(cardNumber: string): string | null {
   return null;
 }
 
-/**
- * Маскирует номер карты, скрывая средние цифры
- * @param number - номер карты
- * @param showValue - флаг отображения полного номера
- * @returns замаскированный или полный номер карты
- */
 export const maskPan = (number: string, showValue = false) => {
   const format = showValue ? PAN_VISIBLE_FORMAT : PAN_MASKED_FORMAT;
 
   return number.replace(PAN_MASK_PATTERN, format);
 };
 
-/**
- * Маскирует значение, заменяя все символы на точки
- * @param value - значение для маскирования
- * @param showValue - флаг отображения полного значения
- * @returns замаскированное или полное значение
- */
 export const maskValue = (value: string, showValue = false) => {
   return showValue ? value : MASK_CHAR.repeat(value.length);
 };
 
-/**
- * Форматирует дату истечения срока действия карты в формат MM/YY
- * @param date - дата в формате MMYY
- * @returns отформатированная дата в формате MM/YY
- */
 export const formatExpiryDate = (date: string) => {
   return date.replace(EXPIRES_FORMAT_PATTERN, EXPIRES_FORMAT_REPLACEMENT);
 };

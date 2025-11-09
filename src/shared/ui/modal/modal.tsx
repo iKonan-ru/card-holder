@@ -1,5 +1,5 @@
 import { useEffect, useRef, type FC } from 'react';
-import { bem, createClassName } from '@shared/lib';
+import { bem, useClassName, ParentClassProvider } from '@shared/lib';
 import type { IModalProps } from './model';
 import { MODAL_BLOCK } from './lib/constants';
 import './modal.less';
@@ -10,7 +10,6 @@ export const Modal: FC<IModalProps> = ({
   isTopModal,
   ariaLabelledBy,
   ariaDescribedBy,
-  parentClass,
 }) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
@@ -67,9 +66,8 @@ export const Modal: FC<IModalProps> = ({
     }
   };
 
-  const className = createClassName({
+  const className = useClassName({
     blockName: MODAL_BLOCK,
-    parentClass,
   });
 
   return (
@@ -86,7 +84,9 @@ export const Modal: FC<IModalProps> = ({
         className={bem(MODAL_BLOCK, 'content')}
         onClick={handleContentClick}
       >
-        {children}
+        <ParentClassProvider parentClass={MODAL_BLOCK}>
+          {children}
+        </ParentClassProvider>
       </div>
     </div>
   );

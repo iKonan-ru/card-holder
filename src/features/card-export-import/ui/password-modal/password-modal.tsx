@@ -1,6 +1,6 @@
 import { useState, type FC, type FormEvent, type ChangeEvent } from 'react';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
-import { bem, createClassName } from '@shared/lib';
+import { bem, useClassName, ParentClassProvider } from '@shared/lib';
 import {
   ERROR_PASSWORD_TOO_SHORT,
   ERROR_PASSWORD_MISMATCH,
@@ -9,6 +9,8 @@ import { FormField } from '@shared/ui';
 import type { IPasswordModalProps } from '../../model';
 import { MIN_PASSWORD_LENGTH } from '../../model/constants';
 import {
+  PASSWORD_MODAL_BLOCK,
+  PASSWORD_MODAL_TITLE_ID,
   PASSWORD_MODAL_TITLE_EXPORT,
   PASSWORD_MODAL_TITLE_IMPORT,
   PASSWORD_MODAL_LABEL,
@@ -16,8 +18,7 @@ import {
   PASSWORD_MODAL_BUTTON_EXPORT,
   PASSWORD_MODAL_BUTTON_IMPORT,
   PASSWORD_MODAL_BUTTON_CANCEL,
-} from '../../lib/constants';
-import { PASSWORD_MODAL_BLOCK, PASSWORD_MODAL_TITLE_ID } from './lib/constants';
+} from './lib/constants';
 import './password-modal.less';
 
 export const PasswordModal: FC<IPasswordModalProps> = ({
@@ -39,7 +40,7 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
     ? PASSWORD_MODAL_BUTTON_EXPORT
     : PASSWORD_MODAL_BUTTON_IMPORT;
 
-  const className = createClassName({
+  const className = useClassName({
     blockName: PASSWORD_MODAL_BLOCK,
   });
 
@@ -128,36 +129,36 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
         {title}
       </h3>
 
-      <FormField
-        id="password"
-        name="password"
-        type={showPassword ? 'text' : 'password'}
-        label={PASSWORD_MODAL_LABEL}
-        value={password}
-        error={passwordError}
-        onChange={handlePasswordChange}
-        autoComplete="new-password"
-        autoFocus
-        required
-        rightContent={passwordRightContent}
-        parentClass={PASSWORD_MODAL_BLOCK}
-      />
-
-      {isExportMode && (
+      <ParentClassProvider parentClass={PASSWORD_MODAL_BLOCK}>
         <FormField
-          id="confirm-password"
-          name="confirm-password"
+          id="password"
+          name="password"
           type={showPassword ? 'text' : 'password'}
-          label={PASSWORD_MODAL_LABEL_CONFIRM}
-          value={confirmPassword}
-          error={confirmError}
-          onChange={handleConfirmPasswordChange}
+          label={PASSWORD_MODAL_LABEL}
+          value={password}
+          error={passwordError}
+          onChange={handlePasswordChange}
           autoComplete="new-password"
+          autoFocus
           required
-          rightContent={confirmPasswordRightContent}
-          parentClass={PASSWORD_MODAL_BLOCK}
+          rightContent={passwordRightContent}
         />
-      )}
+
+        {isExportMode && (
+          <FormField
+            id="confirm-password"
+            name="confirm-password"
+            type={showPassword ? 'text' : 'password'}
+            label={PASSWORD_MODAL_LABEL_CONFIRM}
+            value={confirmPassword}
+            error={confirmError}
+            onChange={handleConfirmPasswordChange}
+            autoComplete="new-password"
+            required
+            rightContent={confirmPasswordRightContent}
+          />
+        )}
+      </ParentClassProvider>
 
       <div className={bem(PASSWORD_MODAL_BLOCK, 'actions')}>
         <button

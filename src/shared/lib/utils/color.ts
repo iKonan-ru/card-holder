@@ -14,11 +14,6 @@ const HASH_CHAR = '#';
 const ZERO_CHAR = '0';
 const EMPTY_STRING = '';
 
-/**
- * Конвертирует HEX цвет в RGB формат
- * @param hex - цвет в HEX формате (с # или без)
- * @returns объект с компонентами RGB или null при невалидном формате
- */
 export const hexToRgb = (
   hex: string
 ): { r: number; g: number; b: number } | null => {
@@ -42,13 +37,6 @@ export const hexToRgb = (
   return { r, g, b };
 };
 
-/**
- * Конвертирует RGB цвет в HEX формат
- * @param r - красный компонент (0-255)
- * @param g - зеленый компонент (0-255)
- * @param b - синий компонент (0-255)
- * @returns цвет в HEX формате с решеткой
- */
 export const rgbToHex = (r: number, g: number, b: number): string => {
   const convertToHex = (value: number) => {
     const clampedValue = Math.round(
@@ -63,12 +51,6 @@ export const rgbToHex = (r: number, g: number, b: number): string => {
   return `${HASH_CHAR}${convertToHex(r)}${convertToHex(g)}${convertToHex(b)}`;
 };
 
-/**
- * Затемняет HEX цвет на указанный процент
- * @param hex - цвет в HEX формате
- * @param percent - процент затемнения (0-100)
- * @returns затемненный цвет в HEX формате
- */
 export const darkenColor = (hex: string, percent: number): string => {
   const rgb = hexToRgb(hex);
   const isInvalidColor = !rgb;

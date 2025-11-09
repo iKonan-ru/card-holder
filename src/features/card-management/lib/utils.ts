@@ -10,17 +10,6 @@ interface IExecuteCardOperationParams {
   context: string;
 }
 
-/**
- * Выполняет операцию с карточкой и обновляет список карт после успешного выполнения
- * Логирует ошибку и пробрасывает её дальше при неудаче
- * @param params - Параметры операции
- * @param params.operation - Асинхронная функция выполняющая операцию
- * @param params.errorMessage - Сообщение об ошибке
- * @param params.onSuccess - Коллбэк вызываемый при успехе с обновлённым списком карт
- * @param params.context - Контекст выполнения операции
- * @returns Промис без значения
- * @throws Ошибка если операция не удалась
- */
 export const executeCardOperation = async ({
   operation,
   errorMessage,

@@ -41,46 +41,22 @@ export const useCardManagementStore = create<
     }));
   },
 
-  enableReorderMode: () => {
+  setReorderMode: (enabled: boolean) => {
     set((state) => {
-      const shouldEnable = !state.isReorderMode;
-
-      if (!shouldEnable) {
+      if (state.isReorderMode === enabled) {
         return state;
       }
 
       return {
-        isReorderMode: true,
-        flippedPan: null,
-      };
-    });
-  },
-
-  disableReorderMode: () => {
-    set((state) => {
-      const shouldDisable = state.isReorderMode;
-
-      if (!shouldDisable) {
-        return state;
-      }
-
-      return {
-        isReorderMode: false,
+        isReorderMode: enabled,
         flippedPan: null,
       };
     });
   },
 
   toggleReorderMode: () => {
-    const { isReorderMode, enableReorderMode, disableReorderMode } = get();
-
-    if (isReorderMode) {
-      disableReorderMode();
-
-      return;
-    }
-
-    enableReorderMode();
+    const { isReorderMode, setReorderMode } = get();
+    setReorderMode(!isReorderMode);
   },
 
   loadCards: async () => {

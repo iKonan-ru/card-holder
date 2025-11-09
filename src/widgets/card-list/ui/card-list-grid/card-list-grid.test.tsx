@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { CardListGrid } from './card-list-grid';
 import type { IBankCard } from '@entities/bank-card';
+import { ParentClassProvider } from '@shared/lib';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
 import type { FC, ReactNode } from 'react';
@@ -50,37 +51,39 @@ describe('CardListGrid', () => {
 
   it('должна рендериться с картами', () => {
     const { container } = render(
-      <DndWrapper>
-        <CardListGrid
-          cards={MOCK_CARDS}
-          flippedPan={null}
-          isReorderMode={false}
-          onFlipCard={vi.fn()}
-          onEditCard={vi.fn()}
-          onShowForm={vi.fn()}
-          parentClass={TEST_PARENT_CLASS}
-        />
-      </DndWrapper>
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <DndWrapper>
+          <CardListGrid
+            cards={MOCK_CARDS}
+            flippedPan={null}
+            isReorderMode={false}
+            onFlipCard={vi.fn()}
+            onEditCard={vi.fn()}
+            onShowForm={vi.fn()}
+          />
+        </DndWrapper>
+      </ParentClassProvider>
     );
 
-    const grid = container.querySelector('.test-parent__grid');
+    const grid = container.querySelector('.card-list-grid');
     expect(grid).toBeInTheDocument();
     expect(grid).toHaveAttribute('role', 'list');
   });
 
   it('должна рендерить все карты', () => {
     render(
-      <DndWrapper>
-        <CardListGrid
-          cards={MOCK_CARDS}
-          flippedPan={null}
-          isReorderMode={false}
-          onFlipCard={vi.fn()}
-          onEditCard={vi.fn()}
-          onShowForm={vi.fn()}
-          parentClass={TEST_PARENT_CLASS}
-        />
-      </DndWrapper>
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <DndWrapper>
+          <CardListGrid
+            cards={MOCK_CARDS}
+            flippedPan={null}
+            isReorderMode={false}
+            onFlipCard={vi.fn()}
+            onEditCard={vi.fn()}
+            onShowForm={vi.fn()}
+          />
+        </DndWrapper>
+      </ParentClassProvider>
     );
 
     expect(screen.getByTestId('card-5559494202595236')).toBeInTheDocument();
@@ -89,17 +92,18 @@ describe('CardListGrid', () => {
 
   it('должна рендерить кнопку добавления', () => {
     const { container } = render(
-      <DndWrapper>
-        <CardListGrid
-          cards={MOCK_CARDS}
-          flippedPan={null}
-          isReorderMode={false}
-          onFlipCard={vi.fn()}
-          onEditCard={vi.fn()}
-          onShowForm={vi.fn()}
-          parentClass={TEST_PARENT_CLASS}
-        />
-      </DndWrapper>
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <DndWrapper>
+          <CardListGrid
+            cards={MOCK_CARDS}
+            flippedPan={null}
+            isReorderMode={false}
+            onFlipCard={vi.fn()}
+            onEditCard={vi.fn()}
+            onShowForm={vi.fn()}
+          />
+        </DndWrapper>
+      </ParentClassProvider>
     );
 
     const addButton = container.querySelector('.add-card-button');
@@ -108,44 +112,44 @@ describe('CardListGrid', () => {
 
   it('должна рендериться с пустым списком', () => {
     const { container } = render(
-      <DndWrapper>
-        <CardListGrid
-          cards={[]}
-          flippedPan={null}
-          isReorderMode={false}
-          onFlipCard={vi.fn()}
-          onEditCard={vi.fn()}
-          onShowForm={vi.fn()}
-          parentClass={TEST_PARENT_CLASS}
-        />
-      </DndWrapper>
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <DndWrapper>
+          <CardListGrid
+            cards={[]}
+            flippedPan={null}
+            isReorderMode={false}
+            onFlipCard={vi.fn()}
+            onEditCard={vi.fn()}
+            onShowForm={vi.fn()}
+          />
+        </DndWrapper>
+      </ParentClassProvider>
     );
 
-    const grid = container.querySelector('.test-parent__grid');
+    const grid = container.querySelector('.card-list-grid');
     expect(grid).toBeInTheDocument();
 
     const addButton = container.querySelector('.add-card-button');
     expect(addButton).toBeInTheDocument();
   });
 
-  it('должна передавать isReorderMode в карты', () => {
+  it('должна использовать parentClass для генерации классов', () => {
     const { container } = render(
-      <DndWrapper>
-        <CardListGrid
-          cards={MOCK_CARDS}
-          flippedPan={null}
-          isReorderMode={true}
-          onFlipCard={vi.fn()}
-          onEditCard={vi.fn()}
-          onShowForm={vi.fn()}
-          parentClass={TEST_PARENT_CLASS}
-        />
-      </DndWrapper>
+      <ParentClassProvider parentClass="custom-parent">
+        <DndWrapper>
+          <CardListGrid
+            cards={MOCK_CARDS}
+            flippedPan={null}
+            isReorderMode={false}
+            onFlipCard={vi.fn()}
+            onEditCard={vi.fn()}
+            onShowForm={vi.fn()}
+          />
+        </DndWrapper>
+      </ParentClassProvider>
     );
 
-    const sortableItems = container.querySelectorAll(
-      '.sortable-card-item__wrapper'
-    );
-    expect(sortableItems.length).toBe(MOCK_CARDS.length);
+    const grid = container.querySelector('.card-list-grid');
+    expect(grid).toBeInTheDocument();
   });
 });

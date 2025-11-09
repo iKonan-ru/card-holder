@@ -1,5 +1,3 @@
-import type { PropsWithParentClass } from '@shared/types';
-
-export interface ICardPreviewProps extends PropsWithParentClass {
+export interface ICardPreviewProps {
   pan: string;
 }

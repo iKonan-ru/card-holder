@@ -1,6 +1,4 @@
-import type { PropsWithParentClass } from '@shared/types';
-
-export interface IConfirmModalProps extends PropsWithParentClass {
+export interface IConfirmModalProps {
   title: string;
   message: string;
   confirmText?: string;

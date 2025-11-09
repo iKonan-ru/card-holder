@@ -2,12 +2,10 @@ import { type FC } from 'react';
 import { MdFileDownload } from 'react-icons/md';
 import { useCardManagementStore } from '@features/card-management';
 import { FabButton } from '@shared/ui';
-import type { PropsWithParentClass } from '@shared/types';
-import { useExportCards } from '../../lib/hooks';
+import { EXPORT_BUTTON_ARIA_LABEL } from './lib/constants';
+import { useExportCards } from './lib/hooks';
 
-const EXPORT_BUTTON_ARIA_LABEL = 'Экспортировать карты';
-
-export const ExportButton: FC<PropsWithParentClass> = ({ parentClass }) => {
+export const ExportButton: FC = () => {
   const cards = useCardManagementStore((state) => state.cards);
   const { isExporting, exportCards } = useExportCards({ cards });
 
@@ -17,7 +15,6 @@ export const ExportButton: FC<PropsWithParentClass> = ({ parentClass }) => {
       ariaLabel={EXPORT_BUTTON_ARIA_LABEL}
       onClick={exportCards}
       disabled={isExporting}
-      parentClass={parentClass}
     />
   );
 };

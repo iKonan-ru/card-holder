@@ -9,7 +9,6 @@ const REORDER_BUTTON_ARIA_LABEL_ACTIVE = 'Выключить режим сорт
 export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({
   isActive,
   onClick,
-  parentClass,
 }) => {
   const icon = isActive ? MdOutlineDone : MdDragIndicator;
   const ariaLabel = isActive
@@ -23,7 +22,6 @@ export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({
       onClick={onClick}
       isActive={isActive}
       ariaPressed={isActive}
-      parentClass={parentClass}
     />
   );
 };

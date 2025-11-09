@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import type { ICardFormProps } from './model';
-import { bem, createClassName, useModal } from '@shared/lib';
+import { bem, useClassName, useModal } from '@shared/lib';
 import {
   ValidatedField,
   ConfirmModal,
@@ -36,7 +36,6 @@ export const CardForm: FC<ICardFormProps> = ({
   initialCard,
   onSuccess,
   onCancel,
-  parentClass,
 }) => {
   const {
     formData,
@@ -69,7 +68,6 @@ export const CardForm: FC<ICardFormProps> = ({
         cancelText={DELETE_CANCEL_TEXT}
         onConfirm={handleConfirmDelete}
         onCancel={deleteModal.close}
-        parentClass={CARD_FORM_BLOCK}
       />,
       () => {},
       CONFIRM_MODAL_TITLE_ID,
@@ -82,21 +80,15 @@ export const CardForm: FC<ICardFormProps> = ({
     deleteModal.close();
   };
 
-  const panFieldRightContent = (
-    <CardPreview
-      pan={formData.pan || ''}
-      parentClass={CARD_FORM_BLOCK}
-    />
-  );
+  const panFieldRightContent = <CardPreview pan={formData.pan || ''} />;
 
   const formTitle = isEditMode ? CARD_FORM_EDIT_TITLE : CARD_FORM_TITLE;
   const submitButtonText = isEditMode
     ? SUBMIT_BUTTON_EDIT_TEXT
     : SUBMIT_BUTTON_TEXT;
 
-  const className = createClassName({
+  const className = useClassName({
     blockName: CARD_FORM_BLOCK,
-    parentClass,
   });
 
   return (

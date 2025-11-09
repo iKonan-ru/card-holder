@@ -8,31 +8,28 @@ import {
   FILE_EXTENSION,
   checkIsFileSelectionCancelled,
 } from '@shared/lib';
+import { handleError, createImportSuccessMessage } from '../../../../lib/utils';
 import {
   parseImportedFile,
   validateImportedPayload,
   parseDecryptedCards,
   mergeCards,
-  handleError,
-  createImportSuccessMessage,
 } from '../utils';
-import { PasswordModal } from '../../ui/password-modal';
+import { PasswordModal } from '../../../password-modal';
 import {
   PASSWORD_MODAL_TITLE_ID,
   PASSWORD_MODAL_DESCRIPTION_ID,
-} from '../../ui/password-modal/lib/constants';
-import { SuccessModal } from '../../ui/success-modal';
+} from '../../../password-modal/lib/constants';
+import { SuccessModal } from '../../../success-modal';
 import {
   SUCCESS_MODAL_TITLE_ID,
   SUCCESS_MODAL_MESSAGE_ID,
-} from '../../ui/success-modal/lib/constants';
+} from '../../../success-modal/lib/constants';
 import {
-  SUCCESS_MODAL_TITLE_IMPORT,
   FALLBACK_ERROR_IMPORT,
-} from '../../model/constants';
-
-const PASSWORD_MODAL_ID = 'password-modal-import';
-const SUCCESS_MODAL_ID = 'success-modal-import';
+  SUCCESS_MODAL_TITLE_IMPORT,
+} from '../../../../model/constants';
+import { PASSWORD_MODAL_ID, SUCCESS_MODAL_ID } from '../constants';
 
 interface IUseImportCardsParams {
   cards: IBankCard[];

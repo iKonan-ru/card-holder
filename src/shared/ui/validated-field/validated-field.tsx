@@ -1,6 +1,7 @@
 import { useCallback, type FC, type ChangeEvent } from 'react';
 import type { IValidatedFieldProps } from './model';
 import { FormField } from '../form-field';
+import { ParentClassProvider } from '@shared/lib';
 import { NON_DIGIT_PATTERN } from './lib';
 
 export const ValidatedField: FC<IValidatedFieldProps> = ({
@@ -71,19 +72,20 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
   );
 
   return (
-    <FormField
-      id={name}
-      name={name}
-      label={label}
-      value={value}
-      error={error}
-      onChange={handleChange}
-      maxLength={maxLength}
-      disabled={disabled}
-      required={required}
-      rightContent={rightContent}
-      inputMode={inputMode}
-      parentClass={parentClass}
-    />
+    <ParentClassProvider parentClass={parentClass}>
+      <FormField
+        id={name}
+        name={name}
+        label={label}
+        value={value}
+        error={error}
+        onChange={handleChange}
+        maxLength={maxLength}
+        disabled={disabled}
+        required={required}
+        rightContent={rightContent}
+        inputMode={inputMode}
+      />
+    </ParentClassProvider>
   );
 };

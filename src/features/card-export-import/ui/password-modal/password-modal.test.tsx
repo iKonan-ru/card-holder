@@ -8,7 +8,7 @@ import {
   PASSWORD_MODAL_BUTTON_CANCEL,
   PASSWORD_MODAL_LABEL,
   PASSWORD_MODAL_LABEL_CONFIRM,
-} from '../../lib/constants';
+} from './lib/constants';
 import {
   ERROR_PASSWORD_TOO_SHORT,
   ERROR_PASSWORD_MISMATCH,

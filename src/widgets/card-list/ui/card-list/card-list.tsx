@@ -1,6 +1,5 @@
-import { type FC } from 'react';
-import type { PropsWithParentClass } from '@shared/types';
-import { createClassName } from '@shared/lib';
+import { type FC, useMemo } from 'react';
+import { ParentClassProvider, useClassName } from '@shared/lib';
 import { ReorderToggleButton } from '@shared/ui';
 import { ExportButton, ImportButton } from '@features/card-export-import';
 import {
@@ -18,7 +17,7 @@ import { CardListDragOverlay } from '../card-list-drag-overlay';
 import { ActionButtonsContainer } from '../action-buttons-container';
 import './card-list.less';
 
-export const CardList: FC<PropsWithParentClass> = ({ parentClass }) => {
+export const CardList: FC = () => {
   const {
     cards: storeCards,
     flippedPan,
@@ -42,15 +41,13 @@ export const CardList: FC<PropsWithParentClass> = ({ parentClass }) => {
   const cardIds = cards.map((card) => card.pan);
   const isDragging = activeCard !== null;
 
-  const modifiers = [];
+  const modifiers = useMemo(
+    () => (isDragging ? ['dragging'] : []),
+    [isDragging]
+  );
 
-  if (isDragging) {
-    modifiers.push('dragging');
-  }
-
-  const className = createClassName({
+  const className = useClassName({
     blockName: CARD_LIST_BLOCK,
-    parentClass,
     modifiers,
   });
 
@@ -59,51 +56,50 @@ export const CardList: FC<PropsWithParentClass> = ({ parentClass }) => {
       className={className}
       aria-label={CARD_LIST_ARIA_LABEL}
     >
-      <DndContext
-        sensors={sensors}
-        collisionDetection={closestCenter}
-        onDragStart={handleDragStart}
-        onDragOver={handleDragOver}
-        onDragEnd={handleDragEnd}
-      >
-        <SortableContext
-          items={cardIds}
-          strategy={rectSortingStrategy}
+      <ParentClassProvider parentClass={CARD_LIST_BLOCK}>
+        <DndContext
+          sensors={sensors}
+          collisionDetection={closestCenter}
+          onDragStart={handleDragStart}
+          onDragOver={handleDragOver}
+          onDragEnd={handleDragEnd}
         >
-          <CardListGrid
-            cards={cards}
-            flippedPan={flippedPan}
-            isReorderMode={isReorderMode}
-            onFlipCard={handleFlipCard}
-            onEditCard={handleEditCard}
-            onShowForm={handleShowForm}
-            parentClass={CARD_LIST_BLOCK}
-          />
-        </SortableContext>
-
-        <DragOverlay dropAnimation={DROP_ANIMATION}>
-          <CardListDragOverlay
-            activeCard={activeCard}
-            onEditCard={handleEditCard}
-            parentClass={CARD_LIST_BLOCK}
-          />
-        </DragOverlay>
-      </DndContext>
-
-      <ActionButtonsContainer parentClass={CARD_LIST_BLOCK}>
-        <ImportButton parentClass={CARD_LIST_BLOCK} />
-
-        {hasCards && (
-          <>
-            <ExportButton parentClass={CARD_LIST_BLOCK} />
-            <ReorderToggleButton
-              isActive={isReorderMode}
-              onClick={handleToggleReorderMode}
-              parentClass={CARD_LIST_BLOCK}
+          <SortableContext
+            items={cardIds}
+            strategy={rectSortingStrategy}
+          >
+            <CardListGrid
+              cards={cards}
+              flippedPan={flippedPan}
+              isReorderMode={isReorderMode}
+              onFlipCard={handleFlipCard}
+              onEditCard={handleEditCard}
+              onShowForm={handleShowForm}
             />
-          </>
-        )}
-      </ActionButtonsContainer>
+          </SortableContext>
+
+          <DragOverlay dropAnimation={DROP_ANIMATION}>
+            <CardListDragOverlay
+              activeCard={activeCard}
+              onEditCard={handleEditCard}
+            />
+          </DragOverlay>
+        </DndContext>
+
+        <ActionButtonsContainer>
+          <ImportButton />
+
+          {hasCards && (
+            <>
+              <ExportButton />
+              <ReorderToggleButton
+                isActive={isReorderMode}
+                onClick={handleToggleReorderMode}
+              />
+            </>
+          )}
+        </ActionButtonsContainer>
+      </ParentClassProvider>
     </div>
   );
 };

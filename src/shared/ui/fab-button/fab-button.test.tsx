@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import type { IconType } from 'react-icons';
 import { FabButton } from './fab-button';
+import { ParentClassProvider } from '@shared/lib';
 import { FAB_BUTTON_BLOCK } from './lib';
 
 const MockIcon: IconType = ({ className, 'aria-hidden': ariaHidden }) => (
@@ -187,16 +188,17 @@ describe('FabButton', () => {
     expect(button.className).toContain(FAB_BUTTON_BLOCK);
   });
 
-  it('должен добавлять parentClass', () => {
+  it('должен добавлять parentClass из контекста', () => {
     const parentClass = 'custom-parent-class';
 
     render(
-      <FabButton
-        icon={MockIcon}
-        ariaLabel="Test button"
-        onClick={vi.fn()}
-        parentClass={parentClass}
-      />
+      <ParentClassProvider parentClass={parentClass}>
+        <FabButton
+          icon={MockIcon}
+          ariaLabel="Test button"
+          onClick={vi.fn()}
+        />
+      </ParentClassProvider>
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });

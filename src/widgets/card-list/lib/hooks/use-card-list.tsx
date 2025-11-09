@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import { useCardManagementStore } from '@features/card-management';
-import { useModal } from '@shared/lib';
-import { CardForm, CARD_FORM_TITLE_ID } from '@features/card-form';
+import { useCardFormModal } from '@features/card-form';
 
 export const useCardList = () => {
   const {
@@ -14,38 +13,14 @@ export const useCardList = () => {
     reorderCards,
     setCards,
     toggleReorderMode,
-    unflipCards,
     flipCard,
   } = useCardManagementStore();
-  const modal = useModal();
+
+  const { openAddCardForm, openEditCardForm } = useCardFormModal();
 
   useEffect(() => {
     loadCards();
   }, [loadCards]);
-
-  const handleShowForm = () => {
-    modal.open(
-      <CardForm
-        onSuccess={modal.close}
-        onCancel={modal.close}
-      />,
-      () => {},
-      CARD_FORM_TITLE_ID
-    );
-    unflipCards();
-  };
-
-  const handleEditCard = (card: IBankCard) => {
-    modal.open(
-      <CardForm
-        initialCard={card}
-        onSuccess={modal.close}
-        onCancel={modal.close}
-      />,
-      () => {},
-      CARD_FORM_TITLE_ID
-    );
-  };
 
   const handleDragEnd = (reorderedCards: IBankCard[]) => {
     setCards(reorderedCards);
@@ -65,8 +40,8 @@ export const useCardList = () => {
     flippedPan,
     isLoading,
     isReorderMode,
-    handleShowForm,
-    handleEditCard,
+    handleShowForm: openAddCardForm,
+    handleEditCard: openEditCardForm,
     handleDragEnd,
     handleToggleReorderMode,
     handleFlipCard,

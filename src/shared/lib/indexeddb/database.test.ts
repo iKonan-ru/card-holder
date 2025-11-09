@@ -341,4 +341,78 @@ describe('IndexedDB database', () => {
       order: 1,
     });
   });
+
+  it('должна обрабатывать onupgradeneeded с невалидным target', async () => {
+    const { initDatabase } = await import('./database');
+    const promise = initDatabase();
+
+    const mockEvent = {
+      target: null,
+    } as unknown as IDBVersionChangeEvent;
+
+    mockOpenRequest.result = mockDatabase;
+
+    if (mockOpenRequest.onupgradeneeded) {
+      mockOpenRequest.onupgradeneeded(mockEvent);
+    }
+
+    if (mockOpenRequest.onsuccess) {
+      mockOpenRequest.onsuccess({} as Event);
+    }
+
+    await promise;
+
+    expect(mockDatabase.createObjectStore).not.toHaveBeenCalled();
+  });
+
+  it('не должна миграировать если result не является массивом', async () => {
+    mockDatabase.objectStoreNames.contains = vi.fn().mockReturnValue(true);
+
+    const { initDatabase } = await import('./database');
+    const promise = initDatabase();
+
+    const mockObjectStore = {
+      createIndex: vi.fn(),
+      indexNames: {
+        contains: vi.fn().mockReturnValue(false),
+      },
+      getAll: vi.fn().mockReturnValue({
+        onsuccess: null,
+        result: null,
+      }),
+      put: vi.fn(),
+    } as unknown as IDBObjectStore;
+
+    const mockTransaction = {
+      objectStore: vi.fn().mockReturnValue(mockObjectStore),
+    } as unknown as IDBTransaction;
+
+    const mockEvent = {
+      target: {
+        ...mockOpenRequest,
+        result: mockDatabase,
+        transaction: mockTransaction,
+      },
+    } as unknown as IDBVersionChangeEvent;
+
+    mockOpenRequest.result = mockDatabase;
+
+    if (mockOpenRequest.onupgradeneeded) {
+      mockOpenRequest.onupgradeneeded(mockEvent);
+    }
+
+    const getAllRequest = mockObjectStore.getAll();
+
+    if (getAllRequest.onsuccess) {
+      getAllRequest.onsuccess({} as Event);
+    }
+
+    if (mockOpenRequest.onsuccess) {
+      mockOpenRequest.onsuccess({} as Event);
+    }
+
+    await promise;
+
+    expect(mockObjectStore.put).not.toHaveBeenCalled();
+  });
 });

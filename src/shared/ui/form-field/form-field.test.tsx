@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { FormField } from './form-field';
+import { ParentClassProvider } from '@shared/lib';
 
 describe('FormField', () => {
   afterEach(() => {
@@ -297,16 +298,17 @@ describe('FormField', () => {
     expect(input).not.toHaveAttribute('aria-describedby');
   });
 
-  it('должен добавлять parentClass к корневому элементу', () => {
+  it('должен добавлять parentClass к корневому элементу из контекста', () => {
     const { container } = render(
-      <FormField
-        id="test-field"
-        name="test"
-        label="Тестовое поле"
-        value=""
-        parentClass="custom-parent"
-        onChange={vi.fn()}
-      />
+      <ParentClassProvider parentClass="custom-parent">
+        <FormField
+          id="test-field"
+          name="test"
+          label="Тестовое поле"
+          value=""
+          onChange={vi.fn()}
+        />
+      </ParentClassProvider>
     );
 
     expect(

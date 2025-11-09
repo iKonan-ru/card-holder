@@ -1,5 +1,3 @@
-import { showError } from '@features/error-handling';
-
 type LogLevel = 'error' | 'warn' | 'info';
 
 interface ILoggerParams {
@@ -12,15 +10,20 @@ interface ILoggerParams {
 
 const LOG_PREFIX = '[Card Holder]';
 
-/**
- * Логирует ошибку в консоль и опционально показывает модальное окно с ошибкой
- * @param params - Параметры логирования
- * @param params.message - Текст сообщения об ошибке
- * @param params.error - Объект ошибки (опционально)
- * @param params.level - Уровень логирования (error/warn/info), по умолчанию error
- * @param params.context - Контекст где произошла ошибка (опционально)
- * @param params.silent - Не показывать модальное окно, только логировать (по умолчанию false)
- */
+let errorModalHandler:
+  | ((params: { message: string; error?: unknown; context?: string }) => void)
+  | null = null;
+
+export const setErrorModalHandler = (
+  handler: (params: {
+    message: string;
+    error?: unknown;
+    context?: string;
+  }) => void
+) => {
+  errorModalHandler = handler;
+};
+
 export const logError = ({
   message,
   error,
@@ -64,10 +67,10 @@ export const logError = ({
     }
   }
 
-  const shouldShowModal = level === 'error' && !silent;
+  const shouldShowModal = level === 'error' && !silent && errorModalHandler;
 
-  if (shouldShowModal) {
-    showError({
+  if (shouldShowModal && errorModalHandler) {
+    errorModalHandler({
       message,
       error,
       context,

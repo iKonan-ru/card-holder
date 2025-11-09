@@ -3,6 +3,7 @@ import { render, screen, cleanup } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { AddCardButton } from './add-card-button';
 import { ADD_CARD_BUTTON_ARIA_LABEL } from './lib/constants';
+import { ParentClassProvider } from '@shared/lib';
 
 const TEST_PARENT_CLASS = 'parent-class';
 
@@ -97,13 +98,12 @@ describe('AddCardButton', () => {
     expect(icon).toHaveAttribute('aria-hidden', 'true');
   });
 
-  it('должна применять parentClass', () => {
+  it('должна применять parentClass из контекста', () => {
     const handleClick = vi.fn();
     const { container } = render(
-      <AddCardButton
-        onClick={handleClick}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <AddCardButton onClick={handleClick} />
+      </ParentClassProvider>
     );
 
     const button = container.querySelector(

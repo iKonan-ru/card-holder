@@ -1,5 +1,5 @@
-import type { FC } from 'react';
-import { bem, createClassName } from '@shared/lib';
+import { type FC, useMemo } from 'react';
+import { bem, useClassName } from '@shared/lib';
 import type { IFormFieldProps } from './model';
 import { FORM_FIELD_BLOCK } from './lib/constants';
 import './form-field.less';
@@ -19,30 +19,24 @@ export const FormField: FC<IFormFieldProps> = ({
   autoComplete,
   autoFocus,
   onChange,
-  parentClass,
 }) => {
   const hasValue = Boolean(value);
   const hasError = Boolean(error);
   const hasRightContent = Boolean(rightContent);
 
-  const modifiers: string[] = [];
+  const modifiers = useMemo(
+    () =>
+      [
+        hasValue && 'has-value',
+        hasError && 'has-error',
+        hasRightContent && 'has-right-content',
+      ].filter(Boolean) as string[],
+    [hasValue, hasError, hasRightContent]
+  );
 
-  if (hasValue) {
-    modifiers.push('has-value');
-  }
-
-  if (hasError) {
-    modifiers.push('has-error');
-  }
-
-  if (hasRightContent) {
-    modifiers.push('has-right-content');
-  }
-
-  const className = createClassName({
+  const className = useClassName({
     blockName: FORM_FIELD_BLOCK,
     modifiers,
-    parentClass,
   });
 
   const errorId = `${id}-error`;

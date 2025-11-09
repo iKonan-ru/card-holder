@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { Modal } from './modal';
+import { ParentClassProvider } from '@shared/lib';
 
 describe('Modal', () => {
   afterEach(() => {
@@ -212,15 +213,16 @@ describe('Modal', () => {
     expect(firstButton).not.toHaveFocus();
   });
 
-  it('должен добавлять parentClass к корневому элементу', () => {
+  it('должен добавлять parentClass к корневому элементу из контекста', () => {
     const { container } = render(
-      <Modal
-        onClose={vi.fn()}
-        isTopModal={true}
-        parentClass="custom-parent"
-      >
-        <div>Содержимое</div>
-      </Modal>
+      <ParentClassProvider parentClass="custom-parent">
+        <Modal
+          onClose={vi.fn()}
+          isTopModal={true}
+        >
+          <div>Содержимое</div>
+        </Modal>
+      </ParentClassProvider>
     );
 
     expect(

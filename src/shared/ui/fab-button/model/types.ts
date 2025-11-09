@@ -1,7 +1,6 @@
 import type { IconType } from 'react-icons';
-import type { PropsWithParentClass } from '@shared/types';
 
-export interface IFabButtonProps extends PropsWithParentClass {
+export interface IFabButtonProps {
   icon: IconType;
   ariaLabel: string;
   onClick: () => void;

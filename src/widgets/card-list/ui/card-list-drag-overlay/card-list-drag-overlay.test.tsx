@@ -2,6 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, cleanup } from '@testing-library/react';
 import { CardListDragOverlay } from './card-list-drag-overlay';
 import type { IBankCard } from '@entities/bank-card';
+import { ParentClassProvider } from '@shared/lib';
 
 vi.mock('@entities/bank-card', () => ({
   BankCard: ({ card }: { card: IBankCard }) => (
@@ -27,11 +28,12 @@ describe('CardListDragOverlay', () => {
 
   it('должна возвращать null когда activeCard=null', () => {
     const { container } = render(
-      <CardListDragOverlay
-        activeCard={null}
-        onEditCard={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CardListDragOverlay
+          activeCard={null}
+          onEditCard={vi.fn()}
+        />
+      </ParentClassProvider>
     );
 
     expect(container.firstChild).toBeNull();
@@ -39,24 +41,26 @@ describe('CardListDragOverlay', () => {
 
   it('должна рендериться когда есть activeCard', () => {
     const { container } = render(
-      <CardListDragOverlay
-        activeCard={MOCK_CARD}
-        onEditCard={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CardListDragOverlay
+          activeCard={MOCK_CARD}
+          onEditCard={vi.fn()}
+        />
+      </ParentClassProvider>
     );
 
-    const overlay = container.querySelector('.test-parent__drag-overlay');
+    const overlay = container.querySelector('.card-list-drag-overlay');
     expect(overlay).toBeInTheDocument();
   });
 
   it('должна рендерить BankCard с activeCard', () => {
     const { getByTestId } = render(
-      <CardListDragOverlay
-        activeCard={MOCK_CARD}
-        onEditCard={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CardListDragOverlay
+          activeCard={MOCK_CARD}
+          onEditCard={vi.fn()}
+        />
+      </ParentClassProvider>
     );
 
     expect(getByTestId('overlay-card-5559494202595236')).toBeInTheDocument();
@@ -64,11 +68,12 @@ describe('CardListDragOverlay', () => {
 
   it('должна передавать isReorderMode=true в BankCard', () => {
     render(
-      <CardListDragOverlay
-        activeCard={MOCK_CARD}
-        onEditCard={vi.fn()}
-        parentClass={TEST_PARENT_CLASS}
-      />
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CardListDragOverlay
+          activeCard={MOCK_CARD}
+          onEditCard={vi.fn()}
+        />
+      </ParentClassProvider>
     );
 
     expect(true).toBe(true);

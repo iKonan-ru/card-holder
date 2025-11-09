@@ -1,11 +1,11 @@
-import { type FC } from 'react';
+import { useMemo, type FC } from 'react';
 import {
   useSortable,
   defaultAnimateLayoutChanges,
   type AnimateLayoutChanges,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { bem } from '@shared/lib';
+import { bem, useParentClass, ParentClassProvider } from '@shared/lib';
 import {
   SORTABLE_CARD_ITEM_BLOCK,
   SORTABLE_CARD_ITEM_TRANSFORM_DURATION,
@@ -46,6 +46,8 @@ export const SortableCardItem: FC<ISortableCardItemProps> = ({
     animateLayoutChanges,
   });
 
+  const parentClass = useParentClass();
+
   const defaultTransition =
     `transform ${SORTABLE_CARD_ITEM_TRANSFORM_DURATION}ms` +
     `${SORTABLE_CARD_ITEM_TRANSFORM_EASING}, ` +
@@ -60,17 +62,27 @@ export const SortableCardItem: FC<ISortableCardItemProps> = ({
       : SORTABLE_CARD_ITEM_DEFAULT_OPACITY,
   };
 
-  const modifiers = [];
+  const className = useMemo(() => {
+    const modifiers = [];
 
-  if (isDragging) {
-    modifiers.push('dragging');
-  }
+    if (isDragging) {
+      modifiers.push('dragging');
+    }
 
-  if (isReorderMode) {
-    modifiers.push('reorder');
-  }
+    if (isReorderMode) {
+      modifiers.push('reorder');
+    }
 
-  const className = bem(bem(SORTABLE_CARD_ITEM_BLOCK, 'wrapper'), modifiers);
+    const wrapperClass = bem(
+      bem(SORTABLE_CARD_ITEM_BLOCK, 'wrapper'),
+      modifiers
+    );
+    const parentElementClass = parentClass
+      ? bem(parentClass, SORTABLE_CARD_ITEM_BLOCK)
+      : '';
+
+    return [wrapperClass, parentElementClass].filter(Boolean).join(' ');
+  }, [isDragging, isReorderMode, parentClass]);
 
   return (
     <div
@@ -80,7 +92,9 @@ export const SortableCardItem: FC<ISortableCardItemProps> = ({
       {...attributes}
       {...listeners}
     >
-      {children}
+      <ParentClassProvider parentClass={SORTABLE_CARD_ITEM_BLOCK}>
+        {children}
+      </ParentClassProvider>
     </div>
   );
 };

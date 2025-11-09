@@ -36,7 +36,7 @@ vi.mock('@shared/lib', async () => {
 
 describe('useCardManagementStore', () => {
   beforeEach(async () => {
-    const { loadCards, flippedPan, isReorderMode, disableReorderMode } =
+    const { loadCards, flippedPan, isReorderMode, setReorderMode } =
       useCardManagementStore.getState();
 
     await loadCards();
@@ -46,7 +46,7 @@ describe('useCardManagementStore', () => {
     }
 
     if (isReorderMode) {
-      disableReorderMode();
+      setReorderMode(false);
     }
   });
 
@@ -157,6 +157,32 @@ describe('useCardManagementStore', () => {
     consoleErrorSpy.mockRestore();
   });
 
+  it('должна добавлять карту и обновлять state через onSuccess', async () => {
+    const mockNewCard = {
+      pan: '5536914125525541',
+      expires: '1230',
+      name: 'NEW CARD',
+      cvv: '999',
+      pin: '9999',
+    } as IBankCard;
+
+    const expectedCardsAfterAdd = [
+      ...useCardManagementStore.getState().cards,
+      { ...mockNewCard, order: 2 },
+    ];
+
+    vi.mocked(sharedLib.getAllCards)
+      .mockResolvedValueOnce([])
+      .mockResolvedValueOnce(expectedCardsAfterAdd);
+    vi.mocked(sharedLib.addCard).mockResolvedValueOnce(undefined);
+
+    const { addCard } = useCardManagementStore.getState();
+    await addCard(mockNewCard);
+
+    expect(sharedLib.addCard).toHaveBeenCalled();
+    expect(sharedLib.getAllCards).toHaveBeenCalled();
+  });
+
   it('должна обрабатывать ошибки при добавлении карты', async () => {
     const consoleErrorSpy = vi
       .spyOn(console, 'error')
@@ -184,6 +210,30 @@ describe('useCardManagementStore', () => {
     consoleErrorSpy.mockRestore();
   });
 
+  it('должна обновлять карту с order и обновлять state через onSuccess', async () => {
+    const mockUpdatedCard = {
+      pan: '5559494202595236',
+      expires: '0726',
+      name: 'UPDATED USER',
+      cvv: '123',
+      pin: '1234',
+      order: 0,
+    };
+
+    const expectedCardsAfterUpdate = [mockUpdatedCard];
+
+    vi.mocked(sharedLib.updateCard).mockResolvedValueOnce(undefined);
+    vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce(
+      expectedCardsAfterUpdate
+    );
+
+    const { updateCard } = useCardManagementStore.getState();
+    await updateCard(mockUpdatedCard);
+
+    expect(sharedLib.updateCard).toHaveBeenCalledWith(mockUpdatedCard);
+    expect(sharedLib.getAllCards).toHaveBeenCalled();
+  });
+
   it('должна обрабатывать ошибки при обновлении карты', async () => {
     const consoleErrorSpy = vi
       .spyOn(console, 'error')
@@ -209,6 +259,22 @@ describe('useCardManagementStore', () => {
     );
 
     consoleErrorSpy.mockRestore();
+  });
+
+  it('должна удалять карту и обновлять state через onSuccess', async () => {
+    const panToDelete = '5559494202595236';
+    const expectedCardsAfterDelete: IBankCard[] = [];
+
+    vi.mocked(sharedLib.deleteCard).mockResolvedValueOnce(undefined);
+    vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce(
+      expectedCardsAfterDelete
+    );
+
+    const { deleteCard } = useCardManagementStore.getState();
+    await deleteCard(panToDelete);
+
+    expect(sharedLib.deleteCard).toHaveBeenCalledWith(panToDelete);
+    expect(sharedLib.getAllCards).toHaveBeenCalled();
   });
 
   it('должна обрабатывать ошибки при удалении карты', async () => {
@@ -375,86 +441,54 @@ describe('useCardManagementStore', () => {
     });
   });
 
-  describe('enableReorderMode', () => {
+  describe('setReorderMode', () => {
     it('должна включать режим переупорядочивания', () => {
-      const { enableReorderMode, isReorderMode } =
-        useCardManagementStore.getState();
+      const { setReorderMode } = useCardManagementStore.getState();
 
-      expect(isReorderMode).toBe(false);
-
-      enableReorderMode();
+      setReorderMode(true);
 
       expect(useCardManagementStore.getState().isReorderMode).toBe(true);
     });
 
-    it('должна сбрасывать flippedPan при включении режима', () => {
-      const { cards, flipCard, enableReorderMode } =
-        useCardManagementStore.getState();
-      const firstCardPan = cards[0].pan;
-
-      flipCard(firstCardPan);
-      expect(useCardManagementStore.getState().flippedPan).toBe(firstCardPan);
-
-      enableReorderMode();
-
-      expect(useCardManagementStore.getState().flippedPan).toBeNull();
-      expect(useCardManagementStore.getState().isReorderMode).toBe(true);
-    });
-
-    it('не должна изменять состояние если режим уже включен', () => {
-      const { enableReorderMode } = useCardManagementStore.getState();
-
-      enableReorderMode();
-      const stateAfterFirst = useCardManagementStore.getState();
-
-      enableReorderMode();
-      const stateAfterSecond = useCardManagementStore.getState();
-
-      expect(stateAfterFirst).toBe(stateAfterSecond);
-    });
-  });
-
-  describe('disableReorderMode', () => {
     it('должна отключать режим переупорядочивания', () => {
-      const { enableReorderMode, disableReorderMode } =
-        useCardManagementStore.getState();
+      const { setReorderMode } = useCardManagementStore.getState();
 
-      enableReorderMode();
+      setReorderMode(true);
       expect(useCardManagementStore.getState().isReorderMode).toBe(true);
 
-      disableReorderMode();
+      setReorderMode(false);
 
       expect(useCardManagementStore.getState().isReorderMode).toBe(false);
     });
 
-    it('должна сбрасывать flippedPan при отключении режима', () => {
-      const { cards, flipCard, enableReorderMode, disableReorderMode } =
+    it('должна сбрасывать flippedPan при изменении режима', () => {
+      const { cards, flipCard, setReorderMode } =
         useCardManagementStore.getState();
       const firstCardPan = cards[0].pan;
 
-      enableReorderMode();
       flipCard(firstCardPan);
       expect(useCardManagementStore.getState().flippedPan).toBe(firstCardPan);
 
-      disableReorderMode();
+      setReorderMode(true);
 
       expect(useCardManagementStore.getState().flippedPan).toBeNull();
-      expect(useCardManagementStore.getState().isReorderMode).toBe(false);
+      expect(useCardManagementStore.getState().isReorderMode).toBe(true);
     });
 
-    it('не должна изменять состояние если режим уже отключен', () => {
-      const { disableReorderMode } = useCardManagementStore.getState();
+    it('не должна изменять состояние если режим уже установлен', () => {
+      const { setReorderMode } = useCardManagementStore.getState();
 
+      setReorderMode(false);
       const stateAfterFirst = useCardManagementStore.getState();
-      disableReorderMode();
+      setReorderMode(false);
       const stateAfterSecond = useCardManagementStore.getState();
 
       expect(stateAfterFirst).toBe(stateAfterSecond);
     });
   });
 
-  describe('toggleReorderMode с enableReorderMode и disableReorderMode', () => {
-    it('должна использовать enableReorderMode при включении', () => {
+  describe('toggleReorderMode', () => {
+    it('должна переключать режим с false на true', () => {
       const { toggleReorderMode, isReorderMode } =
         useCardManagementStore.getState();
 
@@ -465,11 +499,11 @@ describe('useCardManagementStore', () => {
       expect(useCardManagementStore.getState().isReorderMode).toBe(true);
     });
 
-    it('должна использовать disableReorderMode при отключении', () => {
-      const { toggleReorderMode, enableReorderMode } =
+    it('должна переключать режим с true на false', () => {
+      const { toggleReorderMode, setReorderMode } =
         useCardManagementStore.getState();
 
-      enableReorderMode();
+      setReorderMode(true);
       expect(useCardManagementStore.getState().isReorderMode).toBe(true);
 
       toggleReorderMode();

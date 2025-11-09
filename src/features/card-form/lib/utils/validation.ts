@@ -49,11 +49,6 @@ export const checkHasErrors = (errors: IValidationErrors): boolean => {
   return Object.keys(errors).length > 0;
 };
 
-/**
- * Type guard проверяющий что Partial<IBankCard> содержит все обязательные поля
- * @param card - Частичные данные карты
- * @returns true если все обязательные поля заполнены
- */
 export const checkIsValidBankCard = (
   card: Partial<IBankCard>
 ): card is IBankCard => {

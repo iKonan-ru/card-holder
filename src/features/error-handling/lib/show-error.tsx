@@ -10,22 +10,10 @@ import {
 
 let modalContextRef: IModalContextValue | null = null;
 
-/**
- * Устанавливает контекст модальных окон для использования в showError
- * @param context - Контекст модальных окон из ModalProvider
- */
 export const setModalContext = (context: IModalContextValue): void => {
   modalContextRef = context;
 };
 
-/**
- * Показывает модальное окно с ошибкой
- * Переводит сообщение об ошибке и отображает его в модальном окне
- * @param params - Параметры отображения ошибки
- * @param params.message - Техническое сообщение об ошибке
- * @param params.error - Объект ошибки (опционально)
- * @param params.context - Контекст где произошла ошибка (опционально)
- */
 export const showError = (params: {
   message: string;
   error?: unknown;

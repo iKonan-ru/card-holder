@@ -7,5 +7,4 @@ export interface ICardListGridProps {
   onFlipCard: (pan: string) => void;
   onEditCard: (card: IBankCard) => void;
   onShowForm: () => void;
-  parentClass: string;
 }

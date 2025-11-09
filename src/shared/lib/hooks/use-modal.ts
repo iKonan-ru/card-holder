@@ -2,11 +2,6 @@ import { useCallback, useId, type ReactNode } from 'react';
 import { useModalContext } from '../modal';
 import type { IUseModalReturn } from './types';
 
-/**
- * Хук для управления модальным окном
- * Предоставляет методы открытия и закрытия модального окна с уникальным ID
- * @returns Объект с методами open, close и modalId
- */
 export const useModal = (): IUseModalReturn => {
   const { openModal, closeModal, userActionRef } = useModalContext();
   const modalId = useId();

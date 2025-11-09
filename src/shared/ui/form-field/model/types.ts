@@ -1,7 +1,6 @@
 import type { ChangeEvent, ReactNode } from 'react';
-import type { PropsWithParentClass } from '@shared/types';
 
-export interface IFormFieldProps extends PropsWithParentClass {
+export interface IFormFieldProps {
   id: string;
   name: string;
   label: string;

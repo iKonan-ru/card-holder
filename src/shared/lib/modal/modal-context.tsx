@@ -1,18 +1,18 @@
 import { useState, useCallback, useRef, type FC, type ReactNode } from 'react';
 import { ModalContext } from './context';
 import type { IModalContextValue, IModalItem } from './types';
-import { useCardManagementStore } from '@features/card-management';
 
 interface IModalProviderProps {
   children: ReactNode;
+  onModalOpen?: () => void;
 }
 
-export const ModalProvider: FC<IModalProviderProps> = ({ children }) => {
+export const ModalProvider: FC<IModalProviderProps> = ({
+  children,
+  onModalOpen,
+}) => {
   const [modals, setModals] = useState<IModalItem[]>([]);
   const userActionRef = useRef(false);
-  const disableReorderMode = useCardManagementStore(
-    (state) => state.disableReorderMode
-  );
 
   const openModal = useCallback(
     (
@@ -22,7 +22,9 @@ export const ModalProvider: FC<IModalProviderProps> = ({ children }) => {
       ariaLabelledBy?: string,
       ariaDescribedBy?: string
     ) => {
-      disableReorderMode();
+      if (onModalOpen) {
+        onModalOpen();
+      }
 
       setModals((prevModals) => {
         const existingModalIndex = prevModals.findIndex(
@@ -39,7 +41,7 @@ export const ModalProvider: FC<IModalProviderProps> = ({ children }) => {
         ];
       });
     },
-    [disableReorderMode]
+    [onModalOpen]
   );
 
   const closeModal = useCallback((id: string) => {

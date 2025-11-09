@@ -1,11 +1,10 @@
-import type { PropsWithParentClass } from '@shared/types';
 import type { IBankCard } from '@entities/bank-card';
 
-export interface ICardPreviewProps extends PropsWithParentClass {
+export interface ICardPreviewProps {
   pan: string;
 }
 
-export interface ICardFormProps extends PropsWithParentClass {
+export interface ICardFormProps {
   initialCard?: Partial<IBankCard>;
   onSuccess?: () => void;
   onCancel?: () => void;
