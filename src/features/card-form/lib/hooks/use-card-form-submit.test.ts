@@ -192,7 +192,7 @@ describe('useCardFormSubmit', () => {
       });
 
       expect(sharedLib.logError).toHaveBeenCalledWith({
-        message: 'Failed to delete card',
+        message: 'Не удалось удалить карту',
         error: testError,
         context: 'CardFormDelete',
       });

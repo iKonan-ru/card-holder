@@ -47,7 +47,7 @@ describe('showError', () => {
 
   it('должен открывать модальное окно с переведенным сообщением', () => {
     showError({
-      message: 'Failed to add card',
+      message: 'Не удалось добавить карту',
     });
 
     expect(mockOpenModal).toHaveBeenCalledTimes(1);
@@ -62,7 +62,7 @@ describe('showError', () => {
 
   it('должен открывать модальное окно с контекстом', () => {
     showError({
-      message: 'Failed to load cards',
+      message: 'Не удалось загрузить карты',
       context: 'TestContext',
     });
 
@@ -73,7 +73,7 @@ describe('showError', () => {
     const error = new Error('Test error');
 
     showError({
-      message: 'Failed to delete card',
+      message: 'Не удалось удалить карту',
       error,
       context: 'TestContext',
     });
@@ -83,7 +83,7 @@ describe('showError', () => {
 
   it('должен закрывать модальное окно при вызове onClose', () => {
     showError({
-      message: 'Failed to update card',
+      message: 'Не удалось обновить карту',
     });
 
     const callArgs = mockOpenModal.mock.calls[0];
@@ -98,7 +98,7 @@ describe('showError', () => {
     setModalContext(null as unknown as IModalContextValue);
 
     showError({
-      message: 'Failed to add card',
+      message: 'Не удалось добавить карту',
     });
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(

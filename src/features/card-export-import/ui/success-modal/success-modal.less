@@ -1,0 +1,49 @@
+@import '@shared/assets/styles/variables.less';
+
+.success-modal {
+  display: flex;
+  flex-direction: column;
+
+  &__title {
+    margin: 0 0 @border-radius 0;
+    font-size: @font-size-2xl;
+    font-weight: @font-weight-semibold;
+    color: var(--text-primary);
+  }
+
+  &__message {
+    margin: 0 0 @spacing-lg 0;
+    font-size: @font-size-md;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  &__actions {
+    display: flex;
+    gap: @border-radius;
+    justify-content: flex-end;
+  }
+
+  &__button {
+    padding: @spacing-sm @spacing-md;
+    border: none;
+    border-radius: @spacing-sm;
+    font-weight: @font-weight-medium;
+    font-size: @font-size-base;
+    cursor: pointer;
+    transition: @transition-fast;
+
+    &_primary {
+      background: var(--blue-500);
+      color: var(--white);
+
+      &:hover {
+        background: var(--blue-600);
+      }
+
+      &:active {
+        background: var(--blue-700);
+      }
+    }
+  }
+}

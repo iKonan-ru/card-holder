@@ -10,11 +10,14 @@ export const FormField: FC<IFormFieldProps> = ({
   label,
   value,
   error,
+  type = 'text',
   maxLength,
   disabled,
   required,
   rightContent,
   inputMode,
+  autoComplete,
+  autoFocus,
   onChange,
   parentClass,
 }) => {
@@ -49,7 +52,7 @@ export const FormField: FC<IFormFieldProps> = ({
     <div className={className}>
       <div className={bem(FORM_FIELD_BLOCK, 'container')}>
         <input
-          type="text"
+          type={type}
           id={id}
           name={name}
           value={value}
@@ -59,6 +62,8 @@ export const FormField: FC<IFormFieldProps> = ({
           disabled={disabled}
           className={bem(FORM_FIELD_BLOCK, 'input')}
           inputMode={inputMode}
+          autoComplete={autoComplete}
+          autoFocus={autoFocus}
           aria-invalid={hasError}
           aria-required={required}
           aria-describedby={ariaDescribedBy}

@@ -278,7 +278,7 @@ describe('IndexedDB cards', () => {
     }, 0);
 
     await expect(updateCardsOrder(MOCK_CARDS)).rejects.toThrow(
-      'Failed to update cards order'
+      'Не удалось обновить порядок карт'
     );
   });
 });

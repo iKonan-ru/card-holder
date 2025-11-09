@@ -1,24 +1,17 @@
 @import '@shared/assets/styles/variables.less';
 
-.reorder-toggle-button {
-  position: fixed;
-  bottom: @spacing-xl;
-  right: @spacing-xl;
+.fab-button {
   padding: @spacing-md;
   border-radius: 50%;
   border: 0 none transparent;
   display: flex;
   align-items: center;
-  background: var(--bg-secondary);
+  background: var(--bg-secondary-80);
   cursor: pointer;
   transition: @transition;
   font-size: @font-size-md;
   color: var(--text-primary);
-
-  @media (max-width: @mobile) {
-    bottom: @spacing-md;
-    right: @spacing-md;
-  }
+  backdrop-filter: blur(4px);
 
   &:hover {
     background: var(--bg-tertiary);
@@ -28,6 +21,11 @@
     transform: scale(0.98);
   }
 
+  &:disabled {
+    opacity: @opacity-high;
+    cursor: not-allowed;
+  }
+
   &_active {
     background: var(--accent);
     color: var(--text-on-accent);
@@ -35,6 +33,10 @@
     &:hover {
       background: var(--accent);
     }
+  }
+
+  &_disabled {
+    pointer-events: none;
   }
 
   &__icon {

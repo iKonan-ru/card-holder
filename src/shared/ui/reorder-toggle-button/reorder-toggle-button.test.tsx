@@ -65,10 +65,10 @@ describe('ReorderToggleButton', () => {
       />
     );
 
-    const icon = container.querySelector('.reorder-toggle-button__icon');
+    const icon = container.querySelector('.fab-button__icon');
     expect(icon).toBeInTheDocument();
 
-    const text = container.querySelector('.reorder-toggle-button__text');
+    const text = container.querySelector('.fab-button__text');
     expect(text).not.toBeInTheDocument();
   });
 
@@ -81,7 +81,7 @@ describe('ReorderToggleButton', () => {
       />
     );
 
-    const button = container.querySelector('.reorder-toggle-button_active');
+    const button = container.querySelector('.fab-button_active');
     expect(button).toBeInTheDocument();
   });
 
@@ -94,9 +94,7 @@ describe('ReorderToggleButton', () => {
       />
     );
 
-    const button = container.querySelector(
-      '.test-parent__reorder-toggle-button'
-    );
+    const button = container.querySelector('.test-parent__fab-button');
     expect(button).toBeInTheDocument();
   });
 
@@ -109,7 +107,7 @@ describe('ReorderToggleButton', () => {
       />
     );
 
-    const button = container.querySelector('.reorder-toggle-button_active');
+    const button = container.querySelector('.fab-button_active');
     expect(button).not.toBeInTheDocument();
   });
 
@@ -135,7 +133,7 @@ describe('ReorderToggleButton', () => {
       />
     );
 
-    const button = container.querySelector('.reorder-toggle-button');
+    const button = container.querySelector('.fab-button');
     expect(button).toBeInTheDocument();
   });
 
@@ -148,7 +146,7 @@ describe('ReorderToggleButton', () => {
       />
     );
 
-    const icon = container.querySelector('.reorder-toggle-button__icon');
+    const icon = container.querySelector('.fab-button__icon');
     expect(icon).toHaveAttribute('aria-hidden', 'true');
   });
 
@@ -161,7 +159,7 @@ describe('ReorderToggleButton', () => {
       />
     );
 
-    let icon = container.querySelector('.reorder-toggle-button__icon');
+    let icon = container.querySelector('.fab-button__icon');
     expect(icon).toBeInTheDocument();
 
     rerender(
@@ -172,7 +170,7 @@ describe('ReorderToggleButton', () => {
       />
     );
 
-    icon = container.querySelector('.reorder-toggle-button__icon');
+    icon = container.querySelector('.fab-button__icon');
     expect(icon).toBeInTheDocument();
   });
 

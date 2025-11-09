@@ -1,40 +1,29 @@
 import { type FC } from 'react';
-import { bem, createClassName } from '@shared/lib';
 import { MdDragIndicator, MdOutlineDone } from 'react-icons/md';
-import { REORDER_TOGGLE_BUTTON_BLOCK } from './lib';
+import { FabButton } from '../fab-button';
 import type { IReorderToggleButtonProps } from './model';
-import './reorder-toggle-button.less';
+
+const REORDER_BUTTON_ARIA_LABEL_INACTIVE = 'Включить режим сортировки';
+const REORDER_BUTTON_ARIA_LABEL_ACTIVE = 'Выключить режим сортировки';
 
 export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({
   isActive,
   onClick,
   parentClass,
 }) => {
-  const modifiers = [];
-
-  if (isActive) {
-    modifiers.push('active');
-  }
-
-  const className = createClassName({
-    blockName: REORDER_TOGGLE_BUTTON_BLOCK,
-    modifiers,
-    parentClass,
-  });
-
-  const IconComponent = isActive ? MdOutlineDone : MdDragIndicator;
+  const icon = isActive ? MdOutlineDone : MdDragIndicator;
+  const ariaLabel = isActive
+    ? REORDER_BUTTON_ARIA_LABEL_ACTIVE
+    : REORDER_BUTTON_ARIA_LABEL_INACTIVE;
 
   return (
-    <button
-      type="button"
-      className={className}
+    <FabButton
+      icon={icon}
+      ariaLabel={ariaLabel}
       onClick={onClick}
-      aria-pressed={isActive}
-    >
-      <IconComponent
-        className={bem(REORDER_TOGGLE_BUTTON_BLOCK, 'icon')}
-        aria-hidden="true"
-      />
-    </button>
+      isActive={isActive}
+      ariaPressed={isActive}
+      parentClass={parentClass}
+    />
   );
 };

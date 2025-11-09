@@ -1,15 +1,13 @@
-import { ERROR_MESSAGES, DEFAULT_ERROR_MESSAGE } from './constants';
+import { DEFAULT_ERROR_MESSAGE } from './constants';
 
 /**
  * Переводит техническое сообщение об ошибке на русский язык
- * @param message - Техническое сообщение об ошибке на английском
- * @returns Переведённое сообщение или дефолтное сообщение если перевод не найден
+ * @param message - Сообщение об ошибке
+ * @returns Сообщение или дефолтное сообщение если оно пустое
  */
 export const translateError = (message: string): string => {
-  const translatedMessage = ERROR_MESSAGES[message];
-
-  if (translatedMessage) {
-    return translatedMessage;
+  if (message && message.trim().length > 0) {
+    return message;
   }
 
   return DEFAULT_ERROR_MESSAGE;

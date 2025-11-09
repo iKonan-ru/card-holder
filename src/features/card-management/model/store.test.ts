@@ -149,7 +149,7 @@ describe('useCardManagementStore', () => {
     await loadCards();
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      '[Card Holder] [CardManagementStore.loadCards] Failed to load cards',
+      '[Card Holder] [CardManagementStore.loadCards] Не удалось загрузить карты',
       mockError
     );
     expect(useCardManagementStore.getState().isLoading).toBe(false);
@@ -177,7 +177,7 @@ describe('useCardManagementStore', () => {
 
     await expect(addCard(mockCard)).rejects.toThrow(mockError);
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      '[Card Holder] [CardManagementStore.addCard] Failed to add card',
+      '[Card Holder] [CardManagementStore.addCard] Не удалось добавить карту',
       mockError
     );
 
@@ -204,7 +204,7 @@ describe('useCardManagementStore', () => {
 
     await expect(updateCard(mockCard)).rejects.toThrow(mockError);
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      '[Card Holder] [CardManagementStore.updateCard] Failed to update card',
+      '[Card Holder] [CardManagementStore.updateCard] Не удалось обновить карту',
       mockError
     );
 
@@ -223,7 +223,7 @@ describe('useCardManagementStore', () => {
 
     await expect(deleteCard('5559494202595236')).rejects.toThrow(mockError);
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      '[Card Holder] [CardManagementStore.deleteCard] Failed to delete card',
+      '[Card Holder] [CardManagementStore.deleteCard] Не удалось удалить карту',
       mockError
     );
 
@@ -337,7 +337,7 @@ describe('useCardManagementStore', () => {
     await expect(reorderCards(mockCards)).rejects.toThrow(mockError);
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      '[Card Holder] [CardManagementStore.reorderCards] Failed to reorder cards',
+      '[Card Holder] [CardManagementStore.reorderCards] Не удалось изменить порядок карт',
       mockError
     );
 

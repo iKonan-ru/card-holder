@@ -1,0 +1,16 @@
+@import '@shared/assets/styles/variables.less';
+
+.action-buttons-container {
+  position: fixed;
+  bottom: @spacing-xl;
+  right: @spacing-xl;
+  display: flex;
+  flex-direction: column;
+  gap: @spacing-sm;
+  z-index: @z-index-overlay;
+
+  @media (max-width: @mobile) {
+    bottom: @spacing-md;
+    right: @spacing-md;
+  }
+}

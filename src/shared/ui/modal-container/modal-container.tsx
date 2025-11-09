@@ -58,13 +58,17 @@ export const ModalContainer: FC = () => {
       }
     };
 
-    if (modals.length > 0) {
+    const hasModals = modals.length > 0;
+
+    if (hasModals) {
       window.addEventListener('popstate', handlePopState);
       window.addEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = 'hidden';
 
       return () => {
         window.removeEventListener('popstate', handlePopState);
         window.removeEventListener('keydown', handleKeyDown);
+        document.body.style.overflow = '';
       };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

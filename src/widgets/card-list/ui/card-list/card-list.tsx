@@ -2,6 +2,7 @@ import { type FC } from 'react';
 import type { PropsWithParentClass } from '@shared/types';
 import { createClassName } from '@shared/lib';
 import { ReorderToggleButton } from '@shared/ui';
+import { ExportButton, ImportButton } from '@features/card-export-import';
 import {
   useCardList,
   useDndSensors,
@@ -14,6 +15,7 @@ import { DndContext, closestCenter, DragOverlay } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import { CardListGrid } from '../card-list-grid';
 import { CardListDragOverlay } from '../card-list-drag-overlay';
+import { ActionButtonsContainer } from '../action-buttons-container';
 import './card-list.less';
 
 export const CardList: FC<PropsWithParentClass> = ({ parentClass }) => {
@@ -88,13 +90,20 @@ export const CardList: FC<PropsWithParentClass> = ({ parentClass }) => {
         </DragOverlay>
       </DndContext>
 
-      {hasCards && (
-        <ReorderToggleButton
-          isActive={isReorderMode}
-          onClick={handleToggleReorderMode}
-          parentClass={CARD_LIST_BLOCK}
-        />
-      )}
+      <ActionButtonsContainer parentClass={CARD_LIST_BLOCK}>
+        <ImportButton parentClass={CARD_LIST_BLOCK} />
+
+        {hasCards && (
+          <>
+            <ExportButton parentClass={CARD_LIST_BLOCK} />
+            <ReorderToggleButton
+              isActive={isReorderMode}
+              onClick={handleToggleReorderMode}
+              parentClass={CARD_LIST_BLOCK}
+            />
+          </>
+        )}
+      </ActionButtonsContainer>
     </div>
   );
 };

@@ -264,7 +264,7 @@ describe('useCardForm', () => {
     });
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      '[Card Holder] [CardFormSubmit] Failed to add card',
+      '[Card Holder] [CardFormSubmit] Не удалось добавить карту',
       mockError
     );
     expect(result.current.isSubmitting).toBe(false);
@@ -544,7 +544,7 @@ describe('useCardForm', () => {
     });
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      '[Card Holder] [CardFormDelete] Failed to delete card',
+      '[Card Holder] [CardFormDelete] Не удалось удалить карту',
       mockError
     );
     expect(result.current.isSubmitting).toBe(false);
