@@ -1,5 +1,23 @@
 @import '@shared/assets/styles/variables.less';
 
+@keyframes fadeInOverlay {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeOutOverlay {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes fadeInModal {
   from {
     opacity: 0;
@@ -8,6 +26,17 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes fadeOutModal {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(@spacing-xl);
   }
 }
 
@@ -21,6 +50,12 @@
   z-index: @z-index-modal;
   padding: @spacing-md;
   overflow-y: auto;
+  animation: fadeInOverlay @duration-medium @easing-ease-out;
+
+  &_closing {
+    animation: fadeOutOverlay @duration-medium @easing-ease forwards;
+    pointer-events: none;
+  }
 
   &__content {
     max-height: 100%;
@@ -30,17 +65,9 @@
     background: var(--bg-primary);
     box-shadow: @shadow-lg;
     overflow-y: auto;
-  }
 
-  &__confirm-modal {
-  }
-
-  &__password-modal {
-  }
-
-  &__success-modal {
-  }
-
-  &__card-form {
+    &_closing {
+      animation: fadeOutModal @duration-medium @easing-ease forwards;
+    }
   }
 }

@@ -1,22 +1,38 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react';
 import { ModalProvider, useModal } from '@shared/lib';
 import { ModalContainer } from './modal-container';
 
 const MODAL_CONTENT = 'Test Modal Content';
 const SECOND_MODAL_CONTENT = 'Second Modal Content';
 
+const triggerModalAnimationEnd = () => {
+  const closingModals = document.querySelectorAll('.modal_closing');
+  closingModals.forEach((modal) => {
+    const animationEndEvent = new Event('animationend', {
+      bubbles: true,
+      cancelable: false,
+    });
+    Object.defineProperty(animationEndEvent, 'animationName', {
+      value: 'fadeOutModal',
+      writable: false,
+    });
+    modal.dispatchEvent(animationEndEvent);
+  });
+};
+
 const TestComponent = () => {
   const firstModal = useModal();
   const secondModal = useModal();
 
   const handleOpenFirstModal = () => {
-    firstModal.open(<div>{MODAL_CONTENT}</div>, () => {});
+    firstModal.open(<div>{MODAL_CONTENT}</div>);
   };
 
   const handleOpenSecondModal = () => {
-    secondModal.open(<div>{SECOND_MODAL_CONTENT}</div>, () => {});
+    secondModal.open(<div>{SECOND_MODAL_CONTENT}</div>);
   };
 
   const handleCloseFirstModal = () => {
@@ -96,6 +112,15 @@ describe('ModalContainer', () => {
     await user.keyboard('{Escape}');
 
     await waitFor(() => {
+      const closingModals = document.querySelectorAll('.modal_closing');
+      expect(closingModals.length).toBeGreaterThan(0);
+    });
+
+    act(() => {
+      triggerModalAnimationEnd();
+    });
+
+    await waitFor(() => {
       expect(screen.queryByText(MODAL_CONTENT)).not.toBeInTheDocument();
     });
   });
@@ -119,6 +144,15 @@ describe('ModalContainer', () => {
     });
 
     await user.keyboard('{Escape}');
+
+    await waitFor(() => {
+      const closingModals = document.querySelectorAll('.modal_closing');
+      expect(closingModals.length).toBeGreaterThan(0);
+    });
+
+    act(() => {
+      triggerModalAnimationEnd();
+    });
 
     await waitFor(() => {
       expect(screen.queryByText(SECOND_MODAL_CONTENT)).not.toBeInTheDocument();
@@ -148,6 +182,15 @@ describe('ModalContainer', () => {
     await user.click(topOverlay);
 
     await waitFor(() => {
+      const closingModals = document.querySelectorAll('.modal_closing');
+      expect(closingModals.length).toBeGreaterThan(0);
+    });
+
+    act(() => {
+      triggerModalAnimationEnd();
+    });
+
+    await waitFor(() => {
       expect(screen.queryByText(MODAL_CONTENT)).not.toBeInTheDocument();
     });
   });
@@ -171,6 +214,26 @@ describe('ModalContainer', () => {
     await user.click(screen.getByText('Close First Modal'));
 
     await waitFor(() => {
+      const closingModals = document.querySelectorAll('.modal_closing');
+
+      if (closingModals.length > 0) {
+        return true;
+      }
+
+      const allModals = document.querySelectorAll('.modal');
+
+      if (allModals.length === 0) {
+        return true;
+      }
+
+      throw new Error('Waiting for modal to start closing or close');
+    });
+
+    act(() => {
+      triggerModalAnimationEnd();
+    });
+
+    await waitFor(() => {
       expect(screen.queryByText(MODAL_CONTENT)).not.toBeInTheDocument();
     });
   });
@@ -191,7 +254,18 @@ describe('ModalContainer', () => {
       expect(screen.getByText(MODAL_CONTENT)).toBeInTheDocument();
     });
 
-    window.history.back();
+    act(() => {
+      window.history.back();
+    });
+
+    await waitFor(() => {
+      const closingModals = document.querySelectorAll('.modal_closing');
+      expect(closingModals.length).toBeGreaterThan(0);
+    });
+
+    act(() => {
+      triggerModalAnimationEnd();
+    });
 
     await waitFor(() => {
       expect(screen.queryByText(MODAL_CONTENT)).not.toBeInTheDocument();

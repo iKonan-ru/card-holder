@@ -55,9 +55,8 @@ describe('showError', () => {
     const callArgs = mockOpenModal.mock.calls[0];
 
     expect(callArgs[0]).toMatch(/^error-modal-/);
-    expect(callArgs[2]).toBeTypeOf('function');
-    expect(callArgs[3]).toBe('error-modal-title');
-    expect(callArgs[4]).toBe('error-modal-message');
+    expect(callArgs[2]).toBe('error-modal-title');
+    expect(callArgs[3]).toBe('error-modal-message');
   });
 
   it('должен открывать модальное окно с контекстом', () => {
@@ -79,19 +78,6 @@ describe('showError', () => {
     });
 
     expect(mockOpenModal).toHaveBeenCalledTimes(1);
-  });
-
-  it('должен закрывать модальное окно при вызове onClose', () => {
-    showError({
-      message: 'Не удалось обновить карту',
-    });
-
-    const callArgs = mockOpenModal.mock.calls[0];
-    const onClose = callArgs[2];
-
-    onClose();
-
-    expect(mockCloseModal).toHaveBeenCalledTimes(1);
   });
 
   it('должен логировать ошибку если контекст не инициализирован', () => {

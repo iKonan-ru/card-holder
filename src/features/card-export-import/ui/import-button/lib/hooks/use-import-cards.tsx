@@ -57,9 +57,10 @@ export const useImportCards = (
       const payload = parseImportedFile(content);
       validateImportedPayload(payload);
 
-      const handleImportWithPassword = async (password: string) => {
-        modalContext.closeModal(PASSWORD_MODAL_ID);
-
+      const handleImportWithPassword = async (
+        password: string,
+        closePasswordModal: () => void
+      ) => {
         try {
           setIsImporting(true);
 
@@ -75,50 +76,41 @@ export const useImportCards = (
           await onImport(mergedCards);
           onUnflipCards();
 
-          const message = createImportSuccessMessage(stats);
+          closePasswordModal();
 
-          const handleCloseSuccess = () => {
-            modalContext.closeModal(SUCCESS_MODAL_ID);
-          };
+          const message = createImportSuccessMessage(stats);
 
           const successContent: ReactNode = (
             <SuccessModal
               title={SUCCESS_MODAL_TITLE_IMPORT}
               message={message}
-              onClose={handleCloseSuccess}
             />
           );
 
           modalContext.openModal(
             SUCCESS_MODAL_ID,
             successContent,
-            handleCloseSuccess,
             SUCCESS_MODAL_TITLE_ID,
             SUCCESS_MODAL_MESSAGE_ID
           );
         } catch (error) {
+          closePasswordModal();
           handleError(error, FALLBACK_ERROR_IMPORT);
         } finally {
           setIsImporting(false);
         }
       };
 
-      const handleCancel = () => {
-        modalContext.closeModal(PASSWORD_MODAL_ID);
-      };
-
       const modalContent: ReactNode = (
         <PasswordModal
           mode="import"
           onConfirm={handleImportWithPassword}
-          onCancel={handleCancel}
         />
       );
 
       modalContext.openModal(
         PASSWORD_MODAL_ID,
         modalContent,
-        handleCancel,
         PASSWORD_MODAL_TITLE_ID,
         PASSWORD_MODAL_DESCRIPTION_ID
       );

@@ -5,7 +5,7 @@ import {
   ERROR_PASSWORD_TOO_SHORT,
   ERROR_PASSWORD_MISMATCH,
 } from '../../model/constants';
-import { FormField } from '@shared/ui';
+import { FormField, useAnimatedModalClose } from '@shared/ui';
 import type { IPasswordModalProps } from '../../model';
 import { MIN_PASSWORD_LENGTH } from '../../model/constants';
 import {
@@ -19,6 +19,7 @@ import {
   PASSWORD_MODAL_BUTTON_IMPORT,
   PASSWORD_MODAL_BUTTON_CANCEL,
 } from './lib/constants';
+import { useModalClose } from '@shared/ui/modal/lib/modal-close-context';
 import './password-modal.less';
 
 export const PasswordModal: FC<IPasswordModalProps> = ({
@@ -31,6 +32,8 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
   const [passwordError, setPasswordError] = useState<string | undefined>();
   const [confirmError, setConfirmError] = useState<string | undefined>();
   const [showPassword, setShowPassword] = useState(false);
+  const closeModal = useModalClose();
+  const handleCancel = useAnimatedModalClose(onCancel);
 
   const isExportMode = mode === 'export';
   const title = isExportMode
@@ -86,7 +89,7 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
       }
     }
 
-    onConfirm(password);
+    onConfirm(password, closeModal);
   };
 
   const PasswordIcon = showPassword ? MdVisibilityOff : MdVisibility;
@@ -171,7 +174,7 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
         </button>
         <button
           type="button"
-          onClick={onCancel}
+          onClick={handleCancel}
           aria-label={PASSWORD_MODAL_BUTTON_CANCEL}
           className={bem(bem(PASSWORD_MODAL_BLOCK, 'button'), ['secondary'])}
         >

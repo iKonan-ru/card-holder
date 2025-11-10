@@ -36,11 +36,6 @@ export const useCardForm = ({
     onSuccess,
   });
 
-  const handleReset = () => {
-    resetForm();
-    resetErrors();
-  };
-
   return {
     formData,
     errors,
@@ -50,6 +45,5 @@ export const useCardForm = ({
     handleFieldValidation,
     handleSubmit,
     handleDelete,
-    handleReset,
   };
 };

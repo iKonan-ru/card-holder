@@ -65,7 +65,9 @@ describe('ErrorContent', () => {
 
     await user.click(closeButton);
 
-    expect(onClose).toHaveBeenCalledTimes(1);
+    await vi.waitFor(() => {
+      expect(onClose).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('должен иметь правильные accessibility атрибуты', () => {

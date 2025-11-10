@@ -18,7 +18,6 @@ export const ModalProvider: FC<IModalProviderProps> = ({
     (
       id: string,
       content: ReactNode,
-      onClose: () => void,
       ariaLabelledBy?: string,
       ariaDescribedBy?: string
     ) => {
@@ -37,7 +36,7 @@ export const ModalProvider: FC<IModalProviderProps> = ({
 
         return [
           ...prevModals,
-          { id, content, onClose, ariaLabelledBy, ariaDescribedBy },
+          { id, content, ariaLabelledBy, ariaDescribedBy },
         ];
       });
     },
@@ -45,25 +44,11 @@ export const ModalProvider: FC<IModalProviderProps> = ({
   );
 
   const closeModal = useCallback((id: string) => {
-    setModals((prevModals) => {
-      const modal = prevModals.find((m) => m.id === id);
-
-      if (modal) {
-        modal.onClose();
-      }
-
-      return prevModals.filter((m) => m.id !== id);
-    });
+    setModals((prevModals) => prevModals.filter((m) => m.id !== id));
   }, []);
 
   const closeAllModals = useCallback(() => {
-    setModals((prevModals) => {
-      prevModals.forEach((modal) => {
-        modal.onClose();
-      });
-
-      return [];
-    });
+    setModals([]);
   }, []);
 
   const value: IModalContextValue = {

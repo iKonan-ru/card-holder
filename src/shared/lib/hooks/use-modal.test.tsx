@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
+import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ModalProvider } from '../modal';
@@ -64,40 +64,6 @@ describe('useModal', () => {
 
     await waitFor(() => {
       expect(screen.queryByText(MODAL_CONTENT_TEXT)).not.toBeInTheDocument();
-    });
-  });
-
-  it('должен вызывать onClose при закрытии', async () => {
-    const onCloseMock = vi.fn();
-    const user = userEvent.setup();
-
-    const TestComponentWithCallback = () => {
-      const { open, close } = useModal();
-
-      const handleOpen = () => {
-        open(<div>{MODAL_CONTENT_TEXT}</div>, onCloseMock);
-      };
-
-      return (
-        <div>
-          <button onClick={handleOpen}>Open</button>
-          <button onClick={close}>Close</button>
-        </div>
-      );
-    };
-
-    render(<TestComponentWithCallback />, { wrapper: TestWrapper });
-
-    await user.click(screen.getByText('Open'));
-
-    await waitFor(() => {
-      expect(screen.getByText(MODAL_CONTENT_TEXT)).toBeInTheDocument();
-    });
-
-    await user.click(screen.getByText('Close'));
-
-    await waitFor(() => {
-      expect(onCloseMock).toHaveBeenCalledTimes(1);
     });
   });
 });

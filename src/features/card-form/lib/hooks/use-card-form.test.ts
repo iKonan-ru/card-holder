@@ -219,25 +219,6 @@ describe('useCardForm', () => {
     expect(result.current.isSubmitting).toBe(false);
   });
 
-  it('должен сбрасывать форму через handleReset', () => {
-    const { result } = renderHook(() => useCardForm());
-
-    act(() => {
-      result.current.handleFieldChange('name', 'JOHN DOE');
-      result.current.handleFieldValidation('pan', 'Ошибка');
-    });
-
-    expect(result.current.formData.name).toBe('JOHN DOE');
-    expect(result.current.errors.pan).toBe('Ошибка');
-
-    act(() => {
-      result.current.handleReset();
-    });
-
-    expect(result.current.formData.name).toBe('');
-    expect(result.current.errors).toEqual({});
-  });
-
   it('должен обрабатывать ошибки при добавлении карты', async () => {
     const consoleErrorSpy = vi
       .spyOn(console, 'error')

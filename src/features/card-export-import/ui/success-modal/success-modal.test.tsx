@@ -62,7 +62,9 @@ describe('SuccessModal', () => {
     });
     await user.click(closeButton);
 
-    expect(handleClose).toHaveBeenCalledTimes(1);
+    await vi.waitFor(() => {
+      expect(handleClose).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('должен отображать разные заголовки', () => {

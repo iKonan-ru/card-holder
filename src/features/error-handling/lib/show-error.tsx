@@ -29,21 +29,11 @@ export const showError = (params: {
   const errorId = `${Date.now()}-${Math.random()}`;
   const modalId = `${ERROR_MODAL_ID_PREFIX}-${errorId}`;
 
-  const handleClose = () => {
-    modalContextRef?.closeModal(modalId);
-  };
-
-  const modalContent: ReactNode = (
-    <ErrorContent
-      message={translatedMessage}
-      onClose={handleClose}
-    />
-  );
+  const modalContent: ReactNode = <ErrorContent message={translatedMessage} />;
 
   modalContextRef.openModal(
     modalId,
     modalContent,
-    handleClose,
     ERROR_MODAL_TITLE_ID,
     ERROR_MODAL_MESSAGE_ID
   );

@@ -36,11 +36,11 @@ const TestComponent = () => {
   const { openModal, closeModal, closeAllModals, modals } = useModalContext();
 
   const handleOpenModal = () => {
-    openModal('test-modal', <div>{MODAL_CONTENT_TEXT}</div>, () => {});
+    openModal('test-modal', <div>{MODAL_CONTENT_TEXT}</div>);
   };
 
   const handleOpenSecondModal = () => {
-    openModal('test-modal-2', <div>Second Modal</div>, () => {});
+    openModal('test-modal-2', <div>Second Modal</div>);
   };
 
   const handleCloseModal = () => {

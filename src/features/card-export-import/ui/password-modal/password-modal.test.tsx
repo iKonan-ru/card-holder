@@ -136,7 +136,10 @@ describe('PasswordModal', () => {
       await user.type(confirmInput, '12345678');
       await user.click(submitButton);
 
-      expect(mockOnConfirm).toHaveBeenCalledWith('12345678');
+      expect(mockOnConfirm).toHaveBeenCalledWith(
+        '12345678',
+        expect.any(Function)
+      );
     });
 
     it('должен показывать/скрывать пароль при клике на иконку', async () => {
@@ -308,7 +311,7 @@ describe('PasswordModal', () => {
 
       await user.click(submitButton);
 
-      expect(mockOnConfirm).toHaveBeenCalledWith('');
+      expect(mockOnConfirm).toHaveBeenCalledWith('', expect.any(Function));
     });
 
     it('должен разрешать короткий пароль', async () => {
@@ -329,7 +332,7 @@ describe('PasswordModal', () => {
       await user.type(passwordInput, '123');
       await user.click(submitButton);
 
-      expect(mockOnConfirm).toHaveBeenCalledWith('123');
+      expect(mockOnConfirm).toHaveBeenCalledWith('123', expect.any(Function));
     });
 
     it('должен вызывать onConfirm с паролем при валидном пароле', async () => {
@@ -350,7 +353,10 @@ describe('PasswordModal', () => {
       await user.type(passwordInput, '12345678');
       await user.click(submitButton);
 
-      expect(mockOnConfirm).toHaveBeenCalledWith('12345678');
+      expect(mockOnConfirm).toHaveBeenCalledWith(
+        '12345678',
+        expect.any(Function)
+      );
     });
   });
 
@@ -371,7 +377,9 @@ describe('PasswordModal', () => {
 
       await user.click(cancelButton);
 
-      expect(mockOnCancel).toHaveBeenCalled();
+      await vi.waitFor(() => {
+        expect(mockOnCancel).toHaveBeenCalled();
+      });
     });
 
     it('должен отображать кнопку отмены', () => {
@@ -418,7 +426,10 @@ describe('PasswordModal', () => {
 
       await user.type(passwordInput, '12345678{Enter}');
 
-      expect(mockOnConfirm).toHaveBeenCalledWith('12345678');
+      expect(mockOnConfirm).toHaveBeenCalledWith(
+        '12345678',
+        expect.any(Function)
+      );
     });
 
     it('должен очищать обе ошибки при изменении пароля в экспорте', async () => {

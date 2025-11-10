@@ -38,9 +38,21 @@ describe('Modal', () => {
     const overlay = container.querySelector('.modal');
     if (overlay) {
       await user.click(overlay);
+
+      const animationEndEvent = new Event('animationend', {
+        bubbles: true,
+        cancelable: false,
+      });
+      Object.defineProperty(animationEndEvent, 'animationName', {
+        value: 'fadeOutModal',
+        writable: false,
+      });
+      overlay.dispatchEvent(animationEndEvent);
     }
 
-    expect(handleClose).toHaveBeenCalledTimes(1);
+    await vi.waitFor(() => {
+      expect(handleClose).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('не должен вызывать onClose при клике на контент', async () => {
@@ -228,5 +240,32 @@ describe('Modal', () => {
     expect(
       container.querySelector('.custom-parent__modal')
     ).toBeInTheDocument();
+  });
+
+  it('не должен вызывать onClose при mousedown на контенте и mouseup на overlay', async () => {
+    const handleClose = vi.fn();
+
+    const { container } = render(
+      <Modal
+        onClose={handleClose}
+        isTopModal={true}
+      >
+        <div>Содержимое</div>
+      </Modal>
+    );
+
+    const content = screen.getByText('Содержимое');
+    const overlay = container.querySelector('.modal');
+
+    if (overlay && content) {
+      content.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+      overlay.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    }
+
+    await new Promise((resolve) => {
+      setTimeout(resolve, 250);
+    });
+
+    expect(handleClose).not.toHaveBeenCalled();
   });
 });

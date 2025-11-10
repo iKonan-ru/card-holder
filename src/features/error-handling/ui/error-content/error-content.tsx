@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { bem } from '@shared/lib';
+import { useAnimatedModalClose } from '@shared/ui';
 import {
   ERROR_MODAL_BLOCK,
   ERROR_MODAL_TITLE,
@@ -11,10 +12,12 @@ import './error-modal.less';
 
 interface IErrorContentProps {
   message: string;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export const ErrorContent: FC<IErrorContentProps> = ({ message, onClose }) => {
+  const handleClose = useAnimatedModalClose(onClose);
+
   return (
     <div className={ERROR_MODAL_BLOCK}>
       <h3
@@ -32,7 +35,7 @@ export const ErrorContent: FC<IErrorContentProps> = ({ message, onClose }) => {
       <div className={bem(ERROR_MODAL_BLOCK, 'actions')}>
         <button
           type="button"
-          onClick={onClose}
+          onClick={handleClose}
           aria-label={ERROR_MODAL_CLOSE_TEXT}
           className={bem(ERROR_MODAL_BLOCK, 'button')}
         >

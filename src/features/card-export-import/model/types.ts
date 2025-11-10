@@ -12,6 +12,6 @@ export interface IImportResult {
 
 export interface IPasswordModalProps {
   mode: TPasswordModalMode;
-  onConfirm: (password: string) => void;
-  onCancel: () => void;
+  onConfirm: (password: string, closeModal: () => void) => void;
+  onCancel?: () => void;
 }

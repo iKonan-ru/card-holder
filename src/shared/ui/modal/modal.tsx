@@ -1,79 +1,55 @@
-import { useEffect, useRef, type FC, type MouseEvent } from 'react';
+import { useRef, useEffect, type FC } from 'react';
 import { bem, useClassName, ParentClassProvider } from '@shared/lib';
 import type { IModalProps } from './model';
 import { MODAL_BLOCK } from './lib/constants';
+import { ModalCloseContext } from './lib/modal-close-context';
+import { useModalClosingState } from './lib/use-modal-closing-state';
+import { useFocusTrap } from './lib/use-focus-trap';
+import { useOverlayClick } from './lib/use-overlay-click';
 import './modal.less';
 
 export const Modal: FC<IModalProps> = ({
   children,
   onClose,
+  onRegisterClose,
   isTopModal,
   ariaLabelledBy,
   ariaDescribedBy,
 }) => {
+  const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
+  const { isClosing, handleClose } = useModalClosingState(onClose, overlayRef);
 
   useEffect(() => {
-    if (!isTopModal || !contentRef.current) {
-      return;
+    if (onRegisterClose) {
+      onRegisterClose(handleClose);
     }
+  }, [onRegisterClose, handleClose]);
 
-    const focusableElements = contentRef.current.querySelectorAll<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
+  useFocusTrap(contentRef, isTopModal);
 
-    if (focusableElements.length === 0) {
-      return;
-    }
+  const {
+    handleOverlayMouseDown,
+    handleOverlayMouseUp,
+    handleContentClick,
+    handleContentMouseDown,
+  } = useOverlayClick(handleClose, isTopModal);
 
-    const firstElement = focusableElements[0];
-    const lastElement = focusableElements[focusableElements.length - 1];
-
-    firstElement.focus();
-
-    const handleTabKey = (event: KeyboardEvent) => {
-      if (event.key !== 'Tab') {
-        return;
-      }
-
-      if (event.shiftKey) {
-        if (document.activeElement === firstElement) {
-          event.preventDefault();
-          lastElement.focus();
-        }
-      } else {
-        if (document.activeElement === lastElement) {
-          event.preventDefault();
-          firstElement.focus();
-        }
-      }
-    };
-
-    document.addEventListener('keydown', handleTabKey);
-
-    return () => {
-      document.removeEventListener('keydown', handleTabKey);
-    };
-  }, [isTopModal]);
-
-  const handleContentClick = (event: MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };
-
-  const handleOverlayClick = () => {
-    if (isTopModal) {
-      onClose();
-    }
-  };
+  const modifiers = isClosing ? ['closing'] : undefined;
 
   const className = useClassName({
     blockName: MODAL_BLOCK,
+    modifiers,
   });
+
+  const contentClassName = bem(bem(MODAL_BLOCK, 'content'), modifiers);
 
   return (
     <div
+      ref={overlayRef}
       className={className}
-      onClick={handleOverlayClick}
+      onMouseDown={handleOverlayMouseDown}
+      onMouseUp={handleOverlayMouseUp}
     >
       <div
         ref={contentRef}
@@ -81,12 +57,15 @@ export const Modal: FC<IModalProps> = ({
         aria-modal="true"
         aria-labelledby={ariaLabelledBy}
         aria-describedby={ariaDescribedBy}
-        className={bem(MODAL_BLOCK, 'content')}
+        className={contentClassName}
         onClick={handleContentClick}
+        onMouseDown={handleContentMouseDown}
       >
-        <ParentClassProvider parentClass={MODAL_BLOCK}>
-          {children}
-        </ParentClassProvider>
+        <ModalCloseContext.Provider value={handleClose}>
+          <ParentClassProvider parentClass={MODAL_BLOCK}>
+            {children}
+          </ParentClassProvider>
+        </ModalCloseContext.Provider>
       </div>
     </div>
   );

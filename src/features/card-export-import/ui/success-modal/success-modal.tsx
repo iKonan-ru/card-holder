@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { bem, useClassName } from '@shared/lib';
+import { useAnimatedModalClose } from '@shared/ui';
 import type { ISuccessModalProps } from './model';
 import {
   SUCCESS_MODAL_BLOCK,
@@ -18,6 +19,8 @@ export const SuccessModal: FC<ISuccessModalProps> = ({
     blockName: SUCCESS_MODAL_BLOCK,
   });
 
+  const handleClose = useAnimatedModalClose(onClose);
+
   return (
     <div className={className}>
       <h3
@@ -35,7 +38,7 @@ export const SuccessModal: FC<ISuccessModalProps> = ({
       <div className={bem(SUCCESS_MODAL_BLOCK, 'actions')}>
         <button
           type="button"
-          onClick={onClose}
+          onClick={handleClose}
           aria-label={SUCCESS_MODAL_BUTTON_TEXT}
           className={bem(bem(SUCCESS_MODAL_BLOCK, 'button'), ['primary'])}
         >

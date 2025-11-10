@@ -114,7 +114,9 @@ describe('CardForm', () => {
     const cancelButton = screen.getByRole('button', { name: 'Отмена' });
     await user.click(cancelButton);
 
-    expect(handleCancel).toHaveBeenCalledTimes(1);
+    await vi.waitFor(() => {
+      expect(handleCancel).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('должен применять маску к номеру карты', async () => {
@@ -238,6 +240,8 @@ describe('CardForm', () => {
     });
     await user.click(confirmButton);
 
-    expect(mockDeleteCard).toHaveBeenCalledWith('4111111111111111');
+    await vi.waitFor(() => {
+      expect(mockDeleteCard).toHaveBeenCalledWith('4111111111111111');
+    });
   });
 });

@@ -1,0 +1,52 @@
+import { useEffect, type RefObject } from 'react';
+
+const FOCUSABLE_ELEMENTS_SELECTOR =
+  'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+export const useFocusTrap = (
+  contentRef: RefObject<HTMLDivElement | null>,
+  isTopModal: boolean
+): void => {
+  useEffect(() => {
+    if (!isTopModal || !contentRef.current) {
+      return;
+    }
+
+    const focusableElements = contentRef.current.querySelectorAll<HTMLElement>(
+      FOCUSABLE_ELEMENTS_SELECTOR
+    );
+
+    if (focusableElements.length === 0) {
+      return;
+    }
+
+    const firstElement = focusableElements[0];
+    const lastElement = focusableElements[focusableElements.length - 1];
+
+    firstElement.focus();
+
+    const handleTabKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Tab') {
+        return;
+      }
+
+      if (event.shiftKey) {
+        if (document.activeElement === firstElement) {
+          event.preventDefault();
+          lastElement.focus();
+        }
+      } else {
+        if (document.activeElement === lastElement) {
+          event.preventDefault();
+          firstElement.focus();
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleTabKey);
+
+    return () => {
+      document.removeEventListener('keydown', handleTabKey);
+    };
+  }, [isTopModal, contentRef]);
+};

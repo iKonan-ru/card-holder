@@ -7,19 +7,8 @@ export const useModal = (): IUseModalReturn => {
   const modalId = useId();
 
   const open = useCallback(
-    (
-      content: ReactNode,
-      onClose?: () => void,
-      ariaLabelledBy?: string,
-      ariaDescribedBy?: string
-    ) => {
-      const handleClose = () => {
-        if (onClose) {
-          onClose();
-        }
-      };
-
-      openModal(modalId, content, handleClose, ariaLabelledBy, ariaDescribedBy);
+    (content: ReactNode, ariaLabelledBy?: string, ariaDescribedBy?: string) => {
+      openModal(modalId, content, ariaLabelledBy, ariaDescribedBy);
     },
     [modalId, openModal]
   );

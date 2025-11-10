@@ -9,6 +9,7 @@ export const ModalContainer: FC = () => {
   const { push, remove, closeTop } = useModalStack();
   const previousModalIdsRef = useRef<Set<string>>(new Set());
   const isClosingFromHistoryRef = useRef(false);
+  const modalRequestCloseRef = useRef<Map<string, () => void>>(new Map());
 
   useEffect(() => {
     const currentModalIds = new Set(modals.map((modal) => modal.id));
@@ -28,6 +29,7 @@ export const ModalContainer: FC = () => {
     previousModalIds.forEach((modalId) => {
       if (!currentModalIds.has(modalId)) {
         remove(modalId);
+        modalRequestCloseRef.current.delete(modalId);
 
         const shouldSkipHistoryBack =
           isClosingFromHistoryRef.current || userActionRef.current;
@@ -47,14 +49,30 @@ export const ModalContainer: FC = () => {
 
   useEffect(() => {
     const handlePopState = () => {
-      isClosingFromHistoryRef.current = true;
-      closeTop();
+      const topModalId = modals[modals.length - 1]?.id;
+      const requestClose = modalRequestCloseRef.current.get(topModalId);
+
+      if (requestClose) {
+        isClosingFromHistoryRef.current = true;
+        requestClose();
+      } else {
+        isClosingFromHistoryRef.current = true;
+        closeTop();
+      }
     };
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === ESC_KEY) {
-        userActionRef.current = true;
-        closeTop();
+        const topModalId = modals[modals.length - 1]?.id;
+        const requestClose = modalRequestCloseRef.current.get(topModalId);
+
+        if (requestClose) {
+          userActionRef.current = true;
+          requestClose();
+        } else {
+          userActionRef.current = true;
+          closeTop();
+        }
       }
     };
 
@@ -95,6 +113,9 @@ export const ModalContainer: FC = () => {
             key={modal.id}
             onClose={() => {
               handleModalClose(modal.id);
+            }}
+            onRegisterClose={(closeWithAnimation) => {
+              modalRequestCloseRef.current.set(modal.id, closeWithAnimation);
             }}
             isTopModal={isTopModal}
             ariaLabelledBy={modal.ariaLabelledBy}

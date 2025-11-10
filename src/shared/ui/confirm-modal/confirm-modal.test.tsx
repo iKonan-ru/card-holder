@@ -74,7 +74,9 @@ describe('ConfirmModal', () => {
     });
     await user.click(confirmButton);
 
-    expect(handleConfirm).toHaveBeenCalledTimes(1);
+    await vi.waitFor(() => {
+      expect(handleConfirm).toHaveBeenCalledTimes(1);
+    });
   });
 
   it('должен вызывать onCancel при клике на кнопку отмены', async () => {
@@ -93,6 +95,8 @@ describe('ConfirmModal', () => {
     const cancelButton = screen.getByRole('button', { name: 'Отмена' });
     await user.click(cancelButton);
 
-    expect(handleCancel).toHaveBeenCalledTimes(1);
+    await vi.waitFor(() => {
+      expect(handleCancel).toHaveBeenCalledTimes(1);
+    });
   });
 });

@@ -34,9 +34,7 @@ export const useExportCards = (
   const modalContext = useModalContext();
 
   const handleExportWithPassword = useCallback(
-    async (password: string) => {
-      modalContext.closeModal(PASSWORD_MODAL_ID);
-
+    async (password: string, closePasswordModal: () => void) => {
       try {
         setIsExporting(true);
 
@@ -54,32 +52,27 @@ export const useExportCards = (
       } catch (error) {
         handleError(error, FALLBACK_ERROR_EXPORT);
       } finally {
+        closePasswordModal();
         setIsExporting(false);
       }
     },
-    [cards, modalContext]
+    [cards]
   );
 
   const exportCards = useCallback(async () => {
     try {
       validateCardsForExport(cards);
 
-      const handleCancel = () => {
-        modalContext.closeModal(PASSWORD_MODAL_ID);
-      };
-
       const modalContent: ReactNode = (
         <PasswordModal
           mode="export"
           onConfirm={handleExportWithPassword}
-          onCancel={handleCancel}
         />
       );
 
       modalContext.openModal(
         PASSWORD_MODAL_ID,
         modalContent,
-        handleCancel,
         PASSWORD_MODAL_TITLE_ID,
         PASSWORD_MODAL_DESCRIPTION_ID
       );
