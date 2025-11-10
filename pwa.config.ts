@@ -46,7 +46,7 @@ export const pwaConfig: Partial<VitePWAOptions> = {
     theme_color: PWA_THEME_COLOR,
     background_color: PWA_BACKGROUND_COLOR,
     display: 'standalone',
-    orientation: 'portrait',
+    orientation: 'any',
     scope: '/',
     start_url: '/',
     icons: PWA_ICONS,
