@@ -38,9 +38,12 @@ export const BankCard: FC<IBankCardProps> = ({
   onEdit,
   isReorderMode = false,
 }) => {
-  const bankId = getBankByCardNumber(card.pan);
-  const paymentSystem = getPaymentSystem(card.pan);
-  const bank = BANKS_LIST.find((bank) => bank.id === bankId) || DEFAULT_BANK;
+  const paymentSystem = useMemo(() => getPaymentSystem(card.pan), [card.pan]);
+  const bankId = useMemo(() => getBankByCardNumber(card.pan), [card.pan]);
+  const bank = useMemo(
+    () => BANKS_LIST.find((bank) => bank.id === bankId) || DEFAULT_BANK,
+    [bankId]
+  );
 
   const handleCardClick = useCallback(
     (event: MouseEvent) => {
@@ -130,7 +133,7 @@ export const BankCard: FC<IBankCardProps> = ({
                     >
                       <img
                         src={bankLogos[bank.id]}
-                        alt=""
+                        alt={bank.id}
                       />
                     </div>
                   )}
@@ -150,7 +153,7 @@ export const BankCard: FC<IBankCardProps> = ({
                 >
                   <img
                     src={paymentSystemLogos[paymentSystem]}
-                    alt=""
+                    alt={paymentSystem}
                   />
                 </div>
               )}

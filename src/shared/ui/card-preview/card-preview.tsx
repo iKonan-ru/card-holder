@@ -1,6 +1,6 @@
 import { type FC, useMemo } from 'react';
 import type { ICardPreviewProps } from './model';
-import { BANKS_LIST, DEFAULT_BANK, type TBankKeys } from '@shared/data';
+import { BANKS_LIST, DEFAULT_BANK } from '@shared/data';
 import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
 import {
@@ -30,16 +30,6 @@ export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {
   const hasBank = Boolean(bankId);
   const hasAnyInfo = hasPaymentSystem || hasBank;
 
-  const paymentSystemLogoUrl = useMemo(
-    () => (paymentSystem ? paymentSystemLogos[paymentSystem] : null),
-    [paymentSystem]
-  );
-  const bankLogoUrl = useMemo(
-    () =>
-      bankId && bankId in bankLogos ? bankLogos[bankId as TBankKeys] : null,
-    [bankId]
-  );
-
   const className = useClassName({
     blockName: CARD_PREVIEW_BLOCK,
   });
@@ -59,20 +49,20 @@ export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {
         title={bank.name}
       />
 
-      {bankLogoUrl && (
+      {bankLogos[bank.id] && (
         <div className={bem(CARD_PREVIEW_BLOCK, 'icon')}>
           <img
-            src={bankLogoUrl}
-            alt=""
+            src={bankLogos[bank.id]}
+            alt={bankId!}
           />
         </div>
       )}
 
-      {paymentSystemLogoUrl && (
+      {paymentSystem && (
         <div className={bem(CARD_PREVIEW_BLOCK, 'icon')}>
           <img
-            src={paymentSystemLogoUrl}
-            alt=""
+            src={paymentSystemLogos[paymentSystem]}
+            alt={paymentSystem}
           />
         </div>
       )}
