@@ -1,4 +1,11 @@
-import { useState, useRef, useMemo, type FC } from 'react';
+import {
+  useState,
+  useRef,
+  useMemo,
+  type FC,
+  type KeyboardEvent,
+  type MouseEvent,
+} from 'react';
 import { FiCheck } from 'react-icons/fi';
 import { bem, logError, ERROR_FAILED_TO_COPY, useClassName } from '@shared/lib';
 import type { ICopyableFieldProps } from './model';
@@ -41,12 +48,12 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
     }
   };
 
-  const handleClick = (event: React.MouseEvent) => {
+  const handleClick = (event: MouseEvent) => {
     event.stopPropagation();
     handleCopy();
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     const isActivationKey = event.key === 'Enter' || event.key === ' ';
 
     if (isActivationKey) {

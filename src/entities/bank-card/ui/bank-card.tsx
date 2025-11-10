@@ -1,4 +1,4 @@
-import { type FC, type MouseEvent, useMemo } from 'react';
+import { type FC, type MouseEvent, type CSSProperties, useMemo } from 'react';
 import { FiEdit2 } from 'react-icons/fi';
 import { BANKS_LIST, DEFAULT_BANK } from '@shared/data/banks-config';
 import { bankLogos } from '@shared/assets/banks';
@@ -61,7 +61,7 @@ export const BankCard: FC<IBankCardProps> = ({
   const cardStyle = {
     '--color': bank.color,
     '--color-dark': darkenColor(bank.color, CARD_COLOR_DARKEN_PERCENTAGE),
-  } as React.CSSProperties;
+  } as CSSProperties;
 
   const modifiers = useMemo(
     () =>

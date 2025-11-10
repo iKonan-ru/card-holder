@@ -1,3 +1,4 @@
+import { type FormEvent } from 'react';
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useCardFormSubmit } from './use-card-form-submit';
@@ -60,7 +61,7 @@ describe('useCardFormSubmit', () => {
 
       const mockEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       const { result } = renderHook(() =>
         useCardFormSubmit({
@@ -102,7 +103,7 @@ describe('useCardFormSubmit', () => {
 
       const mockEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockEvent);
@@ -278,7 +279,7 @@ describe('useCardFormSubmit', () => {
 
       const mockEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockEvent);
@@ -314,7 +315,7 @@ describe('useCardFormSubmit', () => {
 
       const mockEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockEvent);
@@ -355,7 +356,7 @@ describe('useCardFormSubmit', () => {
 
       const mockEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockEvent);
@@ -396,7 +397,7 @@ describe('useCardFormSubmit', () => {
 
       const mockEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockEvent);
@@ -432,7 +433,7 @@ describe('useCardFormSubmit', () => {
 
       const mockEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockEvent);

@@ -1,4 +1,4 @@
-import { useEffect, useRef, type FC } from 'react';
+import { useEffect, useRef, type FC, type MouseEvent } from 'react';
 import { bem, useClassName, ParentClassProvider } from '@shared/lib';
 import type { IModalProps } from './model';
 import { MODAL_BLOCK } from './lib/constants';
@@ -56,7 +56,7 @@ export const Modal: FC<IModalProps> = ({
     };
   }, [isTopModal]);
 
-  const handleContentClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const handleContentClick = (event: MouseEvent<HTMLDivElement>) => {
     event.stopPropagation();
   };
 

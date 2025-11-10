@@ -91,6 +91,7 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
 
   const PasswordIcon = showPassword ? MdVisibilityOff : MdVisibility;
   const ariaLabelPassword = showPassword ? 'Скрыть пароль' : 'Показать пароль';
+  const inputType = showPassword ? 'text' : 'password';
 
   const passwordRightContent = (
     <button
@@ -133,14 +134,14 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
         <FormField
           id="password"
           name="password"
-          type={showPassword ? 'text' : 'password'}
+          type={inputType}
           label={PASSWORD_MODAL_LABEL}
           value={password}
           error={passwordError}
           onChange={handlePasswordChange}
           autoComplete="new-password"
-          autoFocus
-          required
+          autoFocus={true}
+          required={true}
           rightContent={passwordRightContent}
         />
 
@@ -148,13 +149,13 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
           <FormField
             id="confirm-password"
             name="confirm-password"
-            type={showPassword ? 'text' : 'password'}
+            type={inputType}
             label={PASSWORD_MODAL_LABEL_CONFIRM}
             value={confirmPassword}
             error={confirmError}
             onChange={handleConfirmPasswordChange}
             autoComplete="new-password"
-            required
+            required={true}
             rightContent={confirmPasswordRightContent}
           />
         )}
