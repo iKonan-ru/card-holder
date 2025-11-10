@@ -6,6 +6,7 @@ import { ParentClassProvider } from '@shared/lib';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
 import type { FC, ReactNode } from 'react';
+import { MOCK_CARD, MOCK_CARD_SECOND } from '@test';
 
 vi.mock('@entities/bank-card', () => ({
   BankCard: ({ card }: { card: IBankCard }) => (
@@ -13,24 +14,7 @@ vi.mock('@entities/bank-card', () => ({
   ),
 }));
 
-const MOCK_CARDS: IBankCard[] = [
-  {
-    pan: '5559494202595236',
-    expires: '0726',
-    name: 'USER ONE',
-    cvv: '123',
-    pin: '1234',
-    order: 0,
-  },
-  {
-    pan: '4377723769243191',
-    expires: '0726',
-    name: 'USER TWO',
-    cvv: '456',
-    pin: '5678',
-    order: 1,
-  },
-];
+const MOCK_CARDS: IBankCard[] = [MOCK_CARD, MOCK_CARD_SECOND];
 
 const TEST_PARENT_CLASS = 'test-parent';
 

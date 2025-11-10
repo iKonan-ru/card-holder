@@ -1,4 +1,4 @@
-import { useRef, type MouseEvent } from 'react';
+import { useRef, useCallback, useMemo, type MouseEvent } from 'react';
 
 interface IUseOverlayClickReturn {
   handleOverlayMouseDown: () => void;
@@ -13,32 +13,46 @@ export const useOverlayClick = (
 ): IUseOverlayClickReturn => {
   const isMouseDownOnOverlayRef = useRef(false);
 
-  const handleOverlayMouseDown = () => {
+  const handleOverlayMouseDown = useCallback(() => {
     isMouseDownOnOverlayRef.current = true;
-  };
+  }, []);
 
-  const handleOverlayMouseUp = () => {
+  const handleOverlayMouseUp = useCallback(() => {
     const wasMouseDownOnOverlay = isMouseDownOnOverlayRef.current;
     isMouseDownOnOverlayRef.current = false;
 
     if (wasMouseDownOnOverlay && isTopModal) {
       onOverlayClick();
     }
-  };
+  }, [isTopModal, onOverlayClick]);
 
-  const handleContentClick = (event: MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-  };
+  const handleContentClick = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event.stopPropagation();
+    },
+    []
+  );
 
-  const handleContentMouseDown = (event: MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-    isMouseDownOnOverlayRef.current = false;
-  };
+  const handleContentMouseDown = useCallback(
+    (event: MouseEvent<HTMLDivElement>) => {
+      event.stopPropagation();
+      isMouseDownOnOverlayRef.current = false;
+    },
+    []
+  );
 
-  return {
-    handleOverlayMouseDown,
-    handleOverlayMouseUp,
-    handleContentClick,
-    handleContentMouseDown,
-  };
+  return useMemo(
+    () => ({
+      handleOverlayMouseDown,
+      handleOverlayMouseUp,
+      handleContentClick,
+      handleContentMouseDown,
+    }),
+    [
+      handleOverlayMouseDown,
+      handleOverlayMouseUp,
+      handleContentClick,
+      handleContentMouseDown,
+    ]
+  );
 };

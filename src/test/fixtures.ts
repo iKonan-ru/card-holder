@@ -3,21 +3,10 @@ import type { IBankCard } from '@entities/bank-card';
 export const MOCK_CARD: IBankCard = {
   pan: '5559494202595236',
   expires: '0726',
-  name: 'TEST USER',
+  name: 'USER ONE',
   cvv: '123',
   pin: '1234',
   order: 0,
-};
-
-export const MOCK_CARD_WITH_OPTIONAL: IBankCard = {
-  pan: '5559494202595236',
-  expires: '0726',
-  name: 'TEST USER',
-  cvv: '123',
-  pin: '1234',
-  order: 0,
-  type: 'Тестовая',
-  phrase: 'test phrase',
 };
 
 export const MOCK_CARD_SECOND: IBankCard = {

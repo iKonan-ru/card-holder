@@ -1,4 +1,10 @@
-import { type FC, type MouseEvent, type CSSProperties, useMemo } from 'react';
+import {
+  type FC,
+  type MouseEvent,
+  type CSSProperties,
+  useMemo,
+  useCallback,
+} from 'react';
 import { FiEdit2 } from 'react-icons/fi';
 import { BANKS_LIST, DEFAULT_BANK } from '@shared/data/banks-config';
 import { bankLogos } from '@shared/assets/banks';
@@ -36,32 +42,42 @@ export const BankCard: FC<IBankCardProps> = ({
   const paymentSystem = getPaymentSystem(card.pan);
   const bank = BANKS_LIST.find((bank) => bank.id === bankId) || DEFAULT_BANK;
 
-  const handleCardClick = (event: MouseEvent) => {
-    if (isReorderMode) {
-      return;
-    }
+  const handleCardClick = useCallback(
+    (event: MouseEvent) => {
+      if (isReorderMode) {
+        return;
+      }
 
-    const isClickOnActions = (event.target as HTMLElement).closest(
-      `.${BANK_CARD_ACTIONS_BLOCK}`
-    );
+      const isClickOnActions = (event.target as HTMLElement).closest(
+        `.${BANK_CARD_ACTIONS_BLOCK}`
+      );
 
-    if (!isClickOnActions && onFlip) {
-      onFlip(card.pan);
-    }
-  };
+      if (!isClickOnActions && onFlip) {
+        onFlip(card.pan);
+      }
+    },
+    [isReorderMode, onFlip, card.pan]
+  );
 
-  const handleEditClick = (event: MouseEvent) => {
-    event.stopPropagation();
+  const handleEditClick = useCallback(
+    (event: MouseEvent) => {
+      event.stopPropagation();
 
-    if (onEdit) {
-      onEdit(card);
-    }
-  };
+      if (onEdit) {
+        onEdit(card);
+      }
+    },
+    [onEdit, card]
+  );
 
-  const cardStyle = {
-    '--color': bank.color,
-    '--color-dark': darkenColor(bank.color, CARD_COLOR_DARKEN_PERCENTAGE),
-  } as CSSProperties;
+  const cardStyle = useMemo(
+    () =>
+      ({
+        '--color': bank.color,
+        '--color-dark': darkenColor(bank.color, CARD_COLOR_DARKEN_PERCENTAGE),
+      }) as CSSProperties,
+    [bank.color]
+  );
 
   const modifiers = useMemo(
     () =>
@@ -76,8 +92,12 @@ export const BankCard: FC<IBankCardProps> = ({
     modifiers,
   });
 
-  const maskedPan = maskPan(card.pan, false);
-  const cardAriaLabel = `Банковская карта ${bank.name || ''} ${maskedPan}. ${BANK_CARD_FLIP_LABEL}`;
+  const maskedPan = useMemo(() => maskPan(card.pan, false), [card.pan]);
+  const cardAriaLabel = useMemo(
+    () =>
+      `Банковская карта ${bank.name || ''} ${maskedPan}. ${BANK_CARD_FLIP_LABEL}`,
+    [bank.name, maskedPan]
+  );
 
   return (
     <>

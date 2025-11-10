@@ -10,32 +10,29 @@ import {
   updateCardsOrder,
 } from './cards';
 import type { IBankCard } from '@entities/bank-card';
+import { createMockCard, MOCK_CARD_THIRD } from '@test';
 
 const MOCK_CARDS: IBankCard[] = [
-  {
+  createMockCard({
     pan: '1111222233334444',
     expires: '1230',
     name: 'CARD 2',
     cvv: '456',
     pin: '8888',
     order: 1,
-  },
-  {
-    pan: '5559494202595236',
-    expires: '0726',
+  }),
+  createMockCard({
     name: 'CARD 1',
-    cvv: '123',
-    pin: '1234',
     order: 0,
-  },
-  {
-    pan: '9999888877776666',
-    expires: '0725',
+  }),
+  createMockCard({
+    pan: MOCK_CARD_THIRD.pan,
+    expires: MOCK_CARD_THIRD.expires,
     name: 'CARD 3',
-    cvv: '789',
-    pin: '4321',
+    cvv: MOCK_CARD_THIRD.cvv,
+    pin: MOCK_CARD_THIRD.pin,
     order: 2,
-  },
+  }),
 ];
 
 interface IMockRequest {
@@ -105,14 +102,7 @@ vi.mock('./database', () => ({
 }));
 
 describe('IndexedDB cards', () => {
-  const MOCK_CARD: IBankCard = {
-    pan: '5559494202595236',
-    expires: '0726',
-    name: 'TEST USER',
-    cvv: '123',
-    pin: '1234',
-    order: 0,
-  };
+  const MOCK_CARD = createMockCard();
 
   it('getAllCards должна возвращать отсортированный список карт', async () => {
     const request = (mockStore.getAll as () => IMockRequest)() as IMockRequest;

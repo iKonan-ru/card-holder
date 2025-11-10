@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { type FC, useCallback, useMemo } from 'react';
 import type { ICardFormProps } from './model';
 import { bem, useClassName, useModal } from '@shared/lib';
 import {
@@ -50,13 +50,17 @@ export const CardForm: FC<ICardFormProps> = ({
 
   const deleteModal = useModal();
 
-  const handleCancelClick = () => {
+  const handleCancelClick = useCallback(() => {
     if (onCancel) {
       onCancel();
     }
-  };
+  }, [onCancel]);
 
-  const handleDeleteClick = () => {
+  const handleConfirmDelete = useCallback(async () => {
+    await handleDelete();
+  }, [handleDelete]);
+
+  const handleDeleteClick = useCallback(() => {
     deleteModal.open(
       <ConfirmModal
         title={DELETE_MODAL_TITLE}
@@ -68,13 +72,12 @@ export const CardForm: FC<ICardFormProps> = ({
       CONFIRM_MODAL_TITLE_ID,
       CONFIRM_MODAL_MESSAGE_ID
     );
-  };
+  }, [deleteModal, handleConfirmDelete]);
 
-  const handleConfirmDelete = async () => {
-    await handleDelete();
-  };
-
-  const panFieldRightContent = <CardPreview pan={formData.pan || ''} />;
+  const panFieldRightContent = useMemo(
+    () => <CardPreview pan={formData.pan || ''} />,
+    [formData.pan]
+  );
 
   const formTitle = isEditMode ? CARD_FORM_EDIT_TITLE : CARD_FORM_TITLE;
   const submitButtonText = isEditMode

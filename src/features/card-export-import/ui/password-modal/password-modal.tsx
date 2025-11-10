@@ -1,4 +1,11 @@
-import { useState, type FC, type FormEvent, type ChangeEvent } from 'react';
+import {
+  useState,
+  useCallback,
+  useMemo,
+  type FC,
+  type FormEvent,
+  type ChangeEvent,
+} from 'react';
 import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
 import { bem, useClassName, ParentClassProvider } from '@shared/lib';
 import {
@@ -47,77 +54,99 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
     blockName: PASSWORD_MODAL_BLOCK,
   });
 
-  const handlePasswordChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const newPassword = event.target.value;
-    setPassword(newPassword);
-    setPasswordError(undefined);
-    setConfirmError(undefined);
-  };
-
-  const handleConfirmPasswordChange = (
-    event: ChangeEvent<HTMLInputElement>
-  ) => {
-    const newConfirmPassword = event.target.value;
-    setConfirmPassword(newConfirmPassword);
-    setConfirmError(undefined);
-  };
-
-  const handleTogglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
-  };
-
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setPasswordError(undefined);
-    setConfirmError(undefined);
-
-    if (isExportMode) {
-      const isPasswordValid = password.length >= MIN_PASSWORD_LENGTH;
-
-      if (!isPasswordValid) {
-        setPasswordError(ERROR_PASSWORD_TOO_SHORT);
-
-        return;
-      }
-
-      const doPasswordsMatch = password === confirmPassword;
-
-      if (!doPasswordsMatch) {
-        setConfirmError(ERROR_PASSWORD_MISMATCH);
-
-        return;
-      }
-    }
-
-    onConfirm(password, closeModal);
-  };
-
-  const PasswordIcon = showPassword ? MdVisibilityOff : MdVisibility;
-  const ariaLabelPassword = showPassword ? 'Скрыть пароль' : 'Показать пароль';
-  const inputType = showPassword ? 'text' : 'password';
-
-  const passwordRightContent = (
-    <button
-      type="button"
-      onClick={handleTogglePasswordVisibility}
-      className={bem(PASSWORD_MODAL_BLOCK, 'toggle-button')}
-      aria-label={ariaLabelPassword}
-      tabIndex={-1}
-    >
-      <PasswordIcon className={bem(PASSWORD_MODAL_BLOCK, 'toggle-icon')} />
-    </button>
+  const handlePasswordChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const newPassword = event.target.value;
+      setPassword(newPassword);
+      setPasswordError(undefined);
+      setConfirmError(undefined);
+    },
+    []
   );
 
-  const confirmPasswordRightContent = (
-    <button
-      type="button"
-      onClick={handleTogglePasswordVisibility}
-      className={bem(PASSWORD_MODAL_BLOCK, 'toggle-button')}
-      aria-label={ariaLabelPassword}
-      tabIndex={-1}
-    >
-      <PasswordIcon className={bem(PASSWORD_MODAL_BLOCK, 'toggle-icon')} />
-    </button>
+  const handleConfirmPasswordChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const newConfirmPassword = event.target.value;
+      setConfirmPassword(newConfirmPassword);
+      setConfirmError(undefined);
+    },
+    []
+  );
+
+  const handleTogglePasswordVisibility = useCallback(() => {
+    setShowPassword((prev) => !prev);
+  }, []);
+
+  const handleSubmit = useCallback(
+    (event: FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setPasswordError(undefined);
+      setConfirmError(undefined);
+
+      if (isExportMode) {
+        const isPasswordValid = password.length >= MIN_PASSWORD_LENGTH;
+
+        if (!isPasswordValid) {
+          setPasswordError(ERROR_PASSWORD_TOO_SHORT);
+
+          return;
+        }
+
+        const doPasswordsMatch = password === confirmPassword;
+
+        if (!doPasswordsMatch) {
+          setConfirmError(ERROR_PASSWORD_MISMATCH);
+
+          return;
+        }
+      }
+
+      onConfirm(password, closeModal);
+    },
+    [isExportMode, password, confirmPassword, onConfirm, closeModal]
+  );
+
+  const PasswordIcon = useMemo(
+    () => (showPassword ? MdVisibilityOff : MdVisibility),
+    [showPassword]
+  );
+  const ariaLabelPassword = useMemo(
+    () => (showPassword ? 'Скрыть пароль' : 'Показать пароль'),
+    [showPassword]
+  );
+  const inputType = useMemo(
+    () => (showPassword ? 'text' : 'password'),
+    [showPassword]
+  );
+
+  const passwordRightContent = useMemo(
+    () => (
+      <button
+        type="button"
+        onClick={handleTogglePasswordVisibility}
+        className={bem(PASSWORD_MODAL_BLOCK, 'toggle-button')}
+        aria-label={ariaLabelPassword}
+        tabIndex={-1}
+      >
+        <PasswordIcon className={bem(PASSWORD_MODAL_BLOCK, 'toggle-icon')} />
+      </button>
+    ),
+    [handleTogglePasswordVisibility, ariaLabelPassword, PasswordIcon]
+  );
+
+  const confirmPasswordRightContent = useMemo(
+    () => (
+      <button
+        type="button"
+        onClick={handleTogglePasswordVisibility}
+        className={bem(PASSWORD_MODAL_BLOCK, 'toggle-button')}
+        aria-label={ariaLabelPassword}
+        tabIndex={-1}
+      >
+        <PasswordIcon className={bem(PASSWORD_MODAL_BLOCK, 'toggle-icon')} />
+      </button>
+    ),
+    [handleTogglePasswordVisibility, ariaLabelPassword, PasswordIcon]
   );
 
   return (

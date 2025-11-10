@@ -2,6 +2,7 @@ import {
   useState,
   useRef,
   useMemo,
+  useCallback,
   type FC,
   type KeyboardEvent,
   type MouseEvent,
@@ -26,7 +27,7 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
   const [isCopied, setIsCopied] = useState(false);
   const timeoutRef = useRef<number | null>(null);
 
-  const handleCopy = async () => {
+  const handleCopy = useCallback(async () => {
     try {
       await navigator.clipboard.writeText(value);
 
@@ -46,21 +47,27 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
         context: 'CopyableField',
       });
     }
-  };
+  }, [value]);
 
-  const handleClick = (event: MouseEvent) => {
-    event.stopPropagation();
-    handleCopy();
-  };
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    const isActivationKey = event.key === 'Enter' || event.key === ' ';
-
-    if (isActivationKey) {
-      event.preventDefault();
+  const handleClick = useCallback(
+    (event: MouseEvent) => {
+      event.stopPropagation();
       handleCopy();
-    }
-  };
+    },
+    [handleCopy]
+  );
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const isActivationKey = event.key === 'Enter' || event.key === ' ';
+
+      if (isActivationKey) {
+        event.preventDefault();
+        handleCopy();
+      }
+    },
+    [handleCopy]
+  );
 
   const modifiers = useMemo(() => (modifier ? [modifier] : []), [modifier]);
 
@@ -69,9 +76,13 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
     modifiers,
   });
 
-  const ariaLabel = label
-    ? `${title}: ${label}`
-    : `${title}: ${maskFn ? maskFn(value, false) : value}`;
+  const ariaLabel = useMemo(
+    () =>
+      label
+        ? `${title}: ${label}`
+        : `${title}: ${maskFn ? maskFn(value, false) : value}`,
+    [label, title, value, maskFn]
+  );
 
   return (
     <div className={wrapperClassName}>

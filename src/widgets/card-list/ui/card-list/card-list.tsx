@@ -38,7 +38,7 @@ export const CardList: FC = () => {
     });
 
   const hasCards = cards.length > 0;
-  const cardIds = cards.map((card) => card.pan);
+  const cardIds = useMemo(() => cards.map((card) => card.pan), [cards]);
   const isDragging = activeCard !== null;
 
   const modifiers = useMemo(

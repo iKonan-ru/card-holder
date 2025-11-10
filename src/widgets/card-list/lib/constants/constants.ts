@@ -2,7 +2,7 @@ import type { DropAnimation } from '@dnd-kit/core';
 
 export const CARD_LIST_BLOCK = 'card-list';
 
-export const DROP_ANIMATION_DURATION = 0;
+export const DROP_ANIMATION_DURATION = 200;
 export const DROP_ANIMATION_EASING = 'ease';
 
 export const DROP_ANIMATION: DropAnimation = {

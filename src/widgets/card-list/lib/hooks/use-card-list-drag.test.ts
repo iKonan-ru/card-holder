@@ -3,25 +3,9 @@ import { renderHook, act } from '@testing-library/react';
 import { useCardListDrag } from './use-card-list-drag';
 import type { IBankCard } from '@entities/bank-card';
 import type { DragStartEvent, DragOverEvent } from '@dnd-kit/core';
+import { MOCK_CARD, MOCK_CARD_SECOND } from '@test';
 
-const MOCK_CARDS: IBankCard[] = [
-  {
-    pan: '5559494202595236',
-    expires: '0726',
-    name: 'USER ONE',
-    cvv: '123',
-    pin: '1234',
-    order: 0,
-  },
-  {
-    pan: '4377723769243191',
-    expires: '0726',
-    name: 'USER TWO',
-    cvv: '456',
-    pin: '5678',
-    order: 1,
-  },
-];
+const MOCK_CARDS: IBankCard[] = [MOCK_CARD, MOCK_CARD_SECOND];
 
 describe('useCardListDrag', () => {
   const mockOnDragEnd = vi.fn();

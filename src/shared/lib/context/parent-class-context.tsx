@@ -1,5 +1,11 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useContext, type FC, type ReactNode } from 'react';
+import {
+  createContext,
+  useContext,
+  useMemo,
+  type FC,
+  type ReactNode,
+} from 'react';
 
 interface IParentClassContext {
   parentClass?: string;
@@ -18,8 +24,10 @@ export const ParentClassProvider: FC<IParentClassProviderProps> = ({
   parentClass,
   children,
 }) => {
+  const contextValue = useMemo(() => ({ parentClass }), [parentClass]);
+
   return (
-    <ParentClassContext.Provider value={{ parentClass }}>
+    <ParentClassContext.Provider value={contextValue}>
       {children}
     </ParentClassContext.Provider>
   );

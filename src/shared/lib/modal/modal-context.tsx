@@ -1,4 +1,11 @@
-import { useState, useCallback, useRef, type FC, type ReactNode } from 'react';
+import {
+  useState,
+  useCallback,
+  useRef,
+  useMemo,
+  type FC,
+  type ReactNode,
+} from 'react';
 import { ModalContext } from './context';
 import type { IModalContextValue, IModalItem } from './types';
 
@@ -51,13 +58,16 @@ export const ModalProvider: FC<IModalProviderProps> = ({
     setModals([]);
   }, []);
 
-  const value: IModalContextValue = {
-    modals,
-    openModal,
-    closeModal,
-    closeAllModals,
-    userActionRef,
-  };
+  const value: IModalContextValue = useMemo(
+    () => ({
+      modals,
+      openModal,
+      closeModal,
+      closeAllModals,
+      userActionRef,
+    }),
+    [modals, openModal, closeModal, closeAllModals]
+  );
 
   return (
     <ModalContext.Provider value={value}>{children}</ModalContext.Provider>

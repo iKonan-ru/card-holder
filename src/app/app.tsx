@@ -1,4 +1,4 @@
-import { useEffect, type FC } from 'react';
+import { useEffect, useCallback, type FC } from 'react';
 import { MainPage } from '@pages/main-page';
 import { ModalProvider, usePWAUpdate, setErrorModalHandler } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
@@ -21,9 +21,9 @@ export const App: FC = () => {
     setErrorModalHandler(showError);
   }, []);
 
-  const handleModalOpen = () => {
+  const handleModalOpen = useCallback(() => {
     setReorderMode(false);
-  };
+  }, [setReorderMode]);
 
   return (
     <ModalProvider onModalOpen={handleModalOpen}>

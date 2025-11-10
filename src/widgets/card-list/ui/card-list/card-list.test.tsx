@@ -6,6 +6,7 @@ import { ModalProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import type { IBankCard } from '@entities/bank-card';
 import type { FC, ReactNode } from 'react';
+import { MOCK_CARDS } from '@test';
 
 const {
   mockUseCardManagementStore,
@@ -33,33 +34,6 @@ vi.mock('@entities/bank-card', () => ({
     <div data-testid={`bank-card-${card.pan}`}>{card.name}</div>
   ),
 }));
-
-const MOCK_CARDS: IBankCard[] = [
-  {
-    pan: '5559494202595236',
-    expires: '0726',
-    name: 'USER ONE',
-    cvv: '123',
-    pin: '1234',
-    order: 0,
-  },
-  {
-    pan: '4377723769243191',
-    expires: '0726',
-    name: 'USER TWO',
-    cvv: '456',
-    pin: '5678',
-    order: 1,
-  },
-  {
-    pan: '2200150236441892',
-    expires: '0329',
-    name: 'USER THREE',
-    cvv: '789',
-    pin: '9012',
-    order: 2,
-  },
-];
 
 const TestWrapper: FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -115,7 +89,7 @@ describe('CardList', () => {
   it('должна отображать все карты из store', () => {
     render(<CardList />, { wrapper: TestWrapper });
 
-    MOCK_CARDS.forEach((card) => {
+    MOCK_CARDS.forEach((card: IBankCard) => {
       expect(screen.getByTestId(`bank-card-${card.pan}`)).toBeInTheDocument();
     });
   });
@@ -157,7 +131,7 @@ describe('CardList', () => {
   it('должна использовать pan как key для карт', () => {
     const { container } = render(<CardList />, { wrapper: TestWrapper });
 
-    MOCK_CARDS.forEach((card) => {
+    MOCK_CARDS.forEach((card: IBankCard) => {
       const cardElement = container.querySelector(
         `[data-testid="bank-card-${card.pan}"]`
       );

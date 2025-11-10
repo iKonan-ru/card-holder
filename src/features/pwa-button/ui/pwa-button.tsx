@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { type FC, useMemo } from 'react';
 import { usePWAInstall, useClassName } from '@shared/lib';
 import {
   PWA_BUTTON_BLOCK,
@@ -7,12 +7,16 @@ import {
 } from '../lib/constants';
 import './pwa-button.less';
 
+const PRIMARY_MODIFIER = ['primary'];
+
 export const PWAButton: FC = () => {
   const { canInstall, isInstalled, handleInstall } = usePWAInstall();
 
+  const modifiers = useMemo(() => PRIMARY_MODIFIER, []);
+
   const className = useClassName({
     blockName: PWA_BUTTON_BLOCK,
-    modifiers: ['primary'],
+    modifiers,
   });
 
   if (!canInstall || isInstalled) {

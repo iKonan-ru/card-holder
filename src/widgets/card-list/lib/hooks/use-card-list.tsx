@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import { useCardManagementStore } from '@features/card-management';
 import { useCardFormModal } from '@features/card-form';
@@ -22,18 +22,24 @@ export const useCardList = () => {
     loadCards();
   }, [loadCards]);
 
-  const handleDragEnd = (reorderedCards: IBankCard[]) => {
-    setCards(reorderedCards);
-    reorderCards(reorderedCards);
-  };
+  const handleDragEnd = useCallback(
+    (reorderedCards: IBankCard[]) => {
+      setCards(reorderedCards);
+      reorderCards(reorderedCards);
+    },
+    [setCards, reorderCards]
+  );
 
-  const handleToggleReorderMode = () => {
+  const handleToggleReorderMode = useCallback(() => {
     toggleReorderMode();
-  };
+  }, [toggleReorderMode]);
 
-  const handleFlipCard = (pan: string) => {
-    flipCard(pan);
-  };
+  const handleFlipCard = useCallback(
+    (pan: string) => {
+      flipCard(pan);
+    },
+    [flipCard]
+  );
 
   return {
     cards,

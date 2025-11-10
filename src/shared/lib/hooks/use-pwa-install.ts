@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -71,7 +71,7 @@ export const usePWAInstall = (): UsePWAInstallReturn => {
     };
   }, []);
 
-  const handleInstall = async (): Promise<void> => {
+  const handleInstall = useCallback(async (): Promise<void> => {
     if (!deferredPrompt) {
       return;
     }
@@ -82,7 +82,7 @@ export const usePWAInstall = (): UsePWAInstallReturn => {
     if (outcome === 'accepted') {
       setDeferredPrompt(null);
     }
-  };
+  }, [deferredPrompt]);
 
   return {
     canInstall: Boolean(deferredPrompt),

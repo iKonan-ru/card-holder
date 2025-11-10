@@ -39,8 +39,11 @@ export const FormField: FC<IFormFieldProps> = ({
     modifiers,
   });
 
-  const errorId = `${id}-error`;
-  const ariaDescribedBy = hasError ? errorId : undefined;
+  const errorId = useMemo(() => `${id}-error`, [id]);
+  const ariaDescribedBy = useMemo(
+    () => (hasError ? errorId : undefined),
+    [hasError, errorId]
+  );
 
   return (
     <div className={className}>
