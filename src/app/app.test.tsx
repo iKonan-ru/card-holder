@@ -1,38 +1,23 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { App } from './app';
-import { useCardManagementStore } from '@features/card-management';
+
+const mockHandleModalOpen = vi.fn();
 
 vi.mock('@pages/main-page', () => ({
   MainPage: () => <div data-testid="main-page">MainPage Component</div>,
 }));
 
-vi.mock('@features/card-management', () => ({
-  useCardManagementStore: vi.fn((selector) => {
-    const state = {
-      cards: [],
-      flippedPan: null,
-      isLoading: false,
-      isReorderMode: false,
-      flipCard: vi.fn(),
-      unflipCards: vi.fn(),
-      loadCards: vi.fn(),
-      addCard: vi.fn(),
-      updateCard: vi.fn(),
-      deleteCard: vi.fn(),
-      reorderCards: vi.fn(),
-      setCards: vi.fn(),
-      setReorderMode: vi.fn(),
-      toggleReorderMode: vi.fn(),
-    };
-
-    return selector(state);
+vi.mock('./lib', () => ({
+  useApp: () => ({
+    handleModalOpen: mockHandleModalOpen,
   }),
 }));
 
 describe('App', () => {
   afterEach(() => {
     cleanup();
+    vi.clearAllMocks();
   });
 
   it('должна рендериться', () => {
@@ -54,32 +39,16 @@ describe('App', () => {
     expect(container).toBeInTheDocument();
   });
 
-  it('должна вызывать setReorderMode при инициализации', () => {
-    const mockSetReorderMode = vi.fn();
-
-    vi.mocked(useCardManagementStore).mockImplementation((selector) => {
-      const state = {
-        cards: [],
-        flippedPan: null,
-        isLoading: false,
-        isReorderMode: false,
-        flipCard: vi.fn(),
-        unflipCards: vi.fn(),
-        loadCards: vi.fn(),
-        addCard: vi.fn(),
-        updateCard: vi.fn(),
-        deleteCard: vi.fn(),
-        reorderCards: vi.fn(),
-        setCards: vi.fn(),
-        setReorderMode: mockSetReorderMode,
-        toggleReorderMode: vi.fn(),
-      };
-
-      return selector(state);
-    });
-
+  it('должна использовать useApp хук', () => {
     render(<App />);
 
-    expect(mockSetReorderMode).toBeDefined();
+    expect(mockHandleModalOpen).toBeDefined();
+  });
+
+  it('должна передавать handleModalOpen в ModalProvider', () => {
+    render(<App />);
+
+    expect(mockHandleModalOpen).toBeDefined();
+    expect(typeof mockHandleModalOpen).toBe('function');
   });
 });

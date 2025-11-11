@@ -18,8 +18,17 @@ import {
   ERROR_CVV_INVALID_LENGTH,
   ERROR_PIN_INVALID_LENGTH,
 } from '../constants';
-import { SPACE_REMOVAL_PATTERN } from '@shared/lib';
+import {
+  SPACE_REMOVAL_PATTERN,
+  DECIMAL_RADIX,
+  INITIAL_ZERO,
+} from '@shared/lib';
 import { validateLuhn } from './luhn';
+
+const MONTH_START_INDEX = INITIAL_ZERO;
+const MONTH_END_INDEX = 2;
+const YEAR_START_INDEX = 2;
+const YEAR_END_INDEX = 4;
 
 export const validatePan = (value: string): string | undefined => {
   if (!value) {
@@ -45,14 +54,14 @@ export const validateExpires = (value: string): string | undefined => {
   }
 
   const expiresDigits = value.replace(NON_DIGIT_REMOVAL_PATTERN, '');
-  const month = expiresDigits.slice(0, 2);
-  const year = expiresDigits.slice(2, 4);
+  const month = expiresDigits.slice(MONTH_START_INDEX, MONTH_END_INDEX);
+  const year = expiresDigits.slice(YEAR_START_INDEX, YEAR_END_INDEX);
 
   if (!MONTH_VALIDATION_PATTERN.test(month)) {
     return ERROR_EXPIRES_MONTH;
   }
 
-  if (parseInt(year, 10) < MIN_YEAR) {
+  if (parseInt(year, DECIMAL_RADIX) < MIN_YEAR) {
     return ERROR_EXPIRES_YEAR;
   }
 

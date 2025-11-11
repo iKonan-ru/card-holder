@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { bem } from '../utils';
 import { useParentClass } from '../context';
+import { EMPTY_STRING, SPACE_CHAR } from '../constants';
 
 interface IUseClassNameOptions {
   blockName: string;
@@ -9,11 +10,13 @@ interface IUseClassNameOptions {
   additionalClasses?: string[];
 }
 
+const DEFAULT_ADDITIONAL_CLASSES: string[] = [];
+
 export const useClassName = ({
   blockName,
   modifiers,
   elementName,
-  additionalClasses = [],
+  additionalClasses = DEFAULT_ADDITIONAL_CLASSES,
 }: IUseClassNameOptions): string => {
   const parentClass = useParentClass();
 
@@ -29,14 +32,14 @@ export const useClassName = ({
         return bem(parentClass, blockName);
       }
 
-      return '';
+      return EMPTY_STRING;
     };
 
     const elementClass = getElementClass();
 
     return [blockClass, elementClass, ...additionalClasses]
       .filter(Boolean)
-      .join(' ');
+      .join(SPACE_CHAR);
   }, [blockName, modifiers, parentClass, elementName, additionalClasses]);
 
   return className;

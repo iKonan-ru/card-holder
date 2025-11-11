@@ -19,6 +19,13 @@ import {
   getPaymentSystem,
   maskPan,
   maskValue,
+  INITIAL_FALSE,
+  KEY_ENTER,
+  KEY_SPACE,
+  ARIA_ROLE_BUTTON,
+  ARIA_HIDDEN_TRUE,
+  ARIA_TABINDEX_INTERACTIVE,
+  BUTTON_TYPE_BUTTON,
 } from '@shared/lib';
 import { CopyableField } from '@shared/ui';
 import {
@@ -27,16 +34,20 @@ import {
   BANK_CARD_FLIP_LABEL,
   BANK_CARD_EDIT_LABEL,
   CARD_COLOR_DARKEN_PERCENTAGE,
+  BANK_CARD_MODIFIER_FLIPPED,
+  BANK_CARD_MODIFIER_REORDER_MODE,
+  DEFAULT_IS_FLIPPED,
+  DEFAULT_IS_REORDER_MODE,
 } from '../lib/constants';
 import type { IBankCardProps } from './model';
 import './bank-card.less';
 
 export const BankCard: FC<IBankCardProps> = ({
   card,
-  isFlipped = false,
+  isFlipped = DEFAULT_IS_FLIPPED,
   onFlip,
   onEdit,
-  isReorderMode = false,
+  isReorderMode = DEFAULT_IS_REORDER_MODE,
 }) => {
   const paymentSystem = useMemo(() => getPaymentSystem(card.pan), [card.pan]);
   const bankId = useMemo(() => getBankByCardNumber(card.pan), [card.pan]);
@@ -84,9 +95,10 @@ export const BankCard: FC<IBankCardProps> = ({
 
   const modifiers = useMemo(
     () =>
-      [isFlipped && 'flipped', isReorderMode && 'reorder-mode'].filter(
-        Boolean
-      ) as string[],
+      [
+        isFlipped && BANK_CARD_MODIFIER_FLIPPED,
+        isReorderMode && BANK_CARD_MODIFIER_REORDER_MODE,
+      ].filter(Boolean) as string[],
     [isFlipped, isReorderMode]
   );
 
@@ -95,7 +107,7 @@ export const BankCard: FC<IBankCardProps> = ({
     modifiers,
   });
 
-  const maskedPan = useMemo(() => maskPan(card.pan, false), [card.pan]);
+  const maskedPan = useMemo(() => maskPan(card.pan, INITIAL_FALSE), [card.pan]);
   const cardAriaLabel = useMemo(
     () =>
       `Банковская карта ${bank.name || ''} ${maskedPan}. ${BANK_CARD_FLIP_LABEL}`,
@@ -105,13 +117,14 @@ export const BankCard: FC<IBankCardProps> = ({
   return (
     <>
       <div
-        role="button"
-        tabIndex={0}
+        role={ARIA_ROLE_BUTTON}
+        tabIndex={ARIA_TABINDEX_INTERACTIVE}
         className={className}
         style={cardStyle}
         onClick={handleCardClick}
         onKeyDown={(event) => {
-          const isEnterOrSpace = event.key === 'Enter' || event.key === ' ';
+          const isEnterOrSpace =
+            event.key === KEY_ENTER || event.key === KEY_SPACE;
 
           if (isEnterOrSpace && onFlip) {
             event.preventDefault();
@@ -129,7 +142,7 @@ export const BankCard: FC<IBankCardProps> = ({
                   {bankLogos[bank.id] && (
                     <div
                       className={bem(BANK_CARD_BLOCK, 'logo')}
-                      aria-hidden="true"
+                      aria-hidden={ARIA_HIDDEN_TRUE}
                     >
                       <img
                         src={bankLogos[bank.id]}
@@ -149,7 +162,7 @@ export const BankCard: FC<IBankCardProps> = ({
               {paymentSystem && (
                 <div
                   className={bem(BANK_CARD_BLOCK, 'payment-system')}
-                  aria-hidden="true"
+                  aria-hidden={ARIA_HIDDEN_TRUE}
                 >
                   <img
                     src={paymentSystemLogos[paymentSystem]}
@@ -189,12 +202,12 @@ export const BankCard: FC<IBankCardProps> = ({
             <button
               onClick={handleEditClick}
               className={bem(BANK_CARD_BLOCK, 'edit-button')}
-              type="button"
+              type={BUTTON_TYPE_BUTTON}
               aria-label={BANK_CARD_EDIT_LABEL}
             >
               <FiEdit2
                 className={bem(BANK_CARD_BLOCK, 'edit-icon')}
-                aria-hidden="true"
+                aria-hidden={ARIA_HIDDEN_TRUE}
               />
             </button>
 

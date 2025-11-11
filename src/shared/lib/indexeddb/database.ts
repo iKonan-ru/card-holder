@@ -6,8 +6,12 @@ import {
   CARDS_ORDER_INDEX,
 } from './constants';
 import type { IBankCard } from '@entities/bank-card';
+import { INITIAL_NULL, INITIAL_FALSE } from '../constants/constants';
+import { ERROR_FAILED_TO_OPEN_DATABASE } from '../constants/errors';
 
-let databaseInstance: IDBDatabase | null = null;
+let databaseInstance: IDBDatabase | null = INITIAL_NULL;
+
+const INDEX_UNIQUE_FALSE = INITIAL_FALSE;
 
 const checkIsIDBOpenDBRequest = (
   target: EventTarget | null
@@ -26,7 +30,7 @@ export const initDatabase = (): Promise<IDBDatabase> => {
     const request = indexedDB.open(DATABASE_NAME, DATABASE_VERSION);
 
     request.onerror = () => {
-      reject(new Error('Failed to open database'));
+      reject(new Error(ERROR_FAILED_TO_OPEN_DATABASE));
     };
 
     request.onsuccess = () => {
@@ -53,14 +57,14 @@ export const initDatabase = (): Promise<IDBDatabase> => {
           keyPath: CARDS_KEY_PATH,
         });
         cardsStore.createIndex(CARDS_ORDER_INDEX, CARDS_ORDER_INDEX, {
-          unique: false,
+          unique: INDEX_UNIQUE_FALSE,
         });
       } else {
         cardsStore = transaction.objectStore(CARDS_STORE_NAME);
 
         if (!cardsStore.indexNames.contains(CARDS_ORDER_INDEX)) {
           cardsStore.createIndex(CARDS_ORDER_INDEX, CARDS_ORDER_INDEX, {
-            unique: false,
+            unique: INDEX_UNIQUE_FALSE,
           });
 
           const getAllRequest = cardsStore.getAll();

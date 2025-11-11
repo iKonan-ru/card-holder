@@ -1,29 +1,13 @@
-import { useEffect, useCallback, type FC } from 'react';
+import { type FC } from 'react';
 import { MainPage } from '@pages/main-page';
-import { ModalProvider, usePWAUpdate, setErrorModalHandler } from '@shared/lib';
+import { ModalProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
-import {
-  initGlobalErrorHandler,
-  ErrorHandlerProvider,
-  showError,
-} from '@features/error-handling';
-import { useCardManagementStore } from '@features/card-management';
+import { ErrorHandlerProvider } from '@features/error-handling';
+import { useApp } from './lib';
 import '@shared/assets/styles/index.less';
 
 export const App: FC = () => {
-  usePWAUpdate();
-  const setReorderMode = useCardManagementStore(
-    (state) => state.setReorderMode
-  );
-
-  useEffect(() => {
-    initGlobalErrorHandler();
-    setErrorModalHandler(showError);
-  }, []);
-
-  const handleModalOpen = useCallback(() => {
-    setReorderMode(false);
-  }, [setReorderMode]);
+  const { handleModalOpen } = useApp();
 
   return (
     <ModalProvider onModalOpen={handleModalOpen}>

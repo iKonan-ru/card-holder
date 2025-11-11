@@ -2,6 +2,7 @@ import { useMemo, type FC } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useClassName, ParentClassProvider } from '@shared/lib';
+import { DragHandle } from '../drag-handle';
 import {
   SORTABLE_CARD_ITEM_BLOCK,
   SORTABLE_CARD_ITEM_DRAGGING_OPACITY,
@@ -19,6 +20,7 @@ export const SortableCardItem: FC<ISortableCardItemProps> = ({
     attributes,
     listeners,
     setNodeRef,
+    setActivatorNodeRef,
     transform,
     transition,
     isDragging,
@@ -60,10 +62,14 @@ export const SortableCardItem: FC<ISortableCardItemProps> = ({
       style={style}
       className={className}
       {...attributes}
-      {...listeners}
     >
       <ParentClassProvider parentClass={SORTABLE_CARD_ITEM_BLOCK}>
         {children}
+        <DragHandle
+          ref={setActivatorNodeRef}
+          isVisible={isReorderMode}
+          {...listeners}
+        />
       </ParentClassProvider>
     </div>
   );

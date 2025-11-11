@@ -10,3 +10,4 @@ export * from './add-card-button';
 export * from './fab-button';
 export * from './reorder-toggle-button';
 export * from './sortable-card-item';
+export * from './drag-handle';

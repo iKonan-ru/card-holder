@@ -14,6 +14,9 @@ import {
   ERROR_FAILED_TO_ADD_CARD,
   ERROR_FAILED_TO_UPDATE_CARD,
   ERROR_FAILED_TO_DELETE_CARD,
+  INITIAL_NULL,
+  INITIAL_FALSE,
+  TYPE_NUMBER,
 } from '@shared/lib';
 import {
   executeCardOperation,
@@ -21,23 +24,28 @@ import {
   ERROR_FAILED_TO_REORDER_CARDS,
 } from '../lib';
 
+const INITIAL_CARDS: IBankCard[] = [];
+const INITIAL_FLIPPED_PAN = INITIAL_NULL;
+const INITIAL_IS_LOADING = INITIAL_FALSE;
+const INITIAL_IS_REORDER_MODE = INITIAL_FALSE;
+
 export const useCardManagementStore = create<
   ICardManagementState & ICardManagementActions
 >((set, get) => ({
-  cards: [],
-  flippedPan: null,
-  isLoading: false,
-  isReorderMode: false,
+  cards: INITIAL_CARDS,
+  flippedPan: INITIAL_FLIPPED_PAN,
+  isLoading: INITIAL_IS_LOADING,
+  isReorderMode: INITIAL_IS_REORDER_MODE,
 
   flipCard: (pan: IBankCard['pan']) => {
     set((state) => ({
-      flippedPan: state.flippedPan === pan ? null : pan,
+      flippedPan: state.flippedPan === pan ? INITIAL_NULL : pan,
     }));
   },
 
   unflipCards: () => {
     set(() => ({
-      flippedPan: null,
+      flippedPan: INITIAL_NULL,
     }));
   },
 
@@ -49,7 +57,7 @@ export const useCardManagementStore = create<
 
       return {
         isReorderMode: enabled,
-        flippedPan: null,
+        flippedPan: INITIAL_NULL,
       };
     });
   },
@@ -99,7 +107,7 @@ export const useCardManagementStore = create<
   },
 
   updateCard: async (card: IBankCard) => {
-    const hasOrder = typeof card.order === 'number';
+    const hasOrder = typeof card.order === TYPE_NUMBER;
 
     if (hasOrder) {
       return executeCardOperation({

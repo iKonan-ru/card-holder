@@ -1,5 +1,11 @@
 import type { IEncryptedPayload } from '../crypto';
 import { FILE_NAME_PREFIX, FILE_EXTENSION, FILE_MIME_TYPE } from './constants';
+import {
+  MONTH_OFFSET,
+  TYPE_STRING,
+  ERROR_FAILED_TO_READ_FILE,
+  ERROR_FAILED_TO_READ_FILE_AS_TEXT,
+} from '../constants';
 
 const TWO_DIGIT_PADDING = 2;
 const ZERO_PAD_STRING = '0';
@@ -8,7 +14,7 @@ export const generateExportFileName = (): string => {
   const now = new Date();
 
   const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(
+  const month = String(now.getMonth() + MONTH_OFFSET).padStart(
     TWO_DIGIT_PADDING,
     ZERO_PAD_STRING
   );
@@ -47,17 +53,17 @@ export const readFileAsText = async (file: File): Promise<string> => {
     reader.onload = () => {
       const result = reader.result;
 
-      if (typeof result === 'string') {
-        resolve(result);
+      if (result !== null && typeof result === TYPE_STRING) {
+        resolve(result as string);
 
         return;
       }
 
-      reject(new Error('Failed to read file as text'));
+      reject(new Error(ERROR_FAILED_TO_READ_FILE_AS_TEXT));
     };
 
     reader.onerror = () => {
-      reject(new Error('Failed to read file'));
+      reject(new Error(ERROR_FAILED_TO_READ_FILE));
     };
 
     reader.readAsText(file);

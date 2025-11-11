@@ -1,12 +1,22 @@
 import { useRef, useEffect, type FC } from 'react';
-import { bem, useClassName, ParentClassProvider } from '@shared/lib';
+import {
+  bem,
+  useClassName,
+  ParentClassProvider,
+  INITIAL_NULL,
+  ARIA_ROLE_DIALOG,
+  ARIA_MODAL_TRUE,
+} from '@shared/lib';
 import type { IModalProps } from './model';
-import { MODAL_BLOCK } from './lib/constants';
+import { MODAL_BLOCK, MODAL_MODIFIERS_CLOSING } from './lib/constants';
 import { ModalCloseContext } from './lib/modal-close-context';
 import { useModalClosingState } from './lib/use-modal-closing-state';
 import { useFocusTrap } from './lib/use-focus-trap';
 import { useOverlayClick } from './lib/use-overlay-click';
 import './modal.less';
+
+const INITIAL_OVERLAY_REF = INITIAL_NULL;
+const INITIAL_CONTENT_REF = INITIAL_NULL;
 
 export const Modal: FC<IModalProps> = ({
   children,
@@ -16,8 +26,8 @@ export const Modal: FC<IModalProps> = ({
   ariaLabelledBy,
   ariaDescribedBy,
 }) => {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(INITIAL_OVERLAY_REF);
+  const contentRef = useRef<HTMLDivElement>(INITIAL_CONTENT_REF);
   const { isClosing, handleClose } = useModalClosingState(onClose, overlayRef);
 
   useEffect(() => {
@@ -35,7 +45,7 @@ export const Modal: FC<IModalProps> = ({
     handleContentMouseDown,
   } = useOverlayClick(handleClose, isTopModal);
 
-  const modifiers = isClosing ? ['closing'] : undefined;
+  const modifiers = isClosing ? MODAL_MODIFIERS_CLOSING : undefined;
 
   const className = useClassName({
     blockName: MODAL_BLOCK,
@@ -53,8 +63,8 @@ export const Modal: FC<IModalProps> = ({
     >
       <div
         ref={contentRef}
-        role="dialog"
-        aria-modal="true"
+        role={ARIA_ROLE_DIALOG}
+        aria-modal={ARIA_MODAL_TRUE}
         aria-labelledby={ariaLabelledBy}
         aria-describedby={ariaDescribedBy}
         className={contentClassName}

@@ -63,3 +63,22 @@ export const EMPTY_CARD_FORM = {
   type: '',
   phrase: '',
 };
+
+export const FIELD_NAME_PAN = 'pan';
+export const FIELD_NAME_EXPIRES = 'expires';
+export const FIELD_NAME_CVV = 'cvv';
+export const FIELD_NAME_PIN = 'pin';
+export const FIELD_NAME_PHRASE = 'phrase';
+export const FIELD_NAME_NAME = 'name';
+export const FIELD_NAME_TYPE = 'type';
+
+export const FIELD_REQUIRED_TRUE = true;
+export const FIELD_REQUIRED_FALSE = false;
+
+export const BUTTON_MODIFIER_PRIMARY = 'primary';
+export const BUTTON_MODIFIER_SECONDARY = 'secondary';
+export const BUTTON_MODIFIER_DANGER = 'danger';
+
+export const BUTTON_MODIFIERS_PRIMARY = [BUTTON_MODIFIER_PRIMARY];
+export const BUTTON_MODIFIERS_SECONDARY = [BUTTON_MODIFIER_SECONDARY];
+export const BUTTON_MODIFIERS_DANGER = [BUTTON_MODIFIER_DANGER];

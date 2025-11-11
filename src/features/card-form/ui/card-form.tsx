@@ -1,6 +1,12 @@
 import { type FC, useCallback, useMemo } from 'react';
 import type { ICardFormProps } from './model';
-import { bem, useClassName, useModal } from '@shared/lib';
+import {
+  bem,
+  useClassName,
+  useModal,
+  BUTTON_TYPE_SUBMIT,
+  BUTTON_TYPE_BUTTON,
+} from '@shared/lib';
 import {
   ValidatedField,
   ConfirmModal,
@@ -29,6 +35,9 @@ import {
   PIN_FIELD_CONFIG,
   TYPE_FIELD_CONFIG,
   PHRASE_FIELD_CONFIG,
+  BUTTON_MODIFIERS_PRIMARY,
+  BUTTON_MODIFIERS_SECONDARY,
+  BUTTON_MODIFIERS_DANGER,
 } from '../lib';
 import './card-form.less';
 
@@ -174,26 +183,35 @@ export const CardForm: FC<ICardFormProps> = ({
 
       <div className={bem(CARD_FORM_BLOCK, 'actions')}>
         <button
-          type="submit"
+          type={BUTTON_TYPE_SUBMIT}
           disabled={isSubmitting}
-          className={bem(bem(CARD_FORM_BLOCK, 'button'), ['primary'])}
+          className={bem(
+            bem(CARD_FORM_BLOCK, 'button'),
+            BUTTON_MODIFIERS_PRIMARY
+          )}
         >
           {submitButtonText}
         </button>
         <button
-          type="button"
+          type={BUTTON_TYPE_BUTTON}
           onClick={handleCancelClick}
           disabled={isSubmitting}
-          className={bem(bem(CARD_FORM_BLOCK, 'button'), ['secondary'])}
+          className={bem(
+            bem(CARD_FORM_BLOCK, 'button'),
+            BUTTON_MODIFIERS_SECONDARY
+          )}
         >
           {CANCEL_BUTTON_TEXT}
         </button>
         {isEditMode && (
           <button
-            type="button"
+            type={BUTTON_TYPE_BUTTON}
             onClick={handleDeleteClick}
             disabled={isSubmitting}
-            className={bem(bem(CARD_FORM_BLOCK, 'button'), ['danger'])}
+            className={bem(
+              bem(CARD_FORM_BLOCK, 'button'),
+              BUTTON_MODIFIERS_DANGER
+            )}
           >
             {DELETE_BUTTON_TEXT}
           </button>

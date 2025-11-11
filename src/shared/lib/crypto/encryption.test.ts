@@ -2,10 +2,14 @@
  * @vitest-environment node
  */
 
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { encryptData, decryptData } from './encryption';
 import type { IEncryptedPayload } from './types';
-import { FILE_FORMAT_VERSION, ERROR_DECRYPTION_FAILED } from './constants';
+import {
+  FILE_FORMAT_VERSION,
+  ERROR_DECRYPTION_FAILED,
+  ERROR_ENCRYPTION_FAILED,
+} from './constants';
 
 describe('encryptData', () => {
   const testPassword = 'test-password-12345';
@@ -67,6 +71,18 @@ describe('encryptData', () => {
 
     expect(result).toHaveProperty('encrypted');
     expect(result.encrypted).toBeTruthy();
+  });
+
+  it('должен выбрасывать ошибку при сбое шифрования', async () => {
+    const encryptSpy = vi
+      .spyOn(crypto.subtle, 'encrypt')
+      .mockRejectedValue(new Error('Encryption error'));
+
+    await expect(encryptData(testData, testPassword)).rejects.toThrowError(
+      ERROR_ENCRYPTION_FAILED
+    );
+
+    encryptSpy.mockRestore();
   });
 });
 

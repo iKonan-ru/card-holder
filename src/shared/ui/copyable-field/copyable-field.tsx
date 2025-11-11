@@ -8,14 +8,35 @@ import {
   type MouseEvent,
 } from 'react';
 import { FiCheck } from 'react-icons/fi';
-import { bem, logError, ERROR_FAILED_TO_COPY, useClassName } from '@shared/lib';
+import {
+  bem,
+  logError,
+  ERROR_FAILED_TO_COPY,
+  useClassName,
+  INITIAL_FALSE,
+  INITIAL_NULL,
+  KEY_ENTER,
+  KEY_SPACE,
+  ARIA_ROLE_BUTTON,
+  ARIA_ROLE_STATUS,
+  ARIA_LIVE_POLITE,
+  ARIA_ATOMIC_TRUE,
+  ARIA_HIDDEN_TRUE,
+  ARIA_TABINDEX_INTERACTIVE,
+} from '@shared/lib';
 import type { ICopyableFieldProps } from './model';
 import {
   COPY_INDICATOR_DURATION,
   COPYABLE_FIELD_BLOCK,
   COPY_TITLE_TEXT,
+  COPYABLE_FIELD_CONTEXT,
+  COPIED_ARIA_MESSAGE,
+  EMPTY_ARIA_MESSAGE,
 } from './lib';
 import './copyable-field.less';
+
+const INITIAL_IS_COPIED = INITIAL_FALSE;
+const INITIAL_TIMEOUT_REF = INITIAL_NULL;
 
 export const CopyableField: FC<ICopyableFieldProps> = ({
   value,
@@ -24,8 +45,8 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
   maskFn,
   modifier,
 }) => {
-  const [isCopied, setIsCopied] = useState(false);
-  const timeoutRef = useRef<number | null>(null);
+  const [isCopied, setIsCopied] = useState(INITIAL_IS_COPIED);
+  const timeoutRef = useRef<number | null>(INITIAL_TIMEOUT_REF);
 
   const handleCopy = useCallback(async () => {
     try {
@@ -44,7 +65,7 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
       logError({
         message: ERROR_FAILED_TO_COPY,
         error,
-        context: 'CopyableField',
+        context: COPYABLE_FIELD_CONTEXT,
       });
     }
   }, [value]);
@@ -59,7 +80,8 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLDivElement>) => {
-      const isActivationKey = event.key === 'Enter' || event.key === ' ';
+      const isActivationKey =
+        event.key === KEY_ENTER || event.key === KEY_SPACE;
 
       if (isActivationKey) {
         event.preventDefault();
@@ -91,8 +113,8 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
       )}
 
       <div
-        role="button"
-        tabIndex={0}
+        role={ARIA_ROLE_BUTTON}
+        tabIndex={ARIA_TABINDEX_INTERACTIVE}
         className={bem(COPYABLE_FIELD_BLOCK, 'value')}
         onClick={handleClick}
         onKeyDown={handleKeyDown}
@@ -103,18 +125,18 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
         {isCopied && (
           <FiCheck
             className={bem(COPYABLE_FIELD_BLOCK, 'indicator')}
-            aria-hidden="true"
+            aria-hidden={ARIA_HIDDEN_TRUE}
           />
         )}
       </div>
 
       <div
-        role="status"
-        aria-live="polite"
-        aria-atomic="true"
+        role={ARIA_ROLE_STATUS}
+        aria-live={ARIA_LIVE_POLITE}
+        aria-atomic={ARIA_ATOMIC_TRUE}
         className={bem(COPYABLE_FIELD_BLOCK, 'sr-only')}
       >
-        {isCopied ? 'Скопировано в буфер обмена' : ''}
+        {isCopied ? COPIED_ARIA_MESSAGE : EMPTY_ARIA_MESSAGE}
       </div>
     </div>
   );

@@ -9,6 +9,8 @@ import {
   CARD_LIST_BLOCK,
   CARD_LIST_ARIA_LABEL,
   DROP_ANIMATION,
+  CARD_LIST_MODIFIERS_DRAGGING,
+  CARD_LIST_MODIFIERS_EMPTY,
 } from '../../lib';
 import { DndContext, closestCenter, DragOverlay } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
@@ -42,7 +44,8 @@ export const CardList: FC = () => {
   const isDragging = activeCard !== null;
 
   const modifiers = useMemo(
-    () => (isDragging ? ['dragging'] : []),
+    () =>
+      isDragging ? CARD_LIST_MODIFIERS_DRAGGING : CARD_LIST_MODIFIERS_EMPTY,
     [isDragging]
   );
 

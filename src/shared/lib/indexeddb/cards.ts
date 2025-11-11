@@ -10,6 +10,10 @@ import {
   ERROR_FAILED_TO_CLEAR_CARDS,
   ERROR_FAILED_TO_UPDATE_CARDS_ORDER,
 } from '../constants/errors';
+import {
+  INDEXEDDB_MODE_READONLY,
+  INDEXEDDB_MODE_READWRITE,
+} from '../constants';
 import { getDatabase } from './database';
 
 const sortCardsByOrder = (cards: IBankCard[]): IBankCard[] => {
@@ -19,7 +23,7 @@ const sortCardsByOrder = (cards: IBankCard[]): IBankCard[] => {
 export const getAllCards = async (): Promise<IBankCard[]> => {
   const cards = await executeIndexedDBOperation({
     storeName: CARDS_STORE_NAME,
-    mode: 'readonly',
+    mode: INDEXEDDB_MODE_READONLY,
     operation: (store) => store.getAll(),
     errorMessage: ERROR_FAILED_TO_GET_CARDS,
   });
@@ -32,7 +36,7 @@ export const getCardByPan = async (
 ): Promise<IBankCard | undefined> => {
   return executeIndexedDBOperation({
     storeName: CARDS_STORE_NAME,
-    mode: 'readonly',
+    mode: INDEXEDDB_MODE_READONLY,
     operation: (store) => store.get(pan),
     errorMessage: ERROR_FAILED_TO_GET_CARD,
   });
@@ -49,7 +53,7 @@ export const checkCardExists = async (
 export const addCard = async (card: IBankCard): Promise<void> => {
   await executeIndexedDBOperation({
     storeName: CARDS_STORE_NAME,
-    mode: 'readwrite',
+    mode: INDEXEDDB_MODE_READWRITE,
     operation: (store) => store.add(card),
     errorMessage: ERROR_FAILED_TO_ADD_CARD,
   });
@@ -58,7 +62,7 @@ export const addCard = async (card: IBankCard): Promise<void> => {
 export const updateCard = async (card: IBankCard): Promise<void> => {
   await executeIndexedDBOperation({
     storeName: CARDS_STORE_NAME,
-    mode: 'readwrite',
+    mode: INDEXEDDB_MODE_READWRITE,
     operation: (store) => store.put(card),
     errorMessage: ERROR_FAILED_TO_UPDATE_CARD,
   });
@@ -67,7 +71,7 @@ export const updateCard = async (card: IBankCard): Promise<void> => {
 export const deleteCard = async (pan: IBankCard['pan']): Promise<void> => {
   return executeIndexedDBOperation({
     storeName: CARDS_STORE_NAME,
-    mode: 'readwrite',
+    mode: INDEXEDDB_MODE_READWRITE,
     operation: (store) => store.delete(pan),
     errorMessage: ERROR_FAILED_TO_DELETE_CARD,
   });
@@ -76,7 +80,7 @@ export const deleteCard = async (pan: IBankCard['pan']): Promise<void> => {
 export const clearAllCards = async (): Promise<void> => {
   return executeIndexedDBOperation({
     storeName: CARDS_STORE_NAME,
-    mode: 'readwrite',
+    mode: INDEXEDDB_MODE_READWRITE,
     operation: (store) => store.clear(),
     errorMessage: ERROR_FAILED_TO_CLEAR_CARDS,
   });
@@ -86,7 +90,10 @@ export const updateCardsOrder = async (cards: IBankCard[]): Promise<void> => {
   const database = await getDatabase();
 
   return new Promise((resolve, reject) => {
-    const transaction = database.transaction([CARDS_STORE_NAME], 'readwrite');
+    const transaction = database.transaction(
+      [CARDS_STORE_NAME],
+      INDEXEDDB_MODE_READWRITE
+    );
     const store = transaction.objectStore(CARDS_STORE_NAME);
 
     cards.forEach((card, index) => {

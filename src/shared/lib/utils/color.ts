@@ -1,3 +1,5 @@
+import { EMPTY_STRING } from '../constants';
+
 const HEX_COLOR_PATTERN = /^[0-9A-Fa-f]{6}$/;
 const MIN_RGB_VALUE = 0;
 const MAX_RGB_VALUE = 255;
@@ -12,7 +14,6 @@ const RGB_BLUE_END = 6;
 const PERCENT_BASE = 100;
 const HASH_CHAR = '#';
 const ZERO_CHAR = '0';
-const EMPTY_STRING = '';
 
 export const hexToRgb = (
   hex: string

@@ -1,41 +1,51 @@
 import { BANKS_BINS } from '@shared/data/banks-bins';
 import type { PaymentSystem, IPaymentSystemRule } from './types';
+import { INITIAL_NULL, INITIAL_FALSE } from '../constants';
 
 const FIRST_DIGIT_INDEX = 0;
 const FIRST_TWO_DIGITS_LENGTH = 2;
 const MIN_CARD_PREFIX_LENGTH = 6;
 
 const VISA_PREFIX = '4';
-const MASTERCARD_PREFIXES = ['5', '6'];
+const MASTERCARD_PREFIX_FIVE = '5';
+const MASTERCARD_PREFIX_SIX = '6';
+const MASTERCARD_PREFIXES = [MASTERCARD_PREFIX_FIVE, MASTERCARD_PREFIX_SIX];
 const MIR_PREFIX = '2';
 const UZCARD_PREFIX = '8';
 const HUMO_PREFIX = '9';
 const JCB_PREFIX = '35';
 
+const PAYMENT_SYSTEM_VISA: PaymentSystem = 'visa';
+const PAYMENT_SYSTEM_MASTERCARD: PaymentSystem = 'mastercard';
+const PAYMENT_SYSTEM_MIR: PaymentSystem = 'mir';
+const PAYMENT_SYSTEM_UZCARD: PaymentSystem = 'uzcard';
+const PAYMENT_SYSTEM_HUMO: PaymentSystem = 'humo';
+const PAYMENT_SYSTEM_JCB: PaymentSystem = 'jcb';
+
 const PAYMENT_SYSTEM_RULES: IPaymentSystemRule[] = [
   {
-    system: 'visa',
+    system: PAYMENT_SYSTEM_VISA,
     checkPrefix: (pan: string) => pan[FIRST_DIGIT_INDEX] === VISA_PREFIX,
   },
   {
-    system: 'mastercard',
+    system: PAYMENT_SYSTEM_MASTERCARD,
     checkPrefix: (pan: string) =>
       MASTERCARD_PREFIXES.includes(pan[FIRST_DIGIT_INDEX]),
   },
   {
-    system: 'mir',
+    system: PAYMENT_SYSTEM_MIR,
     checkPrefix: (pan: string) => pan[FIRST_DIGIT_INDEX] === MIR_PREFIX,
   },
   {
-    system: 'uzcard',
+    system: PAYMENT_SYSTEM_UZCARD,
     checkPrefix: (pan: string) => pan[FIRST_DIGIT_INDEX] === UZCARD_PREFIX,
   },
   {
-    system: 'humo',
+    system: PAYMENT_SYSTEM_HUMO,
     checkPrefix: (pan: string) => pan[FIRST_DIGIT_INDEX] === HUMO_PREFIX,
   },
   {
-    system: 'jcb',
+    system: PAYMENT_SYSTEM_JCB,
     checkPrefix: (pan: string) => {
       const hasSufficientLength = pan.length >= FIRST_TWO_DIGITS_LENGTH;
       const firstTwoDigits = pan.substring(
@@ -54,17 +64,18 @@ const PAN_MASKED_FORMAT = '$1 $2•• •••• $5';
 const EXPIRES_FORMAT_PATTERN = /(\d{2})(\d{2})/;
 const EXPIRES_FORMAT_REPLACEMENT = '$1/$2';
 const MASK_CHAR = '•';
+const DEFAULT_SHOW_VALUE = INITIAL_FALSE;
 
 export function getPaymentSystem(pan: string): PaymentSystem | null {
   if (!pan) {
-    return null;
+    return INITIAL_NULL;
   }
 
   const matchedRule = PAYMENT_SYSTEM_RULES.find((rule) =>
     rule.checkPrefix(pan)
   );
 
-  return matchedRule ? matchedRule.system : null;
+  return matchedRule ? matchedRule.system : INITIAL_NULL;
 }
 
 export function getBankByCardNumber(cardNumber: string): string | null {
@@ -72,7 +83,7 @@ export function getBankByCardNumber(cardNumber: string): string | null {
     !cardNumber || cardNumber.length < MIN_CARD_PREFIX_LENGTH;
 
   if (isCardNumberTooShort) {
-    return null;
+    return INITIAL_NULL;
   }
 
   const prefix = cardNumber.substring(
@@ -88,16 +99,16 @@ export function getBankByCardNumber(cardNumber: string): string | null {
     }
   }
 
-  return null;
+  return INITIAL_NULL;
 }
 
-export const maskPan = (number: string, showValue = false) => {
+export const maskPan = (number: string, showValue = DEFAULT_SHOW_VALUE) => {
   const format = showValue ? PAN_VISIBLE_FORMAT : PAN_MASKED_FORMAT;
 
   return number.replace(PAN_MASK_PATTERN, format);
 };
 
-export const maskValue = (value: string, showValue = false) => {
+export const maskValue = (value: string, showValue = DEFAULT_SHOW_VALUE) => {
   return showValue ? value : MASK_CHAR.repeat(value.length);
 };
 
