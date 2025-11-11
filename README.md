@@ -1,7 +1,6 @@
 # Card Holder
 
 [![CI](https://github.com/iKonan-ru/card-holder/actions/workflows/ci.yml/badge.svg)](https://github.com/iKonan-ru/card-holder/actions/workflows/ci.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Test Coverage](https://img.shields.io/badge/coverage-98.44%25-brightgreen.svg)](./coverage)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19-blue.svg)](https://react.dev/)
@@ -142,26 +141,5 @@ src/
 - TypeScript в strict mode
 - ESLint + Prettier
 - Высокое покрытие тестами
-
-## Контрибуция
-
-Приветствуются любые виды вклада! Пожалуйста:
-
-1. Форкните репозиторий
-2. Создайте feature-ветку (`git checkout -b feature/amazing-feature`)
-3. Закоммитьте изменения (`git commit -m 'Add amazing feature'`)
-4. Запушьте в ветку (`git push origin feature/amazing-feature`)
-5. Откройте Pull Request
-
-### Требования к PR:
-
-- Все тесты должны проходить (`npm test`)
-- Линтинг без ошибок (`npm run lint`)
-- Покрытие новой функциональности тестами
-- Обновление документации при необходимости
-
-## Лицензия
-
-Этот проект распространяется под лицензией MIT. Подробности в файле [LICENSE](./LICENSE).
 
 ---
