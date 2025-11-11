@@ -7,41 +7,10 @@
   max-width: @card-max-width;
   perspective: 2000px;
   cursor: pointer;
-  transition:
-    transform @duration-normal @easing-ease,
-    opacity @duration-normal @easing-ease;
-
-  &:hover {
-    transform: translateY(-0.3125rem);
-
-    @media (max-width: @tablet) {
-      transform: none;
-    }
-  }
 
   &_reorder-mode {
     pointer-events: none;
     position: relative;
-    animation: shaking @duration-slow @easing-ease-out infinite;
-    transition: transform @duration-normal @easing-ease;
-
-    @keyframes shaking {
-      0% {
-        transform: rotate(0deg);
-      }
-      25% {
-        transform: rotate(1deg);
-      }
-      50% {
-        transform: rotate(0deg);
-      }
-      75% {
-        transform: rotate(-1deg);
-      }
-      100% {
-        transform: rotate(0deg);
-      }
-    }
 
     &::before {
       content: '';

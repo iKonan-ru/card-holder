@@ -1,9 +1,4 @@
 export const SORTABLE_CARD_ITEM_BLOCK = 'sortable-card-item';
 
-export const SORTABLE_CARD_ITEM_TRANSFORM_DURATION = 350;
-export const SORTABLE_CARD_ITEM_TRANSFORM_EASING =
-  'cubic-bezier(0.25, 0.1, 0.25, 1)';
-export const SORTABLE_CARD_ITEM_OPACITY_DURATION = 350;
-export const SORTABLE_CARD_ITEM_OPACITY_EASING = 'ease-out';
 export const SORTABLE_CARD_ITEM_DEFAULT_OPACITY = 1;
 export const SORTABLE_CARD_ITEM_DRAGGING_OPACITY = 0.3;

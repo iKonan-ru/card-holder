@@ -56,9 +56,7 @@ describe('SortableCardItem', () => {
       </DndWrapper>
     );
 
-    expect(
-      container.querySelector('.sortable-card-item__wrapper')
-    ).toBeInTheDocument();
+    expect(container.querySelector('.sortable-card-item')).toBeInTheDocument();
     expect(container.textContent).toContain('Test Content');
   });
 
@@ -75,14 +73,14 @@ describe('SortableCardItem', () => {
     );
 
     const wrapper = container.querySelector(
-      '.sortable-card-item__wrapper'
+      '.sortable-card-item'
     ) as HTMLElement;
 
     expect(wrapper).toBeInTheDocument();
     expect(wrapper.style.transform).toBeDefined();
   });
 
-  it('должна иметь базовый класс sortable-card-item__wrapper', () => {
+  it('должна иметь базовый класс sortable-card-item', () => {
     const { container } = render(
       <DndWrapper>
         <SortableCardItem
@@ -94,11 +92,11 @@ describe('SortableCardItem', () => {
       </DndWrapper>
     );
 
-    const wrapper = container.querySelector('.sortable-card-item__wrapper');
+    const wrapper = container.querySelector('.sortable-card-item');
     expect(wrapper).toBeInTheDocument();
   });
 
-  it('должна применять стили opacity и cursor', () => {
+  it('должна применять стили opacity', () => {
     const { container } = render(
       <DndWrapper>
         <SortableCardItem
@@ -111,11 +109,10 @@ describe('SortableCardItem', () => {
     );
 
     const wrapper = container.querySelector(
-      '.sortable-card-item__wrapper'
+      '.sortable-card-item'
     ) as HTMLElement;
 
     expect(wrapper.style.opacity).toBeDefined();
-    expect(wrapper.style.cursor).toBeDefined();
   });
 
   it('должна добавлять модификатор dragging при перетаскивании', async () => {
@@ -169,9 +166,7 @@ describe('SortableCardItem', () => {
       </DndWrapper>
     );
 
-    const wrapper = container.querySelector(
-      '.sortable-card-item__wrapper_dragging'
-    );
+    const wrapper = container.querySelector('.sortable-card-item_dragging');
     expect(wrapper).toBeInTheDocument();
   });
 
@@ -187,9 +182,7 @@ describe('SortableCardItem', () => {
       </DndWrapper>
     );
 
-    const wrapper = container.querySelector(
-      '.sortable-card-item__wrapper_reorder'
-    );
+    const wrapper = container.querySelector('.sortable-card-item_reorder');
     expect(wrapper).toBeInTheDocument();
   });
 });
