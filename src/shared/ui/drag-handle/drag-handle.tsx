@@ -1,8 +1,8 @@
 import { forwardRef, useMemo } from 'react';
 import { MdDragIndicator } from 'react-icons/md';
 import { bem, useClassName } from '@shared/lib';
-import { DRAG_HANDLE_BLOCK, DRAG_HANDLE_ARIA_LABEL } from './lib/constants';
-import type { IDragHandleProps } from './model/types';
+import { DRAG_HANDLE_BLOCK, DRAG_HANDLE_ARIA_LABEL } from './lib';
+import type { IDragHandleProps } from './model';
 import './drag-handle.less';
 
 export const DragHandle = forwardRef<HTMLButtonElement, IDragHandleProps>(

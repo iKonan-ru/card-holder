@@ -122,4 +122,76 @@ describe('readFileAsText', () => {
     expect(() => readFileAsText(textFile)).not.toThrow();
     expect(() => readFileAsText(jsonFile)).not.toThrow();
   });
+
+  it('должен обрабатывать ошибку чтения файла', async () => {
+    const file = new File(['test'], 'test.txt', { type: 'text/plain' });
+
+    vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
+      this: FileReader
+    ) {
+      if (this.onerror) {
+        const errorEvent = Object.create(ProgressEvent.prototype, {
+          type: { value: 'error' },
+          target: { value: this },
+        });
+        this.onerror(errorEvent);
+      }
+    });
+
+    await expect(readFileAsText(file)).rejects.toThrow('Failed to read file');
+
+    vi.restoreAllMocks();
+  });
+
+  it('должен обрабатывать ошибку когда результат null', async () => {
+    const file = new File(['test'], 'test.txt', { type: 'text/plain' });
+
+    vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
+      this: FileReader
+    ) {
+      if (this.onload) {
+        Object.defineProperty(this, 'result', {
+          value: null,
+          writable: true,
+        });
+        const loadEvent = Object.create(ProgressEvent.prototype, {
+          type: { value: 'load' },
+          target: { value: this },
+        });
+        this.onload(loadEvent);
+      }
+    });
+
+    await expect(readFileAsText(file)).rejects.toThrow(
+      'Failed to read file as text'
+    );
+
+    vi.restoreAllMocks();
+  });
+
+  it('должен обрабатывать ошибку когда результат не строка', async () => {
+    const file = new File(['test'], 'test.txt', { type: 'text/plain' });
+
+    vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
+      this: FileReader
+    ) {
+      if (this.onload) {
+        Object.defineProperty(this, 'result', {
+          value: new ArrayBuffer(8),
+          writable: true,
+        });
+        const loadEvent = Object.create(ProgressEvent.prototype, {
+          type: { value: 'load' },
+          target: { value: this },
+        });
+        this.onload(loadEvent);
+      }
+    });
+
+    await expect(readFileAsText(file)).rejects.toThrow(
+      'Failed to read file as text'
+    );
+
+    vi.restoreAllMocks();
+  });
 });
