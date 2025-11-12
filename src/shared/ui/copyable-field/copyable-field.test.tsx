@@ -205,6 +205,31 @@ describe('CopyableField', () => {
     consoleErrorSpy.mockRestore();
   });
 
+  it('должна скрывать индикатор после таймаута', async () => {
+    clipboardWriteTextMock.mockResolvedValue(undefined);
+
+    render(
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
+    );
+
+    const element = screen.getByText(TEST_VALUE);
+    fireEvent.click(element);
+
+    await vi.waitFor(() => {
+      const indicator = document.querySelector('.copyable-field__indicator');
+      expect(indicator).toBeInTheDocument();
+    });
+
+    vi.advanceTimersByTime(2000);
+
+    await vi.waitFor(() => {
+      const indicator = document.querySelector('.copyable-field__indicator');
+      expect(indicator).not.toBeInTheDocument();
+    });
+  });
+
   it('должна очищать таймаут при размонтировании компонента', async () => {
     clipboardWriteTextMock.mockResolvedValue(undefined);
 

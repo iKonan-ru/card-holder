@@ -37,6 +37,7 @@ describe('useApp', () => {
         addCard: vi.fn(),
         updateCard: vi.fn(),
         deleteCard: vi.fn(),
+        clearAllCards: vi.fn(),
         reorderCards: vi.fn(),
         setCards: vi.fn(),
         toggleReorderMode: vi.fn(),

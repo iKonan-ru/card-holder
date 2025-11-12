@@ -30,6 +30,7 @@ vi.mock('@shared/lib', async () => {
     addCard: vi.fn().mockResolvedValue(undefined),
     updateCard: vi.fn().mockResolvedValue(undefined),
     deleteCard: vi.fn().mockResolvedValue(undefined),
+    clearAllCards: vi.fn().mockResolvedValue(undefined),
     updateCardsOrder: vi.fn().mockResolvedValue(undefined),
   };
 });
@@ -529,6 +530,89 @@ describe('useCardManagementStore', () => {
       toggleReorderMode();
       expect(useCardManagementStore.getState().flippedPan).toBeNull();
       expect(useCardManagementStore.getState().isReorderMode).toBe(false);
+    });
+  });
+
+  describe('clearAllCards', () => {
+    beforeEach(() => {
+      vi.clearAllMocks();
+    });
+
+    it('должна очищать все карты и обновлять state', async () => {
+      vi.mocked(sharedLib.clearAllCards).mockResolvedValueOnce(undefined);
+      vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce([]);
+
+      const { clearAllCards } = useCardManagementStore.getState();
+
+      expect(useCardManagementStore.getState().cards.length).toBeGreaterThan(0);
+
+      await clearAllCards();
+
+      expect(sharedLib.clearAllCards).toHaveBeenCalledOnce();
+      expect(sharedLib.getAllCards).toHaveBeenCalled();
+      expect(useCardManagementStore.getState().cards).toEqual([]);
+    });
+
+    it('должна вызывать executeCardOperation с правильными параметрами', async () => {
+      vi.mocked(sharedLib.clearAllCards).mockResolvedValueOnce(undefined);
+      vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce([]);
+
+      const { clearAllCards } = useCardManagementStore.getState();
+
+      await clearAllCards();
+
+      expect(sharedLib.clearAllCards).toHaveBeenCalledOnce();
+    });
+
+    it('должна обрабатывать ошибки при очистке карт', async () => {
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+      const mockError = new Error('Clear cards error');
+
+      vi.mocked(sharedLib.clearAllCards).mockRejectedValueOnce(mockError);
+
+      const { clearAllCards } = useCardManagementStore.getState();
+
+      await expect(clearAllCards()).rejects.toThrow(mockError);
+
+      expect(consoleErrorSpy).toHaveBeenCalledWith(
+        '[Card Holder] [CardManagementStore.clearAllCards] Не удалось очистить карты',
+        mockError
+      );
+
+      consoleErrorSpy.mockRestore();
+    });
+
+    it('должна обновлять cards в state после успешной очистки', async () => {
+      const emptyCards: never[] = [];
+
+      vi.mocked(sharedLib.clearAllCards).mockResolvedValueOnce(undefined);
+      vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce(emptyCards);
+
+      const { clearAllCards } = useCardManagementStore.getState();
+
+      await clearAllCards();
+
+      expect(useCardManagementStore.getState().cards).toEqual(emptyCards);
+    });
+
+    it('не должна изменять state при ошибке очистки', async () => {
+      const consoleErrorSpy = vi
+        .spyOn(console, 'error')
+        .mockImplementation(() => {});
+      const initialCards = useCardManagementStore.getState().cards;
+      const mockError = new Error('Clear error');
+
+      vi.mocked(sharedLib.clearAllCards).mockRejectedValueOnce(mockError);
+
+      const { clearAllCards } = useCardManagementStore.getState();
+
+      await expect(clearAllCards()).rejects.toThrow();
+
+      expect(useCardManagementStore.getState().cards).toEqual(initialCards);
+
+      consoleErrorSpy.mockRestore();
     });
   });
 });

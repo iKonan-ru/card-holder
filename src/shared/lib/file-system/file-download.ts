@@ -1,14 +1,18 @@
 export const downloadFile = (blob: Blob, fileName: string): void => {
   const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
 
-  link.href = url;
-  link.download = fileName;
-  link.style.display = 'none';
+  try {
+    const link = document.createElement('a');
 
-  document.body.appendChild(link);
-  link.click();
+    link.href = url;
+    link.download = fileName;
+    link.style.display = 'none';
 
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
 };

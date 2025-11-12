@@ -1,6 +1,8 @@
 export const ERROR_FAILED_TO_OPEN_DATABASE = 'Failed to open database';
 export const ERROR_FAILED_TO_READ_FILE = 'Failed to read file';
 export const ERROR_FAILED_TO_READ_FILE_AS_TEXT = 'Failed to read file as text';
+export const ERROR_FILE_TOO_LARGE = 'Файл слишком большой (максимум 10 МБ)';
+export const ERROR_INVALID_FILE_TYPE = 'Недопустимый тип файла';
 export const ERROR_FAILED_TO_ADD_CARD = 'Не удалось добавить карту';
 export const ERROR_FAILED_TO_UPDATE_CARD = 'Не удалось обновить карту';
 export const ERROR_FAILED_TO_DELETE_CARD = 'Не удалось удалить карту';

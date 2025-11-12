@@ -11,6 +11,7 @@ import { FiCheck } from 'react-icons/fi';
 import {
   bem,
   logError,
+  copyToClipboard,
   ERROR_FAILED_TO_COPY,
   useClassName,
   INITIAL_FALSE,
@@ -50,7 +51,7 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
 
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(value);
+      await copyToClipboard(value);
 
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);

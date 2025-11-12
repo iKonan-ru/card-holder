@@ -100,31 +100,56 @@ describe('createBlobFromPayload', () => {
 
 describe('readFileAsText', () => {
   it('должен возвращать promise', () => {
-    const file = new File(['test'], 'test.txt', { type: 'text/plain' });
+    const file = new File(['test'], 'test.cbk', {
+      type: 'application/octet-stream',
+    });
 
     const result = readFileAsText(file);
 
     expect(result).toBeInstanceOf(Promise);
   });
 
-  it('должен принимать File объект', () => {
-    const file = new File(['test content'], 'test.txt', { type: 'text/plain' });
+  it('должен принимать File объект с допустимым MIME-типом', () => {
+    const file = new File(['test content'], 'test.cbk', {
+      type: 'application/octet-stream',
+    });
 
     expect(() => readFileAsText(file)).not.toThrow();
   });
 
-  it('должен обрабатывать разные типы файлов', () => {
-    const textFile = new File(['text'], 'test.txt', { type: 'text/plain' });
+  it('должен обрабатывать допустимые типы файлов', () => {
+    const octetFile = new File(['data'], 'test.cbk', {
+      type: 'application/octet-stream',
+    });
     const jsonFile = new File(['{}'], 'test.json', {
       type: 'application/json',
     });
 
-    expect(() => readFileAsText(textFile)).not.toThrow();
+    expect(() => readFileAsText(octetFile)).not.toThrow();
     expect(() => readFileAsText(jsonFile)).not.toThrow();
   });
 
-  it('должен обрабатывать ошибку чтения файла', async () => {
+  it('должен отклонять файлы с недопустимым MIME-типом', async () => {
     const file = new File(['test'], 'test.txt', { type: 'text/plain' });
+
+    await expect(readFileAsText(file)).rejects.toThrow(
+      'Недопустимый тип файла'
+    );
+  });
+
+  it('должен отклонять файлы больше 10 МБ', async () => {
+    const largeContent = new Array(11 * 1024 * 1024).fill('x').join('');
+    const file = new File([largeContent], 'large.cbk', {
+      type: 'application/octet-stream',
+    });
+
+    await expect(readFileAsText(file)).rejects.toThrow('Файл слишком большой');
+  });
+
+  it('должен обрабатывать ошибку чтения файла', async () => {
+    const file = new File(['test'], 'test.cbk', {
+      type: 'application/octet-stream',
+    });
 
     vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
       this: FileReader
@@ -144,7 +169,9 @@ describe('readFileAsText', () => {
   });
 
   it('должен обрабатывать ошибку когда результат null', async () => {
-    const file = new File(['test'], 'test.txt', { type: 'text/plain' });
+    const file = new File(['test'], 'test.cbk', {
+      type: 'application/octet-stream',
+    });
 
     vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
       this: FileReader
@@ -170,7 +197,9 @@ describe('readFileAsText', () => {
   });
 
   it('должен обрабатывать ошибку когда результат не строка', async () => {
-    const file = new File(['test'], 'test.txt', { type: 'text/plain' });
+    const file = new File(['test'], 'test.cbk', {
+      type: 'application/octet-stream',
+    });
 
     vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
       this: FileReader

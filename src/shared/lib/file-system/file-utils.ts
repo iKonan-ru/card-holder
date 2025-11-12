@@ -1,10 +1,18 @@
 import type { IEncryptedPayload } from '../crypto';
-import { FILE_NAME_PREFIX, FILE_EXTENSION, FILE_MIME_TYPE } from './constants';
+import {
+  FILE_NAME_PREFIX,
+  FILE_EXTENSION,
+  FILE_MIME_TYPE,
+  MAX_FILE_SIZE,
+  ALLOWED_MIME_TYPES,
+} from './constants';
 import {
   MONTH_OFFSET,
   TYPE_STRING,
   ERROR_FAILED_TO_READ_FILE,
   ERROR_FAILED_TO_READ_FILE_AS_TEXT,
+  ERROR_FILE_TOO_LARGE,
+  ERROR_INVALID_FILE_TYPE,
 } from '../constants';
 
 const TWO_DIGIT_PADDING = 2;
@@ -47,6 +55,20 @@ export const createBlobFromPayload = (payload: IEncryptedPayload): Blob => {
 };
 
 export const readFileAsText = async (file: File): Promise<string> => {
+  const isFileSizeValid = file.size <= MAX_FILE_SIZE;
+
+  if (!isFileSizeValid) {
+    throw new Error(ERROR_FILE_TOO_LARGE);
+  }
+
+  const isMimeTypeAllowed = ALLOWED_MIME_TYPES.includes(
+    file.type as (typeof ALLOWED_MIME_TYPES)[number]
+  );
+
+  if (!isMimeTypeAllowed) {
+    throw new Error(ERROR_INVALID_FILE_TYPE);
+  }
+
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
 

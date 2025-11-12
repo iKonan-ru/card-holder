@@ -8,12 +8,14 @@ import {
   addCard as addCardToDb,
   updateCard as updateCardInDb,
   deleteCard as deleteCardFromDb,
+  clearAllCards as clearAllCardsFromDb,
   updateCardsOrder as updateCardsOrderInDb,
   initDatabase,
   logError,
   ERROR_FAILED_TO_ADD_CARD,
   ERROR_FAILED_TO_UPDATE_CARD,
   ERROR_FAILED_TO_DELETE_CARD,
+  ERROR_FAILED_TO_CLEAR_CARDS,
   INITIAL_NULL,
   INITIAL_FALSE,
   TYPE_NUMBER,
@@ -142,6 +144,17 @@ export const useCardManagementStore = create<
       operation: () => deleteCardFromDb(pan),
       errorMessage: ERROR_FAILED_TO_DELETE_CARD,
       context: 'CardManagementStore.deleteCard',
+      onSuccess: (updatedCards) => {
+        set({ cards: updatedCards });
+      },
+    });
+  },
+
+  clearAllCards: async () => {
+    return executeCardOperation({
+      operation: () => clearAllCardsFromDb(),
+      errorMessage: ERROR_FAILED_TO_CLEAR_CARDS,
+      context: 'CardManagementStore.clearAllCards',
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },

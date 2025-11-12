@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { IModalContextValue } from '@shared/lib';
+import { generateRandomId } from '@shared/lib';
 import { ErrorContent } from '../ui/error-content';
 import { translateError } from './utils';
 import {
@@ -26,7 +27,7 @@ export const showError = (params: {
   }
 
   const translatedMessage = translateError(params.message);
-  const errorId = `${Date.now()}-${Math.random()}`;
+  const errorId = `${Date.now()}-${generateRandomId()}`;
   const modalId = `${ERROR_MODAL_ID_PREFIX}-${errorId}`;
 
   const modalContent: ReactNode = <ErrorContent message={translatedMessage} />;

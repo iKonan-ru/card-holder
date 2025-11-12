@@ -2,6 +2,7 @@ import { type FC, useMemo } from 'react';
 import { ParentClassProvider, useClassName } from '@shared/lib';
 import { ReorderToggleButton } from '@shared/ui';
 import { ExportButton, ImportButton } from '@features/card-export-import';
+import { ClearButton } from '@features/clear-data';
 import {
   useCardList,
   useDndSensors,
@@ -99,6 +100,7 @@ export const CardList: FC = () => {
                 isActive={isReorderMode}
                 onClick={handleToggleReorderMode}
               />
+              <ClearButton />
             </>
           )}
         </ActionButtonsContainer>

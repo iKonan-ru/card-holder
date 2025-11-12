@@ -7,6 +7,7 @@ import {
   useModalContext,
   FILE_EXTENSION,
   checkIsFileSelectionCancelled,
+  withRateLimit,
 } from '@shared/lib';
 import { handleError, createImportSuccessMessage } from '../../../../lib/utils';
 import {
@@ -64,7 +65,9 @@ export const useImportCards = (
         try {
           setIsImporting(true);
 
-          const decryptedData = await decryptData(payload, password);
+          const decryptedData = await withRateLimit(() => {
+            return decryptData(payload, password);
+          });
 
           const importedCards = parseDecryptedCards(decryptedData);
 
