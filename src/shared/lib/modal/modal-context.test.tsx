@@ -33,7 +33,13 @@ const createMockStore = (overrides = {}) => ({
 });
 
 const TestComponent = () => {
-  const { openModal, closeModal, closeAllModals, modals } = useModalContext();
+  const {
+    openModal,
+    closeModal,
+    closeAllModals,
+    updateModalPreventClose,
+    modals,
+  } = useModalContext();
 
   const handleOpenModal = () => {
     openModal('test-modal', <div>{MODAL_CONTENT_TEXT}</div>);
@@ -51,15 +57,33 @@ const TestComponent = () => {
     closeAllModals();
   };
 
+  const handlePreventClose = () => {
+    updateModalPreventClose('test-modal', true);
+  };
+
+  const handleAllowClose = () => {
+    updateModalPreventClose('test-modal', false);
+  };
+
   return (
     <div>
       <button onClick={handleOpenModal}>Open Modal</button>
       <button onClick={handleOpenSecondModal}>Open Second Modal</button>
       <button onClick={handleCloseModal}>Close Modal</button>
       <button onClick={handleCloseAllModals}>Close All Modals</button>
+      <button onClick={handlePreventClose}>Prevent Close</button>
+      <button onClick={handleAllowClose}>Allow Close</button>
       <div data-testid="modals-count">{modals.length}</div>
       {modals.map((modal) => (
-        <div key={modal.id}>{modal.content}</div>
+        <div
+          key={modal.id}
+          data-testid={`modal-${modal.id}`}
+        >
+          {modal.content}
+          {modal.preventClose && (
+            <span data-testid="prevent-close-flag">prevent-close</span>
+          )}
+        </div>
       ))}
     </div>
   );
@@ -163,6 +187,38 @@ describe('ModalProvider', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('modals-count')).toHaveTextContent('0');
+    });
+  });
+
+  it('должен обновлять preventClose для модального окна', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    await user.click(screen.getByText('Open Modal'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('modal-test-modal')).toBeInTheDocument();
+    });
+
+    expect(screen.queryByTestId('prevent-close-flag')).not.toBeInTheDocument();
+
+    await user.click(screen.getByText('Prevent Close'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('prevent-close-flag')).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Allow Close'));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('prevent-close-flag')
+      ).not.toBeInTheDocument();
     });
   });
 

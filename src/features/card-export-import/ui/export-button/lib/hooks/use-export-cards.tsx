@@ -34,7 +34,11 @@ export const useExportCards = (
   const modalContext = useModalContext();
 
   const handleExportWithPassword = useCallback(
-    async (password: string, closePasswordModal: () => void) => {
+    async (
+      password: string,
+      closePasswordModal: () => void,
+      setPasswordError: (error: string) => void
+    ) => {
       try {
         setIsExporting(true);
 
@@ -50,7 +54,9 @@ export const useExportCards = (
 
         downloadFile(blob, fileName);
       } catch (error) {
-        handleError(error, FALLBACK_ERROR_EXPORT);
+        const errorMessage =
+          error instanceof Error ? error.message : FALLBACK_ERROR_EXPORT;
+        setPasswordError(errorMessage);
       } finally {
         closePasswordModal();
         setIsExporting(false);

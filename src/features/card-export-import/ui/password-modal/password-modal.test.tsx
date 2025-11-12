@@ -13,6 +13,16 @@ import {
   ERROR_PASSWORD_TOO_SHORT,
   ERROR_PASSWORD_MISMATCH,
 } from '../../model/constants';
+import * as sharedLib from '@shared/lib';
+
+vi.mock('@shared/lib', async () => {
+  const actual = await vi.importActual('@shared/lib');
+
+  return {
+    ...actual,
+    useModalContext: vi.fn(),
+  };
+});
 
 const getPasswordInput = () =>
   screen.getByPlaceholderText(PASSWORD_MODAL_LABEL);
@@ -22,10 +32,21 @@ const getConfirmInput = () =>
 describe('PasswordModal', () => {
   const mockOnConfirm = vi.fn();
   const mockOnCancel = vi.fn();
+  const mockUpdateModalPreventClose = vi.fn();
 
   beforeEach(() => {
     mockOnConfirm.mockClear();
     mockOnCancel.mockClear();
+    mockUpdateModalPreventClose.mockClear();
+
+    vi.mocked(sharedLib.useModalContext).mockReturnValue({
+      openModal: vi.fn(),
+      closeModal: vi.fn(),
+      closeAllModals: vi.fn(),
+      updateModalPreventClose: mockUpdateModalPreventClose,
+      modals: [],
+      userActionRef: { current: false },
+    });
   });
 
   describe('Режим экспорта', () => {
@@ -138,6 +159,7 @@ describe('PasswordModal', () => {
 
       expect(mockOnConfirm).toHaveBeenCalledWith(
         '12345678',
+        expect.any(Function),
         expect.any(Function)
       );
     });
@@ -311,7 +333,11 @@ describe('PasswordModal', () => {
 
       await user.click(submitButton);
 
-      expect(mockOnConfirm).toHaveBeenCalledWith('', expect.any(Function));
+      expect(mockOnConfirm).toHaveBeenCalledWith(
+        '',
+        expect.any(Function),
+        expect.any(Function)
+      );
     });
 
     it('должен разрешать короткий пароль', async () => {
@@ -332,7 +358,11 @@ describe('PasswordModal', () => {
       await user.type(passwordInput, '123');
       await user.click(submitButton);
 
-      expect(mockOnConfirm).toHaveBeenCalledWith('123', expect.any(Function));
+      expect(mockOnConfirm).toHaveBeenCalledWith(
+        '123',
+        expect.any(Function),
+        expect.any(Function)
+      );
     });
 
     it('должен вызывать onConfirm с паролем при валидном пароле', async () => {
@@ -355,6 +385,7 @@ describe('PasswordModal', () => {
 
       expect(mockOnConfirm).toHaveBeenCalledWith(
         '12345678',
+        expect.any(Function),
         expect.any(Function)
       );
     });
@@ -428,6 +459,7 @@ describe('PasswordModal', () => {
 
       expect(mockOnConfirm).toHaveBeenCalledWith(
         '12345678',
+        expect.any(Function),
         expect.any(Function)
       );
     });

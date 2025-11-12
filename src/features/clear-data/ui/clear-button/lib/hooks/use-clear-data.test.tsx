@@ -18,6 +18,7 @@ describe('useClearData', () => {
       openModal: mockOpenModal,
       closeModal: mockCloseModal,
       closeAllModals: vi.fn(),
+      updateModalPreventClose: vi.fn(),
       userActionRef: mockUserActionRef,
     });
   });

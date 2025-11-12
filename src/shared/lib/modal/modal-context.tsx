@@ -58,15 +58,31 @@ export const ModalProvider: FC<IModalProviderProps> = ({
     setModals([]);
   }, []);
 
+  const updateModalPreventClose = useCallback(
+    (id: string, preventClose: boolean) => {
+      setModals((prevModals) => {
+        return prevModals.map((modal) => {
+          if (modal.id === id) {
+            return { ...modal, preventClose };
+          }
+
+          return modal;
+        });
+      });
+    },
+    []
+  );
+
   const value: IModalContextValue = useMemo(
     () => ({
       modals,
       openModal,
       closeModal,
       closeAllModals,
+      updateModalPreventClose,
       userActionRef,
     }),
-    [modals, openModal, closeModal, closeAllModals]
+    [modals, openModal, closeModal, closeAllModals, updateModalPreventClose]
   );
 
   return (

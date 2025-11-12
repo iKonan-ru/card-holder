@@ -39,11 +39,21 @@ const TestComponent = () => {
     firstModal.close();
   };
 
+  const handlePreventClose = () => {
+    firstModal.updatePreventClose(true);
+  };
+
+  const handleAllowClose = () => {
+    firstModal.updatePreventClose(false);
+  };
+
   return (
     <div>
       <button onClick={handleOpenFirstModal}>Open First Modal</button>
       <button onClick={handleOpenSecondModal}>Open Second Modal</button>
       <button onClick={handleCloseFirstModal}>Close First Modal</button>
+      <button onClick={handlePreventClose}>Prevent Close</button>
+      <button onClick={handleAllowClose}>Allow Close</button>
     </div>
   );
 };
@@ -282,6 +292,58 @@ describe('ModalContainer', () => {
 
     const portal = container.querySelector('#modal-root');
     expect(portal?.children.length || 0).toBe(0);
+  });
+
+  it('не должен закрывать модальное окно по ESC когда preventClose=true', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+        <ModalContainer />
+      </ModalProvider>
+    );
+
+    await user.click(screen.getByText('Open First Modal'));
+
+    await waitFor(() => {
+      expect(screen.getByText(MODAL_CONTENT)).toBeInTheDocument();
+    });
+
+    await user.click(screen.getByText('Prevent Close'));
+
+    await user.keyboard('{Escape}');
+
+    await waitFor(() => {
+      expect(screen.getByText(MODAL_CONTENT)).toBeInTheDocument();
+    });
+  });
+
+  it('должен закрывать модальное окно по ESC когда preventClose=false', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+        <ModalContainer />
+      </ModalProvider>
+    );
+
+    await user.click(screen.getByText('Open First Modal'));
+
+    await waitFor(() => {
+      expect(screen.getByText(MODAL_CONTENT)).toBeInTheDocument();
+    });
+
+    await user.keyboard('{Escape}');
+
+    act(() => {
+      triggerModalAnimationEnd();
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText(MODAL_CONTENT)).not.toBeInTheDocument();
+    });
   });
 
   it('должен корректно обрабатывать несколько модальных окон', async () => {

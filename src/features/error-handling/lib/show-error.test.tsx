@@ -9,6 +9,7 @@ describe('setModalContext', () => {
       openModal: vi.fn(),
       closeModal: vi.fn(),
       closeAllModals: vi.fn(),
+      updateModalPreventClose: vi.fn(),
       userActionRef: { current: false },
     };
 
@@ -35,6 +36,7 @@ describe('showError', () => {
       openModal: mockOpenModal as IModalContextValue['openModal'],
       closeModal: mockCloseModal as IModalContextValue['closeModal'],
       closeAllModals: vi.fn(),
+      updateModalPreventClose: vi.fn(),
       userActionRef: { current: false },
     };
 

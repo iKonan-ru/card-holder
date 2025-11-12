@@ -1,0 +1,88 @@
+@import '@shared/assets/styles/variables.less';
+
+.button {
+  padding: @spacing-sm @spacing-md;
+  border: none;
+  border-radius: @spacing-sm;
+  font-weight: @font-weight-medium;
+  font-size: @font-size-base;
+  transition: @transition-fast;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled {
+    opacity: @opacity-high;
+    cursor: not-allowed;
+  }
+
+  &_primary {
+    background: var(--blue-500);
+    color: var(--white);
+
+    &:hover:not(:disabled) {
+      background: var(--blue-600);
+    }
+
+    &:active:not(:disabled) {
+      background: var(--blue-700);
+    }
+  }
+
+  &_secondary {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+
+    &:hover:not(:disabled) {
+      background: var(--border-color);
+    }
+
+    &:active:not(:disabled) {
+      background: var(--text-muted);
+    }
+  }
+
+  &_danger {
+    background: var(--red-600);
+    color: var(--white);
+
+    &:hover:not(:disabled) {
+      background: var(--red-700);
+    }
+
+    &:active:not(:disabled) {
+      background: var(--red-800);
+    }
+  }
+
+  &_full-width {
+    width: 100%;
+  }
+
+  &__text {
+    transition: opacity @transition-fast;
+    opacity: 1;
+
+    &_hidden {
+      opacity: 0;
+    }
+  }
+
+  &__loader {
+    position: absolute;
+    font-size: @font-size-xl;
+    animation: button-spin 1s linear infinite;
+  }
+}
+
+@keyframes button-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

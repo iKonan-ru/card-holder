@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import { bem, useClassName } from '@shared/lib';
-import { useAnimatedModalClose } from '../modal';
+import { useAnimatedModalClose, Button } from '../';
 import type { IConfirmModalProps } from './model';
 import {
   CONFIRM_MODAL_BLOCK,
@@ -41,22 +41,22 @@ export const ConfirmModal: FC<IConfirmModalProps> = ({
         {message}
       </p>
       <div className={bem(CONFIRM_MODAL_BLOCK, 'actions')}>
-        <button
+        <Button
           type="button"
           onClick={handleConfirm}
           aria-label={`${confirmText}: ${title}`}
-          className={bem(bem(CONFIRM_MODAL_BLOCK, 'button'), ['confirm'])}
+          variant="danger"
         >
           {confirmText}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           onClick={handleCancel}
           aria-label={cancelText}
-          className={bem(bem(CONFIRM_MODAL_BLOCK, 'button'), ['cancel'])}
+          variant="secondary"
         >
           {cancelText}
-        </button>
+        </Button>
       </div>
     </div>
   );

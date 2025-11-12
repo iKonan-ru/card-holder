@@ -23,6 +23,7 @@ export const Modal: FC<IModalProps> = ({
   onClose,
   onRegisterClose,
   isTopModal,
+  preventClose = false,
   ariaLabelledBy,
   ariaDescribedBy,
 }) => {
@@ -43,7 +44,7 @@ export const Modal: FC<IModalProps> = ({
     handleOverlayMouseUp,
     handleContentClick,
     handleContentMouseDown,
-  } = useOverlayClick(handleClose, isTopModal);
+  } = useOverlayClick(handleClose, isTopModal, preventClose);
 
   const modifiers = isClosing ? MODAL_MODIFIERS_CLOSING : undefined;
 

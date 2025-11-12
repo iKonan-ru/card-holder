@@ -1,153 +1,52 @@
+import { type FC, useEffect } from 'react';
 import {
-  useState,
-  useCallback,
-  useMemo,
-  type FC,
-  type FormEvent,
-  type ChangeEvent,
-} from 'react';
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
-import { bem, useClassName, ParentClassProvider } from '@shared/lib';
-import {
-  ERROR_PASSWORD_TOO_SHORT,
-  ERROR_PASSWORD_MISMATCH,
-} from '../../model/constants';
-import { FormField, useAnimatedModalClose } from '@shared/ui';
+  bem,
+  useClassName,
+  ParentClassProvider,
+  useModalContext,
+} from '@shared/lib';
+import { PasswordField, Button } from '@shared/ui';
 import type { IPasswordModalProps } from '../../model';
-import { MIN_PASSWORD_LENGTH } from '../../model/constants';
 import {
   PASSWORD_MODAL_BLOCK,
   PASSWORD_MODAL_TITLE_ID,
-  PASSWORD_MODAL_TITLE_EXPORT,
-  PASSWORD_MODAL_TITLE_IMPORT,
   PASSWORD_MODAL_LABEL,
   PASSWORD_MODAL_LABEL_CONFIRM,
-  PASSWORD_MODAL_BUTTON_EXPORT,
-  PASSWORD_MODAL_BUTTON_IMPORT,
   PASSWORD_MODAL_BUTTON_CANCEL,
 } from './lib/constants';
-import { useModalClose } from '@shared/ui/modal/lib/modal-close-context';
+import { PASSWORD_MODAL_ID } from '../import-button/lib/constants';
+import { usePasswordModal } from './lib/hooks';
 import './password-modal.less';
 
-export const PasswordModal: FC<IPasswordModalProps> = ({
-  mode,
-  onConfirm,
-  onCancel,
-}) => {
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState<string | undefined>();
-  const [confirmError, setConfirmError] = useState<string | undefined>();
-  const [showPassword, setShowPassword] = useState(false);
-  const closeModal = useModalClose();
-  const handleCancel = useAnimatedModalClose(onCancel);
+export const PasswordModal: FC<IPasswordModalProps> = (props) => {
+  const { mode, onConfirm, onCancel } = props;
 
-  const isExportMode = mode === 'export';
-  const title = isExportMode
-    ? PASSWORD_MODAL_TITLE_EXPORT
-    : PASSWORD_MODAL_TITLE_IMPORT;
-  const buttonText = isExportMode
-    ? PASSWORD_MODAL_BUTTON_EXPORT
-    : PASSWORD_MODAL_BUTTON_IMPORT;
+  const modalContext = useModalContext();
+
+  const {
+    password,
+    confirmPassword,
+    passwordError,
+    confirmError,
+    isSubmitting,
+    isExportMode,
+    isPasswordVisible,
+    title,
+    buttonText,
+    handlePasswordChange,
+    handleConfirmPasswordChange,
+    handlePasswordVisibilityChange,
+    handleSubmit,
+    handleCancel,
+  } = usePasswordModal({ mode, onConfirm, onCancel });
+
+  useEffect(() => {
+    modalContext.updateModalPreventClose(PASSWORD_MODAL_ID, isSubmitting);
+  }, [isSubmitting, modalContext]);
 
   const className = useClassName({
     blockName: PASSWORD_MODAL_BLOCK,
   });
-
-  const handlePasswordChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newPassword = event.target.value;
-      setPassword(newPassword);
-      setPasswordError(undefined);
-      setConfirmError(undefined);
-    },
-    []
-  );
-
-  const handleConfirmPasswordChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
-      const newConfirmPassword = event.target.value;
-      setConfirmPassword(newConfirmPassword);
-      setConfirmError(undefined);
-    },
-    []
-  );
-
-  const handleTogglePasswordVisibility = useCallback(() => {
-    setShowPassword((prev) => !prev);
-  }, []);
-
-  const handleSubmit = useCallback(
-    (event: FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      setPasswordError(undefined);
-      setConfirmError(undefined);
-
-      if (isExportMode) {
-        const isPasswordValid = password.length >= MIN_PASSWORD_LENGTH;
-
-        if (!isPasswordValid) {
-          setPasswordError(ERROR_PASSWORD_TOO_SHORT);
-
-          return;
-        }
-
-        const doPasswordsMatch = password === confirmPassword;
-
-        if (!doPasswordsMatch) {
-          setConfirmError(ERROR_PASSWORD_MISMATCH);
-
-          return;
-        }
-      }
-
-      onConfirm(password, closeModal);
-    },
-    [isExportMode, password, confirmPassword, onConfirm, closeModal]
-  );
-
-  const PasswordIcon = useMemo(
-    () => (showPassword ? MdVisibilityOff : MdVisibility),
-    [showPassword]
-  );
-  const ariaLabelPassword = useMemo(
-    () => (showPassword ? 'Скрыть пароль' : 'Показать пароль'),
-    [showPassword]
-  );
-  const inputType = useMemo(
-    () => (showPassword ? 'text' : 'password'),
-    [showPassword]
-  );
-
-  const passwordRightContent = useMemo(
-    () => (
-      <button
-        type="button"
-        onClick={handleTogglePasswordVisibility}
-        className={bem(PASSWORD_MODAL_BLOCK, 'toggle-button')}
-        aria-label={ariaLabelPassword}
-        tabIndex={-1}
-      >
-        <PasswordIcon className={bem(PASSWORD_MODAL_BLOCK, 'toggle-icon')} />
-      </button>
-    ),
-    [handleTogglePasswordVisibility, ariaLabelPassword, PasswordIcon]
-  );
-
-  const confirmPasswordRightContent = useMemo(
-    () => (
-      <button
-        type="button"
-        onClick={handleTogglePasswordVisibility}
-        className={bem(PASSWORD_MODAL_BLOCK, 'toggle-button')}
-        aria-label={ariaLabelPassword}
-        tabIndex={-1}
-      >
-        <PasswordIcon className={bem(PASSWORD_MODAL_BLOCK, 'toggle-icon')} />
-      </button>
-    ),
-    [handleTogglePasswordVisibility, ariaLabelPassword, PasswordIcon]
-  );
 
   return (
     <form
@@ -163,10 +62,9 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
       </h3>
 
       <ParentClassProvider parentClass={PASSWORD_MODAL_BLOCK}>
-        <FormField
+        <PasswordField
           id="password"
           name="password"
-          type={inputType}
           label={PASSWORD_MODAL_LABEL}
           value={password}
           error={passwordError}
@@ -174,41 +72,44 @@ export const PasswordModal: FC<IPasswordModalProps> = ({
           autoComplete="new-password"
           autoFocus={true}
           required={true}
-          rightContent={passwordRightContent}
+          isPasswordVisible={isPasswordVisible}
+          onPasswordVisibilityChange={handlePasswordVisibilityChange}
         />
 
         {isExportMode && (
-          <FormField
+          <PasswordField
             id="confirm-password"
             name="confirm-password"
-            type={inputType}
             label={PASSWORD_MODAL_LABEL_CONFIRM}
             value={confirmPassword}
             error={confirmError}
             onChange={handleConfirmPasswordChange}
             autoComplete="new-password"
             required={true}
-            rightContent={confirmPasswordRightContent}
+            isPasswordVisible={isPasswordVisible}
+            onPasswordVisibilityChange={handlePasswordVisibilityChange}
           />
         )}
       </ParentClassProvider>
 
       <div className={bem(PASSWORD_MODAL_BLOCK, 'actions')}>
-        <button
+        <Button
           type="submit"
           aria-label={`${buttonText}: ${title}`}
-          className={bem(bem(PASSWORD_MODAL_BLOCK, 'button'), ['primary'])}
+          variant="primary"
+          isLoading={isSubmitting}
         >
           {buttonText}
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           onClick={handleCancel}
           aria-label={PASSWORD_MODAL_BUTTON_CANCEL}
-          className={bem(bem(PASSWORD_MODAL_BLOCK, 'button'), ['secondary'])}
+          variant="secondary"
+          disabled={isSubmitting}
         >
           {PASSWORD_MODAL_BUTTON_CANCEL}
-        </button>
+        </Button>
       </div>
     </form>
   );

@@ -63,7 +63,15 @@ export const ModalContainer: FC = () => {
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === ESC_KEY) {
-        const topModalId = modals[modals.length - 1]?.id;
+        const topModal = modals[modals.length - 1];
+        const topModalId = topModal?.id;
+
+        const isPreventClose = topModal?.preventClose ?? false;
+
+        if (isPreventClose) {
+          return;
+        }
+
         const requestClose = modalRequestCloseRef.current.get(topModalId);
 
         if (requestClose) {
@@ -118,6 +126,7 @@ export const ModalContainer: FC = () => {
               modalRequestCloseRef.current.set(modal.id, closeWithAnimation);
             }}
             isTopModal={isTopModal}
+            preventClose={modal.preventClose}
             ariaLabelledBy={modal.ariaLabelledBy}
             ariaDescribedBy={modal.ariaDescribedBy}
           >

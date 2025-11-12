@@ -9,7 +9,8 @@ interface IUseOverlayClickReturn {
 
 export const useOverlayClick = (
   onOverlayClick: () => void,
-  isTopModal: boolean
+  isTopModal: boolean,
+  preventClose = false
 ): IUseOverlayClickReturn => {
   const isMouseDownOnOverlayRef = useRef(false);
 
@@ -21,10 +22,12 @@ export const useOverlayClick = (
     const wasMouseDownOnOverlay = isMouseDownOnOverlayRef.current;
     isMouseDownOnOverlayRef.current = false;
 
-    if (wasMouseDownOnOverlay && isTopModal) {
+    const shouldClose = wasMouseDownOnOverlay && isTopModal && !preventClose;
+
+    if (shouldClose) {
       onOverlayClick();
     }
-  }, [isTopModal, onOverlayClick]);
+  }, [isTopModal, preventClose, onOverlayClick]);
 
   const handleContentClick = useCallback(
     (event: MouseEvent<HTMLDivElement>) => {

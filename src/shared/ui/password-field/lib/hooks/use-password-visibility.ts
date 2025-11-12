@@ -1,0 +1,59 @@
+import { useState, useCallback, useMemo } from 'react';
+import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import {
+  TOGGLE_SHOW_PASSWORD_LABEL,
+  TOGGLE_HIDE_PASSWORD_LABEL,
+} from '../constants';
+
+interface IUsePasswordVisibilityParams {
+  isControlled: boolean;
+  externalIsVisible?: boolean;
+  onExternalChange?: (isVisible: boolean) => void;
+}
+
+interface IUsePasswordVisibility {
+  isVisible: boolean;
+  inputType: 'text' | 'password';
+  ariaLabel: string;
+  Icon: typeof MdVisibility | typeof MdVisibilityOff;
+  toggleVisibility: () => void;
+}
+
+export const usePasswordVisibility = (
+  params: IUsePasswordVisibilityParams
+): IUsePasswordVisibility => {
+  const { isControlled, externalIsVisible, onExternalChange } = params;
+  const [internalIsVisible, setInternalIsVisible] = useState(false);
+
+  const isVisible = isControlled
+    ? (externalIsVisible ?? false)
+    : internalIsVisible;
+
+  const toggleVisibility = useCallback(() => {
+    if (isControlled && onExternalChange) {
+      onExternalChange(!isVisible);
+    } else {
+      setInternalIsVisible((previous) => !previous);
+    }
+  }, [isControlled, isVisible, onExternalChange]);
+
+  const inputType = useMemo(() => {
+    return isVisible ? 'text' : 'password';
+  }, [isVisible]);
+
+  const ariaLabel = useMemo(() => {
+    return isVisible ? TOGGLE_HIDE_PASSWORD_LABEL : TOGGLE_SHOW_PASSWORD_LABEL;
+  }, [isVisible]);
+
+  const Icon = useMemo(() => {
+    return isVisible ? MdVisibilityOff : MdVisibility;
+  }, [isVisible]);
+
+  return {
+    isVisible,
+    inputType,
+    ariaLabel,
+    Icon,
+    toggleVisibility,
+  };
+};

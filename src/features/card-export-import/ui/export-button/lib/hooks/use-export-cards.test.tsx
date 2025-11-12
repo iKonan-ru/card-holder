@@ -53,6 +53,7 @@ describe('useExportCards', () => {
   const mockOpenModal = vi.fn();
   const mockCloseModal = vi.fn();
   const mockClosePasswordModal = vi.fn();
+  const mockSetPasswordError = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -61,6 +62,7 @@ describe('useExportCards', () => {
       openModal: mockOpenModal,
       closeModal: mockCloseModal,
       closeAllModals: vi.fn(),
+      updateModalPreventClose: vi.fn(),
       modals: [],
       userActionRef: { current: false },
     });
@@ -131,7 +133,11 @@ describe('useExportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -155,7 +161,11 @@ describe('useExportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -181,7 +191,11 @@ describe('useExportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -201,7 +215,11 @@ describe('useExportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -224,14 +242,15 @@ describe('useExportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
-      expect(errorUtils.handleError).toHaveBeenCalledWith(
-        mockError,
-        expect.any(String)
-      );
+      expect(mockSetPasswordError).toHaveBeenCalledWith('Export error');
       expect(result.current.isExporting).toBe(false);
     });
   });
@@ -253,7 +272,11 @@ describe('useExportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -273,7 +296,11 @@ describe('useExportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -296,7 +323,11 @@ describe('useExportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {

@@ -3,7 +3,8 @@ import { useModalContext } from '../modal';
 import type { IUseModalReturn } from './types';
 
 export const useModal = (): IUseModalReturn => {
-  const { openModal, closeModal, userActionRef } = useModalContext();
+  const { openModal, closeModal, updateModalPreventClose, userActionRef } =
+    useModalContext();
   const modalId = useId();
 
   const open = useCallback(
@@ -18,9 +19,17 @@ export const useModal = (): IUseModalReturn => {
     closeModal(modalId);
   }, [modalId, closeModal, userActionRef]);
 
+  const updatePreventClose = useCallback(
+    (preventClose: boolean) => {
+      updateModalPreventClose(modalId, preventClose);
+    },
+    [modalId, updateModalPreventClose]
+  );
+
   return {
     open,
     close,
+    updatePreventClose,
     modalId,
   };
 };

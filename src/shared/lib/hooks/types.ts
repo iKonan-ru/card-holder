@@ -7,5 +7,6 @@ export interface IUseModalReturn {
     ariaDescribedBy?: string
   ) => void;
   close: () => void;
+  updatePreventClose: (preventClose: boolean) => void;
   modalId: string;
 }

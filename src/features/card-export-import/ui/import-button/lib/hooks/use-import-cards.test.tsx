@@ -80,6 +80,7 @@ describe('useImportCards', () => {
   const mockOpenModal = vi.fn();
   const mockCloseModal = vi.fn();
   const mockClosePasswordModal = vi.fn();
+  const mockSetPasswordError = vi.fn();
   const mockOnImport = vi.fn();
   const mockOnUnflipCards = vi.fn();
   const mockFile = new File([MOCK_FILE_CONTENT], 'test.json', {
@@ -93,6 +94,7 @@ describe('useImportCards', () => {
       openModal: mockOpenModal,
       closeModal: mockCloseModal,
       closeAllModals: vi.fn(),
+      updateModalPreventClose: vi.fn(),
       modals: [],
       userActionRef: { current: false },
     });
@@ -116,7 +118,7 @@ describe('useImportCards', () => {
     mockOnImport.mockResolvedValue(undefined);
   });
 
-  it('должен инициализироваться с isImporting = false', () => {
+  it('должен инициализироваться корректно', () => {
     const { result } = renderHook(() =>
       useImportCards({
         cards: mockCards,
@@ -125,6 +127,7 @@ describe('useImportCards', () => {
       })
     );
 
+    expect(result.current.importCards).toBeDefined();
     expect(result.current.isImporting).toBe(false);
   });
 
@@ -215,7 +218,11 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -244,7 +251,11 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -270,7 +281,11 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -299,7 +314,11 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -325,7 +344,11 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -351,7 +374,11 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -377,7 +404,11 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -385,7 +416,7 @@ describe('useImportCards', () => {
     });
   });
 
-  it('должен сбрасывать isImporting после успешного импорта', async () => {
+  it('должен завершаться после успешного импорта', async () => {
     const { result } = renderHook(() =>
       useImportCards({
         cards: mockCards,
@@ -403,11 +434,15 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
-      expect(result.current.isImporting).toBe(false);
+      expect(mockClosePasswordModal).toHaveBeenCalled();
     });
   });
 
@@ -432,18 +467,17 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await expect(
+        onConfirm(MOCK_PASSWORD, mockClosePasswordModal, mockSetPasswordError)
+      ).rejects.toThrow('Decryption error');
     });
 
     await waitFor(() => {
-      expect(errorUtils.handleError).toHaveBeenCalledWith(
-        mockError,
-        expect.any(String)
-      );
+      expect(mockSetPasswordError).toHaveBeenCalledWith('Decryption error');
     });
   });
 
-  it('должен сбрасывать isImporting после ошибки', async () => {
+  it('должен обрабатывать ошибку и закрывать модалку после ошибки', async () => {
     const mockError = new Error('Import error');
     vi.mocked(importUtils.parseDecryptedCards).mockImplementation(() => {
       throw mockError;
@@ -466,11 +500,13 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await expect(
+        onConfirm(MOCK_PASSWORD, mockClosePasswordModal, mockSetPasswordError)
+      ).rejects.toThrow('Import error');
     });
 
     await waitFor(() => {
-      expect(result.current.isImporting).toBe(false);
+      expect(mockSetPasswordError).toHaveBeenCalledWith('Import error');
     });
   });
 
@@ -537,7 +573,11 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
     });
 
     await waitFor(() => {
@@ -545,8 +585,8 @@ describe('useImportCards', () => {
     });
   });
 
-  it('должен закрывать модалку пароля при ошибке импорта', async () => {
-    const mockError = new Error('Import error');
+  it('должен показывать ошибку пароля при ошибке импорта', async () => {
+    const mockError = new Error('Decryption error');
     vi.mocked(sharedLib.decryptData).mockRejectedValue(mockError);
 
     const { result } = renderHook(() =>
@@ -566,11 +606,13 @@ describe('useImportCards', () => {
     const onConfirm = modalContent.props.onConfirm;
 
     await act(async () => {
-      await onConfirm(MOCK_PASSWORD, mockClosePasswordModal);
+      await expect(
+        onConfirm(MOCK_PASSWORD, mockClosePasswordModal, mockSetPasswordError)
+      ).rejects.toThrow('Decryption error');
     });
 
     await waitFor(() => {
-      expect(mockClosePasswordModal).toHaveBeenCalled();
+      expect(mockSetPasswordError).toHaveBeenCalledWith('Decryption error');
     });
   });
 });

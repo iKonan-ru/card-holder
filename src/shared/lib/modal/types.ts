@@ -5,6 +5,7 @@ export interface IModalItem {
   content: ReactNode;
   ariaLabelledBy?: string;
   ariaDescribedBy?: string;
+  preventClose?: boolean;
 }
 
 export interface IModalContextValue {
@@ -17,5 +18,6 @@ export interface IModalContextValue {
   ) => void;
   closeModal: (id: string) => void;
   closeAllModals: () => void;
+  updateModalPreventClose: (id: string, preventClose: boolean) => void;
   userActionRef: MutableRefObject<boolean>;
 }

@@ -74,6 +74,28 @@ describe('Modal', () => {
     expect(handleClose).not.toHaveBeenCalled();
   });
 
+  it('не должен вызывать onClose при клике на overlay когда preventClose=true', async () => {
+    const handleClose = vi.fn();
+    const user = userEvent.setup();
+
+    const { container } = render(
+      <Modal
+        onClose={handleClose}
+        isTopModal={true}
+        preventClose={true}
+      >
+        <div>Содержимое</div>
+      </Modal>
+    );
+
+    const overlay = container.querySelector('.modal');
+    if (overlay) {
+      await user.click(overlay);
+    }
+
+    expect(handleClose).not.toHaveBeenCalled();
+  });
+
   it('должен рендерить сложное содержимое', () => {
     render(
       <Modal

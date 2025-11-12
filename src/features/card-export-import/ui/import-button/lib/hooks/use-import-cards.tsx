@@ -51,6 +51,9 @@ export const useImportCards = (
   const modalContext = useModalContext();
 
   const importCards = useCallback(async () => {
+    if (isImporting) {
+      return;
+    }
     try {
       const file = await uploadFile(FILE_EXTENSION);
       const content = await readFileAsText(file);
@@ -60,7 +63,8 @@ export const useImportCards = (
 
       const handleImportWithPassword = async (
         password: string,
-        closePasswordModal: () => void
+        closePasswordModal: () => void,
+        setPasswordError: (error: string) => void
       ) => {
         try {
           setIsImporting(true);
@@ -97,8 +101,11 @@ export const useImportCards = (
             SUCCESS_MODAL_MESSAGE_ID
           );
         } catch (error) {
-          closePasswordModal();
-          handleError(error, FALLBACK_ERROR_IMPORT);
+          const errorMessage =
+            error instanceof Error ? error.message : FALLBACK_ERROR_IMPORT;
+          setPasswordError(errorMessage);
+
+          throw error;
         } finally {
           setIsImporting(false);
         }
@@ -126,7 +133,7 @@ export const useImportCards = (
 
       handleError(error, FALLBACK_ERROR_IMPORT);
     }
-  }, [cards, onImport, onUnflipCards, modalContext]);
+  }, [cards, onImport, onUnflipCards, modalContext, isImporting]);
 
   return {
     isImporting,

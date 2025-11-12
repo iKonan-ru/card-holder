@@ -5,6 +5,7 @@ export interface IModalProps {
   onClose: () => void;
   onRegisterClose?: (closeWithAnimation: () => void) => void;
   isTopModal: boolean;
+  preventClose?: boolean;
   ariaLabelledBy?: string;
   ariaDescribedBy?: string;
 }
