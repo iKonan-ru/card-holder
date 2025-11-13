@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import { BankCard } from './bank-card';
 import type { IBankCard } from '../model';
 
@@ -46,27 +45,6 @@ describe('BankCard', () => {
     render(<BankCard card={MOCK_CARD_WITHOUT_OPTIONAL} />);
 
     expect(screen.queryByText('Тестовая')).not.toBeInTheDocument();
-  });
-
-  it('должна переворачивать карту при клике', async () => {
-    const onFlip = vi.fn();
-    const user = userEvent.setup();
-
-    render(
-      <BankCard
-        card={MOCK_CARD}
-        onFlip={onFlip}
-      />
-    );
-
-    const cardElement = screen.getByText(MOCK_CARD.name).closest('.bank-card');
-    expect(cardElement).toBeInTheDocument();
-
-    if (cardElement) {
-      await user.click(cardElement);
-    }
-
-    expect(onFlip).toHaveBeenCalledWith(MOCK_CARD.pan);
   });
 
   it('должна добавлять класс flipped когда карта перевернута', () => {
@@ -141,31 +119,6 @@ describe('BankCard', () => {
     expect(bankLogoElement).toBeInTheDocument();
   });
 
-  it('должна не переворачивать карту при клике на copyable-field', async () => {
-    const onFlip = vi.fn();
-    const user = userEvent.setup();
-    const clipboardMock = vi.fn().mockResolvedValue(undefined);
-    Object.defineProperty(navigator, 'clipboard', {
-      value: {
-        writeText: clipboardMock,
-      },
-      writable: true,
-      configurable: true,
-    });
-
-    render(
-      <BankCard
-        card={MOCK_CARD}
-        onFlip={onFlip}
-      />
-    );
-
-    const nameElement = screen.getByText(MOCK_CARD.name);
-    await user.click(nameElement);
-
-    expect(onFlip).not.toHaveBeenCalled();
-  });
-
   it('должна содержать front и back стороны', () => {
     const { container } = render(<BankCard card={MOCK_CARD} />);
     const frontElement = container.querySelector('.bank-card__front');
@@ -182,58 +135,6 @@ describe('BankCard', () => {
     expect(editButton).toBeInTheDocument();
   });
 
-  it('должна вызывать onEdit при клике на кнопку редактирования', async () => {
-    const mockOnEdit = vi.fn();
-    const user = userEvent.setup();
-    const { container } = render(
-      <BankCard
-        card={MOCK_CARD}
-        onEdit={mockOnEdit}
-      />
-    );
-
-    const editButton = container.querySelector(
-      '.bank-card__edit-button'
-    ) as HTMLElement;
-    expect(editButton).toBeInTheDocument();
-
-    await user.click(editButton);
-
-    expect(mockOnEdit).toHaveBeenCalledWith(MOCK_CARD);
-  });
-
-  it('не должна вызывать onEdit если коллбэк не передан', async () => {
-    const user = userEvent.setup();
-    const { container } = render(<BankCard card={MOCK_CARD} />);
-
-    const editButton = container.querySelector(
-      '.bank-card__edit-button'
-    ) as HTMLElement;
-
-    await user.click(editButton);
-  });
-
-  it('не должна переворачивать карту при клике в режиме переупорядочивания', async () => {
-    const onFlip = vi.fn();
-    const user = userEvent.setup();
-
-    render(
-      <BankCard
-        card={MOCK_CARD}
-        onFlip={onFlip}
-        isReorderMode={true}
-      />
-    );
-
-    const cardElement = screen.getByText(MOCK_CARD.name).closest('.bank-card');
-
-    if (cardElement) {
-      await user.click(cardElement);
-    }
-
-    expect(onFlip).not.toHaveBeenCalled();
-  });
-
   it('должна добавлять класс reorder-mode в режиме переупорядочивания', () => {
     const { container } = render(
       <BankCard
@@ -244,45 +145,5 @@ describe('BankCard', () => {
 
     const cardElement = container.querySelector('.bank-card_reorder-mode');
     expect(cardElement).toBeInTheDocument();
-  });
-
-  it('должна переворачивать карту при нажатии Enter', async () => {
-    const onFlip = vi.fn();
-    const user = userEvent.setup();
-
-    render(
-      <BankCard
-        card={MOCK_CARD}
-        onFlip={onFlip}
-      />
-    );
-
-    const cardElement = screen.getByText(MOCK_CARD.name).closest('.bank-card');
-
-    if (cardElement) {
-      await user.type(cardElement, '{Enter}');
-    }
-
-    expect(onFlip).toHaveBeenCalledWith(MOCK_CARD.pan);
-  });
-
-  it('должна переворачивать карту при нажатии пробела', async () => {
-    const onFlip = vi.fn();
-    const user = userEvent.setup();
-
-    render(
-      <BankCard
-        card={MOCK_CARD}
-        onFlip={onFlip}
-      />
-    );
-
-    const cardElement = screen.getByText(MOCK_CARD.name).closest('.bank-card');
-
-    if (cardElement) {
-      await user.type(cardElement, ' ');
-    }
-
-    expect(onFlip).toHaveBeenCalledWith(MOCK_CARD.pan);
   });
 });

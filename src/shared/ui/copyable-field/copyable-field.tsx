@@ -1,23 +1,8 @@
-import {
-  useState,
-  useRef,
-  useMemo,
-  useCallback,
-  type FC,
-  type KeyboardEvent,
-  type MouseEvent,
-} from 'react';
+import { type FC, useMemo } from 'react';
 import { FiCheck } from 'react-icons/fi';
 import {
   bem,
-  logError,
-  copyToClipboard,
-  ERROR_FAILED_TO_COPY,
   useClassName,
-  INITIAL_FALSE,
-  INITIAL_NULL,
-  KEY_ENTER,
-  KEY_SPACE,
   ARIA_ROLE_BUTTON,
   ARIA_ROLE_STATUS,
   ARIA_LIVE_POLITE,
@@ -27,17 +12,13 @@ import {
 } from '@shared/lib';
 import type { ICopyableFieldProps } from './model';
 import {
-  COPY_INDICATOR_DURATION,
   COPYABLE_FIELD_BLOCK,
   COPY_TITLE_TEXT,
-  COPYABLE_FIELD_CONTEXT,
   COPIED_ARIA_MESSAGE,
   EMPTY_ARIA_MESSAGE,
+  useCopyableField,
 } from './lib';
 import './copyable-field.less';
-
-const INITIAL_IS_COPIED = INITIAL_FALSE;
-const INITIAL_TIMEOUT_REF = INITIAL_NULL;
 
 export const CopyableField: FC<ICopyableFieldProps> = ({
   value,
@@ -46,51 +27,13 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
   maskFn,
   modifier,
 }) => {
-  const [isCopied, setIsCopied] = useState(INITIAL_IS_COPIED);
-  const timeoutRef = useRef<number | null>(INITIAL_TIMEOUT_REF);
-
-  const handleCopy = useCallback(async () => {
-    try {
-      await copyToClipboard(value);
-
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-
-      setIsCopied(true);
-
-      timeoutRef.current = window.setTimeout(() => {
-        setIsCopied(false);
-      }, COPY_INDICATOR_DURATION);
-    } catch (error) {
-      logError({
-        message: ERROR_FAILED_TO_COPY,
-        error,
-        context: COPYABLE_FIELD_CONTEXT,
-      });
-    }
-  }, [value]);
-
-  const handleClick = useCallback(
-    (event: MouseEvent) => {
-      event.stopPropagation();
-      handleCopy();
-    },
-    [handleCopy]
-  );
-
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent<HTMLDivElement>) => {
-      const isActivationKey =
-        event.key === KEY_ENTER || event.key === KEY_SPACE;
-
-      if (isActivationKey) {
-        event.preventDefault();
-        handleCopy();
-      }
-    },
-    [handleCopy]
-  );
+  const { isCopied, displayValue, ariaLabel, handleClick, handleKeyDown } =
+    useCopyableField({
+      value,
+      label,
+      title,
+      maskFn,
+    });
 
   const modifiers = useMemo(() => (modifier ? [modifier] : []), [modifier]);
 
@@ -98,14 +41,6 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
     blockName: COPYABLE_FIELD_BLOCK,
     modifiers,
   });
-
-  const ariaLabel = useMemo(
-    () =>
-      label
-        ? `${title}: ${label}`
-        : `${title}: ${maskFn ? maskFn(value, false) : value}`,
-    [label, title, value, maskFn]
-  );
 
   return (
     <div className={wrapperClassName}>
@@ -122,7 +57,7 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
         title={title}
         aria-label={ariaLabel}
       >
-        {maskFn ? maskFn(value, isCopied) : value}
+        {displayValue}
         {isCopied && (
           <FiCheck
             className={bem(COPYABLE_FIELD_BLOCK, 'indicator')}
