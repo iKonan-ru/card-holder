@@ -22,60 +22,9 @@
     display: flex;
     gap: @border-radius;
     margin-top: @spacing-sm;
-  }
 
-  &__button {
-    padding: @spacing-sm @spacing-md;
-    border: none;
-    border-radius: @spacing-sm;
-    font-weight: @font-weight-medium;
-    font-size: @font-size-base;
-    transition: @transition-fast;
-    cursor: pointer;
-
-    &:disabled {
-      opacity: @opacity-high;
-      cursor: not-allowed;
-    }
-
-    &_primary {
-      background: var(--blue-500);
-      color: var(--white);
-
-      &:hover:not(:disabled) {
-        background: var(--blue-600);
-      }
-
-      &:active:not(:disabled) {
-        background: var(--blue-700);
-      }
-    }
-
-    &_secondary {
-      background: var(--bg-tertiary);
-      color: var(--text-primary);
-
-      &:hover:not(:disabled) {
-        background: var(--border-color);
-      }
-
-      &:active:not(:disabled) {
-        background: var(--text-muted);
-      }
-    }
-
-    &_danger {
-      background: var(--red-600);
-      color: var(--white);
+    .button_danger {
       margin-left: auto;
-
-      &:hover:not(:disabled) {
-        background: var(--red-700);
-      }
-
-      &:active:not(:disabled) {
-        background: var(--red-800);
-      }
     }
   }
 

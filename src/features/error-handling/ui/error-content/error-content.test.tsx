@@ -83,8 +83,8 @@ describe('ErrorContent', () => {
     const title = screen.getByText('Ошибка');
     const message = screen.getByText('Тестовая ошибка');
 
-    expect(title).toHaveAttribute('id', 'error-modal-title');
-    expect(message).toHaveAttribute('id', 'error-modal-message');
+    expect(title).toHaveAttribute('id', 'error-content-title');
+    expect(message).toHaveAttribute('id', 'error-content-message');
   });
 
   it('должен отображать длинное сообщение ошибки', () => {
@@ -111,8 +111,8 @@ describe('ErrorContent', () => {
       />
     );
 
-    const errorModal = container.querySelector('.error-modal');
+    const errorContent = container.querySelector('.error-content');
 
-    expect(errorModal).toBeInTheDocument();
+    expect(errorContent).toBeInTheDocument();
   });
 });

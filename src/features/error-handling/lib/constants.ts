@@ -1,10 +1,10 @@
-export const ERROR_MODAL_BLOCK = 'error-modal';
+export const ERROR_CONTENT_BLOCK = 'error-content';
 
-export const ERROR_MODAL_ID_PREFIX = 'error-modal';
-export const ERROR_MODAL_TITLE_ID = 'error-modal-title';
-export const ERROR_MODAL_MESSAGE_ID = 'error-modal-message';
+export const ERROR_CONTENT_ID_PREFIX = 'error-content';
+export const ERROR_CONTENT_TITLE_ID = 'error-content-title';
+export const ERROR_CONTENT_MESSAGE_ID = 'error-content-message';
 
-export const ERROR_MODAL_TITLE = 'Ошибка';
-export const ERROR_MODAL_CLOSE_TEXT = 'Закрыть';
+export const ERROR_CONTENT_TITLE = 'Ошибка';
+export const ERROR_CONTENT_CLOSE_TEXT = 'Закрыть';
 
 export const DEFAULT_ERROR_MESSAGE = 'Произошла непредвиденная ошибка';

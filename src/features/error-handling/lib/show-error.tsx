@@ -4,9 +4,9 @@ import { generateRandomId } from '@shared/lib';
 import { ErrorContent } from '../ui/error-content';
 import { translateError } from './utils';
 import {
-  ERROR_MODAL_ID_PREFIX,
-  ERROR_MODAL_TITLE_ID,
-  ERROR_MODAL_MESSAGE_ID,
+  ERROR_CONTENT_ID_PREFIX,
+  ERROR_CONTENT_TITLE_ID,
+  ERROR_CONTENT_MESSAGE_ID,
 } from './constants';
 
 let modalContextRef: IModalContextValue | null = null;
@@ -28,14 +28,14 @@ export const showError = (params: {
 
   const translatedMessage = translateError(params.message);
   const errorId = `${Date.now()}-${generateRandomId()}`;
-  const modalId = `${ERROR_MODAL_ID_PREFIX}-${errorId}`;
+  const modalId = `${ERROR_CONTENT_ID_PREFIX}-${errorId}`;
 
   const modalContent: ReactNode = <ErrorContent message={translatedMessage} />;
 
   modalContextRef.openModal(
     modalId,
     modalContent,
-    ERROR_MODAL_TITLE_ID,
-    ERROR_MODAL_MESSAGE_ID
+    ERROR_CONTENT_TITLE_ID,
+    ERROR_CONTENT_MESSAGE_ID
   );
 };

@@ -1,14 +1,14 @@
 import type { FC } from 'react';
 import { bem } from '@shared/lib';
-import { useAnimatedModalClose } from '@shared/ui';
+import { useAnimatedModalClose, Button } from '@shared/ui';
 import {
-  ERROR_MODAL_BLOCK,
-  ERROR_MODAL_TITLE,
-  ERROR_MODAL_CLOSE_TEXT,
-  ERROR_MODAL_TITLE_ID,
-  ERROR_MODAL_MESSAGE_ID,
+  ERROR_CONTENT_BLOCK,
+  ERROR_CONTENT_TITLE,
+  ERROR_CONTENT_CLOSE_TEXT,
+  ERROR_CONTENT_TITLE_ID,
+  ERROR_CONTENT_MESSAGE_ID,
 } from '../../lib/constants';
-import './error-modal.less';
+import './error-content.less';
 
 interface IErrorContentProps {
   message: string;
@@ -19,28 +19,28 @@ export const ErrorContent: FC<IErrorContentProps> = ({ message, onClose }) => {
   const handleClose = useAnimatedModalClose(onClose);
 
   return (
-    <div className={ERROR_MODAL_BLOCK}>
+    <div className={ERROR_CONTENT_BLOCK}>
       <h3
-        id={ERROR_MODAL_TITLE_ID}
-        className={bem(ERROR_MODAL_BLOCK, 'title')}
+        id={ERROR_CONTENT_TITLE_ID}
+        className={bem(ERROR_CONTENT_BLOCK, 'title')}
       >
-        {ERROR_MODAL_TITLE}
+        {ERROR_CONTENT_TITLE}
       </h3>
       <p
-        id={ERROR_MODAL_MESSAGE_ID}
-        className={bem(ERROR_MODAL_BLOCK, 'message')}
+        id={ERROR_CONTENT_MESSAGE_ID}
+        className={bem(ERROR_CONTENT_BLOCK, 'message')}
       >
         {message}
       </p>
-      <div className={bem(ERROR_MODAL_BLOCK, 'actions')}>
-        <button
+      <div className={bem(ERROR_CONTENT_BLOCK, 'actions')}>
+        <Button
           type="button"
           onClick={handleClose}
-          aria-label={ERROR_MODAL_CLOSE_TEXT}
-          className={bem(ERROR_MODAL_BLOCK, 'button')}
+          aria-label={ERROR_CONTENT_CLOSE_TEXT}
+          variant="secondary"
         >
-          {ERROR_MODAL_CLOSE_TEXT}
-        </button>
+          {ERROR_CONTENT_CLOSE_TEXT}
+        </Button>
       </div>
     </div>
   );

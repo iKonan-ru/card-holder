@@ -1,6 +1,6 @@
 @import '@shared/assets/styles/variables.less';
 
-.error-modal {
+.error-content {
   display: flex;
   flex-direction: column;
 
@@ -22,25 +22,5 @@
     display: flex;
     gap: @border-radius;
     justify-content: flex-end;
-  }
-
-  &__button {
-    padding: @spacing-sm @spacing-md;
-    border: none;
-    border-radius: @spacing-sm;
-    font-weight: @font-weight-medium;
-    font-size: @font-size-base;
-    cursor: pointer;
-    transition: @transition-fast;
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
-
-    &:hover {
-      background: var(--border-color);
-    }
-
-    &:active {
-      background: var(--text-muted);
-    }
   }
 }

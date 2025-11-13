@@ -11,6 +11,7 @@ import {
   ValidatedField,
   ConfirmModal,
   CardPreview,
+  Button,
   CONFIRM_MODAL_TITLE_ID,
   CONFIRM_MODAL_MESSAGE_ID,
 } from '@shared/ui';
@@ -35,9 +36,6 @@ import {
   PIN_FIELD_CONFIG,
   TYPE_FIELD_CONFIG,
   PHRASE_FIELD_CONFIG,
-  BUTTON_MODIFIERS_PRIMARY,
-  BUTTON_MODIFIERS_SECONDARY,
-  BUTTON_MODIFIERS_DANGER,
 } from '../lib';
 import './card-form.less';
 
@@ -182,39 +180,30 @@ export const CardForm: FC<ICardFormProps> = ({
       />
 
       <div className={bem(CARD_FORM_BLOCK, 'actions')}>
-        <button
+        <Button
           type={BUTTON_TYPE_SUBMIT}
           disabled={isSubmitting}
-          className={bem(
-            bem(CARD_FORM_BLOCK, 'button'),
-            BUTTON_MODIFIERS_PRIMARY
-          )}
+          variant="primary"
         >
           {submitButtonText}
-        </button>
-        <button
+        </Button>
+        <Button
           type={BUTTON_TYPE_BUTTON}
           onClick={handleCancelClick}
           disabled={isSubmitting}
-          className={bem(
-            bem(CARD_FORM_BLOCK, 'button'),
-            BUTTON_MODIFIERS_SECONDARY
-          )}
+          variant="secondary"
         >
           {CANCEL_BUTTON_TEXT}
-        </button>
+        </Button>
         {isEditMode && (
-          <button
+          <Button
             type={BUTTON_TYPE_BUTTON}
             onClick={handleDeleteClick}
             disabled={isSubmitting}
-            className={bem(
-              bem(CARD_FORM_BLOCK, 'button'),
-              BUTTON_MODIFIERS_DANGER
-            )}
+            variant="danger"
           >
             {DELETE_BUTTON_TEXT}
-          </button>
+          </Button>
         )}
       </div>
     </form>
