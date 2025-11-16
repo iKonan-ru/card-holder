@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { MdFileDownload } from 'react-icons/md';
+import { FiUpload } from 'react-icons/fi';
 import { useCardManagementStore } from '@features/card-management';
 import { FabButton } from '@shared/ui';
 import { EXPORT_BUTTON_ARIA_LABEL } from './lib/constants';
@@ -11,7 +11,7 @@ export const ExportButton: FC = () => {
 
   return (
     <FabButton
-      icon={MdFileDownload}
+      icon={FiUpload}
       ariaLabel={EXPORT_BUTTON_ARIA_LABEL}
       onClick={exportCards}
       disabled={isExporting}

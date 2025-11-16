@@ -5,12 +5,13 @@
   bottom: @spacing-xl;
   right: @spacing-xl;
   display: flex;
-  flex-direction: column;
+  justify-content: space-evenly;
   gap: @spacing-sm;
   z-index: @z-index-overlay;
 
   @media (max-width: @mobile) {
-    bottom: @spacing-md;
-    right: @spacing-md;
+    position: sticky;
+    bottom: @spacing-lg;
+    margin-top: @spacing-lg;
   }
 }

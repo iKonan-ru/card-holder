@@ -1,9 +1,13 @@
-import { useEffect } from 'react';
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
 const UPDATE_CHECK_INTERVAL = 60 * 1000;
 
-export const usePWAUpdate = (): void => {
+export interface IUsePWAUpdateReturn {
+  needRefresh: boolean;
+  updateServiceWorker: (reloadPage?: boolean) => Promise<void>;
+}
+
+export const usePWAUpdate = (): IUsePWAUpdateReturn => {
   const {
     needRefresh: [needRefresh],
     updateServiceWorker,
@@ -30,11 +34,8 @@ export const usePWAUpdate = (): void => {
     },
   });
 
-  useEffect(() => {
-    if (!needRefresh) {
-      return;
-    }
-
-    void updateServiceWorker(true);
-  }, [needRefresh, updateServiceWorker]);
+  return {
+    needRefresh,
+    updateServiceWorker,
+  };
 };

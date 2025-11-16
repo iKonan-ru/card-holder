@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react';
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import {
   TOGGLE_SHOW_PASSWORD_LABEL,
   TOGGLE_HIDE_PASSWORD_LABEL,
@@ -15,7 +15,7 @@ interface IUsePasswordVisibility {
   isVisible: boolean;
   inputType: 'text' | 'password';
   ariaLabel: string;
-  Icon: typeof MdVisibility | typeof MdVisibilityOff;
+  Icon: typeof FiEye | typeof FiEyeOff;
   toggleVisibility: () => void;
 }
 
@@ -46,7 +46,7 @@ export const usePasswordVisibility = (
   }, [isVisible]);
 
   const Icon = useMemo(() => {
-    return isVisible ? MdVisibilityOff : MdVisibility;
+    return isVisible ? FiEyeOff : FiEye;
   }, [isVisible]);
 
   return {

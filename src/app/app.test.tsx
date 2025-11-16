@@ -12,6 +12,7 @@ vi.mock('./lib', () => ({
   useApp: () => ({
     handleModalOpen: mockHandleModalOpen,
   }),
+  useAppUpdateModal: vi.fn(),
 }));
 
 describe('App', () => {

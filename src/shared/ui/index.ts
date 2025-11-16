@@ -13,3 +13,4 @@ export * from './password-field';
 export * from './reorder-toggle-button';
 export * from './sortable-card-item';
 export * from './drag-handle';
+export * from './update-modal';

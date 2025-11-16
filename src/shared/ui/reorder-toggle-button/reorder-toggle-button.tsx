@@ -1,5 +1,5 @@
 import { type FC, useMemo } from 'react';
-import { MdDragIndicator, MdOutlineDone } from 'react-icons/md';
+import { FiMove, FiCheck } from 'react-icons/fi';
 import { FabButton } from '../fab-button';
 import type { IReorderToggleButtonProps } from './model';
 
@@ -10,10 +10,7 @@ export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({
   isActive,
   onClick,
 }) => {
-  const icon = useMemo(
-    () => (isActive ? MdOutlineDone : MdDragIndicator),
-    [isActive]
-  );
+  const icon = useMemo(() => (isActive ? FiCheck : FiMove), [isActive]);
   const ariaLabel = useMemo(
     () =>
       isActive

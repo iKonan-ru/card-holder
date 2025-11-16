@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { FiEdit2 } from 'react-icons/fi';
+import { FiEdit } from 'react-icons/fi';
 import {
   bem,
   maskValue,
@@ -21,7 +21,7 @@ export const BankCardBack: FC<IBankCardBackProps> = ({ card, onEditClick }) => {
         type={BUTTON_TYPE_BUTTON}
         aria-label={BANK_CARD_EDIT_LABEL}
       >
-        <FiEdit2
+        <FiEdit
           className={bem(BANK_CARD_BLOCK, 'edit-icon')}
           aria-hidden={ARIA_HIDDEN_TRUE}
         />

@@ -1,5 +1,5 @@
 import { forwardRef, useMemo } from 'react';
-import { MdDragIndicator } from 'react-icons/md';
+import { FiMove } from 'react-icons/fi';
 import { bem, useClassName } from '@shared/lib';
 import { DRAG_HANDLE_BLOCK, DRAG_HANDLE_ARIA_LABEL } from './lib';
 import type { IDragHandleProps } from './model';
@@ -30,7 +30,7 @@ export const DragHandle = forwardRef<HTMLButtonElement, IDragHandleProps>(
         aria-label={DRAG_HANDLE_ARIA_LABEL}
         {...restProps}
       >
-        <MdDragIndicator
+        <FiMove
           className={bem(DRAG_HANDLE_BLOCK, 'icon')}
           aria-hidden="true"
         />

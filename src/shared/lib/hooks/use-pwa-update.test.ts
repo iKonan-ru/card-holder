@@ -42,29 +42,32 @@ describe('usePWAUpdate', () => {
     });
 
     const { result } = renderHook(() => usePWAUpdate());
-    expect(result.current).toBeUndefined();
+    expect(result.current).toEqual({
+      needRefresh: false,
+      updateServiceWorker: mockUpdateServiceWorker,
+    });
   });
 
-  it('должен вызывать updateServiceWorker когда needRefresh = true', () => {
+  it('должен возвращать needRefresh = true когда доступно обновление', () => {
     mockUseRegisterSW.mockReturnValue({
       needRefresh: [true, vi.fn()],
       updateServiceWorker: mockUpdateServiceWorker,
     });
 
-    renderHook(() => usePWAUpdate());
-
-    expect(mockUpdateServiceWorker).toHaveBeenCalledWith(true);
+    const { result } = renderHook(() => usePWAUpdate());
+    expect(result.current.needRefresh).toBe(true);
+    expect(result.current.updateServiceWorker).toBeDefined();
   });
 
-  it('не должен вызывать updateServiceWorker когда needRefresh = false', () => {
+  it('должен возвращать needRefresh = false когда обновление недоступно', () => {
     mockUseRegisterSW.mockReturnValue({
       needRefresh: [false, vi.fn()],
       updateServiceWorker: mockUpdateServiceWorker,
     });
 
-    renderHook(() => usePWAUpdate());
-
-    expect(mockUpdateServiceWorker).not.toHaveBeenCalled();
+    const { result } = renderHook(() => usePWAUpdate());
+    expect(result.current.needRefresh).toBe(false);
+    expect(result.current.updateServiceWorker).toBeDefined();
   });
 
   it('должен регистрировать service worker через onRegisteredSW', () => {
@@ -162,25 +165,26 @@ describe('usePWAUpdate', () => {
     expect(capturedOnRegisteredSW).toBeDefined();
   });
 
-  it('должен вызывать update при смене needRefresh с false на true', () => {
-    const { rerender } = renderHook(
+  it('должен обновлять needRefresh при смене с false на true', () => {
+    const { rerender, result } = renderHook(
       ({ needRefresh }) => {
         mockUseRegisterSW.mockReturnValue({
           needRefresh: [needRefresh, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         });
-        usePWAUpdate();
+
+        return usePWAUpdate();
       },
       {
         initialProps: { needRefresh: false },
       }
     );
 
-    expect(mockUpdateServiceWorker).not.toHaveBeenCalled();
+    expect(result.current.needRefresh).toBe(false);
 
     rerender({ needRefresh: true });
 
-    expect(mockUpdateServiceWorker).toHaveBeenCalledWith(true);
+    expect(result.current.needRefresh).toBe(true);
   });
 
   it('должен периодически проверять обновления через setInterval', async () => {

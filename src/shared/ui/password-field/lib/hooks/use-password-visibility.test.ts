@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { MdVisibility, MdVisibilityOff } from 'react-icons/md';
+import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { usePasswordVisibility } from './use-password-visibility';
 
 describe('usePasswordVisibility', () => {
@@ -25,14 +25,14 @@ describe('usePasswordVisibility', () => {
       expect(result.current.inputType).toBe('password');
     });
 
-    it('должен возвращать иконку MdVisibility по умолчанию', () => {
+    it('должен возвращать иконку FiEye по умолчанию', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
         })
       );
 
-      expect(result.current.Icon).toBe(MdVisibility);
+      expect(result.current.Icon).toBe(FiEye);
     });
 
     it('должен возвращать aria-label "Показать пароль" по умолчанию', () => {
@@ -75,7 +75,7 @@ describe('usePasswordVisibility', () => {
       expect(result.current.inputType).toBe('text');
     });
 
-    it('должен менять иконку на MdVisibilityOff при видимом пароле', () => {
+    it('должен менять иконку на FiEyeOff при видимом пароле', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
@@ -86,7 +86,7 @@ describe('usePasswordVisibility', () => {
         result.current.toggleVisibility();
       });
 
-      expect(result.current.Icon).toBe(MdVisibilityOff);
+      expect(result.current.Icon).toBe(FiEyeOff);
     });
 
     it('должен менять aria-label на "Скрыть пароль" при видимом пароле', () => {
@@ -198,7 +198,7 @@ describe('usePasswordVisibility', () => {
       expect(result.current.inputType).toBe('text');
     });
 
-    it('должен возвращать MdVisibilityOff когда externalIsVisible=true', () => {
+    it('должен возвращать FiEyeOff когда externalIsVisible=true', () => {
       const onExternalChange = vi.fn();
       const { result } = renderHook(() =>
         usePasswordVisibility({
@@ -208,7 +208,7 @@ describe('usePasswordVisibility', () => {
         })
       );
 
-      expect(result.current.Icon).toBe(MdVisibilityOff);
+      expect(result.current.Icon).toBe(FiEyeOff);
     });
 
     it('должен обновлять состояние при изменении externalIsVisible', () => {

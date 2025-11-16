@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { MdFileUpload } from 'react-icons/md';
+import { FiDownload } from 'react-icons/fi';
 import { useCardManagementStore } from '@features/card-management';
 import { FabButton } from '@shared/ui';
 import { IMPORT_BUTTON_ARIA_LABEL } from './lib/constants';
@@ -18,7 +18,7 @@ export const ImportButton: FC = () => {
 
   return (
     <FabButton
-      icon={MdFileUpload}
+      icon={FiDownload}
       ariaLabel={IMPORT_BUTTON_ARIA_LABEL}
       onClick={importCards}
       disabled={isImporting}

@@ -31,7 +31,7 @@ const PWA_ICONS = [
 const WORKBOX_GLOB_PATTERNS = ['**/*.{js,css,html,ico,png,svg,woff,woff2,ttf}'];
 
 export const pwaConfig: Partial<VitePWAOptions> = {
-  registerType: 'autoUpdate',
+  registerType: 'prompt',
   includeAssets: [
     'icon.svg',
     'banks/**/*',
@@ -54,8 +54,8 @@ export const pwaConfig: Partial<VitePWAOptions> = {
   workbox: {
     globPatterns: WORKBOX_GLOB_PATTERNS,
     cleanupOutdatedCaches: true,
-    clientsClaim: true,
-    skipWaiting: true,
+    clientsClaim: false,
+    skipWaiting: false,
   },
   devOptions: {
     enabled: true,

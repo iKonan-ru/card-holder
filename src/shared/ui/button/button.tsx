@@ -1,5 +1,5 @@
 import { type FC, useMemo } from 'react';
-import { CgSpinner } from 'react-icons/cg';
+import { FiLoader } from 'react-icons/fi';
 import { bem, useClassName } from '@shared/lib';
 import type { IButtonProps } from './model';
 import { BUTTON_BLOCK } from './lib';
@@ -44,7 +44,7 @@ export const Button: FC<IButtonProps> = ({
         {children}
       </span>
       {isLoading && (
-        <CgSpinner
+        <FiLoader
           className={bem(BUTTON_BLOCK, 'loader')}
           aria-label="Загрузка"
         />

@@ -1,9 +1,7 @@
 import { type FC } from 'react';
-import { MainPage } from '@pages/main-page';
 import { ModalProvider } from '@shared/lib';
-import { ModalContainer } from '@shared/ui';
-import { ErrorHandlerProvider } from '@features/error-handling';
 import { useApp } from './lib';
+import { AppContent } from './app-content';
 import '@shared/assets/styles/index.less';
 
 export const App: FC = () => {
@@ -11,10 +9,7 @@ export const App: FC = () => {
 
   return (
     <ModalProvider onModalOpen={handleModalOpen}>
-      <ErrorHandlerProvider>
-        <MainPage />
-        <ModalContainer />
-      </ErrorHandlerProvider>
+      <AppContent />
     </ModalProvider>
   );
 };

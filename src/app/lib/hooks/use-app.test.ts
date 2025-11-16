@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import { useApp } from './useApp';
+import { useApp } from './use-app';
 import { useCardManagementStore } from '@features/card-management';
 import { initGlobalErrorHandler } from '@features/error-handling';
 import { setErrorModalHandler } from '@shared/lib';
@@ -14,10 +14,14 @@ vi.mock('@features/error-handling', () => ({
   showError: vi.fn(),
 }));
 
-vi.mock('@shared/lib', () => ({
-  usePWAUpdate: vi.fn(),
-  setErrorModalHandler: vi.fn(),
-}));
+vi.mock('@shared/lib', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@shared/lib')>();
+
+  return {
+    ...actual,
+    setErrorModalHandler: vi.fn(),
+  };
+});
 
 describe('useApp', () => {
   const mockSetReorderMode = vi.fn();

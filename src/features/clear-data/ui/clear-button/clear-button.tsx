@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { MdDeleteForever } from 'react-icons/md';
+import { FiTrash2 } from 'react-icons/fi';
 import { useCardManagementStore } from '@features/card-management';
 import { FabButton } from '@shared/ui';
 import { CLEAR_BUTTON_ARIA_LABEL } from './lib/constants';
@@ -14,7 +14,7 @@ export const ClearButton: FC = () => {
 
   return (
     <FabButton
-      icon={MdDeleteForever}
+      icon={FiTrash2}
       ariaLabel={CLEAR_BUTTON_ARIA_LABEL}
       onClick={clearData}
       disabled={isClearing}

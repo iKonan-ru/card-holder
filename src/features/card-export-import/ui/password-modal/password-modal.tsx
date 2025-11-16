@@ -42,7 +42,8 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
 
   useEffect(() => {
     modalContext.updateModalPreventClose(PASSWORD_MODAL_ID, isSubmitting);
-  }, [isSubmitting, modalContext]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isSubmitting]);
 
   const className = useClassName({
     blockName: PASSWORD_MODAL_BLOCK,
