@@ -334,4 +334,31 @@ describe('useExportCards', () => {
       expect(mockClosePasswordModal).toHaveBeenCalled();
     });
   });
+
+  it('должен обрабатывать ошибку которая не является экземпляром Error', async () => {
+    const mockError = 'String error';
+    vi.mocked(sharedLib.encryptData).mockRejectedValue(mockError);
+
+    const { result } = renderHook(() => useExportCards({ cards: mockCards }));
+
+    await act(async () => {
+      await result.current.exportCards();
+    });
+
+    const passwordModalCall = mockOpenModal.mock.calls[0];
+    const modalContent = passwordModalCall[1];
+    const onConfirm = modalContent.props.onConfirm;
+
+    await act(async () => {
+      await onConfirm(
+        MOCK_PASSWORD,
+        mockClosePasswordModal,
+        mockSetPasswordError
+      );
+    });
+
+    await waitFor(() => {
+      expect(mockSetPasswordError).toHaveBeenCalledWith(expect.any(String));
+    });
+  });
 });

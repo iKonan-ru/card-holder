@@ -225,4 +225,20 @@ describe('usePWAInstall', () => {
       expect(result.current.canInstall).toBe(true);
     });
   });
+
+  it('не должен устанавливать deferredPrompt если событие не является BeforeInstallPromptEvent', () => {
+    const { result } = renderHook(() => usePWAInstall());
+
+    const mockEvent = new Event('beforeinstallprompt');
+
+    act(() => {
+      const addEventListenerMock = vi.mocked(window.addEventListener);
+      const handler = addEventListenerMock.mock.calls.find(
+        (call) => call[0] === 'beforeinstallprompt'
+      )?.[1] as EventListener;
+      handler?.(mockEvent);
+    });
+
+    expect(result.current.canInstall).toBe(false);
+  });
 });

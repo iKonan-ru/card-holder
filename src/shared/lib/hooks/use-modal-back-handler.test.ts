@@ -149,4 +149,62 @@ describe('useModalBackHandler', () => {
     expect(onClose1).not.toHaveBeenCalled();
     expect(onClose2).toHaveBeenCalledTimes(1);
   });
+
+  it('не должен вызывать onClose при popstate если isHistoryPushedRef.current false', () => {
+    const onClose = vi.fn();
+
+    const { rerender } = renderHook((props) => useModalBackHandler(props), {
+      initialProps: { isOpen: false, onClose },
+    });
+
+    rerender({ isOpen: true, onClose });
+
+    act(() => {
+      const addEventListenerMock = vi.mocked(window.addEventListener);
+      const handler = addEventListenerMock.mock.calls.find(
+        (call) => call[0] === 'popstate'
+      )?.[1] as EventListener;
+      handler?.(new PopStateEvent('popstate'));
+    });
+
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it('не должен откатывать историю если модалка была закрыта через popstate', () => {
+    const onClose = vi.fn();
+
+    const { rerender } = renderHook((props) => useModalBackHandler(props), {
+      initialProps: { isOpen: true, onClose },
+    });
+
+    act(() => {
+      const addEventListenerMock = vi.mocked(window.addEventListener);
+      const handler = addEventListenerMock.mock.calls.find(
+        (call) => call[0] === 'popstate'
+      )?.[1] as EventListener;
+      handler?.(new PopStateEvent('popstate'));
+    });
+
+    mockBack.mockClear();
+
+    rerender({ isOpen: false, onClose });
+
+    expect(mockBack).not.toHaveBeenCalled();
+  });
+
+  it('не должен добавлять запись в историю если isHistoryPushedRef.current уже true', () => {
+    const onClose = vi.fn();
+
+    const { rerender } = renderHook((props) => useModalBackHandler(props), {
+      initialProps: { isOpen: true, onClose },
+    });
+
+    expect(mockPushState).toHaveBeenCalledTimes(1);
+
+    mockPushState.mockClear();
+
+    rerender({ isOpen: true, onClose });
+
+    expect(mockPushState).not.toHaveBeenCalled();
+  });
 });

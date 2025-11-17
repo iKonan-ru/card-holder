@@ -14,7 +14,7 @@ vi.mock('@shared/lib', () => ({
   useModal: () => mockUseModal(),
 }));
 
-vi.mock('@shared/ui', () => ({
+vi.mock('@features/pwa-update', () => ({
   UpdateModal: vi.fn(
     ({
       onUpdate,
@@ -31,6 +31,7 @@ vi.mock('@shared/ui', () => ({
   ),
   UPDATE_MODAL_TITLE_ID: 'update-modal-title',
   UPDATE_MODAL_MESSAGE_ID: 'update-modal-message',
+  UPDATE_MODAL_TITLE: 'Обновление приложения',
 }));
 
 describe('useAppUpdateModal', () => {
@@ -181,6 +182,27 @@ describe('useAppUpdateModal', () => {
 
     await waitFor(() => {
       expect(mockOpen).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('не должен открывать модальное окно повторно если wasOpenedRef.current уже true', async () => {
+    mockUsePWAUpdate.mockReturnValue({
+      needRefresh: true,
+      updateServiceWorker: mockUpdateServiceWorker,
+    });
+
+    const { rerender } = renderHook(() => useAppUpdateModal());
+
+    await waitFor(() => {
+      expect(mockOpen).toHaveBeenCalledTimes(1);
+    });
+
+    mockOpen.mockClear();
+
+    rerender();
+
+    await waitFor(() => {
+      expect(mockOpen).not.toHaveBeenCalled();
     });
   });
 });

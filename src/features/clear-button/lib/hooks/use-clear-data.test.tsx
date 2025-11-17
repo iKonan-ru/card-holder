@@ -47,7 +47,8 @@ describe('useClearData', () => {
       'confirm-clear-all',
       expect.anything(),
       'confirm-clear-all-title',
-      'confirm-clear-all-message'
+      'confirm-clear-all-message',
+      'Подтверждение удаления'
     );
   });
 

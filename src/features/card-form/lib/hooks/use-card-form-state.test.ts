@@ -174,4 +174,20 @@ describe('useCardFormState', () => {
 
     expect(result.current.formData).toEqual(initialFormData);
   });
+
+  it('должен обрабатывать пустые pan и expires в initialCard', () => {
+    const initialCard: Partial<IBankCard> = {
+      pan: '',
+      expires: '',
+      name: 'TEST USER',
+      cvv: '123',
+      pin: '1234',
+    };
+
+    const { result } = renderHook(() => useCardFormState({ initialCard }));
+
+    expect(result.current.formData.pan).toBe('');
+    expect(result.current.formData.expires).toBe('');
+    expect(result.current.formData.name).toBe('TEST USER');
+  });
 });

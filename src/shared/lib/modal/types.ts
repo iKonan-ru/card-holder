@@ -3,6 +3,7 @@ import type { ReactNode, RefObject } from 'react';
 export interface IModalItem {
   id: string;
   content: ReactNode;
+  title?: string;
   ariaLabelledBy?: string;
   ariaDescribedBy?: string;
   preventClose?: boolean;
@@ -14,7 +15,8 @@ export interface IModalContextValue {
     id: string,
     content: ReactNode,
     ariaLabelledBy?: string,
-    ariaDescribedBy?: string
+    ariaDescribedBy?: string,
+    title?: string
   ) => void;
   closeModal: (id: string) => void;
   closeAllModals: () => void;

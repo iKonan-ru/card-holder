@@ -220,4 +220,22 @@ describe('copyToClipboard', () => {
     expect(mockGetSelection).toHaveBeenCalled();
     expect(document.execCommand).toHaveBeenCalledWith('copy');
   });
+
+  it('должен обрабатывать ошибку при вызове execCommand', async () => {
+    Object.defineProperty(global, 'navigator', {
+      value: {
+        ...originalNavigator,
+        clipboard: undefined,
+        userAgent: originalNavigator.userAgent || 'test-agent',
+      },
+      writable: true,
+      configurable: true,
+    });
+
+    document.execCommand = vi.fn().mockImplementation(() => {
+      throw new Error('execCommand error');
+    }) as unknown as Document['execCommand'];
+
+    await expect(copyToClipboard('test')).rejects.toThrow(ERROR_FAILED_TO_COPY);
+  });
 });

@@ -65,9 +65,18 @@
     background: var(--bg-primary);
     box-shadow: @shadow-lg;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
 
     &_closing {
       animation: fadeOutModal @duration-medium @easing-ease forwards;
     }
+  }
+
+  &__title {
+    margin: 0 0 @spacing-md 0;
+    font-size: @font-size-2xl;
+    font-weight: @font-weight-semibold;
+    color: var(--text-primary);
   }
 }

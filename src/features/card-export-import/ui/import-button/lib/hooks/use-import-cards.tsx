@@ -20,6 +20,7 @@ import { PasswordModal } from '../../../password-modal';
 import {
   PASSWORD_MODAL_TITLE_ID,
   PASSWORD_MODAL_DESCRIPTION_ID,
+  PASSWORD_MODAL_TITLE_IMPORT,
 } from '../../../password-modal/lib/constants';
 import { SuccessModal } from '../../../success-modal';
 import {
@@ -88,18 +89,14 @@ export const useImportCards = (
 
           const message = createImportSuccessMessage(stats);
 
-          const successContent: ReactNode = (
-            <SuccessModal
-              title={SUCCESS_MODAL_TITLE_IMPORT}
-              message={message}
-            />
-          );
+          const successContent: ReactNode = <SuccessModal message={message} />;
 
           modalContext.openModal(
             SUCCESS_MODAL_ID_IMPORT,
             successContent,
             SUCCESS_MODAL_TITLE_ID,
-            SUCCESS_MODAL_MESSAGE_ID
+            SUCCESS_MODAL_MESSAGE_ID,
+            SUCCESS_MODAL_TITLE_IMPORT
           );
         } catch (error) {
           const errorMessage =
@@ -123,7 +120,8 @@ export const useImportCards = (
         PASSWORD_MODAL_ID_IMPORT,
         modalContent,
         PASSWORD_MODAL_TITLE_ID,
-        PASSWORD_MODAL_DESCRIPTION_ID
+        PASSWORD_MODAL_DESCRIPTION_ID,
+        PASSWORD_MODAL_TITLE_IMPORT
       );
     } catch (error) {
       const isSelectionCancelled = checkIsFileSelectionCancelled(error);

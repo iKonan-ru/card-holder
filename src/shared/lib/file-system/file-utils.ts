@@ -6,7 +6,7 @@ import {
   MAX_FILE_SIZE,
   ALLOWED_MIME_TYPES,
 } from './constants';
-import { MONTH_OFFSET, TYPE_STRING, ZERO_CHAR } from '../constants/constants';
+import { MONTH_OFFSET, TYPE_STRING, ZERO_CHAR } from '../constants/common';
 import {
   ERROR_FAILED_TO_READ_FILE,
   ERROR_FAILED_TO_READ_FILE_AS_TEXT,

@@ -1,12 +1,11 @@
 import { type FC } from 'react';
-import { bem, useClassName } from '@shared/lib';
+import { bem, ParentClassProvider, useClassName } from '@shared/lib';
 import { useAnimatedModalClose, Button } from '../';
 import type { IConfirmModalProps } from './model';
 import {
   CONFIRM_MODAL_BLOCK,
   DEFAULT_CANCEL_TEXT,
   DEFAULT_CONFIRM_TEXT,
-  CONFIRM_MODAL_TITLE_ID,
   CONFIRM_MODAL_MESSAGE_ID,
 } from './lib';
 import './confirm-modal.less';
@@ -28,36 +27,32 @@ export const ConfirmModal: FC<IConfirmModalProps> = ({
 
   return (
     <div className={className}>
-      <h3
-        id={CONFIRM_MODAL_TITLE_ID}
-        className={bem(CONFIRM_MODAL_BLOCK, 'title')}
-      >
-        {title}
-      </h3>
-      <p
-        id={CONFIRM_MODAL_MESSAGE_ID}
-        className={bem(CONFIRM_MODAL_BLOCK, 'message')}
-      >
-        {message}
-      </p>
-      <div className={bem(CONFIRM_MODAL_BLOCK, 'actions')}>
-        <Button
-          type="button"
-          onClick={handleConfirm}
-          aria-label={`${confirmText}: ${title}`}
-          variant="danger"
+      <ParentClassProvider parentClass={CONFIRM_MODAL_BLOCK}>
+        <p
+          id={CONFIRM_MODAL_MESSAGE_ID}
+          className={bem(CONFIRM_MODAL_BLOCK, 'message')}
         >
-          {confirmText}
-        </Button>
-        <Button
-          type="button"
-          onClick={handleCancel}
-          aria-label={cancelText}
-          variant="secondary"
-        >
-          {cancelText}
-        </Button>
-      </div>
+          {message}
+        </p>
+        <div className={bem(CONFIRM_MODAL_BLOCK, 'actions')}>
+          <Button
+            type="button"
+            onClick={handleConfirm}
+            aria-label={`${confirmText}: ${title}`}
+            variant="danger"
+          >
+            {confirmText}
+          </Button>
+          <Button
+            type="button"
+            onClick={handleCancel}
+            aria-label={cancelText}
+            variant="secondary"
+          >
+            {cancelText}
+          </Button>
+        </div>
+      </ParentClassProvider>
     </div>
   );
 };

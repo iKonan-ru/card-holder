@@ -7,6 +7,7 @@ import {
   ERROR_CONTENT_ID_PREFIX,
   ERROR_CONTENT_TITLE_ID,
   ERROR_CONTENT_MESSAGE_ID,
+  ERROR_CONTENT_TITLE,
 } from './constants';
 
 let modalContextRef: IModalContextValue | null = null;
@@ -36,6 +37,7 @@ export const showError = (params: {
     modalId,
     modalContent,
     ERROR_CONTENT_TITLE_ID,
-    ERROR_CONTENT_MESSAGE_ID
+    ERROR_CONTENT_MESSAGE_ID,
+    ERROR_CONTENT_TITLE
   );
 };

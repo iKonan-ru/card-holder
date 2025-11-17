@@ -2,7 +2,7 @@ import { getDatabase } from './database';
 import {
   INDEXEDDB_MODE_READONLY,
   INDEXEDDB_MODE_READWRITE,
-} from '../constants/constants';
+} from '../constants/common';
 
 type IDBMode = typeof INDEXEDDB_MODE_READONLY | typeof INDEXEDDB_MODE_READWRITE;
 

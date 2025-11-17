@@ -1,4 +1,4 @@
-import { HEX_RADIX, BYTE_ITERATION_START } from '../constants/constants';
+import { HEX_RADIX, BYTE_ITERATION_START } from '../constants/common';
 
 const RANDOM_ID_LENGTH = 8;
 

@@ -51,7 +51,8 @@ export const useClearData = (params: IUseClearDataParams): IUseClearData => {
       CONFIRM_MODAL_ID,
       modalContent,
       CONFIRM_MODAL_TITLE_ID,
-      CONFIRM_MODAL_MESSAGE_ID
+      CONFIRM_MODAL_MESSAGE_ID,
+      CONFIRM_CLEAR_TITLE
     );
   }, [handleConfirm, modalContext]);
 

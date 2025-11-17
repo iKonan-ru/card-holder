@@ -1,5 +1,5 @@
 import { useEffect, useRef, useCallback, useId } from 'react';
-import { useModalStack } from '@shared/lib';
+import { useModalStack } from './use-modal-stack';
 import { MODAL_STATE_KEY } from '../modal';
 
 interface UseModalBackHandlerProps {

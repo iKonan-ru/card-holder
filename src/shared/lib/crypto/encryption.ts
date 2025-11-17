@@ -7,7 +7,7 @@ import {
   ERROR_ENCRYPTION_FAILED,
   ERROR_DECRYPTION_FAILED,
 } from './constants';
-import { EMPTY_STRING, BYTE_ITERATION_START } from '../constants/constants';
+import { EMPTY_STRING, BYTE_ITERATION_START } from '../constants/common';
 
 const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
   const bytes = new Uint8Array(buffer);

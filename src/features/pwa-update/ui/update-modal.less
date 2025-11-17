@@ -1,0 +1,19 @@
+@import '@shared/assets/styles/variables.less';
+
+.update-modal {
+  display: flex;
+  flex-direction: column;
+
+  &__message {
+    margin: 0 0 @spacing-lg 0;
+    font-size: @font-size-lg;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  &__actions {
+    display: flex;
+    gap: @spacing-md;
+    justify-content: flex-end;
+  }
+}

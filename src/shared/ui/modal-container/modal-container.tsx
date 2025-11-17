@@ -59,6 +59,7 @@ export const ModalContainer: FC = () => {
             }}
             isTopModal={isTopModal}
             preventClose={modal.preventClose}
+            title={modal.title}
             ariaLabelledBy={modal.ariaLabelledBy}
             ariaDescribedBy={modal.ariaDescribedBy}
           >

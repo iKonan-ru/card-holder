@@ -233,4 +233,43 @@ describe('ModalProvider', () => {
       render(<ErrorComponent />);
     }).toThrow('useModalContext must be used within ModalProvider');
   });
+
+  it('должен вызывать onModalOpen при открытии модального окна', async () => {
+    const onModalOpen = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <ModalProvider onModalOpen={onModalOpen}>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    await user.click(screen.getByText('Open Modal'));
+
+    await waitFor(() => {
+      expect(onModalOpen).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  it('не должен обновлять модальное окно если оно уже существует', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <ModalProvider>
+        <TestComponent />
+      </ModalProvider>
+    );
+
+    await user.click(screen.getByText('Open Modal'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('modals-count')).toHaveTextContent('1');
+    });
+
+    await user.click(screen.getByText('Open Modal'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('modals-count')).toHaveTextContent('1');
+    });
+  });
 });

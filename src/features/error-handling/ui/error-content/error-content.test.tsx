@@ -8,19 +8,6 @@ describe('ErrorContent', () => {
     cleanup();
   });
 
-  it('должен отображать заголовок ошибки', () => {
-    const onClose = vi.fn();
-
-    render(
-      <ErrorContent
-        message="Тестовая ошибка"
-        onClose={onClose}
-      />
-    );
-
-    expect(screen.getByText('Ошибка')).toBeInTheDocument();
-  });
-
   it('должен отображать сообщение ошибки', () => {
     const onClose = vi.fn();
     const message = 'Не удалось загрузить карты';
@@ -80,10 +67,8 @@ describe('ErrorContent', () => {
       />
     );
 
-    const title = screen.getByText('Ошибка');
     const message = screen.getByText('Тестовая ошибка');
 
-    expect(title).toHaveAttribute('id', 'error-content-title');
     expect(message).toHaveAttribute('id', 'error-content-message');
   });
 

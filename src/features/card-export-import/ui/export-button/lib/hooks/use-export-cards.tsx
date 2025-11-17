@@ -13,6 +13,7 @@ import { PasswordModal } from '../../../password-modal';
 import {
   PASSWORD_MODAL_TITLE_ID,
   PASSWORD_MODAL_DESCRIPTION_ID,
+  PASSWORD_MODAL_TITLE_EXPORT,
 } from '../../../password-modal/lib/constants';
 import { PASSWORD_MODAL_ID_EXPORT } from '../../../password-modal/lib';
 import { FALLBACK_ERROR_EXPORT } from '../../../../lib/constants';
@@ -80,7 +81,8 @@ export const useExportCards = (
         PASSWORD_MODAL_ID_EXPORT,
         modalContent,
         PASSWORD_MODAL_TITLE_ID,
-        PASSWORD_MODAL_DESCRIPTION_ID
+        PASSWORD_MODAL_DESCRIPTION_ID,
+        PASSWORD_MODAL_TITLE_EXPORT
       );
     } catch (error) {
       handleError(error, FALLBACK_ERROR_EXPORT);

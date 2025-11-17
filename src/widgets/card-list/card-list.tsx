@@ -1,8 +1,5 @@
 import { type FC, useMemo } from 'react';
 import { ParentClassProvider, useClassName } from '@shared/lib';
-import { ReorderToggleButton } from '@shared/ui';
-import { ExportButton, ImportButton } from '@features/card-export-import';
-import { ClearButton } from '@features/clear-button';
 import {
   useCardList,
   useDndSensors,
@@ -15,11 +12,7 @@ import {
 } from './lib';
 import { DndContext, closestCenter, DragOverlay } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
-import {
-  CardListGrid,
-  CardListDragOverlay,
-  ActionButtonsContainer,
-} from './ui';
+import { CardListGrid, CardListDragOverlay } from './ui';
 import './card-list.less';
 
 export const CardList: FC = () => {
@@ -30,7 +23,6 @@ export const CardList: FC = () => {
     handleShowForm,
     handleEditCard,
     handleDragEnd: handleDragEndStore,
-    handleToggleReorderMode,
     handleFlipCard,
   } = useCardList();
 
@@ -42,7 +34,6 @@ export const CardList: FC = () => {
       onDragEnd: handleDragEndStore,
     });
 
-  const hasCards = cards.length > 0;
   const cardIds = useMemo(() => cards.map((card) => card.pan), [cards]);
   const isDragging = activeCard !== null;
 
@@ -91,21 +82,6 @@ export const CardList: FC = () => {
             />
           </DragOverlay>
         </DndContext>
-
-        <ActionButtonsContainer>
-          <ImportButton />
-
-          {hasCards && (
-            <>
-              <ExportButton />
-              <ReorderToggleButton
-                isActive={isReorderMode}
-                onClick={handleToggleReorderMode}
-              />
-              <ClearButton />
-            </>
-          )}
-        </ActionButtonsContainer>
       </ParentClassProvider>
     </div>
   );

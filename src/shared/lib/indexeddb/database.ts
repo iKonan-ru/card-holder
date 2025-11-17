@@ -6,7 +6,7 @@ import {
   CARDS_ORDER_INDEX,
 } from './constants';
 import type { IBankCard } from '@entities/bank-card';
-import { INITIAL_NULL, INITIAL_FALSE } from '../constants/constants';
+import { INITIAL_NULL, INITIAL_FALSE } from '../constants/common';
 import { ERROR_FAILED_TO_OPEN_DATABASE } from '../constants/errors';
 
 let databaseInstance: IDBDatabase | null = INITIAL_NULL;

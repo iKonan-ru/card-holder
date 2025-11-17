@@ -1,5 +1,5 @@
 import type { IBankCard } from '@entities/bank-card';
-import { executeIndexedDBOperation } from '@shared/lib';
+import { executeIndexedDBOperation } from './operations';
 import { CARDS_STORE_NAME } from './constants';
 import {
   ERROR_FAILED_TO_ADD_CARD,
@@ -9,9 +9,11 @@ import {
   ERROR_FAILED_TO_GET_CARD,
   ERROR_FAILED_TO_CLEAR_CARDS,
   ERROR_FAILED_TO_UPDATE_CARDS_ORDER,
+} from '../constants/errors';
+import {
   INDEXEDDB_MODE_READONLY,
   INDEXEDDB_MODE_READWRITE,
-} from '@shared/lib';
+} from '../constants/common';
 import { getDatabase } from './database';
 
 const sortCardsByOrder = (cards: IBankCard[]): IBankCard[] => {

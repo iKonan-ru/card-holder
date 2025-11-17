@@ -3,9 +3,7 @@ import { bem } from '@shared/lib';
 import { useAnimatedModalClose, Button } from '@shared/ui';
 import {
   ERROR_CONTENT_BLOCK,
-  ERROR_CONTENT_TITLE,
   ERROR_CONTENT_CLOSE_TEXT,
-  ERROR_CONTENT_TITLE_ID,
   ERROR_CONTENT_MESSAGE_ID,
 } from '../../lib/constants';
 import './error-content.less';
@@ -20,12 +18,6 @@ export const ErrorContent: FC<IErrorContentProps> = ({ message, onClose }) => {
 
   return (
     <div className={ERROR_CONTENT_BLOCK}>
-      <h3
-        id={ERROR_CONTENT_TITLE_ID}
-        className={bem(ERROR_CONTENT_BLOCK, 'title')}
-      >
-        {ERROR_CONTENT_TITLE}
-      </h3>
       <p
         id={ERROR_CONTENT_MESSAGE_ID}
         className={bem(ERROR_CONTENT_BLOCK, 'message')}

@@ -4,6 +4,7 @@ import { renderHook, act } from '@testing-library/react';
 import { useCardFormSubmit } from './use-card-form-submit';
 import type { IBankCard } from '@entities/bank-card';
 import * as sharedLib from '@shared/lib';
+import * as validationModule from '../utils/validation';
 
 const mockAddCard = vi.fn();
 const mockUpdateCard = vi.fn();
@@ -492,6 +493,94 @@ describe('useCardFormSubmit', () => {
 
       expect(typeof result.current.handleSubmit).toBe('function');
       expect(typeof result.current.handleDelete).toBe('function');
+    });
+  });
+
+  describe('handleSubmit - невалидная карта', () => {
+    it('не должен добавлять карту если checkIsValidBankCard возвращает false', async () => {
+      const formData: Partial<IBankCard> = {
+        pan: '5559494202595236',
+        expires: '1230',
+        name: 'TEST USER',
+      };
+
+      const validateCardFormSpy = vi
+        .spyOn(validationModule, 'validateCardForm')
+        .mockReturnValue({});
+      const checkIsValidBankCardSpy = vi
+        .spyOn(validationModule, 'checkIsValidBankCard')
+        .mockReturnValue(false);
+      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
+      mockAddCard.mockResolvedValue(undefined);
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: false,
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+        })
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as FormEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockSetIsSubmitting).toHaveBeenCalledWith(true);
+      expect(mockAddCard).not.toHaveBeenCalled();
+      expect(mockSetIsSubmitting).toHaveBeenCalledWith(false);
+
+      validateCardFormSpy.mockRestore();
+      checkIsValidBankCardSpy.mockRestore();
+    });
+
+    it('не должен обновлять карту если checkIsValidBankCard возвращает false', async () => {
+      const formData: Partial<IBankCard> = {
+        pan: '5559494202595236',
+        expires: '1230',
+        name: 'UPDATED USER',
+      };
+
+      const validateCardFormSpy = vi
+        .spyOn(validationModule, 'validateCardForm')
+        .mockReturnValue({});
+      const checkIsValidBankCardSpy = vi
+        .spyOn(validationModule, 'checkIsValidBankCard')
+        .mockReturnValue(false);
+      mockUpdateCard.mockResolvedValue(undefined);
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: true,
+          originalPan: '5559494202595236',
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+        })
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as FormEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockSetIsSubmitting).toHaveBeenCalledWith(true);
+      expect(mockUpdateCard).not.toHaveBeenCalled();
+      expect(mockSetIsSubmitting).toHaveBeenCalledWith(false);
+
+      validateCardFormSpy.mockRestore();
+      checkIsValidBankCardSpy.mockRestore();
     });
   });
 });

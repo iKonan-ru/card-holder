@@ -59,13 +59,6 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
       onSubmit={handleSubmit}
       aria-labelledby={PASSWORD_MODAL_TITLE_ID}
     >
-      <h3
-        id={PASSWORD_MODAL_TITLE_ID}
-        className={bem(PASSWORD_MODAL_BLOCK, 'title')}
-      >
-        {title}
-      </h3>
-
       <ParentClassProvider parentClass={PASSWORD_MODAL_BLOCK}>
         <PasswordField
           id="password"
@@ -95,27 +88,27 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
             onPasswordVisibilityChange={handlePasswordVisibilityChange}
           />
         )}
-      </ParentClassProvider>
 
-      <div className={bem(PASSWORD_MODAL_BLOCK, 'actions')}>
-        <Button
-          type="submit"
-          aria-label={`${buttonText}: ${title}`}
-          variant="primary"
-          isLoading={isSubmitting}
-        >
-          {buttonText}
-        </Button>
-        <Button
-          type="button"
-          onClick={handleCancel}
-          aria-label={PASSWORD_MODAL_BUTTON_CANCEL}
-          variant="secondary"
-          disabled={isSubmitting}
-        >
-          {PASSWORD_MODAL_BUTTON_CANCEL}
-        </Button>
-      </div>
+        <div className={bem(PASSWORD_MODAL_BLOCK, 'actions')}>
+          <Button
+            type="submit"
+            aria-label={`${buttonText}: ${title}`}
+            variant="primary"
+            isLoading={isSubmitting}
+          >
+            {buttonText}
+          </Button>
+          <Button
+            type="button"
+            onClick={handleCancel}
+            aria-label={PASSWORD_MODAL_BUTTON_CANCEL}
+            variant="secondary"
+            disabled={isSubmitting}
+          >
+            {PASSWORD_MODAL_BUTTON_CANCEL}
+          </Button>
+        </div>
+      </ParentClassProvider>
     </form>
   );
 };

@@ -47,18 +47,6 @@ describe('PasswordModal', () => {
   });
 
   describe('Режим экспорта', () => {
-    it('должен отображать заголовок экспорта', () => {
-      render(
-        <PasswordModal
-          mode="export"
-          onConfirm={mockOnConfirm}
-          onCancel={mockOnCancel}
-        />
-      );
-
-      expect(screen.getByText(/экспорт карт/i)).toBeInTheDocument();
-    });
-
     it('должен отображать два поля пароля', () => {
       render(
         <PasswordModal
@@ -271,18 +259,6 @@ describe('PasswordModal', () => {
   });
 
   describe('Режим импорта', () => {
-    it('должен отображать заголовок импорта', () => {
-      render(
-        <PasswordModal
-          mode="import"
-          onConfirm={mockOnConfirm}
-          onCancel={mockOnCancel}
-        />
-      );
-
-      expect(screen.getByText(/импорт карт/i)).toBeInTheDocument();
-    });
-
     it('должен отображать только одно поле пароля', () => {
       render(
         <PasswordModal

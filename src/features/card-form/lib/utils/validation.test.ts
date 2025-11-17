@@ -189,4 +189,21 @@ describe('validateCardForm - граничные случаи', () => {
     expect(errors.name).toBeDefined();
     expect(errors.cvv).toBeDefined();
   });
+
+  it('должна пропускать поля без валидатора', () => {
+    const card = {
+      pan: '5555555555554444',
+      expires: '1225',
+      name: 'TEST USER',
+      cvv: '123',
+      pin: '1234',
+      type: 'Visa',
+      phrase: 'test phrase',
+    };
+
+    const errors = validateCardForm(card);
+
+    expect(errors.type).toBeUndefined();
+    expect(errors.phrase).toBeUndefined();
+  });
 });

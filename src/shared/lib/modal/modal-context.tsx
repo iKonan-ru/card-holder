@@ -26,7 +26,8 @@ export const ModalProvider: FC<IModalProviderProps> = ({
       id: string,
       content: ReactNode,
       ariaLabelledBy?: string,
-      ariaDescribedBy?: string
+      ariaDescribedBy?: string,
+      title?: string
     ) => {
       if (onModalOpen) {
         onModalOpen();
@@ -43,7 +44,7 @@ export const ModalProvider: FC<IModalProviderProps> = ({
 
         return [
           ...prevModals,
-          { id, content, ariaLabelledBy, ariaDescribedBy },
+          { id, content, title, ariaLabelledBy, ariaDescribedBy },
         ];
       });
     },

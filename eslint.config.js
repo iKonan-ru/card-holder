@@ -5,11 +5,15 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import tseslint from 'typescript-eslint';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettierConfig from 'eslint-config-prettier';
+import fsdImports from './tools/eslint/fsd-imports.js';
 
 export default defineConfig([
   globalIgnores(['dist', 'coverage', 'dev-dist']),
   {
     files: ['**/*.{ts,tsx}'],
+    plugins: {
+      'fsd-imports': fsdImports,
+    },
     extends: [
       js.configs.recommended,
       tseslint.configs.recommended,
@@ -26,6 +30,7 @@ export default defineConfig([
         'error',
         { blankLine: 'always', prev: '*', next: 'return' },
       ],
+      'fsd-imports/fsd-imports': 'error',
     },
   },
   {

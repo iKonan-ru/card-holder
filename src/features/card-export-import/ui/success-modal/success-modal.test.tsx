@@ -5,22 +5,9 @@ import { SuccessModal } from './success-modal';
 import { SUCCESS_MODAL_BUTTON_TEXT } from './lib';
 
 describe('SuccessModal', () => {
-  it('должен отрисовываться с заголовком', () => {
-    render(
-      <SuccessModal
-        title="Success Title"
-        message="Success message"
-        onClose={vi.fn()}
-      />
-    );
-
-    expect(screen.getByText('Success Title')).toBeInTheDocument();
-  });
-
   it('должен отрисовываться с сообщением', () => {
     render(
       <SuccessModal
-        title="Success Title"
         message="Success message"
         onClose={vi.fn()}
       />
@@ -32,7 +19,6 @@ describe('SuccessModal', () => {
   it('должен иметь кнопку закрытия', () => {
     render(
       <SuccessModal
-        title="Success Title"
         message="Success message"
         onClose={vi.fn()}
       />
@@ -51,7 +37,6 @@ describe('SuccessModal', () => {
 
     render(
       <SuccessModal
-        title="Success Title"
         message="Success message"
         onClose={handleClose}
       />
@@ -67,33 +52,9 @@ describe('SuccessModal', () => {
     });
   });
 
-  it('должен отображать разные заголовки', () => {
-    const { rerender } = render(
-      <SuccessModal
-        title="First Title"
-        message="Message"
-        onClose={vi.fn()}
-      />
-    );
-
-    expect(screen.getByText('First Title')).toBeInTheDocument();
-
-    rerender(
-      <SuccessModal
-        title="Second Title"
-        message="Message"
-        onClose={vi.fn()}
-      />
-    );
-
-    expect(screen.getByText('Second Title')).toBeInTheDocument();
-    expect(screen.queryByText('First Title')).not.toBeInTheDocument();
-  });
-
   it('должен отображать разные сообщения', () => {
     const { rerender } = render(
       <SuccessModal
-        title="Title"
         message="First message"
         onClose={vi.fn()}
       />
@@ -103,7 +64,6 @@ describe('SuccessModal', () => {
 
     rerender(
       <SuccessModal
-        title="Title"
         message="Second message"
         onClose={vi.fn()}
       />

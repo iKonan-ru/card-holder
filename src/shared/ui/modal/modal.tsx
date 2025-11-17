@@ -27,6 +27,7 @@ export const Modal: FC<IModalProps> = ({
   onRegisterClose,
   isTopModal,
   preventClose = false,
+  title,
   ariaLabelledBy,
   ariaDescribedBy,
 }) => {
@@ -57,6 +58,7 @@ export const Modal: FC<IModalProps> = ({
   });
 
   const contentClassName = bem(bem(MODAL_BLOCK, 'content'), modifiers);
+  const titleClassName = bem(MODAL_BLOCK, 'title');
 
   return (
     <div
@@ -77,6 +79,14 @@ export const Modal: FC<IModalProps> = ({
       >
         <ModalCloseContext.Provider value={handleClose}>
           <ParentClassProvider parentClass={MODAL_BLOCK}>
+            {title && (
+              <h3
+                id={ariaLabelledBy}
+                className={titleClassName}
+              >
+                {title}
+              </h3>
+            )}
             {children}
           </ParentClassProvider>
         </ModalCloseContext.Provider>

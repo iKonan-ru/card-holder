@@ -4,7 +4,8 @@ import {
   UpdateModal,
   UPDATE_MODAL_TITLE_ID,
   UPDATE_MODAL_MESSAGE_ID,
-} from '@shared/ui';
+  UPDATE_MODAL_TITLE,
+} from '@features/pwa-update';
 
 export const useAppUpdateModal = (): void => {
   const { needRefresh, updateServiceWorker } = usePWAUpdate();
@@ -40,7 +41,8 @@ export const useAppUpdateModal = (): void => {
     updateModal.open(
       modalContent,
       UPDATE_MODAL_TITLE_ID,
-      UPDATE_MODAL_MESSAGE_ID
+      UPDATE_MODAL_MESSAGE_ID,
+      UPDATE_MODAL_TITLE
     );
   }, [needRefresh, updateServiceWorker, updateModal]);
 };

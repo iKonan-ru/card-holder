@@ -1,7 +1,8 @@
 import { type FC } from 'react';
 import { useClassName, ParentClassProvider } from '@shared/lib';
-import { AddCardButton, SortableCardItem } from '@shared/ui';
 import { BankCard } from '@entities/bank-card';
+import { AddCardButton } from '@features/add-card-button';
+import { SortableCardItem } from '@features/sortable-card-item';
 import type { ICardListGridProps } from './model';
 import { CARD_LIST_GRID_BLOCK } from './lib';
 import './card-list-grid.less';

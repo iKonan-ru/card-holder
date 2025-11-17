@@ -8,7 +8,7 @@ describe('ConfirmModal', () => {
     cleanup();
   });
 
-  it('должен отображать заголовок и сообщение', () => {
+  it('должен отображать сообщение', () => {
     render(
       <ConfirmModal
         title="Заголовок"
@@ -18,7 +18,6 @@ describe('ConfirmModal', () => {
       />
     );
 
-    expect(screen.getByText('Заголовок')).toBeInTheDocument();
     expect(screen.getByText('Сообщение')).toBeInTheDocument();
   });
 

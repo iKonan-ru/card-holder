@@ -2,7 +2,11 @@ import { useCallback } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import { useModal } from '@shared/lib';
 import { CardFormModalContent } from '../../ui/card-form-modal-content';
-import { CARD_FORM_TITLE_ID } from '../constants';
+import {
+  CARD_FORM_TITLE_ID,
+  CARD_FORM_TITLE,
+  CARD_FORM_EDIT_TITLE,
+} from '../constants';
 import { useCardManagementStore } from '@features/card-management';
 
 export const useCardFormModal = () => {
@@ -10,7 +14,12 @@ export const useCardFormModal = () => {
   const unflipCards = useCardManagementStore((state) => state.unflipCards);
 
   const openAddCardForm = useCallback(() => {
-    modal.open(<CardFormModalContent />, CARD_FORM_TITLE_ID);
+    modal.open(
+      <CardFormModalContent />,
+      CARD_FORM_TITLE_ID,
+      undefined,
+      CARD_FORM_TITLE
+    );
     unflipCards();
   }, [modal, unflipCards]);
 
@@ -18,7 +27,9 @@ export const useCardFormModal = () => {
     (card: IBankCard) => {
       modal.open(
         <CardFormModalContent initialCard={card} />,
-        CARD_FORM_TITLE_ID
+        CARD_FORM_TITLE_ID,
+        undefined,
+        CARD_FORM_EDIT_TITLE
       );
     },
     [modal]

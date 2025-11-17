@@ -11,5 +11,3 @@ export * from './use-modal-stack';
 export * from './use-modal';
 
 export * from './use-classname';
-
-export * from './types';

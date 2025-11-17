@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
 import {
   TOGGLE_SHOW_PASSWORD_LABEL,
@@ -29,13 +29,19 @@ export const usePasswordVisibility = (
     ? (externalIsVisible ?? false)
     : internalIsVisible;
 
+  const isVisibleRef = useRef(isVisible);
+
+  useEffect(() => {
+    isVisibleRef.current = isVisible;
+  }, [isVisible]);
+
   const toggleVisibility = useCallback(() => {
     if (isControlled && onExternalChange) {
-      onExternalChange(!isVisible);
+      onExternalChange(!isVisibleRef.current);
     } else {
       setInternalIsVisible((previous) => !previous);
     }
-  }, [isControlled, isVisible, onExternalChange]);
+  }, [isControlled, onExternalChange]);
 
   const inputType = useMemo(() => {
     return isVisible ? 'text' : 'password';

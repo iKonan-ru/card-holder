@@ -24,7 +24,7 @@ vi.mock('@shared/lib', async () => {
   };
 });
 
-vi.mock('./CardPreview', () => ({
+vi.mock('@features/card-preview', () => ({
   CardPreview: () => null,
 }));
 
@@ -76,12 +76,6 @@ describe('CardForm', () => {
 
   afterEach(() => {
     cleanup();
-  });
-
-  it('должен отображать форму с заголовком', () => {
-    render(<CardForm />, { wrapper: TestWrapper });
-
-    expect(screen.getByText('Добавление карты')).toBeInTheDocument();
   });
 
   it('должен отображать все поля формы', () => {
@@ -200,7 +194,6 @@ describe('CardForm', () => {
     const deleteButton = screen.getByRole('button', { name: 'Удалить карту' });
     await user.click(deleteButton);
 
-    expect(screen.getByText('Удаление карты')).toBeInTheDocument();
     expect(
       screen.getByText('Вы уверены, что хотите удалить эту карту?')
     ).toBeInTheDocument();
@@ -242,6 +235,19 @@ describe('CardForm', () => {
 
     await vi.waitFor(() => {
       expect(mockDeleteCard).toHaveBeenCalledWith('4111111111111111');
+    });
+  });
+
+  it('не должен вызывать onCancel если он не передан', async () => {
+    const user = userEvent.setup();
+
+    render(<CardForm />, { wrapper: TestWrapper });
+
+    const cancelButton = screen.getByRole('button', { name: 'Отмена' });
+    await user.click(cancelButton);
+
+    await vi.waitFor(() => {
+      expect(cancelButton).toBeInTheDocument();
     });
   });
 });

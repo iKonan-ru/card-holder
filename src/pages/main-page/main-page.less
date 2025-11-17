@@ -7,9 +7,25 @@
   transition: @transition;
 
   &__content {
+    display: flex;
+    flex-direction: column;
     margin-left: auto;
     margin-right: auto;
     padding: @spacing-lg;
+  }
+
+  &__action-buttons {
+    position: fixed;
+    bottom: @spacing-xl;
+    right: @spacing-xl;
+    z-index: @z-index-actions;
+
+    @media (max-width: @mobile) {
+      position: sticky;
+      bottom: @spacing-lg;
+      margin-top: @spacing-lg;
+      align-self: center;
+    }
   }
 
   &__header {
