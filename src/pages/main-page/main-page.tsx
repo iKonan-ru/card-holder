@@ -2,7 +2,7 @@ import type { FC } from 'react';
 import { bem, ParentClassProvider } from '@shared/lib';
 import { PWAButton } from '@features/pwa-button';
 import { CardList } from '@widgets/card-list';
-import { MAIN_PAGE_BLOCK } from '../lib/constants';
+import { MAIN_PAGE_BLOCK } from './lib/constants';
 import './main-page.less';
 
 export const MainPage: FC = () => {

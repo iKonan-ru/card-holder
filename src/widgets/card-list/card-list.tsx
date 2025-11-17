@@ -2,7 +2,7 @@ import { type FC, useMemo } from 'react';
 import { ParentClassProvider, useClassName } from '@shared/lib';
 import { ReorderToggleButton } from '@shared/ui';
 import { ExportButton, ImportButton } from '@features/card-export-import';
-import { ClearButton } from '@features/clear-data';
+import { ClearButton } from '@features/clear-button';
 import {
   useCardList,
   useDndSensors,
@@ -12,12 +12,14 @@ import {
   DROP_ANIMATION,
   CARD_LIST_MODIFIERS_DRAGGING,
   CARD_LIST_MODIFIERS_EMPTY,
-} from '../../lib';
+} from './lib';
 import { DndContext, closestCenter, DragOverlay } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
-import { CardListGrid } from '../card-list-grid';
-import { CardListDragOverlay } from '../card-list-drag-overlay';
-import { ActionButtonsContainer } from '../action-buttons-container';
+import {
+  CardListGrid,
+  CardListDragOverlay,
+  ActionButtonsContainer,
+} from './ui';
 import './card-list.less';
 
 export const CardList: FC = () => {

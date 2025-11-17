@@ -2,8 +2,7 @@ import { type FC } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { useCardManagementStore } from '@features/card-management';
 import { FabButton } from '@shared/ui';
-import { IMPORT_BUTTON_ARIA_LABEL } from './lib/constants';
-import { useImportCards } from './lib/hooks';
+import { IMPORT_BUTTON_ARIA_LABEL, useImportCards } from './lib';
 
 export const ImportButton: FC = () => {
   const cards = useCardManagementStore((state) => state.cards);

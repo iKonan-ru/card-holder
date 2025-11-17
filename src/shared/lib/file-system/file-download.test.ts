@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { downloadFile } from './file-download';
+import { downloadFile } from '@shared/lib';
 
 describe('downloadFile', () => {
   let mockLink: HTMLAnchorElement;

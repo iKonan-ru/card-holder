@@ -29,8 +29,9 @@ import {
 import {
   FALLBACK_ERROR_IMPORT,
   SUCCESS_MODAL_TITLE_IMPORT,
-} from '../../../../model/constants';
-import { PASSWORD_MODAL_ID, SUCCESS_MODAL_ID } from '../constants';
+} from '../../../../lib/constants';
+import { PASSWORD_MODAL_ID_IMPORT } from '../../../password-modal/lib';
+import { SUCCESS_MODAL_ID_IMPORT } from '../../../success-modal/lib';
 
 interface IUseImportCardsParams {
   cards: IBankCard[];
@@ -95,7 +96,7 @@ export const useImportCards = (
           );
 
           modalContext.openModal(
-            SUCCESS_MODAL_ID,
+            SUCCESS_MODAL_ID_IMPORT,
             successContent,
             SUCCESS_MODAL_TITLE_ID,
             SUCCESS_MODAL_MESSAGE_ID
@@ -119,7 +120,7 @@ export const useImportCards = (
       );
 
       modalContext.openModal(
-        PASSWORD_MODAL_ID,
+        PASSWORD_MODAL_ID_IMPORT,
         modalContent,
         PASSWORD_MODAL_TITLE_ID,
         PASSWORD_MODAL_DESCRIPTION_ID

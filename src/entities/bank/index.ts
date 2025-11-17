@@ -1,1 +1,1 @@
-export type { IBank } from './model';
+export * from './model';

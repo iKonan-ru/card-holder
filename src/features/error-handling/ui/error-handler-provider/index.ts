@@ -1,1 +1,1 @@
-export { ErrorHandlerProvider } from './error-handler-provider';
+export * from './error-handler-provider';

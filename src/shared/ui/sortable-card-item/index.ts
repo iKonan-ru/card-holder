@@ -1,2 +1,3 @@
-export { SortableCardItem } from './sortable-card-item';
-export type { ISortableCardItemProps } from './model';
+export * from './sortable-card-item';
+
+export * from './model';

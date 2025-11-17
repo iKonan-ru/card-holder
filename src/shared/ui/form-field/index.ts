@@ -1,2 +1,3 @@
-export { FormField } from './form-field';
-export type { IFormFieldProps } from './model';
+export * from './form-field';
+
+export * from './model';

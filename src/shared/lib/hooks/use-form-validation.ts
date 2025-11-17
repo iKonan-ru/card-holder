@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { INITIAL_ZERO } from '../constants';
+import { INITIAL_ZERO } from '../constants/constants';
 
 const INITIAL_ERRORS_COUNT = INITIAL_ZERO;
 

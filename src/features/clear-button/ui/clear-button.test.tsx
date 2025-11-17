@@ -3,10 +3,10 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ClearButton } from './clear-button';
 import * as cardManagementModule from '@features/card-management';
-import * as useClearDataModule from './lib/hooks/use-clear-data';
+import * as useClearDataModule from '../lib';
 
 vi.mock('@features/card-management');
-vi.mock('./lib/hooks/use-clear-data');
+vi.mock('../lib');
 
 describe('ClearButton', () => {
   const mockClearAllCards = vi.fn();

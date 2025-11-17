@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useModalClose } from './modal-close-context';
+import { useModalClose } from './use-modal-close';
 
 export const useAnimatedModalClose = (callback?: () => void): (() => void) => {
   const closeModal = useModalClose();

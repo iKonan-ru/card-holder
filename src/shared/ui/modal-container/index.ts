@@ -1,1 +1,1 @@
-export { ModalContainer } from './modal-container';
+export * from './modal-container';

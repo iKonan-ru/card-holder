@@ -1,11 +1,15 @@
-import { EMPTY_STRING } from '../constants';
+import {
+  EMPTY_STRING,
+  HEX_RADIX,
+  INITIAL_ZERO,
+  ZERO_CHAR,
+} from '../constants/constants';
 
 const HEX_COLOR_PATTERN = /^[0-9A-Fa-f]{6}$/;
-const MIN_RGB_VALUE = 0;
+const MIN_RGB_VALUE = INITIAL_ZERO;
 const MAX_RGB_VALUE = 255;
-const HEX_RADIX = 16;
 const SINGLE_HEX_DIGIT_LENGTH = 1;
-const RGB_RED_START = 0;
+const RGB_RED_START = INITIAL_ZERO;
 const RGB_RED_END = 2;
 const RGB_GREEN_START = 2;
 const RGB_GREEN_END = 4;
@@ -13,7 +17,6 @@ const RGB_BLUE_START = 4;
 const RGB_BLUE_END = 6;
 const PERCENT_BASE = 100;
 const HASH_CHAR = '#';
-const ZERO_CHAR = '0';
 
 export const hexToRgb = (
   hex: string

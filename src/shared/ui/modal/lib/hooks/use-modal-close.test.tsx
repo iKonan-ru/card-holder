@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import { ModalCloseContext, useModalClose } from './modal-close-context';
+import { ModalCloseContext, useModalClose } from './use-modal-close';
 
 const mockClose = vi.fn();
 

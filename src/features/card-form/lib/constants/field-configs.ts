@@ -44,6 +44,7 @@ interface IFieldConfig {
   maxLength?: number;
   required?: boolean;
   inputMode?: 'text' | 'numeric' | 'decimal' | 'tel' | 'email' | 'url';
+  autoComplete?: string;
   formatter?: (value: string) => string;
   validator?: (value: string) => string | undefined;
   instantValidateLength?: number;
@@ -55,6 +56,7 @@ export const PAN_FIELD_CONFIG: IFieldConfig = {
   maxLength: PAN_FORMATTED_LENGTH,
   required: FIELD_REQUIRED_TRUE,
   inputMode: INPUT_MODE_NUMERIC,
+  autoComplete: 'cc-number',
   formatter: (value: string) => formatPan(filterDigitsOnly(value)),
   validator: validatePan,
   instantValidateLength: PAN_LENGTH,
@@ -66,6 +68,7 @@ export const EXPIRES_FIELD_CONFIG: IFieldConfig = {
   maxLength: EXPIRES_FORMATTED_LENGTH,
   required: FIELD_REQUIRED_TRUE,
   inputMode: INPUT_MODE_NUMERIC,
+  autoComplete: 'cc-exp',
   formatter: (value: string) => formatExpires(filterDigitsOnly(value)),
   validator: validateExpires,
   instantValidateLength: EXPIRES_LENGTH,
@@ -77,6 +80,7 @@ export const CVV_FIELD_CONFIG: IFieldConfig = {
   maxLength: CVV_MAX_LENGTH,
   required: FIELD_REQUIRED_TRUE,
   inputMode: INPUT_MODE_NUMERIC,
+  autoComplete: 'cc-csc',
   formatter: filterDigitsOnly,
   validator: validateCvv,
   instantValidateLength: CVV_MAX_LENGTH,
@@ -104,6 +108,7 @@ export const NAME_FIELD_CONFIG: IFieldConfig = {
   name: FIELD_NAME_NAME,
   label: NAME_LABEL,
   required: FIELD_REQUIRED_TRUE,
+  autoComplete: 'cc-name',
   formatter: formatName,
   validator: validateName,
 };

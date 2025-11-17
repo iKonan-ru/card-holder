@@ -1,1 +1,1 @@
-export { useCardManagementStore } from './model/store';
+export * from './model';

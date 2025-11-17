@@ -1,2 +1,3 @@
-export { CardPreview } from './card-preview';
-export type { ICardPreviewProps } from './model';
+export * from './card-preview';
+
+export * from './model';

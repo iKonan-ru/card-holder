@@ -1,1 +1,1 @@
-export type { IBank } from './types';
+export * from './types';

@@ -5,15 +5,12 @@ import type { TPasswordModalMode } from '../../../../model';
 
 const mockCloseModal = vi.fn();
 
-vi.mock('@shared/ui/modal/lib/modal-close-context', () => ({
-  useModalClose: () => mockCloseModal,
-}));
-
 vi.mock('@shared/ui', async () => {
   const actual = await vi.importActual('@shared/ui');
 
   return {
     ...actual,
+    useModalClose: () => mockCloseModal,
     useAnimatedModalClose: (callback?: () => void) => callback || vi.fn(),
   };
 });

@@ -1,1 +1,1 @@
-export { usePasswordModal } from './use-password-modal';
+export * from './use-password-modal';

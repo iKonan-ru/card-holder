@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { ParentClassProvider, useParentClass } from './parent-class-context';
+import { ParentClassProvider, useParentClass } from '@shared/lib';
 
 const TestComponent = () => {
   const parentClass = useParentClass();

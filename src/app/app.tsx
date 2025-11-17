@@ -1,7 +1,7 @@
 import { type FC } from 'react';
 import { ModalProvider } from '@shared/lib';
 import { useApp } from './lib';
-import { AppContent } from './app-content';
+import { AppContent } from './ui';
 import '@shared/assets/styles/index.less';
 
 export const App: FC = () => {

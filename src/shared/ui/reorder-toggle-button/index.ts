@@ -1,2 +1,3 @@
-export { ReorderToggleButton } from './reorder-toggle-button';
-export type { IReorderToggleButtonProps } from './model';
+export * from './reorder-toggle-button';
+
+export * from './model';

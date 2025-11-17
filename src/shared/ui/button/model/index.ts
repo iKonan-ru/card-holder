@@ -1,1 +1,1 @@
-export type { IButtonProps, TButtonVariant } from './types';
+export * from './types';

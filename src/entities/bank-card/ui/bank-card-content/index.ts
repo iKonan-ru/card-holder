@@ -1,2 +1,3 @@
-export { BankCardContent } from './bank-card-content';
-export type { IBankCardContentProps } from './model';
+export * from './bank-card-content';
+
+export * from './model';

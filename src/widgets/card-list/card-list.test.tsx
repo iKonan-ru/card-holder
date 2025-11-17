@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { CardList } from '.';
+import { CardList } from './card-list';
 import { ModalProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import type { IBankCard } from '@entities/bank-card';

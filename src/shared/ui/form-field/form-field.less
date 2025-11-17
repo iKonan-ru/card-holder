@@ -5,10 +5,17 @@
   flex-direction: column;
   gap: @spacing-xs;
 
+  &__wrapper {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+  }
+
   &__container {
     position: relative;
     overflow: hidden;
     border-radius: @spacing-sm;
+    flex: 1;
   }
 
   &__input {

@@ -1,1 +1,1 @@
-export type { IFormFieldProps } from './types';
+export * from './types';

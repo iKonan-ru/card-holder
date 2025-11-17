@@ -1,6 +1,7 @@
+// @ts-expect-error - virtual module from vite-plugin-pwa
 import { useRegisterSW } from 'virtual:pwa-register/react';
 
-const UPDATE_CHECK_INTERVAL = 60 * 1000;
+const UPDATE_CHECK_INTERVAL = 60 * 60 * 1000;
 
 export interface IUsePWAUpdateReturn {
   needRefresh: boolean;
@@ -12,7 +13,10 @@ export const usePWAUpdate = (): IUsePWAUpdateReturn => {
     needRefresh: [needRefresh],
     updateServiceWorker,
   } = useRegisterSW({
-    onRegisteredSW(_swUrl, registration) {
+    onRegisteredSW(
+      _swUrl: string,
+      registration: ServiceWorkerRegistration | undefined
+    ) {
       if (!registration) {
         return;
       }
@@ -24,12 +28,12 @@ export const usePWAUpdate = (): IUsePWAUpdateReturn => {
 
         try {
           await registration.update();
-        } catch (error) {
+        } catch (error: unknown) {
           console.error('SW update check error', error);
         }
       }, UPDATE_CHECK_INTERVAL);
     },
-    onRegisterError(error) {
+    onRegisterError(error: Error) {
       console.error('SW registration error', error);
     },
   });

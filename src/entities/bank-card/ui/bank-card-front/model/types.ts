@@ -1,9 +1,6 @@
-import type { IBank } from '@entities/bank';
-import type { PaymentSystem } from '@shared/lib';
 import type { IBankCard } from '../../../model';
+import type { IBankCardCommonProps } from '../../model';
 
-export interface IBankCardFrontProps {
+export interface IBankCardFrontProps extends IBankCardCommonProps {
   card: IBankCard;
-  bank: IBank;
-  paymentSystem: PaymentSystem | null;
 }

@@ -1,2 +1,3 @@
-export { BankCardHeader } from './bank-card-header';
-export type { IBankCardHeaderProps } from './model';
+export * from './bank-card-header';
+
+export * from './model';

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { usePWAInstall } from './use-pwa-install';
+import { usePWAInstall } from '@shared/lib';
 
 const createMockBeforeInstallPromptEvent = (
   outcome: 'accepted' | 'dismissed' = 'accepted'

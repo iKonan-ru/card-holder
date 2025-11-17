@@ -1,4 +1,7 @@
-export { ExportButton } from './export-button';
-export { ImportButton } from './import-button';
-export { PasswordModal } from './password-modal';
-export { SuccessModal } from './success-modal';
+export * from './export-button';
+
+export * from './import-button';
+
+export * from './password-modal';
+
+export * from './success-modal';

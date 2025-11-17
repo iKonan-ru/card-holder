@@ -1,8 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useModalKeyboard } from './use-modal-keyboard';
-import { ESC_KEY } from '../constants';
-import type { IModalItem } from '@shared/lib';
+import { type IModalItem, KEY_ESC } from '@shared/lib';
 
 const mockCloseTop = vi.fn();
 const mockUserActionRef = { current: false };
@@ -52,7 +51,7 @@ describe('useModalKeyboard', () => {
       })
     );
 
-    const event = new KeyboardEvent('keydown', { key: ESC_KEY });
+    const event = new KeyboardEvent('keydown', { key: KEY_ESC });
     window.dispatchEvent(event);
 
     expect(mockCloseTop).toHaveBeenCalledTimes(1);
@@ -71,7 +70,7 @@ describe('useModalKeyboard', () => {
       })
     );
 
-    const event = new KeyboardEvent('keydown', { key: ESC_KEY });
+    const event = new KeyboardEvent('keydown', { key: KEY_ESC });
     window.dispatchEvent(event);
 
     expect(mockCloseTop).not.toHaveBeenCalled();
@@ -91,7 +90,7 @@ describe('useModalKeyboard', () => {
       })
     );
 
-    const event = new KeyboardEvent('keydown', { key: ESC_KEY });
+    const event = new KeyboardEvent('keydown', { key: KEY_ESC });
     window.dispatchEvent(event);
 
     expect(requestClose).toHaveBeenCalledTimes(1);
@@ -165,7 +164,7 @@ describe('useModalKeyboard', () => {
       })
     );
 
-    const event = new KeyboardEvent('keydown', { key: ESC_KEY });
+    const event = new KeyboardEvent('keydown', { key: KEY_ESC });
     window.dispatchEvent(event);
 
     expect(mockCloseTop).toHaveBeenCalledTimes(1);

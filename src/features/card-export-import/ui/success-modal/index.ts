@@ -1,1 +1,1 @@
-export { SuccessModal } from './success-modal';
+export * from './success-modal';

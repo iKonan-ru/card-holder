@@ -1,5 +1,4 @@
 import { type FC, useState, useCallback } from 'react';
-import { FiRefreshCw } from 'react-icons/fi';
 import { bem, useClassName } from '@shared/lib';
 import { useAnimatedModalClose, Button } from '../';
 import type { IUpdateModalProps } from './model';
@@ -44,7 +43,6 @@ export const UpdateModal: FC<IUpdateModalProps> = ({ onUpdate, onDismiss }) => {
   return (
     <div className={className}>
       <div className={bem(UPDATE_MODAL_BLOCK, 'header')}>
-        <FiRefreshCw className={bem(UPDATE_MODAL_BLOCK, 'icon')} />
         <h3
           id={UPDATE_MODAL_TITLE_ID}
           className={bem(UPDATE_MODAL_BLOCK, 'title')}

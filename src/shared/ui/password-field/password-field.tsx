@@ -1,8 +1,8 @@
+import { bem } from '@shared/lib';
 import { type FC, useMemo } from 'react';
-import { FormField } from '../form-field';
+import { FormField } from '@shared/ui';
 import type { IPasswordFieldProps } from './model';
-import { usePasswordVisibility } from './lib/hooks/use-password-visibility';
-import { PasswordVisibilityToggle } from './ui/password-visibility-toggle';
+import { PASSWORD_FIELD_BLOCK, usePasswordVisibility } from './lib';
 import './password-field.less';
 
 export const PasswordField: FC<IPasswordFieldProps> = ({
@@ -27,11 +27,15 @@ export const PasswordField: FC<IPasswordFieldProps> = ({
     }
 
     return (
-      <PasswordVisibilityToggle
+      <button
+        type="button"
         onClick={toggleVisibility}
-        ariaLabel={ariaLabel}
-        Icon={Icon}
-      />
+        className={bem(PASSWORD_FIELD_BLOCK, 'toggle-button')}
+        aria-label={ariaLabel}
+        tabIndex={-1}
+      >
+        <Icon className={bem(PASSWORD_FIELD_BLOCK, 'toggle-icon')} />
+      </button>
     );
   }, [showPasswordToggle, toggleVisibility, ariaLabel, Icon]);
 

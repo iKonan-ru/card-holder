@@ -1,1 +1,1 @@
-export type { ICardListGridProps } from './types';
+export * from './types';

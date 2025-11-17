@@ -1,1 +1,1 @@
-export type { ICopyableFieldProps } from './types';
+export * from './types';

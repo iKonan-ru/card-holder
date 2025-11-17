@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ModalProvider } from './modal-context';
+import { ModalProvider } from '@shared/lib';
 import { useModalContext } from './';
 
 const { mockUseCardManagementStore } = vi.hoisted(() => ({

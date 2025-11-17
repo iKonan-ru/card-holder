@@ -1,6 +1,4 @@
-import { EMPTY_STRING } from '@shared/lib';
-
-const SPACE_CHAR = ' ';
+import { EMPTY_STRING, SPACE_CHAR } from '@shared/lib';
 const SLASH_CHAR = '/';
 const PAN_GROUP_SIZE = 4;
 const MONTH_SEPARATOR_LENGTH = 2;

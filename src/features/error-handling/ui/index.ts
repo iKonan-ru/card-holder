@@ -1,2 +1,3 @@
-export { ErrorHandlerProvider } from './error-handler-provider';
-export { ErrorContent } from './error-content';
+export * from './error-handler-provider';
+
+export * from './error-content';

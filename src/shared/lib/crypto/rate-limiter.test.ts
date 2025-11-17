@@ -8,7 +8,7 @@ import {
   getRemainingLockoutTime,
   applyRateLimit,
   withRateLimit,
-} from './rate-limiter';
+} from '@shared/lib';
 
 describe('rate-limiter', () => {
   beforeEach(() => {

@@ -1,2 +1,3 @@
-export { CopyableField } from './copyable-field';
-export type { ICopyableFieldProps } from './model';
+export * from './copyable-field';
+
+export * from './model';

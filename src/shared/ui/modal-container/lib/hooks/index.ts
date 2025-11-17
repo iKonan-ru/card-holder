@@ -1,3 +1,5 @@
-export { useModalHistory } from './use-modal-history';
-export { useModalKeyboard } from './use-modal-keyboard';
-export { useModalPopstate } from './use-modal-popstate';
+export * from './use-modal-history';
+
+export * from './use-modal-keyboard';
+
+export * from './use-modal-popstate';

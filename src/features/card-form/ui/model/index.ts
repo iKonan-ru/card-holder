@@ -1,1 +1,1 @@
-export type { ICardPreviewProps, ICardFormProps } from './types';
+export * from './types';

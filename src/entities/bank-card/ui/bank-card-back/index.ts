@@ -1,2 +1,3 @@
-export { BankCardBack } from './bank-card-back';
-export type { IBankCardBackProps } from './model';
+export * from './bank-card-back';
+
+export * from './model';

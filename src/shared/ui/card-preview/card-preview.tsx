@@ -11,7 +11,7 @@ import {
   SPACE_REMOVAL_PATTERN,
   EMPTY_STRING,
 } from '@shared/lib';
-import { CARD_PREVIEW_BLOCK } from './lib/constants';
+import { CARD_PREVIEW_BLOCK } from './lib';
 import './card-preview.less';
 
 export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {

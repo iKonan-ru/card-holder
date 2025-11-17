@@ -1,2 +1,3 @@
-export { CardListGrid } from './card-list-grid';
-export type { ICardListGridProps } from './model';
+export * from './card-list-grid';
+
+export * from './model';

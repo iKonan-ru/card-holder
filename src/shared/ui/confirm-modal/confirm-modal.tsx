@@ -8,7 +8,7 @@ import {
   DEFAULT_CONFIRM_TEXT,
   CONFIRM_MODAL_TITLE_ID,
   CONFIRM_MODAL_MESSAGE_ID,
-} from './lib/constants';
+} from './lib';
 import './confirm-modal.less';
 
 export const ConfirmModal: FC<IConfirmModalProps> = ({

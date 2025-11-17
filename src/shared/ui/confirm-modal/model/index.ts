@@ -1,1 +1,1 @@
-export type { IConfirmModalProps } from './types';
+export * from './types';

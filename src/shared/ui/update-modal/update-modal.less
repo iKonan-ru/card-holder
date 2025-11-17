@@ -11,13 +11,6 @@
     margin: 0 0 @border-radius 0;
   }
 
-  &__icon {
-    flex-shrink: 0;
-    font-size: @size-lg;
-    color: var(--accent);
-    animation: update-modal-spin 2s linear infinite;
-  }
-
   &__title {
     margin: 0;
     font-size: @font-size-2xl;
@@ -36,15 +29,5 @@
     display: flex;
     gap: @border-radius;
     justify-content: flex-end;
-  }
-}
-
-@keyframes update-modal-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
   }
 }

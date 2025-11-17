@@ -1,2 +1,3 @@
-export { CardListDragOverlay } from './card-list-drag-overlay';
-export type { ICardListDragOverlayProps } from './model';
+export * from './card-list-drag-overlay';
+
+export * from './model';

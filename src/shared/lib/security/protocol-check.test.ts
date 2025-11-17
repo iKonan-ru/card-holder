@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { checkSecureProtocol } from './protocol-check';
-import { logError } from '../utils/logger';
+import { checkSecureProtocol, logError } from '@shared/lib';
 
 vi.mock('../utils/logger', () => ({
   logError: vi.fn(),

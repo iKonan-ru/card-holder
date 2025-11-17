@@ -1,1 +1,1 @@
-export type { ISortableCardItemProps } from './types';
+export * from './types';

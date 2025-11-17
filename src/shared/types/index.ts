@@ -1,1 +1,3 @@
-export type { PropsWithParentClass } from './component';
+export * from './component';
+
+export * from './input';

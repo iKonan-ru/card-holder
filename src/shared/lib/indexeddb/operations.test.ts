@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { executeIndexedDBOperation } from './operations';
+import { executeIndexedDBOperation } from '@shared/lib';
 import * as database from './database';
 
 vi.mock('./database');

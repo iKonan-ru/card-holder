@@ -1,1 +1,1 @@
-export { useCopyableField } from './use-copyable-field';
+export * from './use-copyable-field';

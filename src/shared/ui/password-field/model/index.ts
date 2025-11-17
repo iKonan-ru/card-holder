@@ -1,1 +1,1 @@
-export type { IPasswordFieldProps } from './types';
+export * from './types';

@@ -53,4 +53,15 @@ export default defineConfig({
       input: path.resolve(__dirname, 'index.html'),
     },
   },
+  server: {
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
+    },
+  },
+  preview: {
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
+      'Cache-Control': 'public, max-age=31536000, immutable',
+    },
+  },
 });

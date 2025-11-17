@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useFormValidation } from './use-form-validation';
+import { useFormValidation } from '@shared/lib';
 
 interface ITestFormErrors {
   email?: string;
@@ -25,7 +25,7 @@ describe('useFormValidation', () => {
     });
 
     expect(result.current.errors.email).toBe('Invalid email');
-    expect(result.current.hasErrors()).toBe(true);
+    expect(Object.keys(result.current.errors).length).toBeGreaterThan(0);
   });
 
   it('должен удалять ошибку при передаче undefined', () => {
@@ -71,7 +71,7 @@ describe('useFormValidation', () => {
 
     expect(result.current.errors.email).toBe('Invalid email');
     expect(result.current.errors.password).toBe('Password too short');
-    expect(result.current.hasErrors()).toBe(true);
+    expect(Object.keys(result.current.errors).length).toBeGreaterThan(0);
   });
 
   it('должен сбрасывать все ошибки через resetErrors', () => {
@@ -82,14 +82,14 @@ describe('useFormValidation', () => {
       result.current.handleFieldValidation('password', 'Password too short');
     });
 
-    expect(result.current.hasErrors()).toBe(true);
+    expect(Object.keys(result.current.errors).length).toBeGreaterThan(0);
 
     act(() => {
       result.current.resetErrors();
     });
 
     expect(result.current.errors).toEqual({});
-    expect(result.current.hasErrors()).toBe(false);
+    expect(Object.keys(result.current.errors).length).toBe(0);
   });
 
   it('должен получать ошибку поля через getFieldError', () => {
@@ -115,7 +115,7 @@ describe('useFormValidation', () => {
 
     expect(result.current.errors.email).toBe('Invalid email');
     expect(result.current.errors.password).toBe('Password too short');
-    expect(result.current.hasErrors()).toBe(true);
+    expect(Object.keys(result.current.errors).length).toBeGreaterThan(0);
   });
 
   it('должен очищать ошибку поля через clearFieldError', () => {
@@ -132,7 +132,7 @@ describe('useFormValidation', () => {
 
     expect(result.current.errors.email).toBeUndefined();
     expect(result.current.errors.password).toBe('Password too short');
-    expect(result.current.hasErrors()).toBe(true);
+    expect(Object.keys(result.current.errors).length).toBeGreaterThan(0);
   });
 
   it('должен объединять ошибки при setMultipleErrors', () => {

@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useModalBackHandler } from './use-modal-back-handler';
+import { useModalBackHandler } from '@shared/lib';
 
 describe('useModalBackHandler', () => {
   let mockPushState: ReturnType<typeof vi.fn>;

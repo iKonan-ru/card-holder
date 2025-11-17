@@ -13,9 +13,10 @@ import {
   PASSWORD_MODAL_LABEL,
   PASSWORD_MODAL_LABEL_CONFIRM,
   PASSWORD_MODAL_BUTTON_CANCEL,
-} from './lib/constants';
-import { PASSWORD_MODAL_ID } from '../import-button/lib/constants';
-import { usePasswordModal } from './lib/hooks';
+  PASSWORD_MODAL_ID_IMPORT,
+  PASSWORD_MODAL_ID_EXPORT,
+  usePasswordModal,
+} from './lib';
 import './password-modal.less';
 
 export const PasswordModal: FC<IPasswordModalProps> = (props) => {
@@ -40,10 +41,13 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
     handleCancel,
   } = usePasswordModal({ mode, onConfirm, onCancel });
 
+  const passwordModalId = isExportMode
+    ? PASSWORD_MODAL_ID_EXPORT
+    : PASSWORD_MODAL_ID_IMPORT;
+
   useEffect(() => {
-    modalContext.updateModalPreventClose(PASSWORD_MODAL_ID, isSubmitting);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isSubmitting]);
+    modalContext.updateModalPreventClose(passwordModalId, isSubmitting);
+  }, [modalContext, passwordModalId, isSubmitting]);
 
   const className = useClassName({
     blockName: PASSWORD_MODAL_BLOCK,

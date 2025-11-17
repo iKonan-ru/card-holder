@@ -1,8 +1,8 @@
 import { BANKS_BINS } from '@shared/data/banks-bins';
 import type { PaymentSystem, IPaymentSystemRule } from './types';
-import { INITIAL_NULL, INITIAL_FALSE } from '../constants';
+import { INITIAL_NULL, INITIAL_FALSE, INITIAL_ZERO } from '../constants';
 
-const FIRST_DIGIT_INDEX = 0;
+const FIRST_DIGIT_INDEX = INITIAL_ZERO;
 const FIRST_TWO_DIGITS_LENGTH = 2;
 const MIN_CARD_PREFIX_LENGTH = 6;
 

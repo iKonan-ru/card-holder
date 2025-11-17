@@ -1,4 +1,4 @@
-import type { ReactNode, MutableRefObject } from 'react';
+import type { ReactNode, RefObject } from 'react';
 
 export interface IModalItem {
   id: string;
@@ -19,5 +19,5 @@ export interface IModalContextValue {
   closeModal: (id: string) => void;
   closeAllModals: () => void;
   updateModalPreventClose: (id: string, preventClose: boolean) => void;
-  userActionRef: MutableRefObject<boolean>;
+  userActionRef: RefObject<boolean>;
 }

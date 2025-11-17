@@ -1,1 +1,1 @@
-export type { IReorderToggleButtonProps } from './types';
+export * from './types';

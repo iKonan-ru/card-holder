@@ -1,4 +1,4 @@
-import { INITIAL_ZERO, INITIAL_NULL } from '../constants';
+import { INITIAL_ZERO, INITIAL_NULL } from '../constants/constants';
 
 const DELAY_BASE_MS = 1000;
 const DELAY_MULTIPLIER = 2;

@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { bem } from '../utils';
 import { useParentClass } from '../context';
-import { EMPTY_STRING, SPACE_CHAR } from '../constants';
+import { EMPTY_STRING, SPACE_CHAR } from '../constants/constants';
 
 interface IUseClassNameOptions {
   blockName: string;

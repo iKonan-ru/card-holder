@@ -1,1 +1,1 @@
-export type { IModalProps } from './types';
+export * from './types';

@@ -1,8 +1,7 @@
 import { type FC, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import type { IPortalProps } from './model';
-
-const DEFAULT_CONTAINER_ID = 'modal-root';
+import { DEFAULT_CONTAINER_ID } from './lib';
 
 export const Portal: FC<IPortalProps> = ({
   children,

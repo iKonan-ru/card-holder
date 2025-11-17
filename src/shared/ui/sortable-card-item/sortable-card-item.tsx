@@ -2,7 +2,7 @@ import { useMemo, type FC } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useClassName, ParentClassProvider } from '@shared/lib';
-import { DragHandle } from '../drag-handle';
+import { DragHandle } from '@shared/ui';
 import {
   SORTABLE_CARD_ITEM_BLOCK,
   SORTABLE_CARD_ITEM_DRAGGING_OPACITY,

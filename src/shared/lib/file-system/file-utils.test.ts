@@ -3,7 +3,7 @@ import {
   generateExportFileName,
   createBlobFromPayload,
   readFileAsText,
-} from './file-utils';
+} from '@shared/lib';
 import type { IEncryptedPayload } from '../crypto';
 import { FILE_NAME_PREFIX, FILE_EXTENSION, FILE_MIME_TYPE } from './constants';
 

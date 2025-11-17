@@ -6,6 +6,7 @@ import {
   useModal,
   BUTTON_TYPE_SUBMIT,
   BUTTON_TYPE_BUTTON,
+  FormProvider,
 } from '@shared/lib';
 import {
   ValidatedField,
@@ -96,116 +97,109 @@ export const CardForm: FC<ICardFormProps> = ({
   });
 
   return (
-    <form
-      className={className}
-      onSubmit={handleSubmit}
-      aria-labelledby={CARD_FORM_TITLE_ID}
-      aria-busy={isSubmitting}
+    <FormProvider
+      onChange={handleFieldChange}
+      onValidate={handleFieldValidation}
     >
-      <h3
-        id={CARD_FORM_TITLE_ID}
-        className={bem(CARD_FORM_BLOCK, 'title')}
+      <form
+        className={className}
+        onSubmit={handleSubmit}
+        aria-labelledby={CARD_FORM_TITLE_ID}
+        aria-busy={isSubmitting}
       >
-        {formTitle}
-      </h3>
-
-      <ValidatedField
-        {...PAN_FIELD_CONFIG}
-        value={formData.pan || ''}
-        error={errors.pan}
-        disabled={isSubmitting}
-        rightContent={panFieldRightContent}
-        onChange={handleFieldChange}
-        onValidate={handleFieldValidation}
-        parentClass={CARD_FORM_BLOCK}
-      />
-
-      <div className={bem(CARD_FORM_BLOCK, 'row')}>
-        <ValidatedField
-          {...EXPIRES_FIELD_CONFIG}
-          value={formData.expires || ''}
-          error={errors.expires}
-          disabled={isSubmitting}
-          onChange={handleFieldChange}
-          onValidate={handleFieldValidation}
-          parentClass={CARD_FORM_BLOCK}
-        />
-
-        <ValidatedField
-          {...CVV_FIELD_CONFIG}
-          value={formData.cvv || ''}
-          error={errors.cvv}
-          disabled={isSubmitting}
-          onChange={handleFieldChange}
-          onValidate={handleFieldValidation}
-          parentClass={CARD_FORM_BLOCK}
-        />
-
-        <ValidatedField
-          {...PIN_FIELD_CONFIG}
-          value={formData.pin || ''}
-          error={errors.pin}
-          disabled={isSubmitting}
-          onChange={handleFieldChange}
-          onValidate={handleFieldValidation}
-          parentClass={CARD_FORM_BLOCK}
-        />
-      </div>
-
-      <ValidatedField
-        {...NAME_FIELD_CONFIG}
-        value={formData.name || ''}
-        error={errors.name}
-        disabled={isSubmitting}
-        onChange={handleFieldChange}
-        parentClass={CARD_FORM_BLOCK}
-      />
-
-      <ValidatedField
-        {...TYPE_FIELD_CONFIG}
-        value={formData.type || ''}
-        disabled={isSubmitting}
-        onChange={handleFieldChange}
-        parentClass={CARD_FORM_BLOCK}
-      />
-
-      <ValidatedField
-        {...PHRASE_FIELD_CONFIG}
-        value={formData.phrase || ''}
-        error={errors.phrase}
-        disabled={isSubmitting}
-        onChange={handleFieldChange}
-        onValidate={handleFieldValidation}
-        parentClass={CARD_FORM_BLOCK}
-      />
-
-      <div className={bem(CARD_FORM_BLOCK, 'actions')}>
-        <Button
-          type={BUTTON_TYPE_SUBMIT}
-          disabled={isSubmitting}
-          variant="primary"
+        <h3
+          id={CARD_FORM_TITLE_ID}
+          className={bem(CARD_FORM_BLOCK, 'title')}
         >
-          {submitButtonText}
-        </Button>
-        <Button
-          type={BUTTON_TYPE_BUTTON}
-          onClick={handleCancelClick}
+          {formTitle}
+        </h3>
+
+        <ValidatedField
+          {...PAN_FIELD_CONFIG}
+          value={formData.pan || ''}
+          error={errors.pan}
           disabled={isSubmitting}
-          variant="secondary"
-        >
-          {CANCEL_BUTTON_TEXT}
-        </Button>
-        {isEditMode && (
+          rightContent={panFieldRightContent}
+          parentClass={CARD_FORM_BLOCK}
+        />
+
+        <div className={bem(CARD_FORM_BLOCK, 'row')}>
+          <ValidatedField
+            {...EXPIRES_FIELD_CONFIG}
+            value={formData.expires || ''}
+            error={errors.expires}
+            disabled={isSubmitting}
+            parentClass={CARD_FORM_BLOCK}
+          />
+
+          <ValidatedField
+            {...CVV_FIELD_CONFIG}
+            value={formData.cvv || ''}
+            error={errors.cvv}
+            disabled={isSubmitting}
+            parentClass={CARD_FORM_BLOCK}
+          />
+
+          <ValidatedField
+            {...PIN_FIELD_CONFIG}
+            value={formData.pin || ''}
+            error={errors.pin}
+            disabled={isSubmitting}
+            parentClass={CARD_FORM_BLOCK}
+          />
+        </div>
+
+        <ValidatedField
+          {...NAME_FIELD_CONFIG}
+          value={formData.name || ''}
+          error={errors.name}
+          disabled={isSubmitting}
+          parentClass={CARD_FORM_BLOCK}
+        />
+
+        <ValidatedField
+          {...TYPE_FIELD_CONFIG}
+          value={formData.type || ''}
+          disabled={isSubmitting}
+          parentClass={CARD_FORM_BLOCK}
+        />
+
+        <ValidatedField
+          {...PHRASE_FIELD_CONFIG}
+          value={formData.phrase || ''}
+          error={errors.phrase}
+          disabled={isSubmitting}
+          parentClass={CARD_FORM_BLOCK}
+        />
+
+        <div className={bem(CARD_FORM_BLOCK, 'actions')}>
+          <Button
+            type={BUTTON_TYPE_SUBMIT}
+            disabled={isSubmitting}
+            variant="primary"
+          >
+            {submitButtonText}
+          </Button>
           <Button
             type={BUTTON_TYPE_BUTTON}
-            onClick={handleDeleteClick}
+            onClick={handleCancelClick}
             disabled={isSubmitting}
-            variant="danger"
+            variant="secondary"
           >
-            {DELETE_BUTTON_TEXT}
+            {CANCEL_BUTTON_TEXT}
           </Button>
-        )}
-      </div>
-    </form>
+          {isEditMode && (
+            <Button
+              type={BUTTON_TYPE_BUTTON}
+              onClick={handleDeleteClick}
+              disabled={isSubmitting}
+              variant="danger"
+            >
+              {DELETE_BUTTON_TEXT}
+            </Button>
+          )}
+        </div>
+      </form>
+    </FormProvider>
   );
 };

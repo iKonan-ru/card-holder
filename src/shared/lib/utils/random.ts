@@ -1,8 +1,6 @@
-import { INITIAL_ZERO } from '../constants';
+import { HEX_RADIX, BYTE_ITERATION_START } from '../constants/constants';
 
 const RANDOM_ID_LENGTH = 8;
-const HEX_RADIX = 16;
-const BYTE_ITERATION_START = INITIAL_ZERO;
 
 export const generateRandomId = (): string => {
   const buffer = new Uint8Array(RANDOM_ID_LENGTH);

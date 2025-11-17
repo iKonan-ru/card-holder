@@ -1,5 +1,5 @@
 import type { IImportResult } from '../../model';
-import { IMPORT_SUCCESS_MESSAGE_TEMPLATE } from '../../model/constants';
+import { IMPORT_SUCCESS_MESSAGE_TEMPLATE } from '../constants';
 
 const PLACEHOLDER_IMPORTED = '{imported}';
 const PLACEHOLDER_REPLACED = '{replaced}';

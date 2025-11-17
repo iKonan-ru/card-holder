@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { uploadFile } from './file-upload';
+import { uploadFile } from '@shared/lib';
 import { FILE_SELECTION_CANCELLED_ERROR } from './errors';
 
 describe('uploadFile', () => {

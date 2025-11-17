@@ -1,9 +1,1 @@
-export {
-  UPDATE_MODAL_BLOCK,
-  UPDATE_MODAL_TITLE_ID,
-  UPDATE_MODAL_MESSAGE_ID,
-  UPDATE_MODAL_TITLE,
-  UPDATE_MODAL_MESSAGE,
-  UPDATE_BUTTON_TEXT,
-  DISMISS_BUTTON_TEXT,
-} from './constants';
+export * from './constants';

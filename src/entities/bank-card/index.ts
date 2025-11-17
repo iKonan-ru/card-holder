@@ -1,3 +1,5 @@
-export { BankCard } from './ui';
-export type { IBankCard } from './model';
-export type { IBankCardProps } from './ui/model';
+export * from './ui';
+
+export * from './model';
+
+export * from './ui/model';

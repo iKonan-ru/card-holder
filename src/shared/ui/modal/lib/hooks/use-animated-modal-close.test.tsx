@@ -4,7 +4,7 @@ import { useAnimatedModalClose } from './use-animated-modal-close';
 
 const mockCloseModal = vi.fn();
 
-vi.mock('./modal-close-context', () => ({
+vi.mock('./use-modal-close', () => ({
   useModalClose: () => mockCloseModal,
 }));
 

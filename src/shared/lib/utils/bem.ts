@@ -2,7 +2,7 @@ import {
   SPACE_CHAR,
   BEM_MODIFIER_SEPARATOR,
   BEM_ELEMENT_SEPARATOR,
-} from '../constants';
+} from '../constants/constants';
 
 const INITIAL_RESULT: string[] = [];
 

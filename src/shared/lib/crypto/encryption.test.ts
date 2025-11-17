@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect, vi } from 'vitest';
-import { encryptData, decryptData } from './encryption';
+import { encryptData, decryptData } from '@shared/lib';
 import type { IEncryptedPayload } from './types';
 import {
   FILE_FORMAT_VERSION,

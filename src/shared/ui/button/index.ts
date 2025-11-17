@@ -1,3 +1,5 @@
-export { Button } from './button';
-export type { IButtonProps, TButtonVariant } from './model';
-export { BUTTON_BLOCK } from './lib';
+export * from './button';
+
+export * from './model';
+
+export * from './lib';

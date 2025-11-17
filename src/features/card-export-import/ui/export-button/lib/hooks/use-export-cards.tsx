@@ -14,8 +14,8 @@ import {
   PASSWORD_MODAL_TITLE_ID,
   PASSWORD_MODAL_DESCRIPTION_ID,
 } from '../../../password-modal/lib/constants';
-import { PASSWORD_MODAL_ID } from '../constants';
-import { FALLBACK_ERROR_EXPORT } from '../../../../model/constants';
+import { PASSWORD_MODAL_ID_EXPORT } from '../../../password-modal/lib';
+import { FALLBACK_ERROR_EXPORT } from '../../../../lib/constants';
 
 interface IUseExportCardsParams {
   cards: IBankCard[];
@@ -77,7 +77,7 @@ export const useExportCards = (
       );
 
       modalContext.openModal(
-        PASSWORD_MODAL_ID,
+        PASSWORD_MODAL_ID_EXPORT,
         modalContent,
         PASSWORD_MODAL_TITLE_ID,
         PASSWORD_MODAL_DESCRIPTION_ID

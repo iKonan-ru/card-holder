@@ -1,9 +1,8 @@
-import { SPACE_REMOVAL_PATTERN } from '@shared/lib';
+import { SPACE_REMOVAL_PATTERN, EMPTY_STRING } from '@shared/lib';
 
 const LUHN_BASE = 10;
 const LUHN_MULTIPLIER = 2;
 const LUHN_THRESHOLD = 9;
-const EMPTY_STRING = '';
 
 export const validateLuhn = (digits: string): boolean => {
   const cleanedDigits = digits.replace(SPACE_REMOVAL_PATTERN, EMPTY_STRING);

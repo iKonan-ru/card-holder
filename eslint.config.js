@@ -28,4 +28,14 @@ export default defineConfig([
       ],
     },
   },
+  {
+    files: ['**/*index.ts'],
+    rules: {
+      'padding-line-between-statements': [
+        'error',
+        { blankLine: 'always', prev: '*', next: 'return' },
+        { blankLine: 'always', prev: 'export', next: 'export' },
+      ],
+    },
+  },
 ]);

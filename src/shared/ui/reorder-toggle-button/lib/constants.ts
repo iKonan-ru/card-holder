@@ -1,4 +1,2 @@
-export const REORDER_TOGGLE_BUTTON_BLOCK = 'reorder-toggle-button';
-
-export const REORDER_TOGGLE_BUTTON_ACTIVE_LABEL = 'Сохранить порядок';
-export const REORDER_TOGGLE_BUTTON_INACTIVE_LABEL = 'Изменить порядок';
+export const REORDER_BUTTON_ARIA_LABEL_INACTIVE = 'Включить режим сортировки';
+export const REORDER_BUTTON_ARIA_LABEL_ACTIVE = 'Выключить режим сортировки';

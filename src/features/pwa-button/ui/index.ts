@@ -1,1 +1,1 @@
-export { PWAButton } from './pwa-button';
+export * from './pwa-button';

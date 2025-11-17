@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import { useModalContext } from './use-modal-context';
+import { useModalContext } from '@shared/lib';
 import { ModalContext } from './context';
 
 const mockContextValue = {

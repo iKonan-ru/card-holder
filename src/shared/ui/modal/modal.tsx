@@ -8,11 +8,14 @@ import {
   ARIA_MODAL_TRUE,
 } from '@shared/lib';
 import type { IModalProps } from './model';
-import { MODAL_BLOCK, MODAL_MODIFIERS_CLOSING } from './lib/constants';
-import { ModalCloseContext } from './lib/modal-close-context';
-import { useModalClosingState } from './lib/use-modal-closing-state';
-import { useFocusTrap } from './lib/use-focus-trap';
-import { useOverlayClick } from './lib/use-overlay-click';
+import {
+  MODAL_BLOCK,
+  MODAL_MODIFIERS_CLOSING,
+  ModalCloseContext,
+  useModalClosingState,
+  useFocusTrap,
+  useOverlayClick,
+} from './lib';
 import './modal.less';
 
 const INITIAL_OVERLAY_REF = INITIAL_NULL;

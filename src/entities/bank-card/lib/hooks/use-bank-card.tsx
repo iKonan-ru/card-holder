@@ -6,15 +6,16 @@ import {
 } from 'react';
 import { BANKS_LIST, DEFAULT_BANK } from '@shared/data/banks-config';
 import {
+  bem,
   darkenColor,
   getBankByCardNumber,
   getPaymentSystem,
 } from '@shared/lib';
 import {
-  BANK_CARD_ACTIONS_BLOCK,
-  CARD_COLOR_DARKEN_PERCENTAGE,
+  BANK_CARD_BLOCK,
   BANK_CARD_MODIFIER_FLIPPED,
   BANK_CARD_MODIFIER_REORDER_MODE,
+  CARD_COLOR_DARKEN_PERCENTAGE,
 } from '../constants';
 import type { IBankCard } from '../../model';
 
@@ -49,7 +50,7 @@ export const useBankCard = ({
       }
 
       const isClickOnActions = (event.target as HTMLElement).closest(
-        `.${BANK_CARD_ACTIONS_BLOCK}`
+        `.${bem(BANK_CARD_BLOCK, 'actions')}`
       );
 
       if (!isClickOnActions && onFlip) {

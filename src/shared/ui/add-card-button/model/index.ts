@@ -1,1 +1,1 @@
-export type { IAddCardButtonProps } from './types';
+export * from './types';

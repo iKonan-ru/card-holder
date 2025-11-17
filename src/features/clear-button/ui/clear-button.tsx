@@ -2,8 +2,7 @@ import { type FC } from 'react';
 import { FiTrash2 } from 'react-icons/fi';
 import { useCardManagementStore } from '@features/card-management';
 import { FabButton } from '@shared/ui';
-import { CLEAR_BUTTON_ARIA_LABEL } from './lib/constants';
-import { useClearData } from './lib/hooks';
+import { CLEAR_BUTTON_ARIA_LABEL, useClearData } from '../lib';
 
 export const ClearButton: FC = () => {
   const clearAllCards = useCardManagementStore((state) => state.clearAllCards);

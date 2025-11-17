@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
+import { ModalProvider } from '@shared/lib';
 import { AppContent } from './app-content';
 
 vi.mock('@pages/main-page', () => ({
@@ -16,11 +17,19 @@ vi.mock('@features/error-handling', () => ({
   ),
 }));
 
-const mockUseAppUpdateModal = vi.fn();
-
-vi.mock('./lib', () => ({
-  useAppUpdateModal: () => mockUseAppUpdateModal(),
+const { mockUseAppUpdateModal } = vi.hoisted(() => ({
+  mockUseAppUpdateModal: vi.fn(),
 }));
+
+vi.mock('../lib', () => ({
+  useAppUpdateModal: () => {
+    mockUseAppUpdateModal();
+  },
+}));
+
+const TestWrapper = ({ children }: { children: React.ReactNode }) => {
+  return <ModalProvider>{children}</ModalProvider>;
+};
 
 describe('AppContent', () => {
   afterEach(() => {
@@ -29,37 +38,37 @@ describe('AppContent', () => {
   });
 
   it('должен рендериться', () => {
-    render(<AppContent />);
+    render(<AppContent />, { wrapper: TestWrapper });
 
     expect(screen.getByTestId('main-page')).toBeInTheDocument();
   });
 
   it('должен рендерить MainPage', () => {
-    render(<AppContent />);
+    render(<AppContent />, { wrapper: TestWrapper });
 
     expect(screen.getByTestId('main-page')).toBeInTheDocument();
   });
 
   it('должен рендерить ModalContainer', () => {
-    render(<AppContent />);
+    render(<AppContent />, { wrapper: TestWrapper });
 
     expect(screen.getByTestId('modal-container')).toBeInTheDocument();
   });
 
   it('должен рендерить ErrorHandlerProvider', () => {
-    render(<AppContent />);
+    render(<AppContent />, { wrapper: TestWrapper });
 
     expect(screen.getByTestId('error-handler-provider')).toBeInTheDocument();
   });
 
   it('должен вызывать useAppUpdateModal', () => {
-    render(<AppContent />);
+    render(<AppContent />, { wrapper: TestWrapper });
 
     expect(mockUseAppUpdateModal).toHaveBeenCalled();
   });
 
   it('должен оборачивать MainPage и ModalContainer в ErrorHandlerProvider', () => {
-    render(<AppContent />);
+    render(<AppContent />, { wrapper: TestWrapper });
 
     const errorHandler = screen.getByTestId('error-handler-provider');
     const mainPage = screen.getByTestId('main-page');

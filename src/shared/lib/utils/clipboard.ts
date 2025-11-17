@@ -1,7 +1,8 @@
-import { ERROR_FAILED_TO_COPY } from '../constants';
+import { INITIAL_ZERO } from '../constants/constants';
+import { ERROR_FAILED_TO_COPY } from '../constants/errors';
 
-const TEXTAREA_POSITION_TOP = 0;
-const TEXTAREA_POSITION_LEFT = 0;
+const TEXTAREA_POSITION_TOP = INITIAL_ZERO;
+const TEXTAREA_POSITION_LEFT = INITIAL_ZERO;
 
 const copyWithExecCommand = (text: string): boolean => {
   const textarea = document.createElement('textarea');

@@ -1,7 +1,7 @@
 import { useCallback, type FC, type ChangeEvent } from 'react';
 import type { IValidatedFieldProps } from './model';
-import { FormField } from '../form-field';
-import { ParentClassProvider } from '@shared/lib';
+import { FormField } from '@shared/ui';
+import { ParentClassProvider, useFormContext } from '@shared/lib';
 import { NON_DIGIT_PATTERN } from './lib';
 
 export const ValidatedField: FC<IValidatedFieldProps> = ({
@@ -14,15 +14,26 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
   required,
   rightContent,
   inputMode,
+  autoComplete,
   formatter,
   validator,
   instantValidateLength,
-  onChange,
-  onValidate,
+  onChange: onChangeProp,
+  onValidate: onValidateProp,
   parentClass,
 }) => {
+  const { onChange: onChangeContext, onValidate: onValidateContext } =
+    useFormContext();
+
+  const onChange = onChangeProp ?? onChangeContext;
+  const onValidate = onValidateProp ?? onValidateContext;
+
   const handleChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
+      if (!onChange) {
+        return;
+      }
+
       const inputValue = event.target.value;
       let processedValue = inputValue;
 
@@ -85,6 +96,7 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
         required={required}
         rightContent={rightContent}
         inputMode={inputMode}
+        autoComplete={autoComplete}
       />
     </ParentClassProvider>
   );

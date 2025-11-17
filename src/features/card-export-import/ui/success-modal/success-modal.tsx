@@ -7,7 +7,7 @@ import {
   SUCCESS_MODAL_TITLE_ID,
   SUCCESS_MODAL_MESSAGE_ID,
   SUCCESS_MODAL_BUTTON_TEXT,
-} from './lib/constants';
+} from './lib';
 import './success-modal.less';
 
 export const SuccessModal: FC<ISuccessModalProps> = ({

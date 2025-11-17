@@ -1,7 +1,10 @@
 import type { IBankCard } from '@entities/bank-card';
 import { FILE_FORMAT_VERSION, type IEncryptedPayload } from '@shared/lib';
 import type { IImportResult } from '../../../../model';
-import { ERROR_CORRUPTED_FILE, ERROR_UNSUPPORTED_VERSION } from '../constants';
+import {
+  ERROR_CORRUPTED_FILE,
+  ERROR_UNSUPPORTED_VERSION,
+} from '../../../../lib/constants';
 
 export const parseImportedFile = (fileContent: string): IEncryptedPayload => {
   if (!fileContent || fileContent.trim().length === 0) {

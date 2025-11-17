@@ -1,11 +1,8 @@
-import { type FC, type ReactNode } from 'react';
+import { type FC } from 'react';
 import { useClassName, ParentClassProvider } from '@shared/lib';
-import { ACTION_BUTTONS_CONTAINER_BLOCK } from './lib/constants';
+import { ACTION_BUTTONS_CONTAINER_BLOCK } from './lib';
+import { type IActionButtonsContainerProps } from './model';
 import './action-buttons-container.less';
-
-interface IActionButtonsContainerProps {
-  children: ReactNode;
-}
 
 export const ActionButtonsContainer: FC<IActionButtonsContainerProps> = ({
   children,

@@ -5,14 +5,13 @@ import {
   type FormEvent,
   type ChangeEvent,
 } from 'react';
-import { useModalClose } from '@shared/ui/modal/lib/modal-close-context';
-import { useAnimatedModalClose } from '@shared/ui';
+import { useAnimatedModalClose, useModalClose } from '@shared/ui';
 import type { TPasswordModalMode } from '../../../../model';
 import {
   ERROR_PASSWORD_TOO_SHORT,
   ERROR_PASSWORD_MISMATCH,
   MIN_PASSWORD_LENGTH,
-} from '../../../../model/constants';
+} from '../../../../lib/constants';
 import {
   PASSWORD_MODAL_TITLE_EXPORT,
   PASSWORD_MODAL_TITLE_IMPORT,

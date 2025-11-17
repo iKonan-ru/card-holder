@@ -1,1 +1,1 @@
-export type { IBankCardFrontProps } from './types';
+export * from './types';

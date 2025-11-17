@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { usePWAUpdate } from './use-pwa-update';
+import { usePWAUpdate } from '@shared/lib';
 
 interface RegisterSWConfig {
   onRegisteredSW?: (

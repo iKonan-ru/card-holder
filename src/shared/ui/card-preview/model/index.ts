@@ -1,1 +1,1 @@
-export type { ICardPreviewProps } from './types';
+export * from './types';

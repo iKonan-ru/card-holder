@@ -1,12 +1,7 @@
 import { type FC, useCallback } from 'react';
-import type { IBankCard } from '@entities/bank-card';
 import { useModalClose } from '@shared/ui';
+import type { ICardFormModalContentProps } from './model';
 import { CardForm } from './card-form';
-
-interface ICardFormModalContentProps {
-  initialCard?: IBankCard;
-  onComplete?: () => void;
-}
 
 export const CardFormModalContent: FC<ICardFormModalContentProps> = ({
   initialCard,

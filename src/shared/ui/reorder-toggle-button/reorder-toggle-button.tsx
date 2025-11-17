@@ -1,10 +1,11 @@
 import { type FC, useMemo } from 'react';
 import { FiMove, FiCheck } from 'react-icons/fi';
-import { FabButton } from '../fab-button';
+import { FabButton } from '@shared/ui';
 import type { IReorderToggleButtonProps } from './model';
-
-const REORDER_BUTTON_ARIA_LABEL_INACTIVE = 'Включить режим сортировки';
-const REORDER_BUTTON_ARIA_LABEL_ACTIVE = 'Выключить режим сортировки';
+import {
+  REORDER_BUTTON_ARIA_LABEL_ACTIVE,
+  REORDER_BUTTON_ARIA_LABEL_INACTIVE,
+} from './lib';
 
 export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({
   isActive,

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import type { IModalItem } from '@shared/lib';
-import { ESC_KEY } from '../constants';
+import { type IModalItem, KEY_ESC } from '@shared/lib';
 
 interface IUseModalKeyboardParams {
   modals: IModalItem[];
@@ -17,7 +16,7 @@ export const useModalKeyboard = ({
 }: IUseModalKeyboardParams) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === ESC_KEY) {
+      if (event.key === KEY_ESC) {
         const topModal = modals[modals.length - 1];
         const topModalId = topModal?.id;
 

@@ -1,1 +1,1 @@
-export type { IPortalProps } from './types';
+export * from './types';

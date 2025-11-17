@@ -10,13 +10,11 @@ export const BankCardContent: FC<IBankCardContentProps> = ({ card }) => {
       {card.type && (
         <div className={bem(BANK_CARD_BLOCK, 'type')}>{card.type}</div>
       )}
-
       <CopyableField
         value={card.pan}
         maskFn={maskPan}
         modifier="pan"
       />
-
       <div className={bem(BANK_CARD_BLOCK, 'footer')}>
         <CopyableField
           value={card.name}
