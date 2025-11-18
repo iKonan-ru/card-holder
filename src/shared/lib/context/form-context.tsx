@@ -4,7 +4,7 @@ import {
   useContext,
   useMemo,
   type FC,
-  type ReactNode,
+  type PropsWithChildren,
 } from 'react';
 
 type TFieldChangeHandler = (name: string, value: string) => void;
@@ -20,10 +20,9 @@ const FormContext = createContext<IFormContext>({
   onValidate: undefined,
 });
 
-interface IFormProviderProps {
+interface IFormProviderProps extends PropsWithChildren {
   onChange?: TFieldChangeHandler;
   onValidate?: TFieldValidateHandler;
-  children: ReactNode;
 }
 
 export const FormProvider: FC<IFormProviderProps> = ({

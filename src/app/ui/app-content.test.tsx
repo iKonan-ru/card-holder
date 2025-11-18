@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
+import type { PropsWithChildren } from 'react';
 import { ModalProvider } from '@shared/lib';
 import { AppContent } from './app-content';
 
@@ -12,7 +13,7 @@ vi.mock('@shared/ui', () => ({
 }));
 
 vi.mock('@features/error-handling', () => ({
-  ErrorHandlerProvider: ({ children }: { children: React.ReactNode }) => (
+  ErrorHandlerProvider: ({ children }: PropsWithChildren) => (
     <div data-testid="error-handler-provider">{children}</div>
   ),
 }));
@@ -27,7 +28,7 @@ vi.mock('../lib', () => ({
   },
 }));
 
-const TestWrapper = ({ children }: { children: React.ReactNode }) => {
+const TestWrapper = ({ children }: PropsWithChildren) => {
   return <ModalProvider>{children}</ModalProvider>;
 };
 

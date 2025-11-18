@@ -5,7 +5,7 @@ import { CardList } from './card-list';
 import { ModalProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import type { IBankCard } from '@entities/bank-card';
-import type { FC, ReactNode } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import { MOCK_CARDS } from '@test';
 
 const {
@@ -35,7 +35,20 @@ vi.mock('@entities/bank-card', () => ({
   ),
 }));
 
-const TestWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+const { mockUseCardListDrag } = vi.hoisted(() => ({
+  mockUseCardListDrag: vi.fn(),
+}));
+
+vi.mock('../lib', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../lib')>();
+
+  return {
+    ...actual,
+    useCardListDrag: (...args: unknown[]) => mockUseCardListDrag(...args),
+  };
+});
+
+const TestWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ModalProvider>
       {children}
@@ -72,6 +85,14 @@ describe('CardList', () => {
       }
 
       return mockStoreValue;
+    });
+
+    mockUseCardListDrag.mockReturnValue({
+      cards: MOCK_CARDS,
+      activeCard: null,
+      handleDragStart: vi.fn(),
+      handleDragOver: vi.fn(),
+      handleDragEnd: vi.fn(),
     });
   });
 
@@ -110,6 +131,14 @@ describe('CardList', () => {
       }
 
       return mockStoreValue;
+    });
+
+    mockUseCardListDrag.mockReturnValue({
+      cards: [],
+      activeCard: null,
+      handleDragStart: vi.fn(),
+      handleDragOver: vi.fn(),
+      handleDragEnd: vi.fn(),
     });
 
     render(<CardList />, { wrapper: TestWrapper });
@@ -164,6 +193,14 @@ describe('CardList', () => {
       return mockStoreValue;
     });
 
+    mockUseCardListDrag.mockReturnValue({
+      cards: updatedCards,
+      activeCard: null,
+      handleDragStart: vi.fn(),
+      handleDragOver: vi.fn(),
+      handleDragEnd: vi.fn(),
+    });
+
     rerender(<CardList />);
 
     expect(screen.getAllByText(/USER/)).toHaveLength(updatedCards.length);
@@ -186,14 +223,33 @@ describe('CardList', () => {
     expect(mockOpenAddCardForm).toHaveBeenCalled();
   });
 
-  it('должна использовать openAddCardForm при добавлении карты', async () => {
-    vi.clearAllMocks();
-    const user = userEvent.setup();
-    render(<CardList />, { wrapper: TestWrapper });
+  it('должна применять модификатор dragging при перетаскивании', () => {
+    mockUseCardListDrag.mockReturnValue({
+      cards: MOCK_CARDS,
+      activeCard: MOCK_CARDS[0],
+      handleDragStart: vi.fn(),
+      handleDragOver: vi.fn(),
+      handleDragEnd: vi.fn(),
+    });
 
-    const addButton = document.querySelector('.add-card-button') as HTMLElement;
-    await user.click(addButton);
+    const { container } = render(<CardList />, { wrapper: TestWrapper });
 
-    expect(mockOpenAddCardForm).toHaveBeenCalled();
+    const cardList = container.querySelector('.card-list');
+    expect(cardList).toHaveClass('card-list_dragging');
+  });
+
+  it('не должна применять модификатор dragging когда не перетаскивается', () => {
+    mockUseCardListDrag.mockReturnValue({
+      cards: MOCK_CARDS,
+      activeCard: null,
+      handleDragStart: vi.fn(),
+      handleDragOver: vi.fn(),
+      handleDragEnd: vi.fn(),
+    });
+
+    const { container } = render(<CardList />, { wrapper: TestWrapper });
+
+    const cardList = container.querySelector('.card-list');
+    expect(cardList).not.toHaveClass('card-list--dragging');
   });
 });

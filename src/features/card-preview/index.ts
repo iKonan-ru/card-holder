@@ -1,3 +1,3 @@
-export * from './ui/card-preview';
+export * from './ui';
 
 export * from './model';

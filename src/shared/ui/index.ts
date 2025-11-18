@@ -18,4 +18,6 @@ export * from './fab-button';
 
 export * from './password-field';
 
+export * from './password-toggle-button';
+
 export * from './drag-handle';

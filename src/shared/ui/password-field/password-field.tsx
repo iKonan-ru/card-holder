@@ -1,14 +1,14 @@
-import { bem } from '@shared/lib';
+import { ParentClassProvider } from '@shared/lib';
 import { type FC, useMemo } from 'react';
-import { FormField } from '@shared/ui';
+import { FormField, PasswordToggleButton } from '@shared/ui';
 import type { IPasswordFieldProps } from './model';
-import { PASSWORD_FIELD_BLOCK, usePasswordVisibility } from './lib';
-import './password-field.less';
+import { usePasswordVisibility } from './lib';
 
 export const PasswordField: FC<IPasswordFieldProps> = ({
   showPasswordToggle = true,
   isPasswordVisible,
   onPasswordVisibilityChange,
+  parentClass,
   ...formFieldProps
 }) => {
   const isControlled =
@@ -27,23 +27,21 @@ export const PasswordField: FC<IPasswordFieldProps> = ({
     }
 
     return (
-      <button
-        type="button"
-        onClick={toggleVisibility}
-        className={bem(PASSWORD_FIELD_BLOCK, 'toggle-button')}
-        aria-label={ariaLabel}
-        tabIndex={-1}
-      >
-        <Icon className={bem(PASSWORD_FIELD_BLOCK, 'toggle-icon')} />
-      </button>
+      <PasswordToggleButton
+        ariaLabel={ariaLabel}
+        Icon={Icon}
+        onToggle={toggleVisibility}
+      />
     );
   }, [showPasswordToggle, toggleVisibility, ariaLabel, Icon]);
 
   return (
-    <FormField
-      {...formFieldProps}
-      type={inputType}
-      rightContent={rightContent}
-    />
+    <ParentClassProvider parentClass={parentClass}>
+      <FormField
+        {...formFieldProps}
+        type={inputType}
+        rightContent={rightContent}
+      />
+    </ParentClassProvider>
   );
 };

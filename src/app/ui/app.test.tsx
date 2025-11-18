@@ -8,7 +8,7 @@ vi.mock('@pages/main-page', () => ({
   MainPage: () => <div data-testid="main-page">MainPage Component</div>,
 }));
 
-vi.mock('./lib', () => ({
+vi.mock('../lib', () => ({
   useApp: () => ({
     handleModalOpen: mockHandleModalOpen,
   }),

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { ParentClassProvider } from '@shared/lib';
 import { CopyableField } from './copyable-field';
 
@@ -108,5 +109,37 @@ describe('CopyableField', () => {
     const element = screen.getByRole('button');
     expect(element).toHaveAttribute('tabIndex', '0');
     expect(element).toHaveAttribute('aria-label');
+  });
+
+  it('должна отображать индикатор копирования после клика', async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
+    );
+
+    const button = screen.getByRole('button');
+    await user.click(button);
+
+    const indicator = container.querySelector('.copyable-field__indicator');
+    expect(indicator).toBeInTheDocument();
+  });
+
+  it('должна отображать aria-live сообщение о копировании', async () => {
+    const user = userEvent.setup();
+    render(
+      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
+        <CopyableField value={TEST_VALUE} />
+      </ParentClassProvider>
+    );
+
+    const button = screen.getByRole('button');
+    await user.click(button);
+
+    const statusElement = screen.getByRole('status');
+    expect(statusElement).toBeInTheDocument();
+    expect(statusElement).toHaveAttribute('aria-live', 'polite');
+    expect(statusElement).toHaveAttribute('aria-atomic', 'true');
   });
 });

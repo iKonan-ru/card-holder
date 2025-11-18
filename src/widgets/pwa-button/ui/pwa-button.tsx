@@ -4,7 +4,7 @@ import {
   PWA_BUTTON_BLOCK,
   PWA_BUTTON_TEXT,
   PWA_BUTTON_ARIA_LABEL,
-} from './lib';
+} from '../lib';
 import './pwa-button.less';
 
 const PRIMARY_MODIFIER = ['primary'];

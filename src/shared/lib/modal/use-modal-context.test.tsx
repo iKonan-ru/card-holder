@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
+import type { PropsWithChildren } from 'react';
 import { useModalContext } from '@shared/lib';
 import { ModalContext } from './context';
 
@@ -14,7 +15,7 @@ const mockContextValue = {
 
 describe('useModalContext', () => {
   it('должен возвращать значение контекста', () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
+    const wrapper = ({ children }: PropsWithChildren) => (
       <ModalContext.Provider value={mockContextValue}>
         {children}
       </ModalContext.Provider>

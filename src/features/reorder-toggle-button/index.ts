@@ -1,3 +1,3 @@
-export * from './ui/reorder-toggle-button';
+export * from './ui';
 
 export * from './model';

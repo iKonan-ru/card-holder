@@ -1,5 +1,6 @@
 import { describe, it, expect, vi } from 'vitest';
 import { renderHook } from '@testing-library/react';
+import type { PropsWithChildren } from 'react';
 import { ModalCloseContext, useModalClose } from './use-modal-close';
 
 const mockClose = vi.fn();
@@ -12,7 +13,7 @@ describe('ModalCloseContext', () => {
 
 describe('useModalClose', () => {
   it('должен возвращать функцию закрытия из контекста', () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
+    const wrapper = ({ children }: PropsWithChildren) => (
       <ModalCloseContext.Provider value={mockClose}>
         {children}
       </ModalCloseContext.Provider>
@@ -31,7 +32,7 @@ describe('useModalClose', () => {
   });
 
   it('должен вызывать функцию закрытия из контекста', () => {
-    const wrapper = ({ children }: { children: React.ReactNode }) => (
+    const wrapper = ({ children }: PropsWithChildren) => (
       <ModalCloseContext.Provider value={mockClose}>
         {children}
       </ModalCloseContext.Provider>

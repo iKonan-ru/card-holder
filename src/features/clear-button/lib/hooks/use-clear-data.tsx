@@ -24,17 +24,17 @@ const CONFIRM_MODAL_MESSAGE_ID = 'confirm-clear-all-message';
 export const useClearData = (params: IUseClearDataParams): IUseClearData => {
   const { onClear } = params;
   const [isClearing, setIsClearing] = useState(INITIAL_FALSE);
-  const modalContext = useModalContext();
+  const { openModal, closeModal } = useModalContext();
 
   const handleConfirm = useCallback(async () => {
     try {
       setIsClearing(true);
       await onClear();
-      modalContext.closeModal(CONFIRM_MODAL_ID);
+      closeModal(CONFIRM_MODAL_ID);
     } finally {
       setIsClearing(false);
     }
-  }, [onClear, modalContext]);
+  }, [onClear, closeModal]);
 
   const clearData = useCallback(() => {
     const modalContent = (
@@ -47,14 +47,14 @@ export const useClearData = (params: IUseClearDataParams): IUseClearData => {
       />
     );
 
-    modalContext.openModal(
+    openModal(
       CONFIRM_MODAL_ID,
       modalContent,
       CONFIRM_MODAL_TITLE_ID,
       CONFIRM_MODAL_MESSAGE_ID,
       CONFIRM_CLEAR_TITLE
     );
-  }, [handleConfirm, modalContext]);
+  }, [handleConfirm, openModal]);
 
   return {
     isClearing,

@@ -4,13 +4,13 @@ import {
   useRef,
   useMemo,
   type FC,
+  type PropsWithChildren,
   type ReactNode,
 } from 'react';
 import { ModalContext } from './context';
 import type { IModalContextValue, IModalItem } from './types';
 
-interface IModalProviderProps {
-  children: ReactNode;
+interface IModalProviderProps extends PropsWithChildren {
   onModalOpen?: () => void;
 }
 

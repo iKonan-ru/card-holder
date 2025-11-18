@@ -3,7 +3,7 @@ import { render, cleanup } from '@testing-library/react';
 import { SortableCardItem } from './sortable-card-item';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
-import type { FC, ReactNode } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 
 vi.mock('@dnd-kit/sortable', async () => {
   const actual = await vi.importActual('@dnd-kit/sortable');
@@ -27,7 +27,7 @@ vi.mock('@dnd-kit/sortable', async () => {
 const TEST_ID = 'test-item-1';
 const TEST_CHILDREN = <div>Test Content</div>;
 
-const DndWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+const DndWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <DndContext>
       <SortableContext items={[TEST_ID]}>{children}</SortableContext>

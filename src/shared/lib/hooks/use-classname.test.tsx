@@ -2,10 +2,10 @@ import { describe, it, expect } from 'vitest';
 import { renderHook } from '@testing-library/react';
 import { useClassName } from '@shared/lib';
 import { ParentClassProvider } from '../context';
-import type { FC, ReactNode } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 
 const createWrapper =
-  (parentClass?: string): FC<{ children: ReactNode }> =>
+  (parentClass?: string): FC<PropsWithChildren> =>
   ({ children }) => {
     if (parentClass) {
       return (

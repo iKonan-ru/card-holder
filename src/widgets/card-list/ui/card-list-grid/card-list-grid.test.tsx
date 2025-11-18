@@ -5,7 +5,7 @@ import type { IBankCard } from '@entities/bank-card';
 import { ParentClassProvider } from '@shared/lib';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
-import type { FC, ReactNode } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 import { MOCK_CARD, MOCK_CARD_SECOND } from '@test';
 
 vi.mock('@entities/bank-card', () => ({
@@ -18,7 +18,7 @@ const MOCK_CARDS: IBankCard[] = [MOCK_CARD, MOCK_CARD_SECOND];
 
 const TEST_PARENT_CLASS = 'test-parent';
 
-const DndWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+const DndWrapper: FC<PropsWithChildren> = ({ children }) => {
   const ids = MOCK_CARDS.map((card) => card.pan);
 
   return (

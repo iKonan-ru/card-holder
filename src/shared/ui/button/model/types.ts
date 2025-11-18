@@ -1,10 +1,11 @@
-import type { ReactNode, ButtonHTMLAttributes } from 'react';
+import type { PropsWithChildren, ButtonHTMLAttributes } from 'react';
 
 export type TButtonVariant = 'primary' | 'secondary' | 'danger';
 
 export interface IButtonProps
-  extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
-  children: ReactNode;
+  extends PropsWithChildren<
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>
+  > {
   variant?: TButtonVariant;
   isLoading?: boolean;
   fullWidth?: boolean;

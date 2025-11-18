@@ -9,10 +9,11 @@ import {
   DROP_ANIMATION,
   CARD_LIST_MODIFIERS_DRAGGING,
   CARD_LIST_MODIFIERS_EMPTY,
-} from './lib';
+} from '../lib';
 import { DndContext, closestCenter, DragOverlay } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
-import { CardListGrid, CardListDragOverlay } from './ui';
+import { CardListGrid } from './card-list-grid';
+import { CardListDragOverlay } from './card-list-drag-overlay';
 import './card-list.less';
 
 export const CardList: FC = () => {

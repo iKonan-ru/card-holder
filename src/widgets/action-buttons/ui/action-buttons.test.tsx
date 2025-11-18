@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 import { ModalProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import { ActionButtons } from './action-buttons';
@@ -15,7 +15,7 @@ vi.mock('@features/card-management', () => ({
   useCardManagementStore: mockUseCardManagementStore,
 }));
 
-const TestWrapper = ({ children }: { children: ReactNode }) => (
+const TestWrapper = ({ children }: PropsWithChildren) => (
   <ModalProvider>
     {children}
     <ModalContainer />

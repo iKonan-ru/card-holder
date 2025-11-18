@@ -1,6 +1,5 @@
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
-export interface IPortalProps {
-  children: ReactNode;
+export interface IPortalProps extends PropsWithChildren {
   containerId?: string;
 }

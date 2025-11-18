@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, waitFor, act, cleanup } from '@testing-library/react';
 import { useCardList } from './use-card-list';
 import type { IBankCard } from '@entities/bank-card';
-import type { ReactNode, FC } from 'react';
+import type { PropsWithChildren, FC } from 'react';
 import { ModalProvider } from '@shared/lib';
 
 const {
@@ -35,7 +35,7 @@ const MOCK_CARD: IBankCard = {
   order: 0,
 };
 
-const TestWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+const TestWrapper: FC<PropsWithChildren> = ({ children }) => {
   return <ModalProvider>{children}</ModalProvider>;
 };
 

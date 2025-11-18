@@ -32,7 +32,7 @@ export const useExportCards = (
 ): IUseExportCards => {
   const { cards } = params;
   const [isExporting, setIsExporting] = useState(false);
-  const modalContext = useModalContext();
+  const { openModal } = useModalContext();
 
   const handleExportWithPassword = useCallback(
     async (
@@ -77,7 +77,7 @@ export const useExportCards = (
         />
       );
 
-      modalContext.openModal(
+      openModal(
         PASSWORD_MODAL_ID_EXPORT,
         modalContent,
         PASSWORD_MODAL_TITLE_ID,
@@ -87,7 +87,7 @@ export const useExportCards = (
     } catch (error) {
       handleError(error, FALLBACK_ERROR_EXPORT);
     }
-  }, [cards, handleExportWithPassword, modalContext]);
+  }, [cards, handleExportWithPassword, openModal]);
 
   return {
     isExporting,

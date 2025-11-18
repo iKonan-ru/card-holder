@@ -1,4 +1,4 @@
-export * from './ui/update-modal';
+export * from './ui';
 
 export * from './lib';
 

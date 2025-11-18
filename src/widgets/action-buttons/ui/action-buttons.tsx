@@ -1,5 +1,5 @@
 import { ParentClassProvider, useClassName } from '@shared/lib';
-import { ACTION_BUTTONS_BLOCK } from './lib';
+import { ACTION_BUTTONS_BLOCK } from '../lib';
 import { type FC } from 'react';
 import { useCardManagementStore } from '@features/card-management';
 import { ReorderToggleButton } from '@features/reorder-toggle-button';

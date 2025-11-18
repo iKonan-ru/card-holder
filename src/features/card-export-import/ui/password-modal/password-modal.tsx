@@ -21,8 +21,7 @@ import './password-modal.less';
 
 export const PasswordModal: FC<IPasswordModalProps> = (props) => {
   const { mode, onConfirm, onCancel } = props;
-
-  const modalContext = useModalContext();
+  const { updateModalPreventClose } = useModalContext();
 
   const {
     password,
@@ -46,8 +45,8 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
     : PASSWORD_MODAL_ID_IMPORT;
 
   useEffect(() => {
-    modalContext.updateModalPreventClose(passwordModalId, isSubmitting);
-  }, [modalContext, passwordModalId, isSubmitting]);
+    updateModalPreventClose(passwordModalId, isSubmitting);
+  }, [updateModalPreventClose, passwordModalId, isSubmitting]);
 
   const className = useClassName({
     blockName: PASSWORD_MODAL_BLOCK,

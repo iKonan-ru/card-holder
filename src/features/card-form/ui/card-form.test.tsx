@@ -5,7 +5,7 @@ import { CardForm } from './card-form';
 import * as sharedLib from '@shared/lib';
 import { ModalProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
-import type { FC, ReactNode } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 
 const { mockUseCardManagementStore } = vi.hoisted(() => ({
   mockUseCardManagementStore: vi.fn(),
@@ -28,7 +28,7 @@ vi.mock('@features/card-preview', () => ({
   CardPreview: () => null,
 }));
 
-const TestWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+const TestWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ModalProvider>
       {children}

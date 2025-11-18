@@ -1,4 +1,4 @@
-export * from './ui/sortable-card-item';
+export * from './ui';
 
 export * from './lib';
 

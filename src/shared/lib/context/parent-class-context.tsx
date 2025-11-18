@@ -4,7 +4,7 @@ import {
   useContext,
   useMemo,
   type FC,
-  type ReactNode,
+  type PropsWithChildren,
 } from 'react';
 
 interface IParentClassContext {
@@ -15,9 +15,8 @@ const ParentClassContext = createContext<IParentClassContext>({
   parentClass: undefined,
 });
 
-interface IParentClassProviderProps {
+interface IParentClassProviderProps extends PropsWithChildren {
   parentClass?: string;
-  children: ReactNode;
 }
 
 export const ParentClassProvider: FC<IParentClassProviderProps> = ({
@@ -34,7 +33,7 @@ export const ParentClassProvider: FC<IParentClassProviderProps> = ({
 };
 
 export const useParentClass = (): string | undefined => {
-  const context = useContext(ParentClassContext);
+  const { parentClass } = useContext(ParentClassContext);
 
-  return context.parentClass;
+  return parentClass;
 };

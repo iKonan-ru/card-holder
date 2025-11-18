@@ -50,7 +50,7 @@ export const useImportCards = (
 ): IUseImportCards => {
   const { cards, onImport, onUnflipCards } = params;
   const [isImporting, setIsImporting] = useState(false);
-  const modalContext = useModalContext();
+  const { openModal } = useModalContext();
 
   const importCards = useCallback(async () => {
     if (isImporting) {
@@ -91,7 +91,7 @@ export const useImportCards = (
 
           const successContent: ReactNode = <SuccessModal message={message} />;
 
-          modalContext.openModal(
+          openModal(
             SUCCESS_MODAL_ID_IMPORT,
             successContent,
             SUCCESS_MODAL_TITLE_ID,
@@ -116,7 +116,7 @@ export const useImportCards = (
         />
       );
 
-      modalContext.openModal(
+      openModal(
         PASSWORD_MODAL_ID_IMPORT,
         modalContent,
         PASSWORD_MODAL_TITLE_ID,
@@ -132,7 +132,7 @@ export const useImportCards = (
 
       handleError(error, FALLBACK_ERROR_IMPORT);
     }
-  }, [cards, onImport, onUnflipCards, modalContext, isImporting]);
+  }, [cards, onImport, onUnflipCards, openModal, isImporting]);
 
   return {
     isImporting,

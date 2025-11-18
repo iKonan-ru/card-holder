@@ -1,7 +1,6 @@
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
-export interface IModalProps {
-  children: ReactNode;
+export interface IModalProps extends PropsWithChildren {
   onClose: () => void;
   onRegisterClose?: (closeWithAnimation: () => void) => void;
   isTopModal: boolean;

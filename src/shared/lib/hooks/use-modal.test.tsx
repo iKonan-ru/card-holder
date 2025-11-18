@@ -4,11 +4,11 @@ import userEvent from '@testing-library/user-event';
 import { ModalProvider } from '../modal';
 import { ModalContainer } from '@shared/ui';
 import { useModal } from './use-modal';
-import type { FC, ReactNode } from 'react';
+import type { FC, PropsWithChildren } from 'react';
 
 const MODAL_CONTENT_TEXT = 'Modal Content';
 
-const TestWrapper: FC<{ children: ReactNode }> = ({ children }) => {
+const TestWrapper: FC<PropsWithChildren> = ({ children }) => {
   return (
     <ModalProvider>
       {children}

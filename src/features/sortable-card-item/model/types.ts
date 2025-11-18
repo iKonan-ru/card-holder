@@ -1,7 +1,6 @@
-import type { ReactNode } from 'react';
+import type { PropsWithChildren } from 'react';
 
-export interface ISortableCardItemProps {
+export interface ISortableCardItemProps extends PropsWithChildren {
   id: string;
   isReorderMode: boolean;
-  children: ReactNode;
 }

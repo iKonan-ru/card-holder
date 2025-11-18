@@ -213,4 +213,51 @@ describe('ValidatedField', () => {
 
     expect(screen.getByText('Ошибка валидации')).toBeInTheDocument();
   });
+
+  it('не должен вызывать onChange если он не передан', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+      />
+    );
+
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await user.type(input, 'test');
+
+    expect(input.value).toBe('');
+  });
+
+  it('должен ограничивать ввод при превышении maxLength', async () => {
+    const handleChange = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        maxLength={3}
+        onChange={handleChange}
+      />
+    );
+
+    const input = screen.getByRole('textbox');
+    await user.type(input, '1234');
+
+    expect(handleChange).toHaveBeenCalled();
+    expect(handleChange).not.toHaveBeenCalledWith('test', '1234');
+
+    const allCalls = handleChange.mock.calls;
+    const allValues = allCalls.map((call) => call[1]).filter(Boolean);
+    const maxLengthValue = Math.max(
+      ...allValues.map((value) =>
+        typeof value === 'string' ? value.length : 0
+      )
+    );
+    expect(maxLengthValue).toBeLessThanOrEqual(3);
+  });
 });
