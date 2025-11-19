@@ -27,10 +27,7 @@ export const KEY_SPACE = ' ';
 
 export const ARIA_ROLE_BUTTON = 'button';
 export const ARIA_ROLE_DIALOG = 'dialog';
-export const ARIA_ROLE_STATUS = 'status';
 export const ARIA_MODAL_TRUE = 'true';
-export const ARIA_LIVE_POLITE = 'polite';
-export const ARIA_ATOMIC_TRUE = 'true';
 export const ARIA_HIDDEN_TRUE = 'true';
 export const ARIA_TABINDEX_INTERACTIVE = 0;
 

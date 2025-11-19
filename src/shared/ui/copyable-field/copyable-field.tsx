@@ -4,20 +4,11 @@ import {
   bem,
   useClassName,
   ARIA_ROLE_BUTTON,
-  ARIA_ROLE_STATUS,
-  ARIA_LIVE_POLITE,
-  ARIA_ATOMIC_TRUE,
   ARIA_HIDDEN_TRUE,
   ARIA_TABINDEX_INTERACTIVE,
 } from '@shared/lib';
 import type { ICopyableFieldProps } from './model';
-import {
-  COPYABLE_FIELD_BLOCK,
-  COPY_TITLE_TEXT,
-  COPIED_ARIA_MESSAGE,
-  EMPTY_ARIA_MESSAGE,
-  useCopyableField,
-} from './lib';
+import { COPYABLE_FIELD_BLOCK, COPY_TITLE_TEXT, useCopyableField } from './lib';
 import './copyable-field.less';
 
 export const CopyableField: FC<ICopyableFieldProps> = ({
@@ -58,22 +49,14 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
         aria-label={ariaLabel}
       >
         {displayValue}
-        {isCopied && (
-          <FiCheck
-            className={bem(COPYABLE_FIELD_BLOCK, 'indicator')}
-            aria-hidden={ARIA_HIDDEN_TRUE}
-          />
-        )}
       </div>
 
-      <div
-        role={ARIA_ROLE_STATUS}
-        aria-live={ARIA_LIVE_POLITE}
-        aria-atomic={ARIA_ATOMIC_TRUE}
-        className={bem(COPYABLE_FIELD_BLOCK, 'sr-only')}
-      >
-        {isCopied ? COPIED_ARIA_MESSAGE : EMPTY_ARIA_MESSAGE}
-      </div>
+      {isCopied && (
+        <FiCheck
+          className={bem(COPYABLE_FIELD_BLOCK, 'indicator')}
+          aria-hidden={ARIA_HIDDEN_TRUE}
+        />
+      )}
     </div>
   );
 };

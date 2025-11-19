@@ -1,18 +1,49 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, cleanup } from '@testing-library/react';
+import { type FC } from 'react';
 import { CardPreview } from './card-preview';
 
+const mockBankLogos: Partial<Record<string, FC<{ className?: string }>>> = {
+  tbank: () => (
+    <svg
+      className="icon"
+      data-testid="bank-logo"
+    />
+  ),
+};
+
+const mockPaymentSystemLogos: Partial<
+  Record<string, FC<{ className?: string }>>
+> = {
+  visa: () => (
+    <svg
+      className="icon"
+      data-testid="visa-logo"
+    />
+  ),
+  mastercard: () => (
+    <svg
+      className="icon"
+      data-testid="mastercard-logo"
+    />
+  ),
+  mir: () => (
+    <svg
+      className="icon"
+      data-testid="mir-logo"
+    />
+  ),
+};
+
 vi.mock('@shared/assets/banks', () => ({
-  bankLogos: {
-    tbank: 'data:image/svg+xml,test-bank-logo',
+  get bankLogos() {
+    return mockBankLogos;
   },
 }));
 
 vi.mock('@shared/assets/payment-systems', () => ({
-  paymentSystemLogos: {
-    visa: 'data:image/svg+xml,test-visa-logo',
-    mastercard: 'data:image/svg+xml,test-mastercard-logo',
-    mir: 'data:image/svg+xml,test-mir-logo',
+  get paymentSystemLogos() {
+    return mockPaymentSystemLogos;
   },
 }));
 
@@ -37,7 +68,7 @@ describe('CardPreview', () => {
   it('должен отображать иконки платёжной системы и банка', () => {
     const { container } = render(<CardPreview pan="427630" />);
 
-    const icons = container.querySelectorAll('.card-preview__icon');
+    const icons = container.querySelectorAll('.icon');
     expect(icons.length).toBeGreaterThan(0);
   });
 

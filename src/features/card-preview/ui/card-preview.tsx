@@ -3,6 +3,7 @@ import type { ICardPreviewProps } from '../model';
 import { BANKS_LIST, DEFAULT_BANK } from '@shared/data';
 import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
+import { Icon } from '@shared/ui/icon';
 import {
   bem,
   useClassName,
@@ -10,6 +11,8 @@ import {
   getPaymentSystem,
   SPACE_REMOVAL_PATTERN,
   EMPTY_STRING,
+  ParentClassProvider,
+  getTextColorStyle,
 } from '@shared/lib';
 import { CARD_PREVIEW_BLOCK } from '../lib';
 import './card-preview.less';
@@ -29,10 +32,24 @@ export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {
   const hasPaymentSystem = Boolean(paymentSystem);
   const hasBank = Boolean(bankId);
   const hasAnyInfo = hasPaymentSystem || hasBank;
+  const isDarkText = Boolean(bank.isDarkText);
+
+  const bankLogo = bankLogos[bank.id];
+  const paymentSystemLogo = paymentSystem
+    ? paymentSystemLogos[paymentSystem]
+    : null;
+
+  const modifiers = useMemo(
+    () => (isDarkText ? ['dark-text'] : []),
+    [isDarkText]
+  );
 
   const className = useClassName({
     blockName: CARD_PREVIEW_BLOCK,
+    modifiers,
   });
+
+  const style = useMemo(() => getTextColorStyle(isDarkText), [isDarkText]);
 
   if (!hasAnyInfo) {
     return null;
@@ -41,31 +58,18 @@ export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {
   return (
     <div
       className={className}
+      style={style}
       aria-hidden="true"
     >
-      <div
-        className={bem(CARD_PREVIEW_BLOCK, 'color-indicator')}
-        style={{ backgroundColor: bank.color }}
-        title={bank.name}
-      />
-
-      {bankLogos[bank.id] && (
-        <div className={bem(CARD_PREVIEW_BLOCK, 'icon')}>
-          <img
-            src={bankLogos[bank.id]}
-            alt={bankId!}
-          />
-        </div>
-      )}
-
-      {paymentSystem && (
-        <div className={bem(CARD_PREVIEW_BLOCK, 'icon')}>
-          <img
-            src={paymentSystemLogos[paymentSystem]}
-            alt={paymentSystem}
-          />
-        </div>
-      )}
+      <ParentClassProvider parentClass={CARD_PREVIEW_BLOCK}>
+        <div
+          className={bem(CARD_PREVIEW_BLOCK, 'color-indicator')}
+          style={{ backgroundColor: bank.color }}
+          title={bank.name}
+        />
+        {bankLogo && <Icon component={bankLogo} />}
+        {paymentSystemLogo && <Icon component={paymentSystemLogo} />}
+      </ParentClassProvider>
     </div>
   );
 };

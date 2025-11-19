@@ -125,21 +125,4 @@ describe('CopyableField', () => {
     const indicator = container.querySelector('.copyable-field__indicator');
     expect(indicator).toBeInTheDocument();
   });
-
-  it('должна отображать aria-live сообщение о копировании', async () => {
-    const user = userEvent.setup();
-    render(
-      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
-        <CopyableField value={TEST_VALUE} />
-      </ParentClassProvider>
-    );
-
-    const button = screen.getByRole('button');
-    await user.click(button);
-
-    const statusElement = screen.getByRole('status');
-    expect(statusElement).toBeInTheDocument();
-    expect(statusElement).toHaveAttribute('aria-live', 'polite');
-    expect(statusElement).toHaveAttribute('aria-atomic', 'true');
-  });
 });

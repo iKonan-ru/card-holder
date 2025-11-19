@@ -29,6 +29,9 @@ const PWA_ICONS = [
 ];
 
 const WORKBOX_GLOB_PATTERNS = ['**/*.{js,css,html,ico,png,svg,woff,woff2,ttf}'];
+const WORKBOX_GLOB_IGNORES = ['**/node_modules/**/*', 'sw.js', 'workbox-*.js'];
+
+const isDev = process.env.NODE_ENV === 'development';
 
 export const pwaConfig: Partial<VitePWAOptions> = {
   registerType: 'prompt',
@@ -52,7 +55,8 @@ export const pwaConfig: Partial<VitePWAOptions> = {
     icons: PWA_ICONS,
   },
   workbox: {
-    globPatterns: WORKBOX_GLOB_PATTERNS,
+    globPatterns: isDev ? [] : WORKBOX_GLOB_PATTERNS,
+    globIgnores: WORKBOX_GLOB_IGNORES,
     cleanupOutdatedCaches: true,
     clientsClaim: false,
     skipWaiting: false,

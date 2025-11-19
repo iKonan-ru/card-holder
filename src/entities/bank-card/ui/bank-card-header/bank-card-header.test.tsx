@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
+import { type FC } from 'react';
 import { BankCardHeader } from './bank-card-header';
 import type { IBank } from '@entities/bank';
 import type { PaymentSystem } from '@shared/lib';
@@ -18,8 +19,14 @@ const MOCK_BANK_WITHOUT_NAME: IBank = {
 
 const MOCK_PAYMENT_SYSTEM: PaymentSystem = 'visa';
 
-const mockBankLogos: Partial<Record<string, string>> = {
-  sberbank: '/path/to/sberbank.svg',
+const mockBankLogos: Partial<Record<string, FC<{ className?: string }>>> = {
+  sberbank: () => <svg data-testid="sberbank-logo" />,
+};
+
+const mockPaymentSystemLogos: Partial<
+  Record<string, FC<{ className?: string }>>
+> = {
+  visa: () => <svg data-testid="visa-logo" />,
 };
 
 vi.mock('@shared/assets/banks', () => ({
@@ -29,8 +36,8 @@ vi.mock('@shared/assets/banks', () => ({
 }));
 
 vi.mock('@shared/assets/payment-systems', () => ({
-  paymentSystemLogos: {
-    visa: '/path/to/visa.svg',
+  get paymentSystemLogos() {
+    return mockPaymentSystemLogos;
   },
 }));
 
@@ -87,15 +94,10 @@ describe('BankCardHeader', () => {
       />
     );
 
-    const logoElement = container.querySelector(
-      '.bank-card__logo img'
-    ) as HTMLImageElement | null;
+    const logoElement = container.querySelector('.bank-card__logo');
 
     expect(logoElement).toBeInTheDocument();
-    if (logoElement) {
-      expect(logoElement).toHaveAttribute('src', '/path/to/sberbank.svg');
-      expect(logoElement).toHaveAttribute('alt', MOCK_BANK_WITH_NAME.id);
-    }
+    expect(screen.getByTestId('sberbank-logo')).toBeInTheDocument();
   });
 
   it('должен отображать логотип платежной системы если он доступен', () => {
@@ -107,14 +109,11 @@ describe('BankCardHeader', () => {
     );
 
     const paymentSystemElement = container.querySelector(
-      '.bank-card__payment-system img'
-    ) as HTMLImageElement | null;
+      '.bank-card__payment-system'
+    );
 
     expect(paymentSystemElement).toBeInTheDocument();
-    if (paymentSystemElement) {
-      expect(paymentSystemElement).toHaveAttribute('src', '/path/to/visa.svg');
-      expect(paymentSystemElement).toHaveAttribute('alt', MOCK_PAYMENT_SYSTEM);
-    }
+    expect(screen.getByTestId('visa-logo')).toBeInTheDocument();
   });
 
   it('не должен отображать логотип платежной системы если paymentSystem = null', () => {

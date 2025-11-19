@@ -1,9 +1,11 @@
+import { type CSSProperties } from 'react';
 import {
   EMPTY_STRING,
   HEX_RADIX,
   INITIAL_ZERO,
   ZERO_CHAR,
 } from '../constants/common';
+import { TEXT_COLOR_DARK, TEXT_COLOR_LIGHT } from '../constants/colors';
 
 const HEX_COLOR_PATTERN = /^[0-9A-Fa-f]{6}$/;
 const MIN_RGB_VALUE = INITIAL_ZERO;
@@ -71,3 +73,8 @@ export const darkenColor = (hex: string, percent: number): string => {
 
   return rgbToHex(newR, newG, newB);
 };
+
+export const getTextColorStyle = (isDarkText?: boolean): CSSProperties =>
+  ({
+    '--text-color': isDarkText ? TEXT_COLOR_DARK : TEXT_COLOR_LIGHT,
+  }) as CSSProperties;

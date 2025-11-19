@@ -1,6 +1,7 @@
 import { type FC } from 'react';
 import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
+import { Icon } from '@shared/ui/icon';
 import { bem, ARIA_HIDDEN_TRUE } from '@shared/lib';
 import { BANK_CARD_BLOCK } from '../../lib';
 import type { IBankCardHeaderProps } from './model';
@@ -23,10 +24,7 @@ export const BankCardHeader: FC<IBankCardHeaderProps> = ({
               className={bem(BANK_CARD_BLOCK, 'logo')}
               aria-hidden={ARIA_HIDDEN_TRUE}
             >
-              <img
-                src={bankLogo}
-                alt={bank.id}
-              />
+              <Icon component={bankLogo} />
             </div>
           )}
 
@@ -41,10 +39,7 @@ export const BankCardHeader: FC<IBankCardHeaderProps> = ({
           className={bem(BANK_CARD_BLOCK, 'payment-system')}
           aria-hidden={ARIA_HIDDEN_TRUE}
         >
-          <img
-            src={paymentSystemLogo}
-            alt={paymentSystem}
-          />
+          <Icon component={paymentSystemLogo} />
         </div>
       )}
     </div>

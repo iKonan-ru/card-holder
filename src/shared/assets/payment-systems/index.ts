@@ -1,15 +1,16 @@
-import humo from './humo.svg';
-import jcb from './jcb.svg';
-import mastercard from './mastercard.svg';
-import mir from './mir.svg';
-import uzcard from './uzcard.svg';
-import visa from './visa.svg';
+import Humo from './humo.svg?react';
+import Jcb from './jcb.svg?react';
+import Mastercard from './mastercard.svg?react';
+import Mir from './mir.svg?react';
+import Uzcard from './uzcard.svg?react';
+import Visa from './visa.svg?react';
+import type { FC } from 'react';
 
-export const paymentSystemLogos: Record<string, string> = {
-  humo,
-  jcb,
-  mastercard,
-  mir,
-  uzcard,
-  visa,
+export const paymentSystemLogos: Record<string, FC<{ className?: string }>> = {
+  humo: Humo,
+  jcb: Jcb,
+  mastercard: Mastercard,
+  mir: Mir,
+  uzcard: Uzcard,
+  visa: Visa,
 };

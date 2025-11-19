@@ -2,10 +2,19 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { VitePWA } from 'vite-plugin-pwa';
+import svgr from 'vite-plugin-svgr';
 import { pwaConfig } from './pwa.config';
 
 export default defineConfig({
-  plugins: [react(), VitePWA(pwaConfig)],
+  plugins: [
+    react(),
+    svgr({
+      svgrOptions: {
+        exportType: 'default',
+      },
+    }),
+    VitePWA(pwaConfig),
+  ],
   resolve: {
     alias: {
       '@app': path.resolve(__dirname, './src/app'),

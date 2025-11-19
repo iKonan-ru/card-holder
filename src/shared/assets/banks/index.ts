@@ -1,34 +1,36 @@
-import alfabank from './alfabank.svg';
-import citibank from './citibank.svg';
-import domrf from './domrf.svg';
-import gazprombank from './gazprombank.svg';
-import ibt from './ibt.svg';
-import mkb from './mkb.svg';
-import open from './open.svg';
-import psbbank from './psbbank.svg';
-import raiffeisen from './raiffeisen.svg';
-import rosbank from './rosbank.svg';
-import sberbank from './sberbank.svg';
-import tbank from './tbank.svg';
-import unicredit from './unicredit.svg';
-import uralsib from './uralsib.svg';
-import vtb24 from './vtb24.svg';
+import Alfabank from './alfabank.svg?react';
+import Citibank from './citibank.svg?react';
+import Domrf from './domrf.svg?react';
+import Gazprombank from './gazprombank.svg?react';
+import Ibt from './ibt.svg?react';
+import Mkb from './mkb.svg?react';
+import Open from './open.svg?react';
+import Psbbank from './psbbank.svg?react';
+import Raiffeisen from './raiffeisen.svg?react';
+import Rosbank from './rosbank.svg?react';
+import Sberbank from './sberbank.svg?react';
+import Tbank from './tbank.svg?react';
+import Unicredit from './unicredit.svg?react';
+import Uralsib from './uralsib.svg?react';
+import Vtb24 from './vtb24.svg?react';
 import type { TBankKeys } from '@shared/data';
+import type { FC } from 'react';
 
-export const bankLogos: Partial<Record<TBankKeys, string>> = {
-  alfabank,
-  citibank,
-  domrf,
-  gazprombank,
-  ibt,
-  mkb,
-  open,
-  psbbank,
-  raiffeisen,
-  rosbank,
-  sberbank,
-  tbank,
-  unicredit,
-  uralsib,
-  vtb24,
-};
+export const bankLogos: Partial<Record<TBankKeys, FC<{ className?: string }>>> =
+  {
+    alfabank: Alfabank,
+    citibank: Citibank,
+    domrf: Domrf,
+    gazprombank: Gazprombank,
+    ibt: Ibt,
+    mkb: Mkb,
+    open: Open,
+    psbbank: Psbbank,
+    raiffeisen: Raiffeisen,
+    rosbank: Rosbank,
+    sberbank: Sberbank,
+    tbank: Tbank,
+    unicredit: Unicredit,
+    uralsib: Uralsib,
+    vtb24: Vtb24,
+  };

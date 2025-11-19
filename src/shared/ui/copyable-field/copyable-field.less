@@ -4,43 +4,68 @@
   cursor: pointer;
   position: relative;
   transition: @transition-medium;
+  padding-top: @spacing-sm;
+  padding-right: @spacing-sm;
+  margin-top: -@spacing-sm;
+  margin-right: -@spacing-sm;
+  overflow: hidden;
 
-  &:hover {
+  &:hover &__value {
     transform: translateY(-0.0625rem);
+  }
+
+  &:active &__value {
+    transform: translateY(0);
+    opacity: @opacity-very-high;
   }
 
   &__label {
     font-size: @font-size-xs;
     color: var(--white-70);
     margin-bottom: @spacing-xs;
+
+    .bank-card_dark-text & {
+      color: var(--black-70);
+    }
   }
 
   &__value {
-    padding: 0.1rem @border-radius-md;
+    padding: 0.1rem @spacing-sm;
     border-radius: @border-radius-md;
     background-color: var(--white-05);
     position: relative;
     cursor: pointer;
     font-family: @font-family-mono;
+    transition: @transition-medium;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &:hover {
       background-color: var(--white-15);
+    }
+
+    .bank-card_dark-text & {
+      background-color: var(--black-05);
+
+      &:hover {
+        background-color: var(--black-10);
+      }
     }
   }
 
   &__indicator {
     position: absolute;
-    top: 0;
-    right: 0;
-    transform: translate(50%, -50%);
+    bottom: @spacing-md;
+    right: @spacing-sm;
+    transform: translate(50%, -25%);
     color: var(--white);
     width: @size-sm;
     height: @size-sm;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: @font-size-xs;
-    font-weight: @font-weight-bold;
+
+    .bank-card_dark-text & {
+      color: var(--black-85);
+    }
   }
 
   &_pan {
@@ -49,22 +74,28 @@
     letter-spacing: 0.125rem;
     text-align: center;
     align-self: flex-start;
-
-    .copyable-field__value {
-      padding-top: @spacing-xs;
-      padding-bottom: @spacing-xs;
-    }
   }
 
-  &_name,
+  &_pan &__indicator {
+    bottom: @spacing-lg;
+  }
+
+  &_pan &__value {
+    padding-top: @spacing-xs;
+    padding-bottom: @spacing-xs;
+  }
+
+  &_name &__value,
+  &_expires &__value {
+    font-size: @font-size-lg;
+    font-weight: @font-weight-medium;
+    opacity: @opacity-very-high;
+    letter-spacing: 0.03125rem;
+    text-transform: uppercase;
+  }
+
   &_expires {
-    .copyable-field__value {
-      font-size: @font-size-lg;
-      font-weight: @font-weight-medium;
-      opacity: @opacity-very-high;
-      letter-spacing: 0.03125rem;
-      text-transform: uppercase;
-    }
+    flex-shrink: 0;
   }
 
   &_cvv,
@@ -72,19 +103,23 @@
   &_phrase {
     display: flex;
     flex-direction: column;
+  }
 
-    .copyable-field__label {
-      font-size: @font-size-sm;
-      opacity: @opacity-higher;
-      margin-bottom: @spacing-xs;
-      font-weight: @font-weight-semibold;
-    }
+  &_cvv &__label,
+  &_pin &__label,
+  &_phrase &__label {
+    font-size: @font-size-sm;
+    opacity: @opacity-higher;
+    margin-bottom: @spacing-xs;
+    font-weight: @font-weight-semibold;
+  }
 
-    .copyable-field__value {
-      font-size: @font-size-lg;
-      font-weight: @font-weight-medium;
-      opacity: @opacity-very-high;
-    }
+  &_cvv &__value,
+  &_pin &__value,
+  &_phrase &__value {
+    font-size: @font-size-lg;
+    font-weight: @font-weight-medium;
+    opacity: @opacity-very-high;
   }
 
   &_cvv {
@@ -98,17 +133,5 @@
   &_pin {
     align-items: flex-end;
     margin-left: auto;
-  }
-
-  &__sr-only {
-    position: absolute;
-    width: 0.0625rem;
-    height: 0.0625rem;
-    padding: 0;
-    margin: -0.0625rem;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border-width: 0;
   }
 }

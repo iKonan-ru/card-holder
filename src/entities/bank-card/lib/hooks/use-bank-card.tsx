@@ -10,11 +10,13 @@ import {
   darkenColor,
   getBankByCardNumber,
   getPaymentSystem,
+  getTextColorStyle,
 } from '@shared/lib';
 import {
   BANK_CARD_BLOCK,
   BANK_CARD_MODIFIER_FLIPPED,
   BANK_CARD_MODIFIER_REORDER_MODE,
+  BANK_CARD_MODIFIER_DARK_TEXT,
   CARD_COLOR_DARKEN_PERCENTAGE,
 } from '../constants';
 import type { IBankCard } from '../../model';
@@ -42,6 +44,8 @@ export const useBankCard = ({
     () => BANKS_LIST.find((bankItem) => bankItem.id === bankId) || DEFAULT_BANK,
     [bankId]
   );
+
+  const { color, isDarkText } = bank;
 
   const handleCardClick = useCallback(
     (event: MouseEvent) => {
@@ -74,10 +78,11 @@ export const useBankCard = ({
   const cardStyle = useMemo(
     () =>
       ({
-        '--color': bank.color,
-        '--color-dark': darkenColor(bank.color, CARD_COLOR_DARKEN_PERCENTAGE),
+        '--color': color,
+        '--color-dark': darkenColor(color, CARD_COLOR_DARKEN_PERCENTAGE),
+        ...getTextColorStyle(isDarkText),
       }) as CSSProperties,
-    [bank.color]
+    [color, isDarkText]
   );
 
   const modifiers = useMemo(
@@ -85,8 +90,9 @@ export const useBankCard = ({
       [
         isFlipped && BANK_CARD_MODIFIER_FLIPPED,
         isReorderMode && BANK_CARD_MODIFIER_REORDER_MODE,
+        isDarkText && BANK_CARD_MODIFIER_DARK_TEXT,
       ].filter(Boolean) as string[],
-    [isFlipped, isReorderMode]
+    [isFlipped, isReorderMode, isDarkText]
   );
 
   return {
