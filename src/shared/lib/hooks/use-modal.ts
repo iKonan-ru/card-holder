@@ -1,5 +1,5 @@
 import { useCallback, useId, type ReactNode } from 'react';
-import { useModalContext } from './use-modal-context';
+import { useModalContext } from '../context';
 
 export interface IUseModalReturn {
   open: (

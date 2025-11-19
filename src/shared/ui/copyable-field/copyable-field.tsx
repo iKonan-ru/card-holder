@@ -8,9 +8,16 @@ import {
   ARIA_TABINDEX_INTERACTIVE,
   useCopyableField,
 } from '@shared/lib';
-import type { ICopyableFieldProps } from './model';
 import { COPYABLE_FIELD_BLOCK, COPY_TITLE_TEXT } from './lib';
 import './copyable-field.less';
+
+interface ICopyableFieldProps {
+  value: string;
+  title?: string;
+  label?: string;
+  modifier?: string;
+  maskFn?: (value: string, showValue?: boolean) => string;
+}
 
 export const CopyableField: FC<ICopyableFieldProps> = ({
   value,

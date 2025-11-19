@@ -1,10 +1,10 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { setModalContext, showError } from './show-error';
-import type { IModalContextValue } from '@shared/lib';
+import type { IModalContext } from '@shared/lib';
 
 describe('setModalContext', () => {
   it('должен сохранять контекст модальных окон', () => {
-    const mockContext: IModalContextValue = {
+    const mockContext: IModalContext = {
       modals: [],
       openModal: vi.fn(),
       closeModal: vi.fn(),
@@ -31,10 +31,10 @@ describe('showError', () => {
       .spyOn(console, 'error')
       .mockImplementation(() => {}) as ReturnType<typeof vi.fn>;
 
-    const mockContext: IModalContextValue = {
+    const mockContext: IModalContext = {
       modals: [],
-      openModal: mockOpenModal as IModalContextValue['openModal'],
-      closeModal: mockCloseModal as IModalContextValue['closeModal'],
+      openModal: mockOpenModal as IModalContext['openModal'],
+      closeModal: mockCloseModal as IModalContext['closeModal'],
       closeAllModals: vi.fn(),
       updateModalPreventClose: vi.fn(),
       userActionRef: { current: false },
@@ -83,7 +83,7 @@ describe('showError', () => {
   });
 
   it('должен логировать ошибку если контекст не инициализирован', () => {
-    setModalContext(null as unknown as IModalContextValue);
+    setModalContext(null as unknown as IModalContext);
 
     showError({
       message: 'Не удалось добавить карту',

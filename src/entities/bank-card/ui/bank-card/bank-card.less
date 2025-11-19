@@ -1,0 +1,223 @@
+@import '@shared/assets/styles/variables.less';
+
+.bank-card {
+  position: relative;
+  width: 100%;
+  height: @card-height;
+  max-width: @card-max-width;
+  perspective: 2000px;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: var(--white-05);
+    border: 0.125rem dashed var(--text-color);
+    border-radius: @border-radius;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity @duration-medium @easing-ease;
+    pointer-events: none;
+  }
+
+  &_reorder-mode {
+    pointer-events: none;
+    cursor: default;
+
+    &::before {
+      opacity: @opacity-high;
+    }
+  }
+
+  &_flipped &__front {
+    transform: rotateY(180deg);
+  }
+
+  &_flipped &__back {
+    transform: rotateY(0deg);
+  }
+
+  &__front,
+  &__back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: @border-radius-card;
+    padding: @card-padding;
+    display: flex;
+    flex-direction: column;
+    backface-visibility: hidden;
+    transition: transform @duration-slow @easing-ease;
+    background: linear-gradient(135deg, var(--color), var(--color-dark));
+    color: var(--text-color);
+    box-shadow: @shadow-card;
+  }
+
+  &__front {
+    justify-content: space-between;
+    transform: rotateY(0deg);
+  }
+
+  &__back {
+    padding-top: 5rem;
+    transform: rotateY(-180deg);
+    background: linear-gradient(135deg, var(--color), var(--color-dark));
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: @spacing-md;
+  }
+
+  &__logo {
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__bank-name {
+    font-size: @font-size-lg;
+    font-weight: @font-weight-bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__payment-system {
+    margin-left: auto;
+    align-self: flex-start;
+    display: flex;
+    height: @size-sm;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  &__type {
+    position: absolute;
+    text-transform: uppercase;
+    font-weight: @font-weight-black;
+    opacity: @opacity-low;
+    bottom: 8.5rem;
+    right: @spacing-sm;
+    left: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+    font-size: @font-size-4xl;
+    line-height: 1;
+    transform: translateY(50%);
+  }
+
+  &__bottom,
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    align-self: stretch;
+  }
+
+  &__footer {
+    margin-top: @spacing-md;
+    gap: @spacing-sm;
+  }
+
+  &__bottom {
+    margin-top: @spacing-md;
+  }
+
+  &__stripe {
+    position: absolute;
+    top: @spacing-xl;
+    left: 0;
+    right: 0;
+    height: 2.5rem;
+    background: var(--black-85);
+  }
+
+  &__edit-button {
+    position: absolute;
+    top: 2.25rem;
+    right: @spacing-md;
+    width: @size-lg;
+    height: @size-lg;
+    border: none;
+    background: transparent;
+    border-radius: @border-radius-full;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: @transition-fast;
+    z-index: @z-index-overlay;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -@spacing-sm;
+    }
+
+    &:hover {
+      background: var(--white-20);
+    }
+
+    &:active {
+      background: var(--white-30);
+    }
+  }
+
+  &__edit-icon {
+    width: @size-sm;
+    height: @size-sm;
+    color: var(--white);
+  }
+}
+
+@media (max-width: @tablet) {
+  .bank-card {
+    height: @card-height-mobile;
+    margin-left: auto;
+    margin-right: auto;
+
+    &__type {
+      font-size: @font-size-3xl;
+      bottom: 8rem;
+    }
+
+    &__front,
+    &__back {
+      padding: @card-padding-mobile;
+    }
+
+    &__back {
+      padding-top: 5rem;
+    }
+
+    &__cvv,
+    &__pin,
+    &__phrase {
+      &-label {
+        margin-bottom: 0;
+      }
+    }
+
+    &__bottom {
+      margin-top: @spacing-sm;
+    }
+  }
+}

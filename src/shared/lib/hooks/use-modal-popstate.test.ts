@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
+import type { IModalItem } from '../context';
 import { useModalPopstate } from './use-modal-popstate';
-import { type IModalItem } from '../modal';
 
 const mockCloseTop = vi.fn();
 const mockIsClosingFromHistoryRef = { current: false };

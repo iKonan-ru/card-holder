@@ -27,5 +27,3 @@ export * from './use-modal-stack';
 export * from './use-overlay-click';
 
 export * from './use-password-visibility';
-
-export * from './use-modal-context';

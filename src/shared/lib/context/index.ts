@@ -1,3 +1,5 @@
-export * from './parent-class-context';
+export * from './parent-class';
 
-export * from './form-context';
+export * from './form';
+
+export * from './modal';

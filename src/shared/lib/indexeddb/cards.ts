@@ -9,11 +9,9 @@ import {
   ERROR_FAILED_TO_GET_CARD,
   ERROR_FAILED_TO_CLEAR_CARDS,
   ERROR_FAILED_TO_UPDATE_CARDS_ORDER,
-} from '../constants/errors';
-import {
   INDEXEDDB_MODE_READONLY,
   INDEXEDDB_MODE_READWRITE,
-} from '../constants/common';
+} from '../constants';
 import { getDatabase } from './database';
 
 const sortCardsByOrder = (cards: IBankCard[]): IBankCard[] => {

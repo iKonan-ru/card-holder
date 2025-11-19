@@ -4,14 +4,12 @@ import {
   BEM_ELEMENT_SEPARATOR,
 } from '../constants';
 
-const INITIAL_RESULT: string[] = [];
-
 export const bem = (
   blockName: string,
   className?: string | string[]
 ): string => {
   if (className) {
-    const result: string[] = [...INITIAL_RESULT];
+    const result: string[] = [];
 
     if (Array.isArray(className)) {
       result.push(blockName);

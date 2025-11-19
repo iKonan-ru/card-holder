@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { IModalItem } from '../modal';
+import type { IModalItem } from '../context';
 
 interface IUseModalPopstateParams {
   modals: IModalItem[];

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback, useId } from 'react';
+import { MODAL_STATE_KEY } from '../constants';
 import { useModalStack } from './use-modal-stack';
-import { MODAL_STATE_KEY } from '../modal';
 
 interface UseModalBackHandlerProps {
   isOpen: boolean;

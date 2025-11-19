@@ -2,8 +2,8 @@ export * from './constants';
 
 export * from './errors';
 
-export * from './file-utils';
+export * from './utils';
 
-export * from './file-download';
+export * from './download-file';
 
-export * from './file-upload';
+export * from './upload-file';

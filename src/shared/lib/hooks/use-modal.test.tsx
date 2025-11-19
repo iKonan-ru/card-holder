@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ModalProvider } from '../modal';
+import { ModalProvider } from '../context';
 import { ModalContainer } from '@shared/ui';
 import { useModal } from './use-modal';
 import type { FC, PropsWithChildren } from 'react';

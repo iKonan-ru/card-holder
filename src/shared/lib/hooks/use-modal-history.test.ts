@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
+import type { IModalItem } from '../context';
+import { MODAL_STATE_KEY } from '../constants';
 import { useModalHistory } from './use-modal-history';
-import { MODAL_STATE_KEY, type IModalItem } from '../modal';
 
 const mockPush = vi.fn();
 const mockRemove = vi.fn();

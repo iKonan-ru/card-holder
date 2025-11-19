@@ -1,9 +1,22 @@
-import { type FC, useMemo } from 'react';
+import {
+  type ButtonHTMLAttributes,
+  type FC,
+  type PropsWithChildren,
+  useMemo,
+} from 'react';
 import { FiLoader } from 'react-icons/fi';
 import { bem, useClassName } from '@shared/lib';
-import type { IButtonProps } from './model';
 import { BUTTON_BLOCK } from './lib';
 import './button.less';
+
+interface IButtonProps
+  extends PropsWithChildren<
+    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>
+  > {
+  variant?: 'primary' | 'secondary' | 'danger';
+  isLoading?: boolean;
+  fullWidth?: boolean;
+}
 
 export const Button: FC<IButtonProps> = ({
   children,

@@ -1,0 +1,35 @@
+import { type FC, useCallback } from 'react';
+import { useModalClose } from '@shared/lib';
+import type { IBankCard } from '@entities/bank-card';
+import { CardForm } from '../card-form';
+
+interface ICardFormModalProps {
+  initialCard?: IBankCard;
+  onComplete?: () => void;
+}
+
+export const CardFormModal: FC<ICardFormModalProps> = ({
+  initialCard,
+  onComplete,
+}) => {
+  const closeModal = useModalClose();
+
+  const handleSuccess = useCallback(() => {
+    closeModal();
+    if (onComplete) {
+      onComplete();
+    }
+  }, [closeModal, onComplete]);
+
+  const handleCancel = useCallback(() => {
+    closeModal();
+  }, [closeModal]);
+
+  return (
+    <CardForm
+      initialCard={initialCard}
+      onSuccess={handleSuccess}
+      onCancel={handleCancel}
+    />
+  );
+};

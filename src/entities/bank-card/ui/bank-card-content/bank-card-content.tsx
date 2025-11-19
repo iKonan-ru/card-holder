@@ -1,8 +1,12 @@
+import type { IBankCard } from '@entities/bank-card';
 import { type FC } from 'react';
 import { bem, formatExpiryDate, maskPan } from '@shared/lib';
 import { CopyableField } from '@shared/ui';
 import { BANK_CARD_BLOCK } from '../../lib';
-import type { IBankCardContentProps } from './model';
+
+interface IBankCardContentProps {
+  card: IBankCard;
+}
 
 export const BankCardContent: FC<IBankCardContentProps> = ({ card }) => {
   return (

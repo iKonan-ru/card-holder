@@ -1,8 +1,16 @@
+import type { IBaseInputFieldProps, IInputChangeHandler } from '@shared/types';
 import { type FC, useMemo } from 'react';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
-import type { IFormFieldProps } from './model';
 import { FORM_FIELD_BLOCK } from './lib';
 import './form-field.less';
+
+export interface IFormFieldProps
+  extends IBaseInputFieldProps,
+    IInputChangeHandler {
+  id: string;
+  type?: 'text' | 'password';
+  autoFocus?: boolean;
+}
 
 export const FormField: FC<IFormFieldProps> = ({
   id,

@@ -1,7 +1,4 @@
 import { useState, useCallback } from 'react';
-import { INITIAL_ZERO } from '../constants';
-
-const INITIAL_ERRORS_COUNT = INITIAL_ZERO;
 
 export function useFormValidation<
   T extends Record<string, string | undefined>,
@@ -35,7 +32,7 @@ export function useFormValidation<
   }, []);
 
   const hasErrors = useCallback(() => {
-    return Object.keys(errors).length > INITIAL_ERRORS_COUNT;
+    return Object.keys(errors).length > 0;
   }, [errors]);
 
   const getFieldError = useCallback(

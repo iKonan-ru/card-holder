@@ -2,17 +2,16 @@ import { type CSSProperties } from 'react';
 import {
   EMPTY_STRING,
   HEX_RADIX,
-  INITIAL_ZERO,
   ZERO_CHAR,
   TEXT_COLOR_DARK,
   TEXT_COLOR_LIGHT,
 } from '../constants';
 
 const HEX_COLOR_PATTERN = /^[0-9A-Fa-f]{6}$/;
-const MIN_RGB_VALUE = INITIAL_ZERO;
+const MIN_RGB_VALUE = 0;
 const MAX_RGB_VALUE = 255;
 const SINGLE_HEX_DIGIT_LENGTH = 1;
-const RGB_RED_START = INITIAL_ZERO;
+const RGB_RED_START = 0;
 const RGB_RED_END = 2;
 const RGB_GREEN_START = 2;
 const RGB_GREEN_END = 4;

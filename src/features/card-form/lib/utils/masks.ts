@@ -1,4 +1,4 @@
-import { EMPTY_STRING, SPACE_CHAR } from '@shared/lib';
+import { EMPTY_STRING, NON_DIGIT_PATTERN, SPACE_CHAR } from '@shared/lib';
 const SLASH_CHAR = '/';
 const PAN_GROUP_SIZE = 4;
 const MONTH_SEPARATOR_LENGTH = 2;
@@ -7,7 +7,6 @@ const MONTH_EXPIRES_SLICE_END = 2;
 const YEAR_EXPIRES_SLICE_START = 2;
 const YEAR_EXPIRES_SLICE_END = 4;
 
-const NON_DIGIT_PATTERN = /\D/g;
 const ALPHANUMERIC_PATTERN = /[^a-zA-Zа-яА-ЯёЁ0-9]/g;
 const LATIN_LETTERS_SPACES_PATTERN = /[^a-zA-Z\s]/g;
 

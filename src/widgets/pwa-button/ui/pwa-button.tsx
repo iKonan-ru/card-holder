@@ -8,12 +8,10 @@ import {
 } from '../lib';
 import './pwa-button.less';
 
-const PRIMARY_MODIFIER = ['primary'];
-
 export const PWAButton: FC = () => {
   const { canInstall, isInstalled, handleInstall } = usePWAInstall();
 
-  const modifiers = useMemo(() => PRIMARY_MODIFIER, []);
+  const modifiers = useMemo(() => ['primary'], []);
 
   const className = useClassName({
     blockName: PWA_BUTTON_BLOCK,

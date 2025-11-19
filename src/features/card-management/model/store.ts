@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { ICardManagementState, ICardManagementActions } from './types';
 import type { IBankCard } from '@entities/bank-card';
-import { DEFAULT_CARD_ORDER } from './constants';
+import { DEFAULT_CARD_ORDER } from '../lib';
 import {
   getAllCards,
   getCardByPan,
@@ -16,8 +16,6 @@ import {
   ERROR_FAILED_TO_UPDATE_CARD,
   ERROR_FAILED_TO_DELETE_CARD,
   ERROR_FAILED_TO_CLEAR_CARDS,
-  INITIAL_NULL,
-  INITIAL_FALSE,
   TYPE_NUMBER,
 } from '@shared/lib';
 import {
@@ -27,9 +25,9 @@ import {
 } from '../lib';
 
 const INITIAL_CARDS: IBankCard[] = [];
-const INITIAL_FLIPPED_PAN = INITIAL_NULL;
-const INITIAL_IS_LOADING = INITIAL_FALSE;
-const INITIAL_IS_REORDER_MODE = INITIAL_FALSE;
+const INITIAL_FLIPPED_PAN = null;
+const INITIAL_IS_LOADING = false;
+const INITIAL_IS_REORDER_MODE = false;
 
 export const useCardManagementStore = create<
   ICardManagementState & ICardManagementActions
@@ -41,13 +39,13 @@ export const useCardManagementStore = create<
 
   flipCard: (pan: IBankCard['pan']) => {
     set((state) => ({
-      flippedPan: state.flippedPan === pan ? INITIAL_NULL : pan,
+      flippedPan: state.flippedPan === pan ? null : pan,
     }));
   },
 
   unflipCards: () => {
     set(() => ({
-      flippedPan: INITIAL_NULL,
+      flippedPan: null,
     }));
   },
 
@@ -59,7 +57,7 @@ export const useCardManagementStore = create<
 
       return {
         isReorderMode: enabled,
-        flippedPan: INITIAL_NULL,
+        flippedPan: null,
       };
     });
   },

@@ -245,4 +245,30 @@ describe('useAppUpdateModal', () => {
       expect(mockOpen).toHaveBeenCalledTimes(1);
     });
   });
+
+  it('не должен открывать модальное окно повторно если wasOpenedRef.current уже true когда needRefresh становится true', async () => {
+    mockUsePWAUpdate.mockReturnValue({
+      needRefresh: true,
+      updateServiceWorker: mockUpdateServiceWorker,
+    });
+
+    const { rerender } = renderHook(() => useAppUpdateModal());
+
+    await waitFor(() => {
+      expect(mockOpen).toHaveBeenCalledTimes(1);
+    });
+
+    mockOpen.mockClear();
+
+    mockUsePWAUpdate.mockReturnValue({
+      needRefresh: true,
+      updateServiceWorker: mockUpdateServiceWorker,
+    });
+
+    rerender();
+
+    await waitFor(() => {
+      expect(mockOpen).not.toHaveBeenCalled();
+    });
+  });
 });

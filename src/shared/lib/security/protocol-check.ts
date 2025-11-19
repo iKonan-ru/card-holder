@@ -1,4 +1,4 @@
-import { logError } from '../utils/logger';
+import { logError } from '../utils';
 
 const PROTOCOL_HTTPS = 'https:';
 const HOSTNAME_LOCALHOST = 'localhost';

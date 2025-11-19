@@ -4,7 +4,9 @@ import { paymentSystemLogos } from '@shared/assets/payment-systems';
 import { Icon } from '@shared/ui/icon';
 import { bem, ARIA_HIDDEN_TRUE } from '@shared/lib';
 import { BANK_CARD_BLOCK } from '../../lib';
-import type { IBankCardHeaderProps } from './model';
+import type { IBankCardCommonProps } from '../../model';
+
+type IBankCardHeaderProps = IBankCardCommonProps;
 
 export const BankCardHeader: FC<IBankCardHeaderProps> = ({
   bank,

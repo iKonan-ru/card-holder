@@ -1,11 +1,19 @@
 import { type FC } from 'react';
 import { useClassName, ParentClassProvider } from '@shared/lib';
-import { BankCard } from '@entities/bank-card';
+import { BankCard, type IBankCard } from '@entities/bank-card';
 import { AddCardButton } from '@features/add-card-button';
 import { SortableCardItem } from '@features/sortable-card-item';
-import type { ICardListGridProps } from './model';
-import { CARD_LIST_GRID_BLOCK } from './lib';
+import { CARD_LIST_GRID_BLOCK } from '../../lib';
 import './card-list-grid.less';
+
+interface ICardListGridProps {
+  cards: IBankCard[];
+  flippedPan: string | null;
+  isReorderMode: boolean;
+  onFlipCard: (pan: string) => void;
+  onEditCard: (card: IBankCard) => void;
+  onShowForm: () => void;
+}
 
 export const CardListGrid: FC<ICardListGridProps> = ({
   cards,

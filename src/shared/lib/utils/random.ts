@@ -1,4 +1,4 @@
-import { HEX_RADIX, BYTE_ITERATION_START } from '../constants';
+import { HEX_RADIX } from '../constants';
 
 const RANDOM_ID_LENGTH = 8;
 
@@ -8,7 +8,7 @@ export const generateRandomId = (): string => {
 
   let randomId = '';
 
-  for (let index = BYTE_ITERATION_START; index < buffer.length; index++) {
+  for (let index = 0; index < buffer.length; index++) {
     const byte = buffer[index];
     randomId += byte.toString(HEX_RADIX).padStart(2, '0');
   }

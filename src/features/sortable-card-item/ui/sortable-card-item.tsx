@@ -1,4 +1,4 @@
-import { useMemo, type FC } from 'react';
+import { useMemo, type FC, type PropsWithChildren } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useClassName, ParentClassProvider } from '@shared/lib';
@@ -8,8 +8,12 @@ import {
   SORTABLE_CARD_ITEM_DRAGGING_OPACITY,
   SORTABLE_CARD_ITEM_DEFAULT_OPACITY,
 } from '../lib';
-import type { ISortableCardItemProps } from '../model';
 import './sortable-card-item.less';
+
+export interface ISortableCardItemProps extends PropsWithChildren {
+  id: string;
+  isReorderMode: boolean;
+}
 
 export const SortableCardItem: FC<ISortableCardItemProps> = ({
   id,

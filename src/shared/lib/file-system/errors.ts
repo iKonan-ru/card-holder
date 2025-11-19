@@ -1,4 +1,4 @@
-export const FILE_SELECTION_CANCELLED_ERROR = 'FILE_SELECTION_CANCELLED';
+import { FILE_SELECTION_CANCELLED_ERROR } from './constants';
 
 export const createFileSelectionCancelledError = (): Error => {
   return new Error(FILE_SELECTION_CANCELLED_ERROR);

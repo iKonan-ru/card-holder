@@ -7,14 +7,14 @@ import {
   ERROR_ENCRYPTION_FAILED,
   ERROR_DECRYPTION_FAILED,
 } from './constants';
-import { EMPTY_STRING, BYTE_ITERATION_START } from '../constants/common';
+import { EMPTY_STRING } from '../constants';
 
 const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
   const bytes = new Uint8Array(buffer);
   let binary = EMPTY_STRING;
   const length = bytes.length;
 
-  for (let index = BYTE_ITERATION_START; index < length; index++) {
+  for (let index = 0; index < length; index++) {
     binary += String.fromCharCode(bytes[index]);
   }
 
@@ -26,7 +26,7 @@ const base64ToArrayBuffer = (base64: string): ArrayBuffer => {
   const length = binary.length;
   const bytes = new Uint8Array(length);
 
-  for (let index = BYTE_ITERATION_START; index < length; index++) {
+  for (let index = 0; index < length; index++) {
     bytes[index] = binary.charCodeAt(index);
   }
 

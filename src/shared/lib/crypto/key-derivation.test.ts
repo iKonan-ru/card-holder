@@ -3,7 +3,7 @@
  */
 
 import { describe, it, expect } from 'vitest';
-import { generateSalt, deriveKeyFromPassword } from '@shared/lib';
+import { generateSalt, deriveKeyFromPassword } from './key-derivation';
 import { SALT_LENGTH, KEY_LENGTH, ENCRYPTION_ALGORITHM } from './constants';
 
 describe('generateSalt', () => {

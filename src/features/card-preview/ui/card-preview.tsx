@@ -1,5 +1,4 @@
 import { type FC, useMemo } from 'react';
-import type { ICardPreviewProps } from '../model';
 import { BANKS_LIST, DEFAULT_BANK } from '@shared/data';
 import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
@@ -16,6 +15,10 @@ import {
 } from '@shared/lib';
 import { CARD_PREVIEW_BLOCK } from '../lib';
 import './card-preview.less';
+
+interface ICardPreviewProps {
+  pan: string;
+}
 
 export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {
   const cleanPan = useMemo(

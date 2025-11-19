@@ -1,8 +1,27 @@
+import type {
+  IFormFieldChangeHandler,
+  PropsWithParentClass,
+} from '@shared/types';
 import { useCallback, type FC, type ChangeEvent } from 'react';
-import { ParentClassProvider, useFormContext } from '@shared/lib';
-import { FormField } from '@shared/ui';
-import type { IValidatedFieldProps } from './model';
-import { NON_DIGIT_PATTERN } from './lib';
+import {
+  ParentClassProvider,
+  useFormContext,
+  NON_DIGIT_PATTERN,
+} from '@shared/lib';
+import { FormField, type IFormFieldProps } from '@shared/ui';
+
+type TFieldFormatter = (value: string) => string;
+type TFieldValidator = (value: string) => string | undefined;
+
+interface IValidatedFieldProps
+  extends Omit<IFormFieldProps, 'id' | 'onChange' | 'type' | 'autoFocus'>,
+    Partial<IFormFieldChangeHandler>,
+    PropsWithParentClass {
+  formatter?: TFieldFormatter;
+  validator?: TFieldValidator;
+  instantValidateLength?: number;
+  onValidate?: (name: string, error: string | undefined) => void;
+}
 
 export const ValidatedField: FC<IValidatedFieldProps> = ({
   name,

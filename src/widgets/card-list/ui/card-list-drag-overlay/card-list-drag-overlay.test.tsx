@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, cleanup } from '@testing-library/react';
-import { CardListDragOverlay } from './card-list-drag-overlay';
 import type { IBankCard } from '@entities/bank-card';
 import { ParentClassProvider } from '@shared/lib';
+import { CardListDragOverlay } from './card-list-drag-overlay';
 
 vi.mock('@entities/bank-card', () => ({
   BankCard: ({ card }: { card: IBankCard }) => (

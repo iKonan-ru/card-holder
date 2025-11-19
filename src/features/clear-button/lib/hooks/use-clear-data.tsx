@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useModalContext, INITIAL_FALSE } from '@shared/lib';
+import { useModalContext } from '@shared/lib';
 import { ConfirmModal } from '@shared/ui';
 import {
   CONFIRM_CLEAR_TITLE,
@@ -23,7 +23,7 @@ const CONFIRM_MODAL_MESSAGE_ID = 'confirm-clear-all-message';
 
 export const useClearData = (params: IUseClearDataParams): IUseClearData => {
   const { onClear } = params;
-  const [isClearing, setIsClearing] = useState(INITIAL_FALSE);
+  const [isClearing, setIsClearing] = useState(false);
   const { openModal, closeModal } = useModalContext();
 
   const handleConfirm = useCallback(async () => {

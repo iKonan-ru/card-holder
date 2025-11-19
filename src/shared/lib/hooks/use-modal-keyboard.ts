@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import type { IModalItem } from '../modal';
+import type { IModalItem } from '../context';
 import { KEY_ESC } from '../constants';
 
 interface IUseModalKeyboardParams {

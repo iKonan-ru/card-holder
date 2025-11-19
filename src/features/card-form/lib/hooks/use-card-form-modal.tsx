@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import { useModal } from '@shared/lib';
-import { CardFormModalContent } from '../../ui/card-form-modal-content';
+import { CardFormModal } from '../../ui/card-form-modal';
 import {
   CARD_FORM_TITLE_ID,
   CARD_FORM_TITLE,
@@ -15,7 +15,7 @@ export const useCardFormModal = () => {
 
   const openAddCardForm = useCallback(() => {
     modal.open(
-      <CardFormModalContent />,
+      <CardFormModal />,
       CARD_FORM_TITLE_ID,
       undefined,
       CARD_FORM_TITLE
@@ -26,7 +26,7 @@ export const useCardFormModal = () => {
   const openEditCardForm = useCallback(
     (card: IBankCard) => {
       modal.open(
-        <CardFormModalContent initialCard={card} />,
+        <CardFormModal initialCard={card} />,
         CARD_FORM_TITLE_ID,
         undefined,
         CARD_FORM_EDIT_TITLE

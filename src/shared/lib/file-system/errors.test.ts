@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
 import {
-  FILE_SELECTION_CANCELLED_ERROR,
   createFileSelectionCancelledError,
   checkIsFileSelectionCancelled,
 } from './errors';
+import { FILE_SELECTION_CANCELLED_ERROR } from './constants';
 
 describe('createFileSelectionCancelledError', () => {
   it('должен создавать Error с правильным сообщением', () => {

@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import { useModalKeyboard } from './use-modal-keyboard';
-import { type IModalItem } from '../modal';
+import type { IModalItem } from '../context';
 import { KEY_ESC } from '../constants';
+import { useModalKeyboard } from './use-modal-keyboard';
 
 const mockCloseTop = vi.fn();
 const mockUserActionRef = { current: false };

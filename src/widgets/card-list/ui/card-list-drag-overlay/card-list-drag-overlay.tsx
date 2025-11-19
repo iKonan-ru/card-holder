@@ -1,10 +1,14 @@
 import { type FC } from 'react';
 import { useClassName, ParentClassProvider } from '@shared/lib';
 import { DragHandle } from '@shared/ui';
-import { BankCard } from '@entities/bank-card';
-import type { ICardListDragOverlayProps } from './model';
-import { CARD_LIST_DRAG_OVERLAY_BLOCK } from './lib';
+import { BankCard, type IBankCard } from '@entities/bank-card';
+import { CARD_LIST_DRAG_OVERLAY_BLOCK } from '../../lib';
 import './card-list-drag-overlay.less';
+
+interface ICardListDragOverlayProps {
+  activeCard: IBankCard | null;
+  onEditCard: (card: IBankCard) => void;
+}
 
 export const CardListDragOverlay: FC<ICardListDragOverlayProps> = ({
   activeCard,

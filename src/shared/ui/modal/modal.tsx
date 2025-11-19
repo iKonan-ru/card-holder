@@ -1,9 +1,8 @@
-import { useRef, useEffect, type FC } from 'react';
+import { useRef, useEffect, type FC, type PropsWithChildren } from 'react';
 import {
   bem,
   useClassName,
   ParentClassProvider,
-  INITIAL_NULL,
   ARIA_ROLE_DIALOG,
   ARIA_MODAL_TRUE,
   useModalClosingState,
@@ -11,12 +10,18 @@ import {
   useOverlayClick,
   ModalCloseContext,
 } from '@shared/lib';
-import type { IModalProps } from './model';
 import { MODAL_BLOCK, MODAL_MODIFIERS_CLOSING } from './lib';
 import './modal.less';
 
-const INITIAL_OVERLAY_REF = INITIAL_NULL;
-const INITIAL_CONTENT_REF = INITIAL_NULL;
+interface IModalProps extends PropsWithChildren {
+  onClose: () => void;
+  onRegisterClose?: (closeWithAnimation: () => void) => void;
+  isTopModal: boolean;
+  preventClose?: boolean;
+  title?: string;
+  ariaLabelledBy?: string;
+  ariaDescribedBy?: string;
+}
 
 export const Modal: FC<IModalProps> = ({
   children,
@@ -28,8 +33,8 @@ export const Modal: FC<IModalProps> = ({
   ariaLabelledBy,
   ariaDescribedBy,
 }) => {
-  const overlayRef = useRef<HTMLDivElement>(INITIAL_OVERLAY_REF);
-  const contentRef = useRef<HTMLDivElement>(INITIAL_CONTENT_REF);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const { isClosing, handleClose } = useModalClosingState(onClose, overlayRef);
 
   useEffect(() => {

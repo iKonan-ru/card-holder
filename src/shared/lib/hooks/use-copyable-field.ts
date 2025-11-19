@@ -1,13 +1,7 @@
 import { useState, useRef, useCallback, useMemo } from 'react';
 import type { KeyboardEvent, MouseEvent } from 'react';
 import { logError, copyToClipboard } from '../utils';
-import {
-  ERROR_FAILED_TO_COPY,
-  INITIAL_FALSE,
-  INITIAL_NULL,
-  KEY_ENTER,
-  KEY_SPACE,
-} from '../constants';
+import { ERROR_FAILED_TO_COPY, KEY_ENTER, KEY_SPACE } from '../constants';
 import {
   COPY_INDICATOR_DURATION,
   COPYABLE_FIELD_CONTEXT,
@@ -21,8 +15,8 @@ interface IUseCopyableFieldParams {
   maskFn?: (value: string, revealed: boolean) => string;
 }
 
-const INITIAL_IS_COPIED = INITIAL_FALSE;
-const INITIAL_TIMEOUT_REF = INITIAL_NULL;
+const INITIAL_IS_COPIED = false;
+const INITIAL_TIMEOUT_REF = null;
 
 export const useCopyableField = ({
   value,

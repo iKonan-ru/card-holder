@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { useCardManagementStore } from './store';
 import * as sharedLib from '@shared/lib';
 import type { IBankCard } from '@entities/bank-card';
+import { useCardManagementStore } from './store';
 
 vi.mock('@shared/lib', async () => {
   const actualModule = await vi.importActual('@shared/lib');

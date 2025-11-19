@@ -1,7 +1,10 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, type PropsWithChildren, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import type { IPortalProps } from './model';
 import { DEFAULT_CONTAINER_ID } from './lib';
+
+interface IPortalProps extends PropsWithChildren {
+  containerId?: string;
+}
 
 export const Portal: FC<IPortalProps> = ({
   children,

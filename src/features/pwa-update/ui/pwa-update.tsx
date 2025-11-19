@@ -2,7 +2,6 @@ import { type FC, useState, useCallback } from 'react';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
 import { useAnimatedModalClose } from '@shared/lib';
 import { Button } from '@shared/ui';
-import type { IPWAUpdateProps } from '../model';
 import {
   PWA_UPDATE_BLOCK,
   PWA_UPDATE_MESSAGE_ID,
@@ -11,6 +10,11 @@ import {
   PWA_UPDATE_DISMISS_BUTTON_TEXT,
 } from '../lib';
 import './pwa-update.less';
+
+interface IPWAUpdateProps {
+  onUpdate: () => Promise<void>;
+  onDismiss?: () => void;
+}
 
 export const PWAUpdate: FC<IPWAUpdateProps> = ({ onUpdate, onDismiss }) => {
   const [isUpdating, setIsUpdating] = useState(false);

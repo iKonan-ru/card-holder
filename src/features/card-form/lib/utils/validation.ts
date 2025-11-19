@@ -1,10 +1,5 @@
 import type { IBankCard } from '@entities/bank-card';
-import {
-  EMPTY_STRING,
-  TYPE_STRING,
-  TYPE_NUMBER,
-  INITIAL_ZERO,
-} from '@shared/lib';
+import { EMPTY_STRING, TYPE_STRING, TYPE_NUMBER } from '@shared/lib';
 import type { IValidationErrors } from '../types';
 import {
   PAN_FIELD_CONFIG,
@@ -13,9 +8,6 @@ import {
   CVV_FIELD_CONFIG,
   PIN_FIELD_CONFIG,
 } from '../constants/field-configs';
-
-const DEFAULT_FIELD_VALUE = EMPTY_STRING;
-const NO_ERRORS_COUNT = INITIAL_ZERO;
 
 const VALIDATABLE_FIELDS = [
   PAN_FIELD_CONFIG,
@@ -37,7 +29,7 @@ export const validateCardForm = (
 
     const rawValue = card[name as keyof Partial<IBankCard>];
     const fieldValue = (
-      typeof rawValue === TYPE_STRING ? rawValue : DEFAULT_FIELD_VALUE
+      typeof rawValue === TYPE_STRING ? rawValue : EMPTY_STRING
     ) as string;
     const errorMessage = validator(fieldValue);
 
@@ -53,7 +45,7 @@ export const validateCardForm = (
 };
 
 export const checkHasErrors = (errors: IValidationErrors): boolean => {
-  return Object.keys(errors).length > NO_ERRORS_COUNT;
+  return Object.keys(errors).length > 0;
 };
 
 export const checkIsValidBankCard = (

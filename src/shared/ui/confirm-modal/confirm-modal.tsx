@@ -6,7 +6,6 @@ import {
   ParentClassProvider,
 } from '@shared/lib';
 import { Button } from '../button';
-import type { IConfirmModalProps } from './model';
 import {
   CONFIRM_MODAL_BLOCK,
   DEFAULT_CANCEL_TEXT,
@@ -14,6 +13,15 @@ import {
   CONFIRM_MODAL_MESSAGE_ID,
 } from './lib';
 import './confirm-modal.less';
+
+interface IConfirmModalProps {
+  title: string;
+  message: string;
+  confirmText?: string;
+  cancelText?: string;
+  onConfirm: () => void;
+  onCancel?: () => void;
+}
 
 export const ConfirmModal: FC<IConfirmModalProps> = ({
   title,

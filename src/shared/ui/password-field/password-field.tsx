@@ -1,7 +1,19 @@
+import type { PropsWithParentClass } from '@shared/types';
 import { type FC, useMemo } from 'react';
 import { ParentClassProvider, usePasswordVisibility } from '@shared/lib';
-import { FormField, PasswordToggleButton } from '@shared/ui';
-import type { IPasswordFieldProps } from './model';
+import {
+  FormField,
+  type IFormFieldProps,
+  PasswordToggleButton,
+} from '@shared/ui';
+
+interface IPasswordFieldProps
+  extends Omit<IFormFieldProps, 'type' | 'rightContent'>,
+    PropsWithParentClass {
+  showPasswordToggle?: boolean;
+  isPasswordVisible?: boolean;
+  onPasswordVisibilityChange?: (isVisible: boolean) => void;
+}
 
 export const PasswordField: FC<IPasswordFieldProps> = ({
   showPasswordToggle = true,

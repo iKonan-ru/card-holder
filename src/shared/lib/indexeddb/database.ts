@@ -6,12 +6,11 @@ import {
   CARDS_ORDER_INDEX,
 } from './constants';
 import type { IBankCard } from '@entities/bank-card';
-import { INITIAL_NULL, INITIAL_FALSE } from '../constants/common';
-import { ERROR_FAILED_TO_OPEN_DATABASE } from '../constants/errors';
+import { ERROR_FAILED_TO_OPEN_DATABASE } from '../constants';
 
-let databaseInstance: IDBDatabase | null = INITIAL_NULL;
+let databaseInstance: IDBDatabase | null = null;
 
-const INDEX_UNIQUE_FALSE = INITIAL_FALSE;
+const INDEX_UNIQUE_FALSE = false;
 
 const checkIsIDBOpenDBRequest = (
   target: EventTarget | null

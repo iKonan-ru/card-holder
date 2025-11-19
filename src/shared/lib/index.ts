@@ -4,8 +4,6 @@ export * from './hooks';
 
 export * from './indexeddb';
 
-export * from './modal';
-
 export * from './constants';
 
 export * from './crypto';

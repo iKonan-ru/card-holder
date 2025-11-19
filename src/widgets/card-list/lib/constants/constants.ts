@@ -1,6 +1,9 @@
 export const CARD_LIST_BLOCK = 'card-list';
 export const CARD_LIST_ARIA_LABEL = 'Список банковских карт';
 
+export const CARD_LIST_DRAG_OVERLAY_BLOCK = 'card-list-drag-overlay';
+export const CARD_LIST_GRID_BLOCK = 'card-list-grid';
+
 export const DROP_ANIMATION_DURATION = 200;
 export const DROP_ANIMATION_EASING = 'ease';
 

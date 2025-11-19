@@ -3,9 +3,8 @@ import type {
   TPaymentSystem,
   IPaymentSystemRule,
 } from '@entities/payment-system';
-import { INITIAL_NULL, INITIAL_FALSE, INITIAL_ZERO } from '../constants';
 
-const FIRST_DIGIT_INDEX = INITIAL_ZERO;
+const FIRST_DIGIT_INDEX = 0;
 const FIRST_TWO_DIGITS_LENGTH = 2;
 const MIN_CARD_PREFIX_LENGTH = 6;
 
@@ -67,18 +66,18 @@ const PAN_MASKED_FORMAT = '$1 $2•• •••• $5';
 const EXPIRES_FORMAT_PATTERN = /(\d{2})(\d{2})/;
 const EXPIRES_FORMAT_REPLACEMENT = '$1/$2';
 const MASK_CHAR = '•';
-const DEFAULT_SHOW_VALUE = INITIAL_FALSE;
+const DEFAULT_SHOW_VALUE = false;
 
 export function getPaymentSystem(pan: string): TPaymentSystem | null {
   if (!pan) {
-    return INITIAL_NULL;
+    return null;
   }
 
   const matchedRule = PAYMENT_SYSTEM_RULES.find((rule) =>
     rule.checkPrefix(pan)
   );
 
-  return matchedRule ? matchedRule.system : INITIAL_NULL;
+  return matchedRule ? matchedRule.system : null;
 }
 
 export function getBankByCardNumber(cardNumber: string): string | null {
@@ -86,7 +85,7 @@ export function getBankByCardNumber(cardNumber: string): string | null {
     !cardNumber || cardNumber.length < MIN_CARD_PREFIX_LENGTH;
 
   if (isCardNumberTooShort) {
-    return INITIAL_NULL;
+    return null;
   }
 
   const prefix = cardNumber.substring(
@@ -102,7 +101,7 @@ export function getBankByCardNumber(cardNumber: string): string | null {
     }
   }
 
-  return INITIAL_NULL;
+  return null;
 }
 
 export const maskPan = (number: string, showValue = DEFAULT_SHOW_VALUE) => {

@@ -1,14 +1,14 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import {
-  resetFailedAttempts,
-  incrementFailedAttempts,
+  applyRateLimit,
+  checkIsLockedOut,
   getFailedAttempts,
   getLockoutUntil,
-  checkIsLockedOut,
   getRemainingLockoutTime,
-  applyRateLimit,
+  incrementFailedAttempts,
+  resetFailedAttempts,
   withRateLimit,
-} from '@shared/lib';
+} from './rate-limiter';
 
 describe('rate-limiter', () => {
   beforeEach(() => {

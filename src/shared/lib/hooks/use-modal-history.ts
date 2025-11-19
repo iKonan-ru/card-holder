@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { MODAL_STATE_KEY, type IModalItem } from '../modal';
+import type { IModalItem } from '../context';
+import { MODAL_STATE_KEY } from '../constants';
 
 interface IUseModalHistoryParams {
   modals: IModalItem[];

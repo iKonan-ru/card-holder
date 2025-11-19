@@ -18,14 +18,10 @@ import {
   ERROR_CVV_INVALID_LENGTH,
   ERROR_PIN_INVALID_LENGTH,
 } from '../constants';
-import {
-  SPACE_REMOVAL_PATTERN,
-  DECIMAL_RADIX,
-  INITIAL_ZERO,
-} from '@shared/lib';
+import { SPACE_REMOVAL_PATTERN, DECIMAL_RADIX } from '@shared/lib';
 import { validateLuhn } from './luhn';
 
-const MONTH_START_INDEX = INITIAL_ZERO;
+const MONTH_START_INDEX = 0;
 const MONTH_END_INDEX = 2;
 const YEAR_START_INDEX = 2;
 const YEAR_END_INDEX = 4;

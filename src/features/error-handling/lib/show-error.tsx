@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { IModalContextValue } from '@shared/lib';
+import type { IModalContext } from '@shared/lib';
 import { generateRandomId } from '@shared/lib';
 import { ErrorContent } from '../ui/error-content';
 import { translateError } from './utils';
@@ -10,9 +10,9 @@ import {
   ERROR_CONTENT_TITLE,
 } from './constants';
 
-let modalContextRef: IModalContextValue | null = null;
+let modalContextRef: IModalContext | null = null;
 
-export const setModalContext = (context: IModalContextValue): void => {
+export const setModalContext = (context: IModalContext): void => {
   modalContextRef = context;
 };
 

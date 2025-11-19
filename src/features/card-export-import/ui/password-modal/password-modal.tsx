@@ -6,7 +6,7 @@ import {
   useModalContext,
 } from '@shared/lib';
 import { PasswordField, Button } from '@shared/ui';
-import type { IPasswordModalProps } from '../../model';
+import type { TPasswordModalMode } from '../../model';
 import {
   PASSWORD_MODAL_BLOCK,
   PASSWORD_MODAL_TITLE_ID,
@@ -18,6 +18,16 @@ import {
   usePasswordModal,
 } from '../../lib';
 import './password-modal.less';
+
+interface IPasswordModalProps {
+  mode: TPasswordModalMode;
+  onConfirm: (
+    password: string,
+    closeModal: () => void,
+    setError: (error: string) => void
+  ) => Promise<void>;
+  onCancel?: () => void;
+}
 
 export const PasswordModal: FC<IPasswordModalProps> = (props) => {
   const { mode, onConfirm, onCancel } = props;

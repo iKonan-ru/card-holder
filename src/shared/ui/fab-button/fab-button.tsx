@@ -1,8 +1,17 @@
 import { type FC, useMemo } from 'react';
 import { bem, useClassName } from '@shared/lib';
-import type { IFabButtonProps } from './model';
+import type { IconType } from 'react-icons';
 import { FAB_BUTTON_BLOCK } from './lib';
 import './fab-button.less';
+
+interface IFabButtonProps {
+  icon: IconType;
+  ariaLabel: string;
+  onClick: () => void;
+  disabled?: boolean;
+  isActive?: boolean;
+  ariaPressed?: boolean;
+}
 
 export const FabButton: FC<IFabButtonProps> = ({
   icon: IconComponent,

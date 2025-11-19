@@ -1,8 +1,11 @@
-import { type FC } from 'react';
+import { type ComponentType, type FC, type HTMLAttributes } from 'react';
 import { useClassName } from '@shared/lib';
-import type { IIconBaseProps, IIconProps } from './model';
 import { ICON_BLOCK } from './lib';
 import './icon.less';
+
+interface IIconBaseProps extends HTMLAttributes<HTMLOrSVGElement> {
+  icon: ComponentType<{ className?: string }>;
+}
 
 const IconBase = ({ icon: Icon, className, ...rest }: IIconBaseProps) => (
   <Icon
@@ -10,6 +13,11 @@ const IconBase = ({ icon: Icon, className, ...rest }: IIconBaseProps) => (
     className={className}
   />
 );
+
+interface IIconProps
+  extends Omit<HTMLAttributes<HTMLOrSVGElement>, 'className'> {
+  component?: FC<{ className?: string }>;
+}
 
 export const Icon: FC<IIconProps> = ({ component, ...rest }) => {
   const className = useClassName({

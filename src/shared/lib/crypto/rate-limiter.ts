@@ -1,17 +1,15 @@
-import { INITIAL_ZERO, INITIAL_NULL } from '../constants/common';
-
 const DELAY_BASE_MS = 1000;
 const DELAY_MULTIPLIER = 2;
 const MAX_ATTEMPTS_BEFORE_DELAY = 3;
 const MAX_ATTEMPTS_BEFORE_LOCKOUT = 10;
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000;
 
-let failedAttempts = INITIAL_ZERO;
-let lockoutUntil: number | null = INITIAL_NULL;
+let failedAttempts = 0;
+let lockoutUntil: number | null = null;
 
 export const resetFailedAttempts = (): void => {
-  failedAttempts = INITIAL_ZERO;
-  lockoutUntil = INITIAL_NULL;
+  failedAttempts = 0;
+  lockoutUntil = null;
 };
 
 export const incrementFailedAttempts = (): void => {
@@ -33,7 +31,7 @@ export const getLockoutUntil = (): number | null => {
 };
 
 export const checkIsLockedOut = (): boolean => {
-  if (lockoutUntil === INITIAL_NULL) {
+  if (lockoutUntil === null) {
     return false;
   }
 
@@ -50,21 +48,21 @@ export const checkIsLockedOut = (): boolean => {
 };
 
 export const getRemainingLockoutTime = (): number => {
-  if (lockoutUntil === INITIAL_NULL) {
-    return INITIAL_ZERO;
+  if (lockoutUntil === null) {
+    return 0;
   }
 
   const now = Date.now();
   const remaining = lockoutUntil - now;
 
-  return Math.max(INITIAL_ZERO, remaining);
+  return Math.max(0, remaining);
 };
 
 const calculateDelay = (attempts: number): number => {
   const shouldApplyDelay = attempts > MAX_ATTEMPTS_BEFORE_DELAY;
 
   if (!shouldApplyDelay) {
-    return INITIAL_ZERO;
+    return 0;
   }
 
   const attemptsOverThreshold = attempts - MAX_ATTEMPTS_BEFORE_DELAY;
@@ -86,7 +84,7 @@ export const applyRateLimit = async (): Promise<void> => {
   }
 
   const delay = calculateDelay(failedAttempts);
-  const hasDelay = delay > INITIAL_ZERO;
+  const hasDelay = delay > 0;
 
   if (hasDelay) {
     await new Promise((resolve) => {

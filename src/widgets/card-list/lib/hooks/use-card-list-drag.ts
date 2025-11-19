@@ -2,23 +2,18 @@ import { useState, useEffect, useCallback } from 'react';
 import type { DragStartEvent, DragOverEvent } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import type { IBankCard } from '@entities/bank-card';
-import { INITIAL_NULL } from '@shared/lib';
 
 interface IUseCardListDragParams {
   storeCards: IBankCard[];
   onDragEnd: (cards: IBankCard[]) => void;
 }
 
-const INITIAL_ACTIVE_CARD = INITIAL_NULL;
-
 export const useCardListDrag = ({
   storeCards,
   onDragEnd,
 }: IUseCardListDragParams) => {
   const [cards, setCards] = useState<IBankCard[]>(storeCards);
-  const [activeCard, setActiveCard] = useState<IBankCard | null>(
-    INITIAL_ACTIVE_CARD
-  );
+  const [activeCard, setActiveCard] = useState<IBankCard | null>(null);
 
   useEffect(() => {
     const isNotDragging = !activeCard;
@@ -62,7 +57,7 @@ export const useCardListDrag = ({
 
   const handleDragEndInternal = useCallback(() => {
     onDragEnd(cards);
-    setActiveCard(INITIAL_ACTIVE_CARD);
+    setActiveCard(null);
   }, [cards, onDragEnd]);
 
   return {

@@ -1,15 +1,12 @@
-import { INITIAL_ZERO, ERROR_FAILED_TO_COPY } from '../constants';
-
-const TEXTAREA_POSITION_TOP = INITIAL_ZERO;
-const TEXTAREA_POSITION_LEFT = INITIAL_ZERO;
+import { ERROR_FAILED_TO_COPY } from '../constants';
 
 const copyWithExecCommand = (text: string): boolean => {
   const textarea = document.createElement('textarea');
 
   textarea.value = text;
   textarea.style.position = 'fixed';
-  textarea.style.top = `${TEXTAREA_POSITION_TOP}px`;
-  textarea.style.left = `${TEXTAREA_POSITION_LEFT}px`;
+  textarea.style.top = `0px`;
+  textarea.style.left = `0}px`;
   textarea.style.width = '2em';
   textarea.style.height = '2em';
   textarea.style.padding = '0';

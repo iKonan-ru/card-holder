@@ -1,9 +1,12 @@
-import { forwardRef, useMemo } from 'react';
+import { type ButtonHTMLAttributes, forwardRef, useMemo } from 'react';
 import { FiMove } from 'react-icons/fi';
 import { bem, useClassName } from '@shared/lib';
 import { DRAG_HANDLE_BLOCK, DRAG_HANDLE_ARIA_LABEL } from './lib';
-import type { IDragHandleProps } from './model';
 import './drag-handle.less';
+
+interface IDragHandleProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  isVisible: boolean;
+}
 
 export const DragHandle = forwardRef<HTMLButtonElement, IDragHandleProps>(
   ({ isVisible, ...restProps }, ref) => {

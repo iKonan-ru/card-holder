@@ -278,4 +278,33 @@ describe('ValidatedField', () => {
 
     expect(input.value).toBe('');
   });
+
+  it('должен предотвращать ввод при превышении maxLength даже после форматирования', async () => {
+    const handleChange = vi.fn();
+    const formatter = (value: string) => value.replace(/\s/g, '');
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        maxLength={3}
+        formatter={formatter}
+        onChange={handleChange}
+      />
+    );
+
+    const input = screen.getByRole('textbox');
+    await user.type(input, '1234');
+
+    const allValues = handleChange.mock.calls.map((call) => call[1]);
+    const maxLengthValue = Math.max(
+      ...allValues.map((value) =>
+        typeof value === 'string' ? value.length : 0
+      )
+    );
+
+    expect(maxLengthValue).toBeLessThanOrEqual(3);
+  });
 });

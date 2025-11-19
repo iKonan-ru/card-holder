@@ -71,6 +71,3 @@ export const FIELD_NAME_PIN = 'pin';
 export const FIELD_NAME_PHRASE = 'phrase';
 export const FIELD_NAME_NAME = 'name';
 export const FIELD_NAME_TYPE = 'type';
-
-export const FIELD_REQUIRED_TRUE = true;
-export const FIELD_REQUIRED_FALSE = false;
