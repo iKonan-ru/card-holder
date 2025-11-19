@@ -583,4 +583,74 @@ describe('useCardFormSubmit', () => {
       checkIsValidBankCardSpy.mockRestore();
     });
   });
+
+  describe('handleSubmit - граничные случаи', () => {
+    it('должен обрабатывать случай когда cardPan пустой', async () => {
+      const formData: Partial<IBankCard> = {
+        pan: '',
+        expires: '1230',
+        name: 'TEST USER',
+        cvv: '123',
+        pin: '1234',
+      };
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: false,
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+        })
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as FormEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockSetErrors).toHaveBeenCalled();
+    });
+
+    it('должен обрабатывать случай когда originalPan не передан при изменении PAN', async () => {
+      const formData: Partial<IBankCard> = {
+        pan: '4377723769243191',
+        expires: '1230',
+        name: 'UPDATED USER',
+        cvv: '123',
+        pin: '1234',
+        order: 0,
+      };
+
+      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
+      mockUpdateCard.mockResolvedValue(undefined);
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: true,
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+          onSuccess: mockOnSuccess,
+        })
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as FormEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockDeleteCard).not.toHaveBeenCalled();
+      expect(mockUpdateCard).toHaveBeenCalled();
+    });
+  });
 });

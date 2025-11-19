@@ -415,4 +415,66 @@ describe('IndexedDB database', () => {
 
     expect(mockObjectStore.put).not.toHaveBeenCalled();
   });
+
+  it('должна создавать индекс order если он не существует и обновлять существующие карты', async () => {
+    mockDatabase.objectStoreNames.contains = vi.fn().mockReturnValue(true);
+
+    const { initDatabase } = await import('./database');
+    const promise = initDatabase();
+
+    const mockCards = [
+      {
+        pan: '1111',
+        expires: '12/25',
+        name: 'Card 1',
+        cvv: '123',
+        pin: '1234',
+      },
+    ];
+
+    const mockObjectStore = {
+      createIndex: vi.fn(),
+      indexNames: {
+        contains: vi.fn().mockReturnValue(false),
+      },
+      getAll: vi.fn().mockReturnValue({
+        onsuccess: null,
+        result: mockCards,
+      }),
+      put: vi.fn(),
+    } as unknown as IDBObjectStore;
+
+    const mockTransaction = {
+      objectStore: vi.fn().mockReturnValue(mockObjectStore),
+    } as unknown as IDBTransaction;
+
+    const mockEvent = {
+      target: {
+        ...mockOpenRequest,
+        result: mockDatabase,
+        transaction: mockTransaction,
+      },
+    } as unknown as IDBVersionChangeEvent;
+
+    mockOpenRequest.result = mockDatabase;
+
+    if (mockOpenRequest.onupgradeneeded) {
+      mockOpenRequest.onupgradeneeded(mockEvent);
+    }
+
+    const getAllRequest = mockObjectStore.getAll();
+
+    if (getAllRequest.onsuccess) {
+      getAllRequest.onsuccess({} as Event);
+    }
+
+    if (mockOpenRequest.onsuccess) {
+      mockOpenRequest.onsuccess({} as Event);
+    }
+
+    await promise;
+
+    expect(mockObjectStore.createIndex).toHaveBeenCalled();
+    expect(mockObjectStore.put).toHaveBeenCalled();
+  });
 });

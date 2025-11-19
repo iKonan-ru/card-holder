@@ -260,4 +260,22 @@ describe('ValidatedField', () => {
     );
     expect(maxLengthValue).toBeLessThanOrEqual(3);
   });
+
+  it('должен обрабатывать случай когда onChange не передан и maxLength превышен', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        maxLength={3}
+      />
+    );
+
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await user.type(input, '1234');
+
+    expect(input.value).toBe('');
+  });
 });

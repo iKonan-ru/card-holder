@@ -442,6 +442,29 @@ describe('useCardManagementStore', () => {
     });
   });
 
+  it('должна обновлять карту без order, используя DEFAULT_CARD_ORDER если карта не найдена', async () => {
+    vi.mocked(sharedLib.getCardByPan).mockResolvedValueOnce(undefined);
+    vi.mocked(sharedLib.updateCard).mockResolvedValueOnce(undefined);
+    vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce([]);
+
+    const mockCard = {
+      pan: '9999999999999999',
+      expires: '0726',
+      name: 'NEW CARD',
+      cvv: '123',
+      pin: '1234',
+    } as IBankCard;
+
+    const { updateCard } = useCardManagementStore.getState();
+    await updateCard(mockCard);
+
+    expect(sharedLib.getCardByPan).toHaveBeenCalledWith(mockCard.pan);
+    expect(sharedLib.updateCard).toHaveBeenCalledWith({
+      ...mockCard,
+      order: 0,
+    });
+  });
+
   describe('setReorderMode', () => {
     it('должна включать режим переупорядочивания', () => {
       const { setReorderMode } = useCardManagementStore.getState();

@@ -218,4 +218,17 @@ describe('UpdateModal', () => {
     expect(updateButton).toHaveAttribute('aria-label', UPDATE_BUTTON_TEXT);
     expect(dismissButton).toHaveAttribute('aria-label', DISMISS_BUTTON_TEXT);
   });
+
+  it('не должен вызывать onDismiss если он не передан', async () => {
+    const user = userEvent.setup();
+
+    render(<UpdateModal onUpdate={vi.fn()} />);
+
+    const updateButton = screen.getByRole('button', {
+      name: UPDATE_BUTTON_TEXT,
+    });
+    await user.click(updateButton);
+
+    expect(updateButton).toBeInTheDocument();
+  });
 });

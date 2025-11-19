@@ -290,4 +290,19 @@ describe('Modal', () => {
 
     expect(handleClose).not.toHaveBeenCalled();
   });
+
+  it('должен отображать title если он передан', () => {
+    render(
+      <Modal
+        onClose={vi.fn()}
+        isTopModal={true}
+        title="Тестовый заголовок"
+        ariaLabelledBy="modal-title"
+      >
+        <div>Содержимое</div>
+      </Modal>
+    );
+
+    expect(screen.getByText('Тестовый заголовок')).toBeInTheDocument();
+  });
 });

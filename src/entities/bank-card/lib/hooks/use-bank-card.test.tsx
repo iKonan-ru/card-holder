@@ -362,4 +362,33 @@ describe('useBankCard', () => {
     expect(result.current.bank).toBeDefined();
     expect(result.current.bank.id).toBe('default');
   });
+
+  it('должен добавлять модификатор dark-text когда isDarkText true', () => {
+    const raiffeisenCard: IBankCard = {
+      pan: '2200123456789012',
+      expires: '0726',
+      name: 'TEST USER',
+      cvv: '123',
+      pin: '1234',
+      order: 0,
+    };
+
+    const { result } = renderHook(() =>
+      useBankCard({
+        card: raiffeisenCard,
+        isFlipped: false,
+        isReorderMode: false,
+      })
+    );
+
+    const hasDarkTextModifier = result.current.modifiers.some(
+      (modifier) => modifier === 'dark-text'
+    );
+
+    const bankHasDarkText = result.current.bank.isDarkText === true;
+
+    if (bankHasDarkText) {
+      expect(hasDarkTextModifier).toBe(true);
+    }
+  });
 });

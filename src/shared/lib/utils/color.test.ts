@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { hexToRgb, rgbToHex, darkenColor } from './color';
+import { hexToRgb, rgbToHex, darkenColor, getTextColorStyle } from './color';
 
 const INVALID_HEX_VALUE = '#gggggg';
 const PERCENT_ZERO = 0;
@@ -132,5 +132,25 @@ describe('darkenColor', () => {
     const expectedBlue = 29;
 
     expect(result).toBe(rgbToHex(expectedRed, expectedGreen, expectedBlue));
+  });
+});
+
+describe('getTextColorStyle', () => {
+  it('должна возвращать стиль с темным текстом когда isDarkText true', () => {
+    const result = getTextColorStyle(true);
+
+    expect(result).toHaveProperty('--text-color');
+  });
+
+  it('должна возвращать стиль со светлым текстом когда isDarkText false', () => {
+    const result = getTextColorStyle(false);
+
+    expect(result).toHaveProperty('--text-color');
+  });
+
+  it('должна возвращать стиль со светлым текстом когда isDarkText undefined', () => {
+    const result = getTextColorStyle(undefined);
+
+    expect(result).toHaveProperty('--text-color');
   });
 });

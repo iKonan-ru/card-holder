@@ -71,6 +71,7 @@
   &__header {
     display: flex;
     align-items: center;
+    gap: @spacing-md;
   }
 
   &__logo {
@@ -79,12 +80,15 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-shrink: 0;
   }
 
   &__bank-name {
     font-size: @font-size-lg;
     font-weight: @font-weight-bold;
-    margin-left: @spacing-md;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   &__payment-system {
@@ -92,6 +96,7 @@
     align-self: flex-start;
     display: flex;
     height: @size-sm;
+    flex-shrink: 0;
   }
 
   &__content {

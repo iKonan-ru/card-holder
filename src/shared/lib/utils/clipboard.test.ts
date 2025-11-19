@@ -238,4 +238,38 @@ describe('copyToClipboard', () => {
 
     await expect(copyToClipboard('test')).rejects.toThrow(ERROR_FAILED_TO_COPY);
   });
+
+  it('должен обрабатывать случай когда selection существует для iOS', async () => {
+    Object.defineProperty(global, 'navigator', {
+      value: {
+        ...originalNavigator,
+        clipboard: undefined,
+        userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)',
+      },
+      writable: true,
+      configurable: true,
+    });
+
+    const mockCreateRange = vi.fn().mockReturnValue({
+      selectNodeContents: vi.fn(),
+    });
+
+    const mockSelection = {
+      removeAllRanges: vi.fn(),
+      addRange: vi.fn(),
+    };
+
+    const mockGetSelection = vi.fn().mockReturnValue(mockSelection);
+
+    document.createRange = mockCreateRange;
+    window.getSelection = mockGetSelection;
+    document.execCommand = vi
+      .fn()
+      .mockReturnValue(true) as unknown as Document['execCommand'];
+
+    await copyToClipboard('iOS test');
+
+    expect(mockSelection.removeAllRanges).toHaveBeenCalled();
+    expect(mockSelection.addRange).toHaveBeenCalled();
+  });
 });

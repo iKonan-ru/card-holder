@@ -39,24 +39,26 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
         <div className={bem(COPYABLE_FIELD_BLOCK, 'label')}>{label}</div>
       )}
 
-      <div
-        role={ARIA_ROLE_BUTTON}
-        tabIndex={ARIA_TABINDEX_INTERACTIVE}
-        className={bem(COPYABLE_FIELD_BLOCK, 'value')}
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
-        title={title}
-        aria-label={ariaLabel}
-      >
-        {displayValue}
-      </div>
+      <div className={bem(COPYABLE_FIELD_BLOCK, 'copy-wrapper')}>
+        <div
+          role={ARIA_ROLE_BUTTON}
+          tabIndex={ARIA_TABINDEX_INTERACTIVE}
+          className={bem(COPYABLE_FIELD_BLOCK, 'value')}
+          onClick={handleClick}
+          onKeyDown={handleKeyDown}
+          title={title}
+          aria-label={ariaLabel}
+        >
+          {displayValue}
+        </div>
 
-      {isCopied && (
-        <FiCheck
-          className={bem(COPYABLE_FIELD_BLOCK, 'indicator')}
-          aria-hidden={ARIA_HIDDEN_TRUE}
-        />
-      )}
+        {isCopied && (
+          <FiCheck
+            className={bem(COPYABLE_FIELD_BLOCK, 'indicator')}
+            aria-hidden={ARIA_HIDDEN_TRUE}
+          />
+        )}
+      </div>
     </div>
   );
 };

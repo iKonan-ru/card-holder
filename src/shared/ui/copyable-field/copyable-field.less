@@ -29,6 +29,10 @@
     }
   }
 
+  &__copy-wrapper {
+    position: relative;
+  }
+
   &__value {
     padding: 0.1rem @spacing-sm;
     border-radius: @border-radius-md;
@@ -56,9 +60,9 @@
 
   &__indicator {
     position: absolute;
-    bottom: @spacing-md;
-    right: @spacing-sm;
-    transform: translate(50%, -25%);
+    top: 0;
+    right: 0;
+    transform: translate(50%, -50%);
     color: var(--white);
     width: @size-sm;
     height: @size-sm;
@@ -74,10 +78,6 @@
     letter-spacing: 0.125rem;
     text-align: center;
     align-self: flex-start;
-  }
-
-  &_pan &__indicator {
-    bottom: @spacing-lg;
   }
 
   &_pan &__value {

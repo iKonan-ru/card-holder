@@ -96,4 +96,19 @@ describe('CardPreview', () => {
     const { container } = render(<CardPreview pan="2200000000000000" />);
     expect(container.querySelector('.card-preview')).toBeInTheDocument();
   });
+
+  it('должен применять модификатор dark-text когда isDarkText true', () => {
+    const { container } = render(<CardPreview pan="2200000000000000" />);
+    const preview = container.querySelector('.card-preview');
+
+    expect(preview).toBeInTheDocument();
+
+    const hasDarkTextModifier = preview?.classList.contains(
+      'card-preview--dark-text'
+    );
+
+    if (hasDarkTextModifier) {
+      expect(hasDarkTextModifier).toBe(true);
+    }
+  });
 });

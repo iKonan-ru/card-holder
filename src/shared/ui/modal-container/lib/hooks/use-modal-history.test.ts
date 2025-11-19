@@ -219,4 +219,26 @@ describe('useModalHistory', () => {
 
     expect(mockPush).not.toHaveBeenCalled();
   });
+
+  it('должен вызывать closeModal при вызове handleClose из push', () => {
+    const modals = [createMockModal('modal-1')];
+
+    renderHook(() =>
+      useModalHistory({
+        modals,
+        push: mockPush,
+        remove: mockRemove,
+        closeModal: mockCloseModal,
+        userActionRef: mockUserActionRef,
+        modalRequestCloseRef: mockModalRequestCloseRef,
+      })
+    );
+
+    const pushCall = mockPush.mock.calls[0];
+    const handleClose = pushCall[1];
+
+    handleClose();
+
+    expect(mockCloseModal).toHaveBeenCalledWith('modal-1');
+  });
 });

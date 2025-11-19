@@ -207,4 +207,43 @@ describe('useModalBackHandler', () => {
 
     expect(mockPushState).not.toHaveBeenCalled();
   });
+
+  it('не должен добавлять запись в историю если isHistoryPushedRef.current уже true', () => {
+    const onClose = vi.fn();
+
+    const { rerender } = renderHook((props) => useModalBackHandler(props), {
+      initialProps: { isOpen: true, onClose },
+    });
+
+    expect(mockPushState).toHaveBeenCalledTimes(1);
+
+    mockPushState.mockClear();
+
+    rerender({ isOpen: true, onClose });
+
+    expect(mockPushState).not.toHaveBeenCalled();
+  });
+
+  it('должен сбрасывать closedByPopStateRef при открытии модалки', () => {
+    const onClose = vi.fn();
+
+    const { rerender } = renderHook((props) => useModalBackHandler(props), {
+      initialProps: { isOpen: true, onClose },
+    });
+
+    act(() => {
+      const addEventListenerMock = vi.mocked(window.addEventListener);
+      const handler = addEventListenerMock.mock.calls.find(
+        (call) => call[0] === 'popstate'
+      )?.[1] as EventListener;
+      handler?.(new PopStateEvent('popstate'));
+    });
+
+    mockBack.mockClear();
+
+    rerender({ isOpen: false, onClose });
+    rerender({ isOpen: true, onClose });
+
+    expect(mockPushState).toHaveBeenCalled();
+  });
 });

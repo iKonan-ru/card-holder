@@ -223,4 +223,32 @@ describe('readFileAsText', () => {
 
     vi.restoreAllMocks();
   });
+
+  it('должен обрабатывать случай когда result не является строкой', async () => {
+    const file = new File(['test'], 'test.cbk', {
+      type: 'application/octet-stream',
+    });
+
+    vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
+      this: FileReader
+    ) {
+      if (this.onload) {
+        Object.defineProperty(this, 'result', {
+          value: null,
+          writable: true,
+        });
+        const loadEvent = Object.create(ProgressEvent.prototype, {
+          type: { value: 'load' },
+          target: { value: this },
+        });
+        this.onload(loadEvent);
+      }
+    });
+
+    await expect(readFileAsText(file)).rejects.toThrow(
+      'Failed to read file as text'
+    );
+
+    vi.restoreAllMocks();
+  });
 });
