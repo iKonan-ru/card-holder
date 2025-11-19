@@ -1,11 +1,12 @@
 import { useEffect, useRef, createElement } from 'react';
-import { usePWAUpdate, useModal } from '@shared/lib';
+import { useModal } from '@shared/lib';
 import {
   UpdateModal,
   UPDATE_MODAL_TITLE_ID,
   UPDATE_MODAL_MESSAGE_ID,
   UPDATE_MODAL_TITLE,
 } from '@features/pwa-update';
+import { usePWAUpdate } from './use-pwa-update';
 
 export const useAppUpdateModal = (): void => {
   const { needRefresh, updateServiceWorker } = usePWAUpdate();

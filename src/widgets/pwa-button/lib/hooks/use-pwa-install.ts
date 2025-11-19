@@ -1,27 +1,15 @@
+import {
+  checkHasNavigatorStandalone,
+  checkIsBeforeInstallPromptEvent,
+} from '@shared/lib';
+import type { BeforeInstallPromptEvent } from '@shared/types';
 import { useEffect, useState, useCallback } from 'react';
-
-interface BeforeInstallPromptEvent extends Event {
-  prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
-}
 
 interface UsePWAInstallReturn {
   canInstall: boolean;
   isInstalled: boolean;
   handleInstall: () => Promise<void>;
 }
-
-const checkIsBeforeInstallPromptEvent = (
-  event: Event
-): event is BeforeInstallPromptEvent => {
-  return 'prompt' in event && 'userChoice' in event;
-};
-
-const checkHasNavigatorStandalone = (
-  navigator: Navigator
-): navigator is Navigator & { standalone: boolean } => {
-  return 'standalone' in navigator;
-};
 
 export const usePWAInstall = (): UsePWAInstallReturn => {
   const [deferredPrompt, setDeferredPrompt] =

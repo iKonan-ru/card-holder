@@ -9,8 +9,11 @@ const mockClose = vi.fn();
 const mockUsePWAUpdate = vi.fn();
 const mockUseModal = vi.fn();
 
-vi.mock('@shared/lib', () => ({
+vi.mock('./use-pwa-update', () => ({
   usePWAUpdate: () => mockUsePWAUpdate(),
+}));
+
+vi.mock('@shared/lib', () => ({
   useModal: () => mockUseModal(),
 }));
 

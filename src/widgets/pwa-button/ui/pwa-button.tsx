@@ -1,9 +1,10 @@
 import { type FC, useMemo } from 'react';
-import { usePWAInstall, useClassName } from '@shared/lib';
+import { useClassName } from '@shared/lib';
 import {
   PWA_BUTTON_BLOCK,
   PWA_BUTTON_TEXT,
   PWA_BUTTON_ARIA_LABEL,
+  usePWAInstall,
 } from '../lib';
 import './pwa-button.less';
 
