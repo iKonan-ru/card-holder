@@ -1,8 +1,13 @@
 import { type FC, useRef } from 'react';
-import { useModalContext, useModalStack } from '@shared/lib';
+import {
+  useModalContext,
+  useModalStack,
+  useModalHistory,
+  useModalKeyboard,
+  useModalPopstate,
+} from '@shared/lib';
 import { Portal } from '../portal';
 import { Modal } from '../modal';
-import { useModalHistory, useModalKeyboard, useModalPopstate } from './lib';
 
 export const ModalContainer: FC = () => {
   const { modals, closeModal, userActionRef } = useModalContext();

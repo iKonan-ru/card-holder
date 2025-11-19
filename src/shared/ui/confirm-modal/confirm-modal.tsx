@@ -1,6 +1,11 @@
 import { type FC } from 'react';
-import { bem, ParentClassProvider, useClassName } from '@shared/lib';
-import { useAnimatedModalClose, Button } from '../';
+import {
+  bem,
+  useClassName,
+  useAnimatedModalClose,
+  ParentClassProvider,
+} from '@shared/lib';
+import { Button } from '../button';
 import type { IConfirmModalProps } from './model';
 import {
   CONFIRM_MODAL_BLOCK,

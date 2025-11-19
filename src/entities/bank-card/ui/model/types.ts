@@ -1,10 +1,10 @@
 import type { IBankCard } from '../../model';
 import type { IBank } from '@entities/bank';
-import type { PaymentSystem } from '@shared/lib';
+import type { TPaymentSystem } from '@entities/payment-system';
 
 export interface IBankCardCommonProps {
   bank: IBank;
-  paymentSystem: PaymentSystem | null;
+  paymentSystem: TPaymentSystem | null;
 }
 
 export interface IBankCardProps {

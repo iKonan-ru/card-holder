@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { useModalStack } from '@shared/lib';
+import { useModalStack } from './use-modal-stack';
 
 describe('useModalStack', () => {
   beforeEach(() => {

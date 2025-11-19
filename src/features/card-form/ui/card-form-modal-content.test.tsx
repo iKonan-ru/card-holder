@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { CardFormModalContent } from './card-form-modal-content';
 import type { IBankCard } from '@entities/bank-card';
 
-vi.mock('@shared/ui', () => ({
+vi.mock('@shared/lib', () => ({
   useModalClose: vi.fn(),
 }));
 
@@ -40,7 +40,7 @@ describe('CardFormModalContent', () => {
 
   beforeEach(async () => {
     vi.clearAllMocks();
-    const { useModalClose } = vi.mocked(await import('@shared/ui'));
+    const { useModalClose } = vi.mocked(await import('@shared/lib'));
     useModalClose.mockReturnValue(mockCloseModal);
   });
 

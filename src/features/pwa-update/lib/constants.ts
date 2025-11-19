@@ -1,10 +1,10 @@
-export const UPDATE_MODAL_BLOCK = 'update-modal';
+export const PWA_UPDATE_BLOCK = 'pwa-update';
 
-export const UPDATE_MODAL_TITLE_ID = 'update-modal-title';
-export const UPDATE_MODAL_MESSAGE_ID = 'update-modal-message';
+export const PWA_UPDATE_TITLE_ID = 'pwa-update-title';
+export const PWA_UPDATE_MESSAGE_ID = 'pwa-update-message';
 
-export const UPDATE_MODAL_TITLE = 'Обновление приложения';
-export const UPDATE_MODAL_MESSAGE =
+export const PWA_UPDATE_TITLE = 'Обновление приложения';
+export const PWA_UPDATE_MESSAGE =
   'Доступна новая версия приложения. Обновить сейчас?';
-export const UPDATE_BUTTON_TEXT = 'Обновить';
-export const DISMISS_BUTTON_TEXT = 'Позже';
+export const PWA_UPDATE_BUTTON_TEXT = 'Обновить';
+export const PWA_UPDATE_DISMISS_BUTTON_TEXT = 'Позже';

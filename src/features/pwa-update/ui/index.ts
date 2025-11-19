@@ -1,1 +1,1 @@
-export * from './update-modal';
+export * from './pwa-update';

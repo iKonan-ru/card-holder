@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, waitFor, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react';
-import { ModalProvider, useModal } from '@shared/lib';
+import { ModalProvider, useModal } from '../../lib';
 import { ModalContainer } from './modal-container';
 
 const MODAL_CONTENT = 'Test Modal Content';

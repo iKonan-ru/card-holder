@@ -1,6 +1,6 @@
 import { useEffect, type FC, type PropsWithChildren } from 'react';
 import { useModalContext } from '@shared/lib';
-import { setModalContext } from '../../lib/show-error';
+import { setModalContext } from '../../lib';
 
 export const ErrorHandlerProvider: FC<PropsWithChildren> = ({ children }) => {
   const modalContext = useModalContext();

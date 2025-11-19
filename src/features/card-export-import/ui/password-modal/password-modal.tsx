@@ -16,7 +16,7 @@ import {
   PASSWORD_MODAL_ID_IMPORT,
   PASSWORD_MODAL_ID_EXPORT,
   usePasswordModal,
-} from './lib';
+} from '../../lib';
 import './password-modal.less';
 
 export const PasswordModal: FC<IPasswordModalProps> = (props) => {

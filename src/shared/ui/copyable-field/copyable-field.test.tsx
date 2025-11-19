@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ParentClassProvider } from '@shared/lib';
+import { ParentClassProvider } from '../../lib';
 import { CopyableField } from './copyable-field';
 
 const TEST_VALUE = 'test-value';

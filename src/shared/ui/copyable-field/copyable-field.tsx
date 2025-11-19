@@ -6,9 +6,10 @@ import {
   ARIA_ROLE_BUTTON,
   ARIA_HIDDEN_TRUE,
   ARIA_TABINDEX_INTERACTIVE,
+  useCopyableField,
 } from '@shared/lib';
 import type { ICopyableFieldProps } from './model';
-import { COPYABLE_FIELD_BLOCK, COPY_TITLE_TEXT, useCopyableField } from './lib';
+import { COPYABLE_FIELD_BLOCK, COPY_TITLE_TEXT } from './lib';
 import './copyable-field.less';
 
 export const CopyableField: FC<ICopyableFieldProps> = ({

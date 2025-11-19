@@ -1,10 +1,10 @@
 import { useEffect, useRef, createElement } from 'react';
 import { useModal } from '@shared/lib';
 import {
-  UpdateModal,
-  UPDATE_MODAL_TITLE_ID,
-  UPDATE_MODAL_MESSAGE_ID,
-  UPDATE_MODAL_TITLE,
+  PWAUpdate,
+  PWA_UPDATE_TITLE_ID,
+  PWA_UPDATE_MESSAGE_ID,
+  PWA_UPDATE_TITLE,
 } from '@features/pwa-update';
 import { usePWAUpdate } from './use-pwa-update';
 
@@ -34,16 +34,16 @@ export const useAppUpdateModal = (): void => {
       updateModal.close();
     };
 
-    const modalContent = createElement(UpdateModal, {
+    const modalContent = createElement(PWAUpdate, {
       onUpdate: handleUpdate,
       onDismiss: handleDismissUpdate,
     });
 
     updateModal.open(
       modalContent,
-      UPDATE_MODAL_TITLE_ID,
-      UPDATE_MODAL_MESSAGE_ID,
-      UPDATE_MODAL_TITLE
+      PWA_UPDATE_TITLE_ID,
+      PWA_UPDATE_MESSAGE_ID,
+      PWA_UPDATE_TITLE
     );
   }, [needRefresh, updateServiceWorker, updateModal]);
 };

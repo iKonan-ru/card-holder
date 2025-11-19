@@ -3,7 +3,7 @@ import { render, screen, cleanup } from '@testing-library/react';
 import { BankCardFront } from './bank-card-front';
 import { MOCK_CARD } from '@test';
 import type { IBank } from '@entities/bank';
-import type { PaymentSystem } from '@shared/lib';
+import type { TPaymentSystem } from '@entities/payment-system';
 
 const MOCK_BANK: IBank = {
   id: 'sberbank',
@@ -11,7 +11,7 @@ const MOCK_BANK: IBank = {
   color: '#000000',
 };
 
-const MOCK_PAYMENT_SYSTEM: PaymentSystem = 'visa';
+const MOCK_PAYMENT_SYSTEM: TPaymentSystem = 'visa';
 
 vi.mock('../bank-card-header', () => ({
   BankCardHeader: ({
@@ -19,7 +19,7 @@ vi.mock('../bank-card-header', () => ({
     paymentSystem,
   }: {
     bank: IBank;
-    paymentSystem: PaymentSystem | null;
+    paymentSystem: TPaymentSystem | null;
   }) => (
     <div data-testid="bank-card-header">
       {bank.name} - {paymentSystem}

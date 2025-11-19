@@ -2,7 +2,7 @@ import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, cleanup } from '@testing-library/react';
 import { ErrorHandlerProvider } from './error-handler-provider';
 import { ModalProvider } from '@shared/lib';
-import * as showErrorModule from '../../lib/show-error';
+import * as showErrorModule from '../../lib';
 
 describe('ErrorHandlerProvider', () => {
   afterEach(() => {

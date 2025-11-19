@@ -3,7 +3,7 @@ import { render, screen, cleanup } from '@testing-library/react';
 import { type FC } from 'react';
 import { BankCardHeader } from './bank-card-header';
 import type { IBank } from '@entities/bank';
-import type { PaymentSystem } from '@shared/lib';
+import type { TPaymentSystem } from '@entities/payment-system';
 
 const MOCK_BANK_WITH_NAME: IBank = {
   id: 'sberbank',
@@ -17,7 +17,7 @@ const MOCK_BANK_WITHOUT_NAME: IBank = {
   color: '#000000',
 };
 
-const MOCK_PAYMENT_SYSTEM: PaymentSystem = 'visa';
+const MOCK_PAYMENT_SYSTEM: TPaymentSystem = 'visa';
 
 const mockBankLogos: Partial<Record<string, FC<{ className?: string }>>> = {
   sberbank: () => <svg data-testid="sberbank-logo" />,

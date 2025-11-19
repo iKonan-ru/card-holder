@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
-import { useFormValidation } from '@shared/lib';
+import { useFormValidation } from './use-form-validation';
 
 interface ITestFormErrors {
   email?: string;

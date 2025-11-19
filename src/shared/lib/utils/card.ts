@@ -1,5 +1,8 @@
-import { BANKS_BINS } from '@shared/data/banks-bins';
-import type { PaymentSystem, IPaymentSystemRule } from './types';
+import { BANKS_BINS } from '@shared/data';
+import type {
+  TPaymentSystem,
+  IPaymentSystemRule,
+} from '@entities/payment-system';
 import { INITIAL_NULL, INITIAL_FALSE, INITIAL_ZERO } from '../constants';
 
 const FIRST_DIGIT_INDEX = INITIAL_ZERO;
@@ -15,12 +18,12 @@ const UZCARD_PREFIX = '8';
 const HUMO_PREFIX = '9';
 const JCB_PREFIX = '35';
 
-const PAYMENT_SYSTEM_VISA: PaymentSystem = 'visa';
-const PAYMENT_SYSTEM_MASTERCARD: PaymentSystem = 'mastercard';
-const PAYMENT_SYSTEM_MIR: PaymentSystem = 'mir';
-const PAYMENT_SYSTEM_UZCARD: PaymentSystem = 'uzcard';
-const PAYMENT_SYSTEM_HUMO: PaymentSystem = 'humo';
-const PAYMENT_SYSTEM_JCB: PaymentSystem = 'jcb';
+const PAYMENT_SYSTEM_VISA: TPaymentSystem = 'visa';
+const PAYMENT_SYSTEM_MASTERCARD: TPaymentSystem = 'mastercard';
+const PAYMENT_SYSTEM_MIR: TPaymentSystem = 'mir';
+const PAYMENT_SYSTEM_UZCARD: TPaymentSystem = 'uzcard';
+const PAYMENT_SYSTEM_HUMO: TPaymentSystem = 'humo';
+const PAYMENT_SYSTEM_JCB: TPaymentSystem = 'jcb';
 
 const PAYMENT_SYSTEM_RULES: IPaymentSystemRule[] = [
   {
@@ -66,7 +69,7 @@ const EXPIRES_FORMAT_REPLACEMENT = '$1/$2';
 const MASK_CHAR = '•';
 const DEFAULT_SHOW_VALUE = INITIAL_FALSE;
 
-export function getPaymentSystem(pan: string): PaymentSystem | null {
+export function getPaymentSystem(pan: string): TPaymentSystem | null {
   if (!pan) {
     return INITIAL_NULL;
   }

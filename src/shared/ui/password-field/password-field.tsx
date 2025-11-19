@@ -1,8 +1,7 @@
-import { ParentClassProvider } from '@shared/lib';
 import { type FC, useMemo } from 'react';
+import { ParentClassProvider, usePasswordVisibility } from '@shared/lib';
 import { FormField, PasswordToggleButton } from '@shared/ui';
 import type { IPasswordFieldProps } from './model';
-import { usePasswordVisibility } from './lib';
 
 export const PasswordField: FC<IPasswordFieldProps> = ({
   showPasswordToggle = true,

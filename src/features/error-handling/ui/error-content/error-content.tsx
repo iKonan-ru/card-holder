@@ -1,11 +1,12 @@
 import type { FC } from 'react';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
-import { useAnimatedModalClose, Button } from '@shared/ui';
+import { useAnimatedModalClose } from '@shared/lib';
+import { Button } from '@shared/ui';
 import {
   ERROR_CONTENT_BLOCK,
   ERROR_CONTENT_CLOSE_TEXT,
   ERROR_CONTENT_MESSAGE_ID,
-} from '../../lib/constants';
+} from '../../lib';
 import './error-content.less';
 
 interface IErrorContentProps {

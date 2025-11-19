@@ -1,7 +1,7 @@
 import { useCallback, type FC, type ChangeEvent } from 'react';
-import type { IValidatedFieldProps } from './model';
-import { FormField } from '@shared/ui';
 import { ParentClassProvider, useFormContext } from '@shared/lib';
+import { FormField } from '@shared/ui';
+import type { IValidatedFieldProps } from './model';
 import { NON_DIGIT_PATTERN } from './lib';
 
 export const ValidatedField: FC<IValidatedFieldProps> = ({

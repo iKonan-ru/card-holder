@@ -4,8 +4,9 @@ import {
   HEX_RADIX,
   INITIAL_ZERO,
   ZERO_CHAR,
-} from '../constants/common';
-import { TEXT_COLOR_DARK, TEXT_COLOR_LIGHT } from '../constants/colors';
+  TEXT_COLOR_DARK,
+  TEXT_COLOR_LIGHT,
+} from '../constants';
 
 const HEX_COLOR_PATTERN = /^[0-9A-Fa-f]{6}$/;
 const MIN_RGB_VALUE = INITIAL_ZERO;

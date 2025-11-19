@@ -2,8 +2,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { CardForm } from './card-form';
-import * as sharedLib from '@shared/lib';
-import { ModalProvider } from '@shared/lib';
+import { ModalProvider, checkCardExists } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import type { FC, PropsWithChildren } from 'react';
 
@@ -71,7 +70,7 @@ describe('CardForm', () => {
       return mockStoreValue;
     });
 
-    vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
+    vi.mocked(checkCardExists).mockResolvedValue(false);
   });
 
   afterEach(() => {

@@ -4,7 +4,7 @@ import {
   useMemo,
   useCallback,
 } from 'react';
-import { BANKS_LIST, DEFAULT_BANK } from '@shared/data/banks-config';
+import { BANKS_LIST, DEFAULT_BANK } from '@shared/data';
 import {
   bem,
   darkenColor,

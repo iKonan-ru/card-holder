@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act, waitFor } from '@testing-library/react';
 import { useClearData } from './use-clear-data';
-import * as modalContextModule from '@shared/lib/modal/use-modal-context';
+import * as modalContextModule from '@shared/lib';
 
-vi.mock('@shared/lib/modal/use-modal-context');
+vi.mock('@shared/lib');
 
 describe('useClearData', () => {
   const mockOnClear = vi.fn();

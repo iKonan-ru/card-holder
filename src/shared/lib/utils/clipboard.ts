@@ -1,5 +1,4 @@
-import { INITIAL_ZERO } from '../constants/common';
-import { ERROR_FAILED_TO_COPY } from '../constants/errors';
+import { INITIAL_ZERO, ERROR_FAILED_TO_COPY } from '../constants';
 
 const TEXTAREA_POSITION_TOP = INITIAL_ZERO;
 const TEXTAREA_POSITION_LEFT = INITIAL_ZERO;

@@ -1,4 +1,4 @@
-export interface IUpdateModalProps {
+export interface IPWAUpdateProps {
   onUpdate: () => Promise<void>;
   onDismiss?: () => void;
 }

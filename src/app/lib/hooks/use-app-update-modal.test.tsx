@@ -18,7 +18,7 @@ vi.mock('@shared/lib', () => ({
 }));
 
 vi.mock('@features/pwa-update', () => ({
-  UpdateModal: vi.fn(
+  PWAUpdate: vi.fn(
     ({
       onUpdate,
       onDismiss,
@@ -26,15 +26,15 @@ vi.mock('@features/pwa-update', () => ({
       onUpdate: () => void;
       onDismiss: () => void;
     }) => (
-      <div data-testid="update-modal">
-        <button onClick={onUpdate}>Update</button>
-        <button onClick={onDismiss}>Dismiss</button>
+      <div data-testid="pwa-update">
+        <button onClick={onUpdate}>Обновить</button>
+        <button onClick={onDismiss}>Отклонить</button>
       </div>
     )
   ),
-  UPDATE_MODAL_TITLE_ID: 'update-modal-title',
-  UPDATE_MODAL_MESSAGE_ID: 'update-modal-message',
-  UPDATE_MODAL_TITLE: 'Обновление приложения',
+  PWA_UPDATE_TITLE_ID: 'pwa-update-title',
+  PWA_UPDATE_MESSAGE_ID: 'pwa-update-message',
+  PWA_UPDATE_TITLE: 'Обновление приложения',
 }));
 
 describe('useAppUpdateModal', () => {

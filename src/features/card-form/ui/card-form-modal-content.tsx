@@ -1,5 +1,5 @@
 import { type FC, useCallback } from 'react';
-import { useModalClose } from '@shared/ui';
+import { useModalClose } from '@shared/lib';
 import type { ICardFormModalContentProps } from './model';
 import { CardForm } from './card-form';
 

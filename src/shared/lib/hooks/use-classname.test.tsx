@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import { useClassName } from '@shared/lib';
+import { useClassName } from './use-classname';
 import { ParentClassProvider } from '../context';
 import type { FC, PropsWithChildren } from 'react';
 

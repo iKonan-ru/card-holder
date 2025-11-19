@@ -19,3 +19,8 @@ export interface IPasswordModalProps {
   ) => Promise<void>;
   onCancel?: () => void;
 }
+
+export interface ISuccessModalProps {
+  message: string;
+  onClose?: () => void;
+}

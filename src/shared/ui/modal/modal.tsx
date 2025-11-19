@@ -6,16 +6,13 @@ import {
   INITIAL_NULL,
   ARIA_ROLE_DIALOG,
   ARIA_MODAL_TRUE,
-} from '@shared/lib';
-import type { IModalProps } from './model';
-import {
-  MODAL_BLOCK,
-  MODAL_MODIFIERS_CLOSING,
-  ModalCloseContext,
   useModalClosingState,
   useFocusTrap,
   useOverlayClick,
-} from './lib';
+  ModalCloseContext,
+} from '@shared/lib';
+import type { IModalProps } from './model';
+import { MODAL_BLOCK, MODAL_MODIFIERS_CLOSING } from './lib';
 import './modal.less';
 
 const INITIAL_OVERLAY_REF = INITIAL_NULL;
