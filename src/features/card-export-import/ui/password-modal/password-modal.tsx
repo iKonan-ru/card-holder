@@ -9,7 +9,6 @@ import { PasswordField, Button } from '@shared/ui';
 import type { TPasswordModalMode } from '../../model';
 import {
   PASSWORD_MODAL_BLOCK,
-  PASSWORD_MODAL_TITLE_ID,
   PASSWORD_MODAL_LABEL,
   PASSWORD_MODAL_LABEL_CONFIRM,
   PASSWORD_MODAL_BUTTON_CANCEL,
@@ -66,7 +65,6 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
     <form
       className={className}
       onSubmit={handleSubmit}
-      aria-labelledby={PASSWORD_MODAL_TITLE_ID}
     >
       <ParentClassProvider parentClass={PASSWORD_MODAL_BLOCK}>
         <PasswordField

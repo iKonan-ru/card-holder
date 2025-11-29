@@ -2,7 +2,6 @@ import { describe, it, expect } from 'vitest';
 import {
   formatPan,
   formatExpires,
-  unformatValue,
   filterDigitsOnly,
   filterAlphanumeric,
   formatName,
@@ -45,20 +44,6 @@ describe('formatExpires', () => {
 
   it('должна игнорировать нецифровые символы', () => {
     expect(formatExpires('12ab25')).toBe('12/25');
-  });
-});
-
-describe('unformatValue', () => {
-  it('должна удалять все нецифровые символы', () => {
-    expect(unformatValue('1234 5678 9012 3456')).toBe('1234567890123456');
-  });
-
-  it('должна удалять слеш из даты', () => {
-    expect(unformatValue('12/25')).toBe('1225');
-  });
-
-  it('должна обрабатывать пустую строку', () => {
-    expect(unformatValue('')).toBe('');
   });
 });
 

@@ -4,7 +4,6 @@ import { useAnimatedModalClose } from '@shared/lib';
 import { Button } from '@shared/ui';
 import {
   PWA_UPDATE_BLOCK,
-  PWA_UPDATE_MESSAGE_ID,
   PWA_UPDATE_MESSAGE,
   PWA_UPDATE_BUTTON_TEXT,
   PWA_UPDATE_DISMISS_BUTTON_TEXT,
@@ -46,12 +45,7 @@ export const PWAUpdate: FC<IPWAUpdateProps> = ({ onUpdate, onDismiss }) => {
   return (
     <div className={className}>
       <ParentClassProvider parentClass={PWA_UPDATE_BLOCK}>
-        <p
-          id={PWA_UPDATE_MESSAGE_ID}
-          className={bem(PWA_UPDATE_BLOCK, 'message')}
-        >
-          {PWA_UPDATE_MESSAGE}
-        </p>
+        <p className={bem(PWA_UPDATE_BLOCK, 'message')}>{PWA_UPDATE_MESSAGE}</p>
         <div className={bem(PWA_UPDATE_BLOCK, 'actions')}>
           {onDismiss && (
             <Button

@@ -53,8 +53,6 @@ const TestComponent = () => {
     openModal(
       'test-modal-metadata',
       <div>Modal with metadata</div>,
-      'modal-label',
-      'modal-description',
       'Modal Title'
     );
   };
@@ -99,16 +97,6 @@ const TestComponent = () => {
           )}
           {modal.title && (
             <span data-testid={`modal-title-${modal.id}`}>{modal.title}</span>
-          )}
-          {modal.ariaLabelledBy && (
-            <span data-testid={`modal-aria-labelled-by-${modal.id}`}>
-              {modal.ariaLabelledBy}
-            </span>
-          )}
-          {modal.ariaDescribedBy && (
-            <span data-testid={`modal-aria-described-by-${modal.id}`}>
-              {modal.ariaDescribedBy}
-            </span>
           )}
         </div>
       ))}
@@ -318,42 +306,6 @@ describe('ModalProvider', () => {
     });
   });
 
-  it('должен сохранять ariaLabelledBy при открытии модального окна', async () => {
-    const user = userEvent.setup();
-
-    render(
-      <ModalProvider>
-        <TestComponent />
-      </ModalProvider>
-    );
-
-    await user.click(screen.getByText('Open Modal With Metadata'));
-
-    await waitFor(() => {
-      expect(
-        screen.getByTestId('modal-aria-labelled-by-test-modal-metadata')
-      ).toHaveTextContent('modal-label');
-    });
-  });
-
-  it('должен сохранять ariaDescribedBy при открытии модального окна', async () => {
-    const user = userEvent.setup();
-
-    render(
-      <ModalProvider>
-        <TestComponent />
-      </ModalProvider>
-    );
-
-    await user.click(screen.getByText('Open Modal With Metadata'));
-
-    await waitFor(() => {
-      expect(
-        screen.getByTestId('modal-aria-described-by-test-modal-metadata')
-      ).toHaveTextContent('modal-description');
-    });
-  });
-
   it('должен предоставлять userActionRef', () => {
     render(
       <ModalProvider>
@@ -365,50 +317,6 @@ describe('ModalProvider', () => {
 
     expect(userActionRefElement).toBeInTheDocument();
     expect(userActionRefElement).toHaveTextContent('false');
-  });
-
-  it('должен открывать модальное окно с частичными метаданными', async () => {
-    const user = userEvent.setup();
-
-    const PartialMetadataComponent = () => {
-      const { openModal, modals } = useModalContext();
-
-      const handleOpenModal = () => {
-        openModal('partial-modal', <div>Partial</div>, 'label-id');
-      };
-
-      return (
-        <div>
-          <button onClick={handleOpenModal}>Open Partial Modal</button>
-          {modals.map((modal) => (
-            <div
-              key={modal.id}
-              data-testid={`modal-${modal.id}`}
-            >
-              {modal.ariaLabelledBy && (
-                <span data-testid={`modal-aria-labelled-by-${modal.id}`}>
-                  {modal.ariaLabelledBy}
-                </span>
-              )}
-            </div>
-          ))}
-        </div>
-      );
-    };
-
-    render(
-      <ModalProvider>
-        <PartialMetadataComponent />
-      </ModalProvider>
-    );
-
-    await user.click(screen.getByText('Open Partial Modal'));
-
-    await waitFor(() => {
-      expect(
-        screen.getByTestId('modal-aria-labelled-by-partial-modal')
-      ).toHaveTextContent('label-id');
-    });
   });
 
   it('не должен изменять модальное окно если оно не найдено при updateModalPreventClose', async () => {

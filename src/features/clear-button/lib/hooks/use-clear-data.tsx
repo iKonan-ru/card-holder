@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { useModalContext } from '@shared/lib';
 import { ConfirmModal } from '@shared/ui';
 import {
+  CONFIRM_MODAL_ID,
   CONFIRM_CLEAR_TITLE,
   CONFIRM_CLEAR_MESSAGE,
   CONFIRM_CLEAR_BUTTON,
@@ -16,10 +17,6 @@ interface IUseClearData {
   isClearing: boolean;
   clearData: () => void;
 }
-
-const CONFIRM_MODAL_ID = 'confirm-clear-all';
-const CONFIRM_MODAL_TITLE_ID = 'confirm-clear-all-title';
-const CONFIRM_MODAL_MESSAGE_ID = 'confirm-clear-all-message';
 
 export const useClearData = (params: IUseClearDataParams): IUseClearData => {
   const { onClear } = params;
@@ -39,7 +36,6 @@ export const useClearData = (params: IUseClearDataParams): IUseClearData => {
   const clearData = useCallback(() => {
     const modalContent = (
       <ConfirmModal
-        title={CONFIRM_CLEAR_TITLE}
         message={CONFIRM_CLEAR_MESSAGE}
         confirmText={CONFIRM_CLEAR_BUTTON}
         cancelText={CANCEL_CLEAR_BUTTON}
@@ -47,13 +43,7 @@ export const useClearData = (params: IUseClearDataParams): IUseClearData => {
       />
     );
 
-    openModal(
-      CONFIRM_MODAL_ID,
-      modalContent,
-      CONFIRM_MODAL_TITLE_ID,
-      CONFIRM_MODAL_MESSAGE_ID,
-      CONFIRM_CLEAR_TITLE
-    );
+    openModal(CONFIRM_MODAL_ID, modalContent, CONFIRM_CLEAR_TITLE);
   }, [handleConfirm, openModal]);
 
   return {

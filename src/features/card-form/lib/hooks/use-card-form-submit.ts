@@ -8,13 +8,13 @@ import {
   ERROR_FAILED_TO_DELETE_CARD,
 } from '@shared/lib';
 import {
+  filterDigitsOnly,
   validateCardForm,
   checkHasErrors,
   checkIsValidBankCard,
-  unformatValue,
-  type IValidationErrors,
-  ERROR_CARD_ALREADY_EXISTS,
-} from '..';
+} from '../utils';
+import type { IValidationErrors } from '../types';
+import { ERROR_CARD_ALREADY_EXISTS } from '../constants';
 
 interface IUseCardFormSubmitParams {
   formData: Partial<IBankCard>;
@@ -45,8 +45,8 @@ export const useCardFormSubmit = ({
 
       const cardDataToValidate: Partial<IBankCard> = {
         ...formData,
-        pan: unformatValue(formData.pan || ''),
-        expires: unformatValue(formData.expires || ''),
+        pan: filterDigitsOnly(formData.pan || ''),
+        expires: filterDigitsOnly(formData.expires || ''),
       };
 
       const validationErrors = validateCardForm(cardDataToValidate);

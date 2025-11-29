@@ -7,3 +7,15 @@ export interface IValidationErrors {
   phrase?: string;
   [key: string]: string | undefined;
 }
+
+export interface IFieldConfig {
+  name: string;
+  label: string;
+  maxLength?: number;
+  required?: boolean;
+  inputMode?: 'text' | 'numeric' | 'decimal' | 'tel' | 'email' | 'url';
+  autoComplete?: string;
+  formatter?: (value: string) => string;
+  validator?: (value: string) => string | undefined;
+  instantValidateLength?: number;
+}

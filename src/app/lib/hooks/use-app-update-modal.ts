@@ -1,11 +1,6 @@
 import { useEffect, useRef, createElement } from 'react';
 import { useModal } from '@shared/lib';
-import {
-  PWAUpdate,
-  PWA_UPDATE_TITLE_ID,
-  PWA_UPDATE_MESSAGE_ID,
-  PWA_UPDATE_TITLE,
-} from '@features/pwa-update';
+import { PWAUpdate, PWA_UPDATE_TITLE } from '@features/pwa-update';
 import { usePWAUpdate } from './use-pwa-update';
 
 export const useAppUpdateModal = (): void => {
@@ -39,11 +34,6 @@ export const useAppUpdateModal = (): void => {
       onDismiss: handleDismissUpdate,
     });
 
-    updateModal.open(
-      modalContent,
-      PWA_UPDATE_TITLE_ID,
-      PWA_UPDATE_MESSAGE_ID,
-      PWA_UPDATE_TITLE
-    );
+    updateModal.open(modalContent, PWA_UPDATE_TITLE);
   }, [needRefresh, updateServiceWorker, updateModal]);
 };

@@ -57,8 +57,6 @@ describe('showError', () => {
     const callArgs = mockOpenModal.mock.calls[0];
 
     expect(callArgs[0]).toMatch(/^error-content-/);
-    expect(callArgs[2]).toBe('error-content-title');
-    expect(callArgs[3]).toBe('error-content-message');
   });
 
   it('должен открывать модальное окно с контекстом', () => {

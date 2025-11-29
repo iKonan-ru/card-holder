@@ -1,6 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import type { IBankCard } from '@entities/bank-card';
-import { formatPan, formatExpires, EMPTY_CARD_FORM } from '..';
+import { EMPTY_CARD_FORM } from '../constants';
+import { formatPan, formatExpires } from '../utils';
 
 interface IUseCardFormStateParams {
   initialCard?: Partial<IBankCard>;

@@ -9,18 +9,11 @@ import {
   FormProvider,
   ParentClassProvider,
 } from '@shared/lib';
-import {
-  ValidatedField,
-  ConfirmModal,
-  Button,
-  CONFIRM_MODAL_TITLE_ID,
-  CONFIRM_MODAL_MESSAGE_ID,
-} from '@shared/ui';
+import { ValidatedField, ConfirmModal, Button } from '@shared/ui';
 import { CardPreview } from '@features/card-preview';
 import {
   useCardForm,
   CARD_FORM_BLOCK,
-  CARD_FORM_TITLE_ID,
   SUBMIT_BUTTON_TEXT,
   SUBMIT_BUTTON_EDIT_TEXT,
   DELETE_BUTTON_TEXT,
@@ -76,14 +69,12 @@ export const CardForm: FC<ICardFormProps> = ({
   const handleDeleteClick = useCallback(() => {
     deleteModal.open(
       <ConfirmModal
-        title={DELETE_MODAL_TITLE}
         message={DELETE_MODAL_MESSAGE}
         confirmText={DELETE_CONFIRM_TEXT}
         cancelText={DELETE_CANCEL_TEXT}
         onConfirm={handleConfirmDelete}
       />,
-      CONFIRM_MODAL_TITLE_ID,
-      CONFIRM_MODAL_MESSAGE_ID
+      DELETE_MODAL_TITLE
     );
   }, [deleteModal, handleConfirmDelete]);
 
@@ -108,7 +99,6 @@ export const CardForm: FC<ICardFormProps> = ({
       <form
         className={className}
         onSubmit={handleSubmit}
-        aria-labelledby={CARD_FORM_TITLE_ID}
         aria-busy={isSubmitting}
       >
         <ParentClassProvider parentClass={CARD_FORM_BLOCK}>

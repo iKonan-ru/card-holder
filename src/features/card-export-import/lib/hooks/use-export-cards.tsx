@@ -15,8 +15,6 @@ import {
 import { PasswordModal } from '../../ui';
 import {
   PASSWORD_MODAL_ID_EXPORT,
-  PASSWORD_MODAL_TITLE_ID,
-  PASSWORD_MODAL_DESCRIPTION_ID,
   PASSWORD_MODAL_TITLE_EXPORT,
   FALLBACK_ERROR_EXPORT,
 } from '../constants';
@@ -83,8 +81,6 @@ export const useExportCards = (
       openModal(
         PASSWORD_MODAL_ID_EXPORT,
         modalContent,
-        PASSWORD_MODAL_TITLE_ID,
-        PASSWORD_MODAL_DESCRIPTION_ID,
         PASSWORD_MODAL_TITLE_EXPORT
       );
     } catch (error) {

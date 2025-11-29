@@ -16,20 +16,12 @@ export interface IModalItem {
   id: string;
   content: ReactNode;
   title?: string;
-  ariaLabelledBy?: string;
-  ariaDescribedBy?: string;
   preventClose?: boolean;
 }
 
 export interface IModalContext {
   modals: IModalItem[];
-  openModal: (
-    id: string,
-    content: ReactNode,
-    ariaLabelledBy?: string,
-    ariaDescribedBy?: string,
-    title?: string
-  ) => void;
+  openModal: (id: string, content: ReactNode, title?: string) => void;
   closeModal: (id: string) => void;
   closeAllModals: () => void;
   updateModalPreventClose: (id: string, preventClose: boolean) => void;
@@ -50,13 +42,7 @@ export const ModalProvider: FC<IModalProviderProps> = ({
   const userActionRef = useRef(false);
 
   const openModal = useCallback(
-    (
-      id: string,
-      content: ReactNode,
-      ariaLabelledBy?: string,
-      ariaDescribedBy?: string,
-      title?: string
-    ) => {
+    (id: string, content: ReactNode, title?: string) => {
       if (onModalOpen) {
         onModalOpen();
       }
@@ -70,10 +56,7 @@ export const ModalProvider: FC<IModalProviderProps> = ({
           return prevModals;
         }
 
-        return [
-          ...prevModals,
-          { id, content, title, ariaLabelledBy, ariaDescribedBy },
-        ];
+        return [...prevModals, { id, content, title }];
       });
     },
     [onModalOpen]

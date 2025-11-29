@@ -192,14 +192,6 @@ describe('UpdateModal', () => {
     consoleErrorSpy.mockRestore();
   });
 
-  it('должен устанавливать правильные id для сообщения', () => {
-    render(<PWAUpdate onUpdate={vi.fn()} />);
-
-    const message = screen.getByText(PWA_UPDATE_MESSAGE);
-
-    expect(message).toHaveAttribute('id', 'pwa-update-message');
-  });
-
   it('должен устанавливать правильные aria-label для кнопок', () => {
     render(
       <PWAUpdate

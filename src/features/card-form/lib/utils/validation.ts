@@ -2,12 +2,12 @@ import type { IBankCard } from '@entities/bank-card';
 import { EMPTY_STRING, TYPE_STRING, TYPE_NUMBER } from '@shared/lib';
 import type { IValidationErrors } from '../types';
 import {
-  PAN_FIELD_CONFIG,
+  CVV_FIELD_CONFIG,
   EXPIRES_FIELD_CONFIG,
   NAME_FIELD_CONFIG,
-  CVV_FIELD_CONFIG,
+  PAN_FIELD_CONFIG,
   PIN_FIELD_CONFIG,
-} from '../constants/field-configs';
+} from '../constants';
 
 const VALIDATABLE_FIELDS = [
   PAN_FIELD_CONFIG,

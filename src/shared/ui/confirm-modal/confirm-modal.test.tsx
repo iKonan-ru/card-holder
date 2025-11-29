@@ -11,7 +11,6 @@ describe('ConfirmModal', () => {
   it('должен отображать сообщение', () => {
     render(
       <ConfirmModal
-        title="Заголовок"
         message="Сообщение"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
@@ -24,7 +23,6 @@ describe('ConfirmModal', () => {
   it('должен отображать кнопки с текстом по умолчанию', () => {
     render(
       <ConfirmModal
-        title="Заголовок"
         message="Сообщение"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
@@ -32,7 +30,7 @@ describe('ConfirmModal', () => {
     );
 
     expect(
-      screen.getByRole('button', { name: 'Подтвердить: Заголовок' })
+      screen.getByRole('button', { name: 'Подтвердить' })
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Отмена' })).toBeInTheDocument();
   });
@@ -40,7 +38,6 @@ describe('ConfirmModal', () => {
   it('должен отображать кастомный текст кнопок', () => {
     render(
       <ConfirmModal
-        title="Заголовок"
         message="Сообщение"
         confirmText="Да"
         cancelText="Нет"
@@ -49,9 +46,7 @@ describe('ConfirmModal', () => {
       />
     );
 
-    expect(
-      screen.getByRole('button', { name: 'Да: Заголовок' })
-    ).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Да' })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Нет' })).toBeInTheDocument();
   });
 
@@ -61,7 +56,6 @@ describe('ConfirmModal', () => {
 
     render(
       <ConfirmModal
-        title="Заголовок"
         message="Сообщение"
         onConfirm={handleConfirm}
         onCancel={vi.fn()}
@@ -69,7 +63,7 @@ describe('ConfirmModal', () => {
     );
 
     const confirmButton = screen.getByRole('button', {
-      name: 'Подтвердить: Заголовок',
+      name: 'Подтвердить',
     });
     await user.click(confirmButton);
 
@@ -84,7 +78,6 @@ describe('ConfirmModal', () => {
 
     render(
       <ConfirmModal
-        title="Заголовок"
         message="Сообщение"
         onConfirm={vi.fn()}
         onCancel={handleCancel}

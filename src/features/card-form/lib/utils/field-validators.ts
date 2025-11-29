@@ -1,3 +1,4 @@
+import { SPACE_REMOVAL_PATTERN, DECIMAL_RADIX } from '@shared/lib';
 import {
   PAN_LENGTH,
   CVV_MAX_LENGTH,
@@ -6,6 +7,10 @@ import {
   MONTH_VALIDATION_PATTERN,
   NON_DIGIT_REMOVAL_PATTERN,
   MIN_NAME_LENGTH,
+  MONTH_START_INDEX,
+  MONTH_END_INDEX,
+  YEAR_START_INDEX,
+  YEAR_END_INDEX,
   ERROR_PAN_REQUIRED,
   ERROR_PAN_INVALID_LENGTH,
   ERROR_PAN_INVALID,
@@ -18,13 +23,7 @@ import {
   ERROR_CVV_INVALID_LENGTH,
   ERROR_PIN_INVALID_LENGTH,
 } from '../constants';
-import { SPACE_REMOVAL_PATTERN, DECIMAL_RADIX } from '@shared/lib';
 import { validateLuhn } from './luhn';
-
-const MONTH_START_INDEX = 0;
-const MONTH_END_INDEX = 2;
-const YEAR_START_INDEX = 2;
-const YEAR_END_INDEX = 4;
 
 export const validatePan = (value: string): string | undefined => {
   if (!value) {

@@ -228,7 +228,7 @@ describe('CardForm', () => {
     await user.click(deleteButton);
 
     const confirmButton = screen.getByRole('button', {
-      name: 'Удалить: Удаление карты',
+      name: 'Удалить',
     });
     await user.click(confirmButton);
 

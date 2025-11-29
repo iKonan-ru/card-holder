@@ -19,8 +19,6 @@ interface IModalProps extends PropsWithChildren {
   isTopModal: boolean;
   preventClose?: boolean;
   title?: string;
-  ariaLabelledBy?: string;
-  ariaDescribedBy?: string;
 }
 
 export const Modal: FC<IModalProps> = ({
@@ -30,8 +28,6 @@ export const Modal: FC<IModalProps> = ({
   isTopModal,
   preventClose = false,
   title,
-  ariaLabelledBy,
-  ariaDescribedBy,
 }) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -73,22 +69,13 @@ export const Modal: FC<IModalProps> = ({
         ref={contentRef}
         role={ARIA_ROLE_DIALOG}
         aria-modal={ARIA_MODAL_TRUE}
-        aria-labelledby={ariaLabelledBy}
-        aria-describedby={ariaDescribedBy}
         className={contentClassName}
         onClick={handleContentClick}
         onMouseDown={handleContentMouseDown}
       >
         <ModalCloseContext.Provider value={handleClose}>
           <ParentClassProvider parentClass={MODAL_BLOCK}>
-            {title && (
-              <h3
-                id={ariaLabelledBy}
-                className={titleClassName}
-              >
-                {title}
-              </h3>
-            )}
+            {title && <h3 className={titleClassName}>{title}</h3>}
             {children}
           </ParentClassProvider>
         </ModalCloseContext.Provider>

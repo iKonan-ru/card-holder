@@ -1,7 +1,10 @@
 export const SPACE_REMOVAL_PATTERN = /\s/g;
 export const NON_DIGIT_PATTERN = /\D/g;
+
 export const EMPTY_STRING = '';
 export const SPACE_CHAR = ' ';
+export const SLASH_CHAR = '/';
+export const ZERO_CHAR = '0';
 
 export const TYPE_STRING = 'string';
 export const TYPE_NUMBER = 'number';
@@ -10,8 +13,6 @@ export const DECIMAL_RADIX = 10;
 export const HEX_RADIX = 16;
 
 export const MONTH_OFFSET = 1;
-
-export const ZERO_CHAR = '0';
 
 export const INDEXEDDB_MODE_READONLY = 'readonly';
 export const INDEXEDDB_MODE_READWRITE = 'readwrite';

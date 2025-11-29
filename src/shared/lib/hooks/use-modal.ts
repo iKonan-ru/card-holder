@@ -2,12 +2,7 @@ import { useCallback, useId, type ReactNode } from 'react';
 import { useModalContext } from '../context';
 
 export interface IUseModalReturn {
-  open: (
-    content: ReactNode,
-    ariaLabelledBy?: string,
-    ariaDescribedBy?: string,
-    title?: string
-  ) => void;
+  open: (content: ReactNode, title?: string) => void;
   close: () => void;
   updatePreventClose: (preventClose: boolean) => void;
   modalId: string;
@@ -19,13 +14,8 @@ export const useModal = (): IUseModalReturn => {
   const modalId = useId();
 
   const open = useCallback(
-    (
-      content: ReactNode,
-      ariaLabelledBy?: string,
-      ariaDescribedBy?: string,
-      title?: string
-    ) => {
-      openModal(modalId, content, ariaLabelledBy, ariaDescribedBy, title);
+    (content: ReactNode, title?: string) => {
+      openModal(modalId, content, title);
     },
     [modalId, openModal]
   );

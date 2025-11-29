@@ -1,3 +1,4 @@
+import type { IFieldConfig } from '@features/card-form';
 import {
   formatPan,
   formatExpires,
@@ -15,38 +16,14 @@ import {
 import {
   PAN_FORMATTED_LENGTH,
   PAN_LENGTH,
-  PAN_LABEL,
   EXPIRES_FORMATTED_LENGTH,
   EXPIRES_LENGTH,
-  EXPIRES_LABEL,
   CVV_MAX_LENGTH,
-  CVV_LABEL,
   PIN_MAX_LENGTH,
-  PIN_LABEL,
-  PHRASE_LABEL,
-  NAME_LABEL,
-  TYPE_LABEL,
-  FIELD_NAME_PAN,
-  FIELD_NAME_EXPIRES,
-  FIELD_NAME_CVV,
-  FIELD_NAME_PIN,
-  FIELD_NAME_PHRASE,
-  FIELD_NAME_NAME,
-  FIELD_NAME_TYPE,
-} from './constants';
+} from './validation';
 
-interface IFieldConfig {
-  name: string;
-  label: string;
-  maxLength?: number;
-  required?: boolean;
-  inputMode?: 'text' | 'numeric' | 'decimal' | 'tel' | 'email' | 'url';
-  autoComplete?: string;
-  formatter?: (value: string) => string;
-  validator?: (value: string) => string | undefined;
-  instantValidateLength?: number;
-}
-
+export const FIELD_NAME_PAN = 'pan';
+export const PAN_LABEL = 'Номер карты';
 export const PAN_FIELD_CONFIG: IFieldConfig = {
   name: FIELD_NAME_PAN,
   label: PAN_LABEL,
@@ -54,11 +31,13 @@ export const PAN_FIELD_CONFIG: IFieldConfig = {
   required: true,
   inputMode: 'numeric',
   autoComplete: 'cc-number',
-  formatter: (value: string) => formatPan(filterDigitsOnly(value)),
+  formatter: formatPan,
   validator: validatePan,
   instantValidateLength: PAN_LENGTH,
 };
 
+export const FIELD_NAME_EXPIRES = 'expires';
+export const EXPIRES_LABEL = 'Срок действия';
 export const EXPIRES_FIELD_CONFIG: IFieldConfig = {
   name: FIELD_NAME_EXPIRES,
   label: EXPIRES_LABEL,
@@ -66,11 +45,13 @@ export const EXPIRES_FIELD_CONFIG: IFieldConfig = {
   required: true,
   inputMode: 'numeric',
   autoComplete: 'cc-exp',
-  formatter: (value: string) => formatExpires(filterDigitsOnly(value)),
+  formatter: formatExpires,
   validator: validateExpires,
   instantValidateLength: EXPIRES_LENGTH,
 };
 
+export const FIELD_NAME_CVV = 'cvv';
+export const CVV_LABEL = 'CVV';
 export const CVV_FIELD_CONFIG: IFieldConfig = {
   name: FIELD_NAME_CVV,
   label: CVV_LABEL,
@@ -83,6 +64,8 @@ export const CVV_FIELD_CONFIG: IFieldConfig = {
   instantValidateLength: CVV_MAX_LENGTH,
 };
 
+export const FIELD_NAME_PIN = 'pin';
+export const PIN_LABEL = 'PIN';
 export const PIN_FIELD_CONFIG: IFieldConfig = {
   name: FIELD_NAME_PIN,
   label: PIN_LABEL,
@@ -94,6 +77,8 @@ export const PIN_FIELD_CONFIG: IFieldConfig = {
   instantValidateLength: PIN_MAX_LENGTH,
 };
 
+export const FIELD_NAME_PHRASE = 'phrase';
+export const PHRASE_LABEL = 'Кодовая фраза';
 export const PHRASE_FIELD_CONFIG: IFieldConfig = {
   name: FIELD_NAME_PHRASE,
   label: PHRASE_LABEL,
@@ -101,6 +86,8 @@ export const PHRASE_FIELD_CONFIG: IFieldConfig = {
   formatter: filterAlphanumeric,
 };
 
+export const FIELD_NAME_NAME = 'name';
+export const NAME_LABEL = 'Имя владельца';
 export const NAME_FIELD_CONFIG: IFieldConfig = {
   name: FIELD_NAME_NAME,
   label: NAME_LABEL,
@@ -110,6 +97,8 @@ export const NAME_FIELD_CONFIG: IFieldConfig = {
   validator: validateName,
 };
 
+export const FIELD_NAME_TYPE = 'type';
+export const TYPE_LABEL = 'Тип карты';
 export const TYPE_FIELD_CONFIG: IFieldConfig = {
   name: FIELD_NAME_TYPE,
   label: TYPE_LABEL,

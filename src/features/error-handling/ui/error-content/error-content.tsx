@@ -1,12 +1,12 @@
 import type { FC } from 'react';
-import { bem, ParentClassProvider, useClassName } from '@shared/lib';
-import { useAnimatedModalClose } from '@shared/lib';
-import { Button } from '@shared/ui';
 import {
-  ERROR_CONTENT_BLOCK,
-  ERROR_CONTENT_CLOSE_TEXT,
-  ERROR_CONTENT_MESSAGE_ID,
-} from '../../lib';
+  bem,
+  ParentClassProvider,
+  useClassName,
+  useAnimatedModalClose,
+} from '@shared/lib';
+import { Button } from '@shared/ui';
+import { ERROR_CONTENT_BLOCK, ERROR_CONTENT_CLOSE_TEXT } from '../../lib';
 import './error-content.less';
 
 interface IErrorContentProps {
@@ -24,12 +24,7 @@ export const ErrorContent: FC<IErrorContentProps> = ({ message, onClose }) => {
   return (
     <div className={className}>
       <ParentClassProvider parentClass={ERROR_CONTENT_BLOCK}>
-        <p
-          id={ERROR_CONTENT_MESSAGE_ID}
-          className={bem(ERROR_CONTENT_BLOCK, 'message')}
-        >
-          {message}
-        </p>
+        <p className={bem(ERROR_CONTENT_BLOCK, 'message')}>{message}</p>
         <div className={bem(ERROR_CONTENT_BLOCK, 'actions')}>
           <Button
             type="button"

@@ -10,7 +10,7 @@ import {
   POINTER_SENSOR_ACTIVATION_DISTANCE,
   TOUCH_SENSOR_ACTIVATION_DELAY,
   TOUCH_SENSOR_ACTIVATION_TOLERANCE,
-} from '..';
+} from '../constants';
 
 export const useDndSensors = () => {
   return useSensors(

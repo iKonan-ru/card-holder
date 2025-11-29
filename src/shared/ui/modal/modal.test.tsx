@@ -217,8 +217,6 @@ describe('Modal', () => {
       <Modal
         onClose={vi.fn()}
         isTopModal={true}
-        ariaLabelledBy="modal-title"
-        ariaDescribedBy="modal-description"
       >
         <div>Содержимое</div>
       </Modal>
@@ -226,8 +224,6 @@ describe('Modal', () => {
 
     const dialog = container.querySelector('[role="dialog"]');
     expect(dialog).toHaveAttribute('aria-modal', 'true');
-    expect(dialog).toHaveAttribute('aria-labelledby', 'modal-title');
-    expect(dialog).toHaveAttribute('aria-describedby', 'modal-description');
   });
 
   it('не должен управлять фокусом если модальное окно не верхнее', () => {
@@ -297,7 +293,6 @@ describe('Modal', () => {
         onClose={vi.fn()}
         isTopModal={true}
         title="Тестовый заголовок"
-        ariaLabelledBy="modal-title"
       >
         <div>Содержимое</div>
       </Modal>

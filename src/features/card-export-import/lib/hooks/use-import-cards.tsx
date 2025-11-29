@@ -19,12 +19,8 @@ import {
 } from '../utils';
 import { PasswordModal, SuccessModal } from '../../ui';
 import {
-  PASSWORD_MODAL_TITLE_ID,
-  PASSWORD_MODAL_DESCRIPTION_ID,
   PASSWORD_MODAL_TITLE_IMPORT,
   PASSWORD_MODAL_ID_IMPORT,
-  SUCCESS_MODAL_TITLE_ID,
-  SUCCESS_MODAL_MESSAGE_ID,
   SUCCESS_MODAL_ID_IMPORT,
   FALLBACK_ERROR_IMPORT,
   SUCCESS_MODAL_TITLE_IMPORT,
@@ -90,8 +86,6 @@ export const useImportCards = (
           openModal(
             SUCCESS_MODAL_ID_IMPORT,
             successContent,
-            SUCCESS_MODAL_TITLE_ID,
-            SUCCESS_MODAL_MESSAGE_ID,
             SUCCESS_MODAL_TITLE_IMPORT
           );
         } catch (error) {
@@ -115,8 +109,6 @@ export const useImportCards = (
       openModal(
         PASSWORD_MODAL_ID_IMPORT,
         modalContent,
-        PASSWORD_MODAL_TITLE_ID,
-        PASSWORD_MODAL_DESCRIPTION_ID,
         PASSWORD_MODAL_TITLE_IMPORT
       );
     } catch (error) {

@@ -57,21 +57,6 @@ describe('ErrorContent', () => {
     });
   });
 
-  it('должен иметь правильные accessibility атрибуты', () => {
-    const onClose = vi.fn();
-
-    render(
-      <ErrorContent
-        message="Тестовая ошибка"
-        onClose={onClose}
-      />
-    );
-
-    const message = screen.getByText('Тестовая ошибка');
-
-    expect(message).toHaveAttribute('id', 'error-content-message');
-  });
-
   it('должен отображать длинное сообщение ошибки', () => {
     const onClose = vi.fn();
     const longMessage =

@@ -46,8 +46,6 @@ describe('useClearData', () => {
     expect(mockOpenModal).toHaveBeenCalledWith(
       'confirm-clear-all',
       expect.anything(),
-      'confirm-clear-all-title',
-      'confirm-clear-all-message',
       'Подтверждение удаления'
     );
   });
@@ -181,10 +179,8 @@ describe('useClearData', () => {
       result.current.clearData();
     });
 
-    const [modalId, , titleId, messageId] = mockOpenModal.mock.calls[0];
+    const args = mockOpenModal.mock.calls[0];
 
-    expect(modalId).toBe('confirm-clear-all');
-    expect(titleId).toBe('confirm-clear-all-title');
-    expect(messageId).toBe('confirm-clear-all-message');
+    expect(args[0]).toBe('confirm-clear-all');
   });
 });

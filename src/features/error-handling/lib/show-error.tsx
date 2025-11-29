@@ -1,14 +1,8 @@
 import type { ReactNode } from 'react';
-import type { IModalContext } from '@shared/lib';
-import { generateRandomId } from '@shared/lib';
-import { ErrorContent } from '../ui/error-content';
+import { type IModalContext, generateRandomId } from '@shared/lib';
+import { ErrorContent } from '../ui';
 import { translateError } from './utils';
-import {
-  ERROR_CONTENT_ID_PREFIX,
-  ERROR_CONTENT_TITLE_ID,
-  ERROR_CONTENT_MESSAGE_ID,
-  ERROR_CONTENT_TITLE,
-} from './constants';
+import { ERROR_CONTENT_ID_PREFIX, ERROR_CONTENT_TITLE } from './constants';
 
 let modalContextRef: IModalContext | null = null;
 
@@ -33,11 +27,5 @@ export const showError = (params: {
 
   const modalContent: ReactNode = <ErrorContent message={translatedMessage} />;
 
-  modalContextRef.openModal(
-    modalId,
-    modalContent,
-    ERROR_CONTENT_TITLE_ID,
-    ERROR_CONTENT_MESSAGE_ID,
-    ERROR_CONTENT_TITLE
-  );
+  modalContextRef.openModal(modalId, modalContent, ERROR_CONTENT_TITLE);
 };

@@ -32,8 +32,6 @@ vi.mock('@features/pwa-update', () => ({
       </div>
     )
   ),
-  PWA_UPDATE_TITLE_ID: 'pwa-update-title',
-  PWA_UPDATE_MESSAGE_ID: 'pwa-update-message',
   PWA_UPDATE_TITLE: 'Обновление приложения',
 }));
 
