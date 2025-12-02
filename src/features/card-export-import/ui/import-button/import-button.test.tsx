@@ -1,10 +1,10 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen } from '@testing-library/react';
 import type { PropsWithChildren } from 'react';
+import { render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { IBankCard } from '@entities/bank-card';
 import { ModalProvider, ParentClassProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import { ImportButton } from './import-button';
-import type { IBankCard } from '@entities/bank-card';
 
 const { mockUseCardManagementStore } = vi.hoisted(() => ({
   mockUseCardManagementStore: vi.fn(),

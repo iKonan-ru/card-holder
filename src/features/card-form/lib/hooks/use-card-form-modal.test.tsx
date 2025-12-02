@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useCardFormModal } from './use-card-form-modal';
+import { act, renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { useCardFormModal } from '@features/card-form';
 import type { IBankCard } from '@entities/bank-card';
 
 const { mockUseCardManagementStore, mockUseModal } = vi.hoisted(() => ({

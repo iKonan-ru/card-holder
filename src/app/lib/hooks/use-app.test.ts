@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { useApp } from '@app/lib';
 import { useCardManagementStore } from '@features/card-management';
 import { initGlobalErrorHandler } from '@features/error-handling';
 import { setErrorModalHandler } from '@shared/lib';
-import { useApp } from './use-app';
 
 vi.mock('@features/card-management', () => ({
   useCardManagementStore: vi.fn(),

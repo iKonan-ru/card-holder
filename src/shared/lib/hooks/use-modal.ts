@@ -1,14 +1,15 @@
 import { useCallback, useId, type ReactNode } from 'react';
+import type { Procedure } from '@shared/types';
 import { useModalContext } from '../context';
 
-export interface IUseModalReturn {
+export interface IUseModalResult {
   open: (content: ReactNode, title?: string) => void;
-  close: () => void;
+  close: Procedure;
   updatePreventClose: (preventClose: boolean) => void;
   modalId: string;
 }
 
-export const useModal = (): IUseModalReturn => {
+export const useModal = (): IUseModalResult => {
   const { openModal, closeModal, updateModalPreventClose, userActionRef } =
     useModalContext();
   const modalId = useId();

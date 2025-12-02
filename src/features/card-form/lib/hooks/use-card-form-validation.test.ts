@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useCardFormValidation } from './use-card-form-validation';
+import { act, renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { useCardFormValidation } from '@features/card-form';
 
 describe('useCardFormValidation', () => {
   it('должен инициализироваться с пустым объектом ошибок', () => {

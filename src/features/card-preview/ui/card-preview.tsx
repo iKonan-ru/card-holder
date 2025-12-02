@@ -1,18 +1,18 @@
-import { type FC, useMemo } from 'react';
-import { BANKS_LIST, DEFAULT_BANK } from '@shared/data';
+import { useMemo, type FC } from 'react';
 import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
-import { Icon } from '@shared/ui/icon';
+import { BANKS_LIST, DEFAULT_BANK } from '@shared/data';
 import {
   bem,
-  useClassName,
+  EMPTY_STRING,
   getBankByCardNumber,
   getPaymentSystem,
-  SPACE_REMOVAL_PATTERN,
-  EMPTY_STRING,
-  ParentClassProvider,
   getTextColorStyle,
+  ParentClassProvider,
+  SPACE_REMOVAL_PATTERN,
+  useClassName,
 } from '@shared/lib';
+import { Icon } from '@shared/ui/icon';
 import { CARD_PREVIEW_BLOCK } from '../lib';
 import './card-preview.less';
 

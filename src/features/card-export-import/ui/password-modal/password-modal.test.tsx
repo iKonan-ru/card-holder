@@ -1,17 +1,17 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { PasswordModal } from './password-modal';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import * as sharedLib from '@shared/lib';
 import {
+  ERROR_PASSWORD_MISMATCH,
+  ERROR_PASSWORD_TOO_SHORT,
+  PASSWORD_MODAL_BUTTON_CANCEL,
   PASSWORD_MODAL_BUTTON_EXPORT,
   PASSWORD_MODAL_BUTTON_IMPORT,
-  PASSWORD_MODAL_BUTTON_CANCEL,
   PASSWORD_MODAL_LABEL,
   PASSWORD_MODAL_LABEL_CONFIRM,
-  ERROR_PASSWORD_TOO_SHORT,
-  ERROR_PASSWORD_MISMATCH,
 } from '../../lib';
-import * as sharedLib from '@shared/lib';
+import { PasswordModal } from './password-modal';
 
 vi.mock('@shared/lib', async () => {
   const actual = await vi.importActual('@shared/lib');

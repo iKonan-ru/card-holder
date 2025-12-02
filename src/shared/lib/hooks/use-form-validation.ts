@@ -1,8 +1,28 @@
-import { useState, useCallback } from 'react';
+import {
+  useCallback,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
+import type { Procedure } from '@shared/types';
+
+export interface IUseFormValidationResult<T> {
+  errors: Record<string, string | undefined>;
+  setErrors: Dispatch<SetStateAction<T>>;
+  handleFieldValidation: (
+    fieldName: keyof T,
+    error: string | undefined
+  ) => void;
+  resetErrors: Procedure;
+  hasErrors: () => boolean;
+  getFieldError: (fieldName: keyof T) => string | undefined;
+  setMultipleErrors: (newErrors: Partial<T>) => void;
+  clearFieldError: (fieldName: keyof T) => void;
+}
 
 export function useFormValidation<
   T extends Record<string, string | undefined>,
->() {
+>(): IUseFormValidationResult<T> {
   const [errors, setErrors] = useState<T>({} as T);
 
   const handleFieldValidation = useCallback(
@@ -67,5 +87,3 @@ export function useFormValidation<
     clearFieldError,
   };
 }
-
-export type {};

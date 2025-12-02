@@ -1,7 +1,7 @@
 import { type FormEvent } from 'react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useCardFormSubmit } from './use-card-form-submit';
+import { act, renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { useCardFormSubmit } from '@features/card-form';
 import type { IBankCard } from '@entities/bank-card';
 import * as sharedLib from '@shared/lib';
 import * as validationModule from '../utils/validation';

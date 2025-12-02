@@ -1,8 +1,8 @@
 import {
+  useMemo,
   type ButtonHTMLAttributes,
   type FC,
   type PropsWithChildren,
-  useMemo,
 } from 'react';
 import { FiLoader } from 'react-icons/fi';
 import { bem, useClassName } from '@shared/lib';

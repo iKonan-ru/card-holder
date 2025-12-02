@@ -1,12 +1,13 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
-import type { IModalItem } from '../context';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Procedure } from '@shared/types';
 import { KEY_ESC } from '../constants';
+import type { IModalItem } from '../context';
 import { useModalKeyboard } from './use-modal-keyboard';
 
 const mockCloseTop = vi.fn();
 const mockUserActionRef = { current: false };
-const mockModalRequestCloseRef = { current: new Map<string, () => void>() };
+const mockModalRequestCloseRef = { current: new Map<string, Procedure>() };
 
 const createMockModal = (id: string, preventClose = false): IModalItem => ({
   id,

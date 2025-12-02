@@ -1,24 +1,27 @@
-import { useState, useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useModalContext } from '@shared/lib';
+import type { Procedure } from '@shared/types';
 import { ConfirmModal } from '@shared/ui';
 import {
-  CONFIRM_MODAL_ID,
-  CONFIRM_CLEAR_TITLE,
-  CONFIRM_CLEAR_MESSAGE,
-  CONFIRM_CLEAR_BUTTON,
   CANCEL_CLEAR_BUTTON,
+  CONFIRM_CLEAR_BUTTON,
+  CONFIRM_CLEAR_MESSAGE,
+  CONFIRM_CLEAR_TITLE,
+  CONFIRM_MODAL_ID,
 } from '../constants';
 
 interface IUseClearDataParams {
   onClear: () => Promise<void>;
 }
 
-interface IUseClearData {
+interface IUseClearDataResult {
   isClearing: boolean;
-  clearData: () => void;
+  clearData: Procedure;
 }
 
-export const useClearData = (params: IUseClearDataParams): IUseClearData => {
+export const useClearData = (
+  params: IUseClearDataParams
+): IUseClearDataResult => {
   const { onClear } = params;
   const [isClearing, setIsClearing] = useState(false);
   const { openModal, closeModal } = useModalContext();

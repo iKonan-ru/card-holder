@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { validateCardForm, checkHasErrors } from './validation';
+import { describe, expect, it } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
+import { checkHasErrors, validateCardForm } from './validation';
 
 describe('validateCardForm', () => {
   const VALID_CARD: IBankCard = {

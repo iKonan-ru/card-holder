@@ -1,8 +1,9 @@
-import { useState, useCallback, useMemo, useRef, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import type { Procedure } from '@shared/types';
 import {
-  TOGGLE_SHOW_PASSWORD_LABEL,
   TOGGLE_HIDE_PASSWORD_LABEL,
+  TOGGLE_SHOW_PASSWORD_LABEL,
 } from '@shared/ui';
 
 interface IUsePasswordVisibilityParams {
@@ -11,17 +12,17 @@ interface IUsePasswordVisibilityParams {
   onExternalChange?: (isVisible: boolean) => void;
 }
 
-interface IUsePasswordVisibility {
+interface IUsePasswordVisibilityResult {
   isVisible: boolean;
   inputType: 'text' | 'password';
   ariaLabel: string;
   Icon: typeof FiEye | typeof FiEyeOff;
-  toggleVisibility: () => void;
+  toggleVisibility: Procedure;
 }
 
 export const usePasswordVisibility = (
   params: IUsePasswordVisibilityParams
-): IUsePasswordVisibility => {
+): IUsePasswordVisibilityResult => {
   const { isControlled, externalIsVisible, onExternalChange } = params;
   const [internalIsVisible, setInternalIsVisible] = useState(false);
 

@@ -1,11 +1,12 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Procedure } from '@shared/types';
 import type { IModalItem } from '../context';
 import { useModalPopstate } from './use-modal-popstate';
 
 const mockCloseTop = vi.fn();
 const mockIsClosingFromHistoryRef = { current: false };
-const mockModalRequestCloseRef = { current: new Map<string, () => void>() };
+const mockModalRequestCloseRef = { current: new Map<string, Procedure>() };
 
 const createMockModal = (id: string): IModalItem => ({
   id,

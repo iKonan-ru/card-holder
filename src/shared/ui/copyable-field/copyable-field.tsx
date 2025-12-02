@@ -1,14 +1,14 @@
-import { type FC, useMemo } from 'react';
+import { useMemo, type FC } from 'react';
 import { FiCheck } from 'react-icons/fi';
 import {
+  ARIA_HIDDEN_TRUE,
+  ARIA_ROLE_BUTTON,
+  ARIA_TABINDEX_INTERACTIVE,
   bem,
   useClassName,
-  ARIA_ROLE_BUTTON,
-  ARIA_HIDDEN_TRUE,
-  ARIA_TABINDEX_INTERACTIVE,
   useCopyableField,
 } from '@shared/lib';
-import { COPYABLE_FIELD_BLOCK, COPY_TITLE_TEXT } from './lib';
+import { COPY_TITLE_TEXT, COPYABLE_FIELD_BLOCK } from './lib';
 import './copyable-field.less';
 
 interface ICopyableFieldProps {

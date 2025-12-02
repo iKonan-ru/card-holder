@@ -1,11 +1,12 @@
-import { type FC, useCallback } from 'react';
-import { useModalClose } from '@shared/lib';
+import { useCallback, type FC } from 'react';
 import type { IBankCard } from '@entities/bank-card';
+import { useModalClose } from '@shared/lib';
+import type { Procedure } from '@shared/types';
 import { CardForm } from '../card-form';
 
 interface ICardFormModalProps {
   initialCard?: IBankCard;
-  onComplete?: () => void;
+  onComplete?: Procedure;
 }
 
 export const CardFormModal: FC<ICardFormModalProps> = ({

@@ -1,24 +1,24 @@
 import type { IFieldConfig } from '@features/card-form';
 import {
-  formatPan,
-  formatExpires,
-  formatName,
-  filterDigitsOnly,
-  filterAlphanumeric,
-} from '../utils/masks';
-import {
-  validatePan,
+  validateCvv,
   validateExpires,
   validateName,
-  validateCvv,
+  validatePan,
   validatePin,
 } from '../utils/field-validators';
 import {
-  PAN_FORMATTED_LENGTH,
-  PAN_LENGTH,
+  filterAlphanumeric,
+  filterDigitsOnly,
+  formatExpires,
+  formatName,
+  formatPan,
+} from '../utils/masks';
+import {
+  CVV_MAX_LENGTH,
   EXPIRES_FORMATTED_LENGTH,
   EXPIRES_LENGTH,
-  CVV_MAX_LENGTH,
+  PAN_FORMATTED_LENGTH,
+  PAN_LENGTH,
   PIN_MAX_LENGTH,
 } from './validation';
 

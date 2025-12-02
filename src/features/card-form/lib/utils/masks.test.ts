@@ -1,10 +1,10 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
-  formatPan,
-  formatExpires,
-  filterDigitsOnly,
   filterAlphanumeric,
+  filterDigitsOnly,
+  formatExpires,
   formatName,
+  formatPan,
 } from './masks';
 
 describe('formatPan', () => {

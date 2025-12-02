@@ -9,9 +9,7 @@ export const parseImportedFile = (fileContent: string): IEncryptedPayload => {
   }
 
   try {
-    const payload = JSON.parse(fileContent) as IEncryptedPayload;
-
-    return payload;
+    return JSON.parse(fileContent) as IEncryptedPayload;
   } catch {
     throw new Error(ERROR_CORRUPTED_FILE);
   }

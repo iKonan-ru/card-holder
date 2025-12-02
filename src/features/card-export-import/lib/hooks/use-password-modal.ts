@@ -1,33 +1,34 @@
 import {
-  useState,
   useCallback,
   useMemo,
-  type FormEvent,
+  useState,
   type ChangeEvent,
+  type FormEvent,
 } from 'react';
 import { useAnimatedModalClose, useModalClose } from '@shared/lib';
+import type { Procedure } from '@shared/types';
 import type { TPasswordModalMode } from '../../model';
 import {
-  ERROR_PASSWORD_TOO_SHORT,
   ERROR_PASSWORD_MISMATCH,
+  ERROR_PASSWORD_TOO_SHORT,
   MIN_PASSWORD_LENGTH,
-  PASSWORD_MODAL_TITLE_EXPORT,
-  PASSWORD_MODAL_TITLE_IMPORT,
   PASSWORD_MODAL_BUTTON_EXPORT,
   PASSWORD_MODAL_BUTTON_IMPORT,
+  PASSWORD_MODAL_TITLE_EXPORT,
+  PASSWORD_MODAL_TITLE_IMPORT,
 } from '../constants';
 
 interface IUsePasswordModalParams {
   mode: TPasswordModalMode;
   onConfirm: (
     password: string,
-    closeModal: () => void,
+    closeModal: Procedure,
     setError: (error: string) => void
   ) => Promise<void>;
-  onCancel?: () => void;
+  onCancel?: Procedure;
 }
 
-interface IUsePasswordModal {
+interface IUsePasswordModalResult {
   password: string;
   confirmPassword: string;
   passwordError: string | undefined;
@@ -41,12 +42,12 @@ interface IUsePasswordModal {
   handleConfirmPasswordChange: (event: ChangeEvent<HTMLInputElement>) => void;
   handlePasswordVisibilityChange: (isVisible: boolean) => void;
   handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
-  handleCancel: () => void;
+  handleCancel: Procedure;
 }
 
 export const usePasswordModal = (
   params: IUsePasswordModalParams
-): IUsePasswordModal => {
+): IUsePasswordModalResult => {
   const { mode, onConfirm, onCancel } = params;
 
   const [password, setPassword] = useState('');

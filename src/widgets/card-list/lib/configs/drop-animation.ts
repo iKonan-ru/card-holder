@@ -1,5 +1,7 @@
-import type { DropAnimation } from '@dnd-kit/core';
-import { defaultDropAnimationSideEffects } from '@dnd-kit/core';
+import {
+  defaultDropAnimationSideEffects,
+  type DropAnimation,
+} from '@dnd-kit/core';
 import { SORTABLE_CARD_ITEM_DRAGGING_OPACITY } from '@features/sortable-card-item';
 import { DROP_ANIMATION_DURATION, DROP_ANIMATION_EASING } from '../constants';
 

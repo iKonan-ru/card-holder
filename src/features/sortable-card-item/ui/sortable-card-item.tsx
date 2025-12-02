@@ -1,12 +1,12 @@
 import { useMemo, type FC, type PropsWithChildren } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { useClassName, ParentClassProvider } from '@shared/lib';
+import { ParentClassProvider, useClassName } from '@shared/lib';
 import { DragHandle } from '@shared/ui';
 import {
   SORTABLE_CARD_ITEM_BLOCK,
-  SORTABLE_CARD_ITEM_DRAGGING_OPACITY,
   SORTABLE_CARD_ITEM_DEFAULT_OPACITY,
+  SORTABLE_CARD_ITEM_DRAGGING_OPACITY,
 } from '../lib';
 import './sortable-card-item.less';
 

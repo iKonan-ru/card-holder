@@ -1,18 +1,18 @@
 import type { IBankCard } from '@entities/bank-card';
-import { executeIndexedDBOperation } from './operations';
-import { CARDS_STORE_NAME } from './constants';
 import {
   ERROR_FAILED_TO_ADD_CARD,
-  ERROR_FAILED_TO_UPDATE_CARD,
-  ERROR_FAILED_TO_DELETE_CARD,
-  ERROR_FAILED_TO_GET_CARDS,
-  ERROR_FAILED_TO_GET_CARD,
   ERROR_FAILED_TO_CLEAR_CARDS,
+  ERROR_FAILED_TO_DELETE_CARD,
+  ERROR_FAILED_TO_GET_CARD,
+  ERROR_FAILED_TO_GET_CARDS,
+  ERROR_FAILED_TO_UPDATE_CARD,
   ERROR_FAILED_TO_UPDATE_CARDS_ORDER,
   INDEXEDDB_MODE_READONLY,
   INDEXEDDB_MODE_READWRITE,
 } from '../constants';
+import { CARDS_STORE_NAME } from './constants';
 import { getDatabase } from './database';
+import { executeIndexedDBOperation } from './operations';
 
 const sortCardsByOrder = (cards: IBankCard[]): IBankCard[] => {
   return [...cards].sort((cardA, cardB) => cardA.order - cardB.order);

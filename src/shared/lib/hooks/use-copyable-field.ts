@@ -1,18 +1,32 @@
-import { useState, useRef, useCallback, useMemo } from 'react';
-import type { KeyboardEvent, MouseEvent } from 'react';
-import { logError, copyToClipboard } from '../utils';
-import { ERROR_FAILED_TO_COPY, KEY_ENTER, KEY_SPACE } from '../constants';
+import {
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+  type MouseEvent,
+} from 'react';
 import {
   COPY_INDICATOR_DURATION,
-  COPYABLE_FIELD_CONTEXT,
   COPY_TITLE_TEXT,
+  COPYABLE_FIELD_CONTEXT,
 } from '@shared/ui';
+import { ERROR_FAILED_TO_COPY, KEY_ENTER, KEY_SPACE } from '../constants';
+import { copyToClipboard, logError } from '../utils';
 
 interface IUseCopyableFieldParams {
   value: string;
   label?: string;
   title?: string;
   maskFn?: (value: string, revealed: boolean) => string;
+}
+
+interface IUseCopyableFieldResult {
+  isCopied: boolean;
+  displayValue: string;
+  ariaLabel: string;
+  handleClick: (event: MouseEvent) => void;
+  handleKeyDown: (event: KeyboardEvent<HTMLDivElement>) => void;
 }
 
 const INITIAL_IS_COPIED = false;
@@ -23,7 +37,7 @@ export const useCopyableField = ({
   label,
   title = COPY_TITLE_TEXT,
   maskFn,
-}: IUseCopyableFieldParams) => {
+}: IUseCopyableFieldParams): IUseCopyableFieldResult => {
   const [isCopied, setIsCopied] = useState(INITIAL_IS_COPIED);
   const timeoutRef = useRef<number | null>(INITIAL_TIMEOUT_REF);
 

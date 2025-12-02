@@ -1,14 +1,14 @@
 import { type FC } from 'react';
 import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
+import { ARIA_HIDDEN_TRUE, bem } from '@shared/lib';
 import { Icon } from '@shared/ui/icon';
-import { bem, ARIA_HIDDEN_TRUE } from '@shared/lib';
 import { BANK_CARD_BLOCK } from '../../lib';
 import type { IBankCardCommonProps } from '../../model';
 
-type IBankCardHeaderProps = IBankCardCommonProps;
+type TBankCardHeaderProps = IBankCardCommonProps;
 
-export const BankCardHeader: FC<IBankCardHeaderProps> = ({
+export const BankCardHeader: FC<TBankCardHeaderProps> = ({
   bank,
   paymentSystem,
 }) => {

@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { setModalContext, showError } from './show-error';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IModalContext } from '@shared/lib';
+import { setModalContext, showError } from './show-error';
 
 describe('setModalContext', () => {
   it('должен сохранять контекст модальных окон', () => {

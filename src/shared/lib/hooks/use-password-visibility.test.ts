@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
+import { act, renderHook } from '@testing-library/react';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { describe, expect, it, vi } from 'vitest';
 import { usePasswordVisibility } from './use-password-visibility';
 
 describe('usePasswordVisibility', () => {

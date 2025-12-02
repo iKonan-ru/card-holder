@@ -1,4 +1,5 @@
 import type { IBankCard } from '@entities/bank-card';
+import type { Procedure } from '@shared/types';
 
 export interface ICardManagementState {
   cards: IBankCard[];
@@ -9,7 +10,7 @@ export interface ICardManagementState {
 
 export interface ICardManagementActions {
   flipCard: (pan: IBankCard['pan']) => void;
-  unflipCards: () => void;
+  unflipCards: Procedure;
   loadCards: () => Promise<void>;
   addCard: (card: IBankCard) => Promise<void>;
   updateCard: (card: IBankCard) => Promise<void>;
@@ -18,5 +19,5 @@ export interface ICardManagementActions {
   reorderCards: (cards: IBankCard[]) => Promise<void>;
   setCards: (cards: IBankCard[]) => void;
   setReorderMode: (enabled: boolean) => void;
-  toggleReorderMode: () => void;
+  toggleReorderMode: Procedure;
 }

@@ -1,7 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
+import { type MouseEvent } from 'react';
 import { renderHook } from '@testing-library/react';
-import { useBankCard } from './use-bank-card';
+import { describe, expect, it, vi } from 'vitest';
 import type { IBankCard } from '../../model';
+import { useBankCard } from './use-bank-card';
 
 const MOCK_MASTERCARD: IBankCard = {
   pan: '5559494202595236',
@@ -170,7 +171,7 @@ describe('useBankCard', () => {
 
     const mockEvent = {
       target: document.createElement('div'),
-    } as unknown as React.MouseEvent;
+    } as unknown as MouseEvent;
 
     result.current.handleCardClick(mockEvent);
 
@@ -188,7 +189,7 @@ describe('useBankCard', () => {
 
     const mockEvent = {
       target: document.createElement('div'),
-    } as unknown as React.MouseEvent;
+    } as unknown as MouseEvent;
 
     expect(() => {
       result.current.handleCardClick(mockEvent);
@@ -209,7 +210,7 @@ describe('useBankCard', () => {
 
     const mockEvent = {
       target: document.createElement('div'),
-    } as unknown as React.MouseEvent;
+    } as unknown as MouseEvent;
 
     result.current.handleCardClick(mockEvent);
 
@@ -235,7 +236,7 @@ describe('useBankCard', () => {
 
     const mockEvent = {
       target: targetElement,
-    } as unknown as React.MouseEvent;
+    } as unknown as MouseEvent;
 
     result.current.handleCardClick(mockEvent);
 
@@ -257,7 +258,7 @@ describe('useBankCard', () => {
 
     const mockEvent = {
       stopPropagation: stopPropagationMock,
-    } as unknown as React.MouseEvent;
+    } as unknown as MouseEvent;
 
     result.current.handleEditClick(mockEvent);
 
@@ -278,7 +279,7 @@ describe('useBankCard', () => {
 
     const mockEvent = {
       stopPropagation: stopPropagationMock,
-    } as unknown as React.MouseEvent;
+    } as unknown as MouseEvent;
 
     expect(() => {
       result.current.handleEditClick(mockEvent);

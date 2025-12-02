@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
-import { CardFormModal } from './card-form-modal';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
+import { CardFormModal } from './card-form-modal';
 
 vi.mock('@shared/lib', () => ({
   useModalClose: vi.fn(),

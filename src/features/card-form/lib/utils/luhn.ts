@@ -1,4 +1,4 @@
-import { SPACE_REMOVAL_PATTERN, EMPTY_STRING } from '@shared/lib';
+import { EMPTY_STRING, SPACE_REMOVAL_PATTERN } from '@shared/lib';
 
 const LUHN_BASE = 10;
 const LUHN_MULTIPLIER = 2;

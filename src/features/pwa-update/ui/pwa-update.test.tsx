@@ -1,19 +1,20 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, cleanup, waitFor, act } from '@testing-library/react';
+import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { PWAUpdate } from './pwa-update';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import type { Procedure } from '@shared/types';
 import {
-  PWA_UPDATE_MESSAGE,
   PWA_UPDATE_BUTTON_TEXT,
   PWA_UPDATE_DISMISS_BUTTON_TEXT,
+  PWA_UPDATE_MESSAGE,
 } from '../lib';
+import { PWAUpdate } from './pwa-update';
 
 vi.mock('@shared/ui', async () => {
   const actual = await vi.importActual('@shared/ui');
 
   return {
     ...actual,
-    useAnimatedModalClose: (callback: () => void | Promise<void>) => callback,
+    useAnimatedModalClose: (callback: Procedure | Promise<void>) => callback,
   };
 });
 
@@ -95,7 +96,7 @@ describe('UpdateModal', () => {
   });
 
   it('должен устанавливать isLoading в true во время обновления', async () => {
-    let resolvePromise: () => void;
+    let resolvePromise: Procedure;
     const promise = new Promise<void>((resolve) => {
       resolvePromise = resolve;
     });

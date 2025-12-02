@@ -1,8 +1,8 @@
 import type { FC } from 'react';
-import { bem, ParentClassProvider } from '@shared/lib';
-import { PWAButton } from '@widgets/pwa-button';
-import { CardList } from '@widgets/card-list';
 import { ActionButtons } from '@widgets/action-buttons';
+import { CardList } from '@widgets/card-list';
+import { PWAButton } from '@widgets/pwa-button';
+import { bem, ParentClassProvider } from '@shared/lib';
 import { MAIN_PAGE_BLOCK } from '../lib';
 import './main-page.less';
 

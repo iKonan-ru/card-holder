@@ -1,12 +1,12 @@
-import {
-  DATABASE_NAME,
-  DATABASE_VERSION,
-  CARDS_STORE_NAME,
-  CARDS_KEY_PATH,
-  CARDS_ORDER_INDEX,
-} from './constants';
 import type { IBankCard } from '@entities/bank-card';
 import { ERROR_FAILED_TO_OPEN_DATABASE } from '../constants';
+import {
+  CARDS_KEY_PATH,
+  CARDS_ORDER_INDEX,
+  CARDS_STORE_NAME,
+  DATABASE_NAME,
+  DATABASE_VERSION,
+} from './constants';
 
 let databaseInstance: IDBDatabase | null = null;
 

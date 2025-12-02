@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
+  CARDS_KEY_PATH,
+  CARDS_STORE_NAME,
   DATABASE_NAME,
   DATABASE_VERSION,
-  CARDS_STORE_NAME,
-  CARDS_KEY_PATH,
 } from './constants';
 
 let mockOpenRequest: {

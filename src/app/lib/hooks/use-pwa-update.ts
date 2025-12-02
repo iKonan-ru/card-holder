@@ -1,18 +1,18 @@
+import { useEffect, useRef } from 'react';
 // @ts-expect-error - virtual module from vite-plugin-pwa
 import { useRegisterSW } from 'virtual:pwa-register/react';
-import { useEffect, useRef } from 'react';
 import {
   checkForServiceWorkerUpdate,
   INITIAL_UPDATE_DELAY,
   UPDATE_CHECK_INTERVAL,
 } from '@shared/lib';
 
-export interface IUsePWAUpdateReturn {
+export interface IUsePWAUpdateResult {
   needRefresh: boolean;
   updateServiceWorker: (reloadPage?: boolean) => Promise<void>;
 }
 
-export const usePWAUpdate = (): IUsePWAUpdateReturn => {
+export const usePWAUpdate = (): IUsePWAUpdateResult => {
   const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
   const intervalIdRef = useRef<number | null>(null);
 

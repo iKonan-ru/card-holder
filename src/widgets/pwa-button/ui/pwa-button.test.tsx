@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, fireEvent, cleanup } from '@testing-library/react';
-import { PWAButton } from './pwa-button';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import * as pwaButtonLib from '../lib';
+import { PWAButton } from './pwa-button';
 
 vi.mock('../lib', async () => {
   const actual = await vi.importActual('../lib');

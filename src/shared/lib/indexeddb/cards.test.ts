@@ -1,16 +1,16 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { createMockCard, MOCK_CARD_THIRD } from '@test';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { IBankCard } from '@entities/bank-card';
 import {
-  getAllCards,
   addCard,
-  updateCard,
-  deleteCard,
-  getCardByPan,
   checkCardExists,
   clearAllCards,
+  deleteCard,
+  getAllCards,
+  getCardByPan,
+  updateCard,
   updateCardsOrder,
 } from './cards';
-import type { IBankCard } from '@entities/bank-card';
-import { createMockCard, MOCK_CARD_THIRD } from '@test';
 
 const MOCK_CARDS: IBankCard[] = [
   createMockCard({

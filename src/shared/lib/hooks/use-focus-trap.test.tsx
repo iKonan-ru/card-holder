@@ -1,14 +1,13 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook } from '@testing-library/react';
-import { render, screen } from '@testing-library/react';
-import { userEvent } from '@testing-library/user-event';
-import { useFocusTrap } from './use-focus-trap';
 import { useRef } from 'react';
+import { render, renderHook, screen } from '@testing-library/react';
+import { userEvent } from '@testing-library/user-event';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { useFocusTrap } from './use-focus-trap';
 
 const TestComponent = ({ isTopModal }: { isTopModal: boolean }) => {
   const contentRef = useRef<HTMLDivElement>(null);
 
-  useFocusTrap(contentRef, isTopModal);
+  useFocusTrap({ contentRef, isTopModal });
 
   return (
     <div ref={contentRef}>
@@ -47,7 +46,7 @@ describe('useFocusTrap', () => {
   it('не должен устанавливать фокус когда contentRef.current = null', () => {
     const contentRef = { current: null };
 
-    renderHook(() => useFocusTrap(contentRef, true));
+    renderHook(() => useFocusTrap({ contentRef, isTopModal: true }));
 
     expect(contentRef.current).toBeNull();
   });
@@ -112,7 +111,7 @@ describe('useFocusTrap', () => {
     }) => {
       const contentRef = useRef<HTMLDivElement>(null);
 
-      useFocusTrap(contentRef, isTopModal);
+      useFocusTrap({ contentRef, isTopModal });
 
       return (
         <div ref={contentRef}>

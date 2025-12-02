@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
-import { handleError } from './error';
+import { describe, expect, it, vi } from 'vitest';
 import * as errorHandling from '@features/error-handling';
+import { handleError } from './error';
 
 vi.mock('@features/error-handling', () => ({
   showError: vi.fn(),

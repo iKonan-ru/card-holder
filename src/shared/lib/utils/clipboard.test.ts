@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { copyToClipboard } from './clipboard';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ERROR_FAILED_TO_COPY } from '@shared/lib';
+import { copyToClipboard } from './clipboard';
 
 describe('copyToClipboard', () => {
   let mockWriteText: ReturnType<typeof vi.fn>;

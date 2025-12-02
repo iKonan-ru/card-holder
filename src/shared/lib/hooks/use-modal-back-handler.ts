@@ -1,16 +1,17 @@
-import { useEffect, useRef, useCallback, useId } from 'react';
+import { useCallback, useEffect, useId, useRef } from 'react';
+import type { Procedure } from '@shared/types';
 import { MODAL_STATE_KEY } from '../constants';
 import { useModalStack } from './use-modal-stack';
 
-interface UseModalBackHandlerProps {
+interface IUseModalBackHandlerParams {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: Procedure;
 }
 
 export const useModalBackHandler = ({
   isOpen,
   onClose,
-}: UseModalBackHandlerProps): void => {
+}: IUseModalBackHandlerParams): void => {
   const modalId = useId();
   const isHistoryPushedRef = useRef(false);
   const closedByPopStateRef = useRef(false);

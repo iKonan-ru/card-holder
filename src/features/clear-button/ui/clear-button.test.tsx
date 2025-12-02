@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ClearButton } from './clear-button';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as cardManagementModule from '@features/card-management';
 import * as useClearDataModule from '../lib';
+import { ClearButton } from './clear-button';
 
 vi.mock('@features/card-management');
 vi.mock('../lib');

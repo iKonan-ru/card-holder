@@ -1,13 +1,26 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import type { IBankCard } from '@entities/bank-card';
+import type { Procedure } from '@shared/types';
 import { EMPTY_CARD_FORM } from '../constants';
-import { formatPan, formatExpires } from '../utils';
+import { formatExpires, formatPan } from '../utils';
 
 interface IUseCardFormStateParams {
   initialCard?: Partial<IBankCard>;
 }
 
-export const useCardFormState = ({ initialCard }: IUseCardFormStateParams) => {
+interface IUseCardFormStateResult {
+  formData: Partial<IBankCard>;
+  isSubmitting: boolean;
+  setIsSubmitting: (value: ((prevState: boolean) => boolean) | boolean) => void;
+  isEditMode: boolean;
+  originalPan: string | undefined;
+  handleFieldChange: (fieldName: string, value: string) => void;
+  resetForm: Procedure;
+}
+
+export const useCardFormState = ({
+  initialCard,
+}: IUseCardFormStateParams): IUseCardFormStateResult => {
   const [formData, setFormData] = useState<Partial<IBankCard>>(EMPTY_CARD_FORM);
   const [isSubmitting, setIsSubmitting] = useState(false);
 

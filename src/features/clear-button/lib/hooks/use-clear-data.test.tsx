@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act, waitFor } from '@testing-library/react';
-import { useClearData } from './use-clear-data';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as modalContextModule from '@shared/lib';
+import { useClearData } from './use-clear-data';
 
 vi.mock('@shared/lib');
 

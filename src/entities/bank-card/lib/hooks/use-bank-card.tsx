@@ -1,9 +1,11 @@
 import {
-  type MouseEvent,
-  type CSSProperties,
-  useMemo,
   useCallback,
+  useMemo,
+  type CSSProperties,
+  type MouseEvent,
 } from 'react';
+import type { IBank } from '@entities/bank';
+import type { TPaymentSystem } from '@entities/payment-system';
 import { BANKS_LIST, DEFAULT_BANK } from '@shared/data';
 import {
   bem,
@@ -12,14 +14,14 @@ import {
   getPaymentSystem,
   getTextColorStyle,
 } from '@shared/lib';
+import type { IBankCard } from '../../model';
 import {
   BANK_CARD_BLOCK,
+  BANK_CARD_MODIFIER_DARK_TEXT,
   BANK_CARD_MODIFIER_FLIPPED,
   BANK_CARD_MODIFIER_REORDER_MODE,
-  BANK_CARD_MODIFIER_DARK_TEXT,
   CARD_COLOR_DARKEN_PERCENTAGE,
 } from '../constants';
-import type { IBankCard } from '../../model';
 
 interface IUseBankCardParams {
   card: IBankCard;
@@ -29,13 +31,22 @@ interface IUseBankCardParams {
   onEdit?: (card: IBankCard) => void;
 }
 
+interface IUseBankCardResult {
+  bank: IBank;
+  paymentSystem: TPaymentSystem | null;
+  cardStyle: CSSProperties;
+  modifiers: string[];
+  handleCardClick: (event: MouseEvent) => void;
+  handleEditClick: (event: MouseEvent) => void;
+}
+
 export const useBankCard = ({
   card,
   isFlipped,
   isReorderMode,
   onFlip,
   onEdit,
-}: IUseBankCardParams) => {
+}: IUseBankCardParams): IUseBankCardResult => {
   const paymentSystem = useMemo(() => getPaymentSystem(card.pan), [card.pan]);
 
   const bankId = useMemo(() => getBankByCardNumber(card.pan), [card.pan]);

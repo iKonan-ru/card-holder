@@ -1,11 +1,17 @@
 import { useCallback } from 'react';
+import { useCardManagementStore } from '@features/card-management';
 import type { IBankCard } from '@entities/bank-card';
 import { useModal } from '@shared/lib';
-import { useCardManagementStore } from '@features/card-management';
+import type { Procedure } from '@shared/types';
 import { CardFormModal } from '../../ui';
-import { CARD_FORM_TITLE, CARD_FORM_EDIT_TITLE } from '../constants';
+import { CARD_FORM_EDIT_TITLE, CARD_FORM_TITLE } from '../constants';
 
-export const useCardFormModal = () => {
+interface IUseCardFormModalResult {
+  openAddCardForm: Procedure;
+  openEditCardForm: (card: IBankCard) => void;
+}
+
+export const useCardFormModal = (): IUseCardFormModalResult => {
   const modal = useModal();
   const unflipCards = useCardManagementStore((state) => state.unflipCards);
 

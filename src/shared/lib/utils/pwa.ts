@@ -1,4 +1,4 @@
-import type { BeforeInstallPromptEvent } from '../../types';
+import type { IBeforeInstallPromptEvent } from '../../types';
 
 export const checkForServiceWorkerUpdate = async (
   registration: ServiceWorkerRegistration
@@ -16,7 +16,7 @@ export const checkForServiceWorkerUpdate = async (
 
 export const checkIsBeforeInstallPromptEvent = (
   event: Event
-): event is BeforeInstallPromptEvent => {
+): event is IBeforeInstallPromptEvent => {
   return 'prompt' in event && 'userChoice' in event;
 };
 

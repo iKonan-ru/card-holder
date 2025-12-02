@@ -1,16 +1,22 @@
-import { useState, useCallback, useEffect, type RefObject } from 'react';
+import { useCallback, useEffect, useState, type RefObject } from 'react';
+import type { Procedure } from '@shared/types';
 
-interface IUseModalClosingStateReturn {
+interface IUseModalClosingStateParams {
+  onClose: Procedure;
+  overlayRef: RefObject<HTMLDivElement | null>;
+}
+
+interface IUseModalClosingStateResult {
   isClosing: boolean;
-  handleClose: () => void;
+  handleClose: Procedure;
 }
 
 const FADE_OUT_MODAL_ANIMATION_NAME = 'fadeOutModal';
 
-export const useModalClosingState = (
-  onClose: () => void,
-  overlayRef: RefObject<HTMLDivElement | null>
-): IUseModalClosingStateReturn => {
+export const useModalClosingState = ({
+  onClose,
+  overlayRef,
+}: IUseModalClosingStateParams): IUseModalClosingStateResult => {
   const [isClosing, setIsClosing] = useState(false);
 
   const handleClose = useCallback(() => {

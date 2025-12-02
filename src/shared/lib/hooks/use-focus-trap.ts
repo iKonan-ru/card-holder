@@ -1,12 +1,17 @@
 import { useEffect, type RefObject } from 'react';
 
+interface IUseFocusTrapParams {
+  contentRef: RefObject<HTMLDivElement | null>;
+  isTopModal: boolean;
+}
+
 const FOCUSABLE_ELEMENTS_SELECTOR =
   'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-export const useFocusTrap = (
-  contentRef: RefObject<HTMLDivElement | null>,
-  isTopModal: boolean
-): void => {
+export const useFocusTrap = ({
+  contentRef,
+  isTopModal,
+}: IUseFocusTrapParams): void => {
   useEffect(() => {
     if (!isTopModal || !contentRef.current) {
       return;

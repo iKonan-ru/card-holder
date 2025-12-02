@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
-import { BankCard } from './bank-card';
+import { cleanup, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { IBankCard } from '../../model';
+import { BankCard } from './bank-card';
 
 const MOCK_CARD: IBankCard = {
   pan: '5559494202595236',

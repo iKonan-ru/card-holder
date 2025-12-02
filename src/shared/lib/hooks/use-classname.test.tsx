@@ -1,8 +1,8 @@
-import { describe, it, expect } from 'vitest';
-import { renderHook } from '@testing-library/react';
-import { useClassName } from './use-classname';
-import { ParentClassProvider } from '../context';
 import type { FC, PropsWithChildren } from 'react';
+import { renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { ParentClassProvider } from '../context';
+import { useClassName } from './use-classname';
 
 const createWrapper =
   (parentClass?: string): FC<PropsWithChildren> =>

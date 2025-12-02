@@ -1,6 +1,6 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import * as sharedLib from '@shared/lib';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
+import * as sharedLib from '@shared/lib';
 import { useCardManagementStore } from './store';
 
 vi.mock('@shared/lib', async () => {

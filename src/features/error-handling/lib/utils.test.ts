@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { translateError, extractErrorMessage } from './utils';
+import { describe, expect, it } from 'vitest';
 import { DEFAULT_ERROR_MESSAGE } from './constants';
+import { extractErrorMessage, translateError } from './utils';
 
 describe('translateError', () => {
   it('должен возвращать переданное сообщение если оно не пустое', () => {

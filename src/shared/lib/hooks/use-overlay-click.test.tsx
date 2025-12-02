@@ -1,7 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook } from '@testing-library/react';
-import { render, screen } from '@testing-library/react';
+import { render, renderHook, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Procedure } from '@shared/types';
 import { useOverlayClick } from './use-overlay-click';
 
 const TestComponent = ({
@@ -9,7 +9,7 @@ const TestComponent = ({
   isTopModal,
   preventClose = false,
 }: {
-  onOverlayClick: () => void;
+  onOverlayClick: Procedure;
   isTopModal: boolean;
   preventClose?: boolean;
 }) => {
@@ -18,7 +18,7 @@ const TestComponent = ({
     handleOverlayMouseUp,
     handleContentClick,
     handleContentMouseDown,
-  } = useOverlayClick(onOverlayClick, isTopModal, preventClose);
+  } = useOverlayClick({ onOverlayClick, isTopModal, preventClose });
 
   return (
     <div>
@@ -52,7 +52,10 @@ describe('useOverlayClick', () => {
     const mockOnOverlayClick = vi.fn();
 
     const { result } = renderHook(() =>
-      useOverlayClick(mockOnOverlayClick, true)
+      useOverlayClick({
+        onOverlayClick: mockOnOverlayClick,
+        isTopModal: true,
+      })
     );
 
     expect(result.current.handleOverlayMouseDown).toBeDefined();

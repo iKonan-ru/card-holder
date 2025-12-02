@@ -1,21 +1,22 @@
-import { useRef, useEffect, type FC, type PropsWithChildren } from 'react';
+import { useEffect, useRef, type FC, type PropsWithChildren } from 'react';
 import {
-  bem,
-  useClassName,
-  ParentClassProvider,
-  ARIA_ROLE_DIALOG,
   ARIA_MODAL_TRUE,
-  useModalClosingState,
-  useFocusTrap,
-  useOverlayClick,
+  ARIA_ROLE_DIALOG,
+  bem,
   ModalCloseContext,
+  ParentClassProvider,
+  useClassName,
+  useFocusTrap,
+  useModalClosingState,
+  useOverlayClick,
 } from '@shared/lib';
+import type { Procedure } from '@shared/types';
 import { MODAL_BLOCK, MODAL_MODIFIERS_CLOSING } from './lib';
 import './modal.less';
 
 interface IModalProps extends PropsWithChildren {
-  onClose: () => void;
-  onRegisterClose?: (closeWithAnimation: () => void) => void;
+  onClose: Procedure;
+  onRegisterClose?: (closeWithAnimation: Procedure) => void;
   isTopModal: boolean;
   preventClose?: boolean;
   title?: string;
@@ -31,7 +32,10 @@ export const Modal: FC<IModalProps> = ({
 }) => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const { isClosing, handleClose } = useModalClosingState(onClose, overlayRef);
+  const { isClosing, handleClose } = useModalClosingState({
+    onClose,
+    overlayRef,
+  });
 
   useEffect(() => {
     if (onRegisterClose) {
@@ -39,14 +43,18 @@ export const Modal: FC<IModalProps> = ({
     }
   }, [onRegisterClose, handleClose]);
 
-  useFocusTrap(contentRef, isTopModal);
+  useFocusTrap({ contentRef, isTopModal });
 
   const {
     handleOverlayMouseDown,
     handleOverlayMouseUp,
     handleContentClick,
     handleContentMouseDown,
-  } = useOverlayClick(handleClose, isTopModal, preventClose);
+  } = useOverlayClick({
+    onOverlayClick: handleClose,
+    isTopModal,
+    preventClose,
+  });
 
   const modifiers = isClosing ? MODAL_MODIFIERS_CLOSING : undefined;
 

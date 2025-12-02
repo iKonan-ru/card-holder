@@ -1,10 +1,10 @@
+import type { FC } from 'react';
 import Humo from './humo.svg?react';
 import Jcb from './jcb.svg?react';
 import Mastercard from './mastercard.svg?react';
 import Mir from './mir.svg?react';
 import Uzcard from './uzcard.svg?react';
 import Visa from './visa.svg?react';
-import type { FC } from 'react';
 
 export const paymentSystemLogos: Record<string, FC<{ className?: string }>> = {
   humo: Humo,

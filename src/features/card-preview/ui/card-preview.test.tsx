@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, cleanup } from '@testing-library/react';
 import { type FC } from 'react';
+import { cleanup, render } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { CardPreview } from './card-preview';
 
 const mockBankLogos: Partial<Record<string, FC<{ className?: string }>>> = {

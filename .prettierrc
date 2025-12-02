@@ -9,6 +9,23 @@
   "arrowParens": "always",
   "bracketSameLine": false,
   "endOfLine": "lf",
-  "singleAttributePerLine": true
+  "singleAttributePerLine": true,
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "^(react|react-dom)(/.*)?$",
+    "<THIRD_PARTY_MODULES>",
+    "^@app(/.*)?$",
+    "^@pages(/.*)?$",
+    "^@widgets(/.*)?$",
+    "^@features(/.*)?$",
+    "^@entities(/.*)?$",
+    "^@shared(/.*)?$",
+    "^[.][.]",
+    "^[.]",
+    "^.+\\.(less|css)$"
+  ],
+  "importOrderParserPlugins": ["typescript", "jsx"],
+  "importOrderTypeScriptVersion": "5.0.0",
+  "importOrderCaseSensitive": false
 }
 

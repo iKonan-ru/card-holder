@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, waitFor, act } from '@testing-library/react';
-import { useImportCards } from './use-import-cards';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
 import * as sharedLib from '@shared/lib';
 import * as utils from '../utils';
+import { useImportCards } from './use-import-cards';
 
 vi.mock('@shared/lib', async () => {
   const actual = await vi.importActual('@shared/lib');

@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
-import type { IBankCard } from '@entities/bank-card';
-import { ParentClassProvider } from '@shared/lib';
+import type { FC, PropsWithChildren } from 'react';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
-import type { FC, PropsWithChildren } from 'react';
 import { MOCK_CARD, MOCK_CARD_SECOND } from '@test';
+import { cleanup, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import type { IBankCard } from '@entities/bank-card';
+import { ParentClassProvider } from '@shared/lib';
 import { CardListGrid } from './card-list-grid';
 
 vi.mock('@entities/bank-card', () => ({

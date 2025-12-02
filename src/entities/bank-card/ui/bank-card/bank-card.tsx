@@ -1,14 +1,14 @@
 import { type FC } from 'react';
-import { useClassName, ParentClassProvider } from '@shared/lib';
+import { ParentClassProvider, useClassName } from '@shared/lib';
 import {
   BANK_CARD_BLOCK,
   DEFAULT_IS_FLIPPED,
   DEFAULT_IS_REORDER_MODE,
   useBankCard,
 } from '../../lib';
-import { BankCardFront } from '../bank-card-front';
-import { BankCardBack } from '../bank-card-back';
 import type { IBankCard } from '../../model';
+import { BankCardBack } from '../bank-card-back';
+import { BankCardFront } from '../bank-card-front';
 import './bank-card.less';
 
 interface IBankCardProps {

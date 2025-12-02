@@ -1,8 +1,9 @@
 import { createContext, useContext } from 'react';
+import type { Procedure } from '@shared/types';
 
-export const ModalCloseContext = createContext<(() => void) | null>(null);
+export const ModalCloseContext = createContext<Procedure | null>(null);
 
-export const useModalClose = (): (() => void) => {
+export const useModalClose = (): Procedure => {
   const context = useContext(ModalCloseContext);
 
   if (!context) {

@@ -2,9 +2,9 @@
  * @vitest-environment node
  */
 
-import { describe, it, expect } from 'vitest';
-import { generateSalt, deriveKeyFromPassword } from './key-derivation';
-import { SALT_LENGTH, KEY_LENGTH, ENCRYPTION_ALGORITHM } from './constants';
+import { describe, expect, it } from 'vitest';
+import { ENCRYPTION_ALGORITHM, KEY_LENGTH, SALT_LENGTH } from './constants';
+import { deriveKeyFromPassword, generateSalt } from './key-derivation';
 
 describe('generateSalt', () => {
   it('должен генерировать соль правильной длины', () => {

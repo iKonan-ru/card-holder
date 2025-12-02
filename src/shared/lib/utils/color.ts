@@ -2,9 +2,9 @@ import { type CSSProperties } from 'react';
 import {
   EMPTY_STRING,
   HEX_RADIX,
-  ZERO_CHAR,
   TEXT_COLOR_DARK,
   TEXT_COLOR_LIGHT,
+  ZERO_CHAR,
 } from '../constants';
 
 const HEX_COLOR_PATTERN = /^[0-9A-Fa-f]{6}$/;

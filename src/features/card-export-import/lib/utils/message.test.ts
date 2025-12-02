@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { createImportSuccessMessage } from './message';
+import { describe, expect, it } from 'vitest';
 import type { IImportResult } from '../../model';
+import { createImportSuccessMessage } from './message';
 
 describe('createImportSuccessMessage', () => {
   it('должен создавать сообщение с правильными числами', () => {

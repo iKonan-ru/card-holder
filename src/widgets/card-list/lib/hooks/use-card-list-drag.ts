@@ -1,17 +1,26 @@
-import { useState, useEffect, useCallback } from 'react';
-import type { DragStartEvent, DragOverEvent } from '@dnd-kit/core';
+import { useCallback, useEffect, useState } from 'react';
+import type { DragOverEvent, DragStartEvent } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
 import type { IBankCard } from '@entities/bank-card';
+import type { Procedure } from '@shared/types';
 
 interface IUseCardListDragParams {
   storeCards: IBankCard[];
   onDragEnd: (cards: IBankCard[]) => void;
 }
 
+interface IUseCardListDragResult {
+  cards: IBankCard[];
+  activeCard: IBankCard | null;
+  handleDragStart: (event: DragStartEvent) => void;
+  handleDragOver: (event: DragOverEvent) => void;
+  handleDragEnd: Procedure;
+}
+
 export const useCardListDrag = ({
   storeCards,
   onDragEnd,
-}: IUseCardListDragParams) => {
+}: IUseCardListDragParams): IUseCardListDragResult => {
   const [cards, setCards] = useState<IBankCard[]>(storeCards);
   const [activeCard, setActiveCard] = useState<IBankCard | null>(null);
 

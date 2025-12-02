@@ -1,19 +1,19 @@
+import { useCallback, useEffect, useState } from 'react';
 import {
   checkHasNavigatorStandalone,
   checkIsBeforeInstallPromptEvent,
 } from '@shared/lib';
-import type { BeforeInstallPromptEvent } from '@shared/types';
-import { useEffect, useState, useCallback } from 'react';
+import type { IBeforeInstallPromptEvent } from '@shared/types';
 
-interface UsePWAInstallReturn {
+interface IUsePWAInstallResult {
   canInstall: boolean;
   isInstalled: boolean;
   handleInstall: () => Promise<void>;
 }
 
-export const usePWAInstall = (): UsePWAInstallReturn => {
+export const usePWAInstall = (): IUsePWAInstallResult => {
   const [deferredPrompt, setDeferredPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null);
+    useState<IBeforeInstallPromptEvent | null>(null);
   const [isInstalled, setIsInstalled] = useState(false);
 
   useEffect(() => {

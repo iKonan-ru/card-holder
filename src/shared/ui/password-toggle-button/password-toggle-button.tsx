@@ -1,12 +1,13 @@
+import { type ComponentType, type FC } from 'react';
 import { bem, useClassName } from '@shared/lib';
-import { type FC } from 'react';
+import type { Procedure } from '@shared/types';
 import { PASSWORD_TOGGLE_BUTTON_BLOCK } from './lib';
 import './password-toggle-button.less';
 
 interface IPasswordToggleButtonProps {
   ariaLabel: string;
-  Icon: React.ComponentType<{ className?: string }>;
-  onToggle: () => void;
+  Icon: ComponentType<{ className?: string }>;
+  onToggle: Procedure;
 }
 
 export const PasswordToggleButton: FC<IPasswordToggleButtonProps> = ({

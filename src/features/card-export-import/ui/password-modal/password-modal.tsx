@@ -1,31 +1,32 @@
-import { type FC, useEffect } from 'react';
+import { useEffect, type FC } from 'react';
 import {
   bem,
-  useClassName,
   ParentClassProvider,
+  useClassName,
   useModalContext,
 } from '@shared/lib';
-import { PasswordField, Button } from '@shared/ui';
-import type { TPasswordModalMode } from '../../model';
+import type { Procedure } from '@shared/types';
+import { Button, PasswordField } from '@shared/ui';
 import {
   PASSWORD_MODAL_BLOCK,
+  PASSWORD_MODAL_BUTTON_CANCEL,
+  PASSWORD_MODAL_ID_EXPORT,
+  PASSWORD_MODAL_ID_IMPORT,
   PASSWORD_MODAL_LABEL,
   PASSWORD_MODAL_LABEL_CONFIRM,
-  PASSWORD_MODAL_BUTTON_CANCEL,
-  PASSWORD_MODAL_ID_IMPORT,
-  PASSWORD_MODAL_ID_EXPORT,
   usePasswordModal,
 } from '../../lib';
+import type { TPasswordModalMode } from '../../model';
 import './password-modal.less';
 
 interface IPasswordModalProps {
   mode: TPasswordModalMode;
   onConfirm: (
     password: string,
-    closeModal: () => void,
+    closeModal: Procedure,
     setError: (error: string) => void
   ) => Promise<void>;
-  onCancel?: () => void;
+  onCancel?: Procedure;
 }
 
 export const PasswordModal: FC<IPasswordModalProps> = (props) => {

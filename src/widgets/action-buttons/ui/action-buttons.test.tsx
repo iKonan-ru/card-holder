@@ -1,11 +1,11 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import type { PropsWithChildren } from 'react';
+import { MOCK_CARDS } from '@test';
+import { cleanup, render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { ModalProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import { ActionButtons } from './action-buttons';
-import { MOCK_CARDS } from '@test';
 
 const { mockUseCardManagementStore } = vi.hoisted(() => ({
   mockUseCardManagementStore: vi.fn(),

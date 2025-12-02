@@ -1,9 +1,9 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import {
-  validatePan,
+  validateCvv,
   validateExpires,
   validateName,
-  validateCvv,
+  validatePan,
   validatePin,
 } from './field-validators';
 

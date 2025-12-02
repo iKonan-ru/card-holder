@@ -1,10 +1,10 @@
 import {
-  SALT_LENGTH,
+  ENCRYPTION_ALGORITHM,
+  KEY_LENGTH,
   PBKDF2_ALGORITHM,
   PBKDF2_HASH,
   PBKDF2_ITERATIONS,
-  KEY_LENGTH,
-  ENCRYPTION_ALGORITHM,
+  SALT_LENGTH,
 } from './constants';
 
 export const generateSalt = (): Uint8Array => {
@@ -26,7 +26,7 @@ export const deriveKeyFromPassword = async (
     ['deriveKey']
   );
 
-  const derivedKey = await crypto.subtle.deriveKey(
+  return await crypto.subtle.deriveKey(
     {
       name: PBKDF2_ALGORITHM,
       salt: salt as BufferSource,
@@ -41,6 +41,4 @@ export const deriveKeyFromPassword = async (
     false,
     ['encrypt', 'decrypt']
   );
-
-  return derivedKey;
 };

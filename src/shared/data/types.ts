@@ -16,4 +16,4 @@ export type TBankKeys =
   | 'domrf'
   | 'default';
 
-export type IBanksRecord = Record<Exclude<TBankKeys, 'default'>, string[]>;
+export type TBanksRecord = Record<Exclude<TBankKeys, 'default'>, string[]>;

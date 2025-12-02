@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, waitFor, act, cleanup } from '@testing-library/react';
-import { useCardList } from './use-card-list';
+import type { FC, PropsWithChildren } from 'react';
+import { act, cleanup, renderHook, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
-import type { PropsWithChildren, FC } from 'react';
 import { ModalProvider } from '@shared/lib';
+import { useCardList } from './use-card-list';
 
 const {
   mockUseCardManagementStore,

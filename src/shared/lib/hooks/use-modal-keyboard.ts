@@ -1,12 +1,13 @@
-import { useEffect } from 'react';
-import type { IModalItem } from '../context';
+import { useEffect, type RefObject } from 'react';
+import type { Procedure } from '@shared/types';
 import { KEY_ESC } from '../constants';
+import type { IModalItem } from '../context';
 
 interface IUseModalKeyboardParams {
   modals: IModalItem[];
-  closeTop: () => void;
-  modalRequestCloseRef: React.MutableRefObject<Map<string, () => void>>;
-  userActionRef: React.MutableRefObject<boolean>;
+  closeTop: Procedure;
+  modalRequestCloseRef: RefObject<Map<string, Procedure>>;
+  userActionRef: RefObject<boolean>;
 }
 
 export const useModalKeyboard = ({
@@ -14,7 +15,7 @@ export const useModalKeyboard = ({
   closeTop,
   modalRequestCloseRef,
   userActionRef,
-}: IUseModalKeyboardParams) => {
+}: IUseModalKeyboardParams): void => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === KEY_ESC) {

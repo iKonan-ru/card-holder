@@ -1,37 +1,37 @@
-import { create } from 'zustand';
-import type { ICardManagementState, ICardManagementActions } from './types';
+import { create, type StoreApi, type UseBoundStore } from 'zustand';
 import type { IBankCard } from '@entities/bank-card';
-import { DEFAULT_CARD_ORDER } from '../lib';
 import {
+  addCard as addCardToDb,
+  clearAllCards as clearAllCardsFromDb,
+  deleteCard as deleteCardFromDb,
+  ERROR_FAILED_TO_ADD_CARD,
+  ERROR_FAILED_TO_CLEAR_CARDS,
+  ERROR_FAILED_TO_DELETE_CARD,
+  ERROR_FAILED_TO_UPDATE_CARD,
   getAllCards,
   getCardByPan,
-  addCard as addCardToDb,
-  updateCard as updateCardInDb,
-  deleteCard as deleteCardFromDb,
-  clearAllCards as clearAllCardsFromDb,
-  updateCardsOrder as updateCardsOrderInDb,
   initDatabase,
   logError,
-  ERROR_FAILED_TO_ADD_CARD,
-  ERROR_FAILED_TO_UPDATE_CARD,
-  ERROR_FAILED_TO_DELETE_CARD,
-  ERROR_FAILED_TO_CLEAR_CARDS,
   TYPE_NUMBER,
+  updateCard as updateCardInDb,
+  updateCardsOrder as updateCardsOrderInDb,
 } from '@shared/lib';
 import {
-  executeCardOperation,
+  DEFAULT_CARD_ORDER,
   ERROR_FAILED_TO_LOAD_CARDS,
   ERROR_FAILED_TO_REORDER_CARDS,
+  executeCardOperation,
 } from '../lib';
+import type { ICardManagementActions, ICardManagementState } from './types';
 
 const INITIAL_CARDS: IBankCard[] = [];
 const INITIAL_FLIPPED_PAN = null;
 const INITIAL_IS_LOADING = false;
 const INITIAL_IS_REORDER_MODE = false;
 
-export const useCardManagementStore = create<
-  ICardManagementState & ICardManagementActions
->((set, get) => ({
+export const useCardManagementStore: UseBoundStore<
+  StoreApi<ICardManagementState & ICardManagementActions>
+> = create((set, get) => ({
   cards: INITIAL_CARDS,
   flippedPan: INITIAL_FLIPPED_PAN,
   isLoading: INITIAL_IS_LOADING,

@@ -1,6 +1,7 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { renderHook, waitFor } from '@testing-library/react';
-import { useAppUpdateModal } from './use-app-update-modal';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { useAppUpdateModal } from '@app/lib';
+import type { Procedure } from '@shared/types';
 
 const mockUpdateServiceWorker = vi.fn(() => Promise.resolve());
 const mockOpen = vi.fn();
@@ -23,8 +24,8 @@ vi.mock('@features/pwa-update', () => ({
       onUpdate,
       onDismiss,
     }: {
-      onUpdate: () => void;
-      onDismiss: () => void;
+      onUpdate: Procedure;
+      onDismiss: Procedure;
     }) => (
       <div data-testid="pwa-update">
         <button onClick={onUpdate}>Обновить</button>

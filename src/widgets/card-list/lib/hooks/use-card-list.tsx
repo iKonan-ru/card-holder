@@ -1,9 +1,22 @@
-import { useEffect, useCallback } from 'react';
-import type { IBankCard } from '@entities/bank-card';
-import { useCardManagementStore } from '@features/card-management';
+import { useCallback, useEffect } from 'react';
 import { useCardFormModal } from '@features/card-form';
+import { useCardManagementStore } from '@features/card-management';
+import type { IBankCard } from '@entities/bank-card';
+import type { Procedure } from '@shared/types';
 
-export const useCardList = () => {
+interface IUseCardListResult {
+  cards: IBankCard[];
+  flippedPan: string | null;
+  isLoading: boolean;
+  isReorderMode: boolean;
+  handleShowForm: Procedure;
+  handleEditCard: (card: IBankCard) => void;
+  handleDragEnd: (reorderedCards: IBankCard[]) => void;
+  handleToggleReorderMode: Procedure;
+  handleFlipCard: (pan: string) => void;
+}
+
+export const useCardList = (): IUseCardListResult => {
   const {
     cards,
     flippedPan,

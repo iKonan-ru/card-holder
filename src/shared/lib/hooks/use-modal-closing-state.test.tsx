@@ -1,14 +1,17 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { renderHook, waitFor, act } from '@testing-library/react';
-import { render } from '@testing-library/react';
-import { useModalClosingState } from './use-modal-closing-state';
 import { useRef } from 'react';
+import { act, render, renderHook, waitFor } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Procedure } from '@shared/types';
+import { useModalClosingState } from './use-modal-closing-state';
 
 const FADE_OUT_MODAL_ANIMATION_NAME = 'fadeOutModal';
 
-const TestComponent = ({ onClose }: { onClose: () => void }) => {
+const TestComponent = ({ onClose }: { onClose: Procedure }) => {
   const overlayRef = useRef<HTMLDivElement>(null);
-  const { isClosing, handleClose } = useModalClosingState(onClose, overlayRef);
+  const { isClosing, handleClose } = useModalClosingState({
+    onClose,
+    overlayRef,
+  });
 
   return (
     <div
@@ -35,7 +38,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: null };
 
     const { result } = renderHook(() =>
-      useModalClosingState(mockOnClose, overlayRef)
+      useModalClosingState({ onClose: mockOnClose, overlayRef })
     );
 
     expect(result.current.isClosing).toBe(false);
@@ -46,7 +49,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: document.createElement('div') };
 
     const { result } = renderHook(() =>
-      useModalClosingState(mockOnClose, overlayRef)
+      useModalClosingState({ onClose: mockOnClose, overlayRef })
     );
 
     act(() => {
@@ -61,7 +64,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: null };
 
     const { result } = renderHook(() =>
-      useModalClosingState(mockOnClose, overlayRef)
+      useModalClosingState({ onClose: mockOnClose, overlayRef })
     );
 
     act(() => {
@@ -154,7 +157,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: null };
 
     const { result } = renderHook(() =>
-      useModalClosingState(mockOnClose, overlayRef)
+      useModalClosingState({ onClose: mockOnClose, overlayRef })
     );
 
     act(() => {
@@ -169,7 +172,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: document.createElement('div') };
 
     const { result } = renderHook(() =>
-      useModalClosingState(mockOnClose, overlayRef)
+      useModalClosingState({ onClose: mockOnClose, overlayRef })
     );
 
     act(() => {

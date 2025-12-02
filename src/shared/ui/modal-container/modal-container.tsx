@@ -1,18 +1,19 @@
-import { type FC, useRef } from 'react';
+import { useRef, type FC } from 'react';
 import {
   useModalContext,
-  useModalStack,
   useModalHistory,
   useModalKeyboard,
   useModalPopstate,
+  useModalStack,
 } from '@shared/lib';
-import { Portal } from '../portal';
+import type { Procedure } from '@shared/types';
 import { Modal } from '../modal';
+import { Portal } from '../portal';
 
 export const ModalContainer: FC = () => {
   const { modals, closeModal, userActionRef } = useModalContext();
   const { push, remove, closeTop } = useModalStack();
-  const modalRequestCloseRef = useRef<Map<string, () => void>>(new Map());
+  const modalRequestCloseRef = useRef<Map<string, Procedure>>(new Map());
 
   const { isClosingFromHistoryRef } = useModalHistory({
     modals,

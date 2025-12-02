@@ -1,7 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act, waitFor } from '@testing-library/react';
-import { usePasswordModal } from './use-password-modal';
+import { type ChangeEvent, type FormEvent } from 'react';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Procedure } from '@shared/types';
 import type { TPasswordModalMode } from '../../model';
+import { usePasswordModal } from './use-password-modal';
 
 const mockCloseModal = vi.fn();
 
@@ -11,7 +13,7 @@ vi.mock('@shared/lib', async () => {
   return {
     ...actual,
     useModalClose: () => mockCloseModal,
-    useAnimatedModalClose: (callback?: () => void) => callback || vi.fn(),
+    useAnimatedModalClose: (callback?: Procedure) => callback || vi.fn(),
   };
 });
 
@@ -69,7 +71,7 @@ describe('usePasswordModal', () => {
 
       const event = {
         target: { value: 'newpassword' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(event);
@@ -85,7 +87,7 @@ describe('usePasswordModal', () => {
 
       const mockFormEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       act(() => {
         result.current.handleSubmit(mockFormEvent);
@@ -95,7 +97,7 @@ describe('usePasswordModal', () => {
 
       const event = {
         target: { value: 'newpassword' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(event);
@@ -112,7 +114,7 @@ describe('usePasswordModal', () => {
 
       const event = {
         target: { value: 'confirmedpassword' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handleConfirmPasswordChange(event);
@@ -142,7 +144,7 @@ describe('usePasswordModal', () => {
 
       const passwordEvent = {
         target: { value: 'short' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(passwordEvent);
@@ -150,7 +152,7 @@ describe('usePasswordModal', () => {
 
       const mockFormEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       act(() => {
         result.current.handleSubmit(mockFormEvent);
@@ -166,11 +168,11 @@ describe('usePasswordModal', () => {
 
       const passwordEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       const confirmEvent = {
         target: { value: 'password456' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(passwordEvent);
@@ -179,7 +181,7 @@ describe('usePasswordModal', () => {
 
       const mockFormEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       act(() => {
         result.current.handleSubmit(mockFormEvent);
@@ -196,11 +198,11 @@ describe('usePasswordModal', () => {
 
       const passwordEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       const confirmEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(passwordEvent);
@@ -209,7 +211,7 @@ describe('usePasswordModal', () => {
 
       const mockFormEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockFormEvent);
@@ -223,7 +225,7 @@ describe('usePasswordModal', () => {
     });
 
     it('должен устанавливать isSubmitting в true во время отправки', async () => {
-      let resolvePromise: () => void;
+      let resolvePromise: Procedure;
       const promise = new Promise<void>((resolve) => {
         resolvePromise = resolve;
       });
@@ -236,11 +238,11 @@ describe('usePasswordModal', () => {
 
       const passwordEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       const confirmEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(passwordEvent);
@@ -249,7 +251,7 @@ describe('usePasswordModal', () => {
 
       const mockFormEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       act(() => {
         result.current.handleSubmit(mockFormEvent);
@@ -273,11 +275,11 @@ describe('usePasswordModal', () => {
 
       const passwordEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       const confirmEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(passwordEvent);
@@ -286,7 +288,7 @@ describe('usePasswordModal', () => {
 
       const mockFormEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockFormEvent);
@@ -301,7 +303,7 @@ describe('usePasswordModal', () => {
         .mockImplementation(
           async (
             _password: string,
-            _closeModal: () => void,
+            _closeModal: Procedure,
             setError: (error: string) => void
           ) => {
             setError('Неверный пароль');
@@ -314,11 +316,11 @@ describe('usePasswordModal', () => {
 
       const passwordEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       const confirmEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(passwordEvent);
@@ -327,7 +329,7 @@ describe('usePasswordModal', () => {
 
       const mockFormEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockFormEvent);
@@ -388,7 +390,7 @@ describe('usePasswordModal', () => {
 
       const passwordEvent = {
         target: { value: 'short' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(passwordEvent);
@@ -396,7 +398,7 @@ describe('usePasswordModal', () => {
 
       const mockFormEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockFormEvent);
@@ -419,7 +421,7 @@ describe('usePasswordModal', () => {
 
       const passwordEvent = {
         target: { value: 'password123' },
-      } as React.ChangeEvent<HTMLInputElement>;
+      } as ChangeEvent<HTMLInputElement>;
 
       act(() => {
         result.current.handlePasswordChange(passwordEvent);
@@ -427,7 +429,7 @@ describe('usePasswordModal', () => {
 
       const mockFormEvent = {
         preventDefault: vi.fn(),
-      } as unknown as React.FormEvent<HTMLFormElement>;
+      } as unknown as FormEvent<HTMLFormElement>;
 
       await act(async () => {
         await result.current.handleSubmit(mockFormEvent);

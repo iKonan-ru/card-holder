@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { render, cleanup } from '@testing-library/react';
-import { SortableCardItem } from './sortable-card-item';
+import type { FC, PropsWithChildren } from 'react';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
-import type { FC, PropsWithChildren } from 'react';
+import { cleanup, render } from '@testing-library/react';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { SortableCardItem } from './sortable-card-item';
 
 vi.mock('@dnd-kit/sortable', async () => {
   const actual = await vi.importActual('@dnd-kit/sortable');

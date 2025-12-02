@@ -1,6 +1,6 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
-import { uploadFile } from './upload-file';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { FILE_SELECTION_CANCELLED_ERROR } from './constants';
+import { uploadFile } from './upload-file';
 
 describe('uploadFile', () => {
   let mockInput: HTMLInputElement;

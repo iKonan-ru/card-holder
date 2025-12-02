@@ -1,13 +1,13 @@
-import type { IEncryptedPayload } from './types';
-import { generateSalt, deriveKeyFromPassword } from './key-derivation';
+import { EMPTY_STRING } from '../constants';
 import {
   ENCRYPTION_ALGORITHM,
-  IV_LENGTH,
-  FILE_FORMAT_VERSION,
-  ERROR_ENCRYPTION_FAILED,
   ERROR_DECRYPTION_FAILED,
+  ERROR_ENCRYPTION_FAILED,
+  FILE_FORMAT_VERSION,
+  IV_LENGTH,
 } from './constants';
-import { EMPTY_STRING } from '../constants';
+import { deriveKeyFromPassword, generateSalt } from './key-derivation';
+import type { IEncryptedPayload } from './types';
 
 const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
   const bytes = new Uint8Array(buffer);
@@ -72,9 +72,9 @@ export const decryptData = async (
   password: string
 ): Promise<string> => {
   try {
-    const salt = new Uint8Array(base64ToArrayBuffer(payload.salt));
-    const iv = new Uint8Array(base64ToArrayBuffer(payload.iv));
-    const encryptedData = base64ToArrayBuffer(payload.encrypted);
+    const salt = new Uint8Array(base64ToArrayBuffer(payload.salt!));
+    const iv = new Uint8Array(base64ToArrayBuffer(payload.iv!));
+    const encryptedData = base64ToArrayBuffer(payload.encrypted!);
 
     const key = await deriveKeyFromPassword(password, salt);
 

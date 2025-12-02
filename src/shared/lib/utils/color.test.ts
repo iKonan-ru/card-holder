@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { hexToRgb, rgbToHex, darkenColor, getTextColorStyle } from './color';
+import { describe, expect, it } from 'vitest';
+import { darkenColor, getTextColorStyle, hexToRgb, rgbToHex } from './color';
 
 const INVALID_HEX_VALUE = '#gggggg';
 const PERCENT_ZERO = 0;

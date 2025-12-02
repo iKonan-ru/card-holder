@@ -1,36 +1,37 @@
-import { useState, useCallback, type ReactNode } from 'react';
+import { useCallback, useState, type ReactNode } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import {
-  encryptData,
-  generateExportFileName,
   createBlobFromPayload,
   downloadFile,
+  encryptData,
+  generateExportFileName,
   useModalContext,
 } from '@shared/lib';
-import {
-  validateCardsForExport,
-  prepareCardsForExport,
-  handleError,
-} from '../utils';
+import type { Procedure } from '@shared/types';
 import { PasswordModal } from '../../ui';
 import {
+  FALLBACK_ERROR_EXPORT,
   PASSWORD_MODAL_ID_EXPORT,
   PASSWORD_MODAL_TITLE_EXPORT,
-  FALLBACK_ERROR_EXPORT,
 } from '../constants';
+import {
+  handleError,
+  prepareCardsForExport,
+  validateCardsForExport,
+} from '../utils';
 
 interface IUseExportCardsParams {
   cards: IBankCard[];
 }
 
-interface IUseExportCards {
+interface IUseExportCardsResult {
   isExporting: boolean;
   exportCards: () => Promise<void>;
 }
 
 export const useExportCards = (
   params: IUseExportCardsParams
-): IUseExportCards => {
+): IUseExportCardsResult => {
   const { cards } = params;
   const [isExporting, setIsExporting] = useState(false);
   const { openModal } = useModalContext();
@@ -38,7 +39,7 @@ export const useExportCards = (
   const handleExportWithPassword = useCallback(
     async (
       password: string,
-      closePasswordModal: () => void,
+      closePasswordModal: Procedure,
       setPasswordError: (error: string) => void
     ) => {
       try {

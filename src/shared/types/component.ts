@@ -1,3 +1,3 @@
-export type PropsWithParentClass<TProps = object> = TProps & {
+export type TPropsWithParentClass<TProps = object> = TProps & {
   parentClass?: string;
 };

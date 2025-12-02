@@ -2,14 +2,14 @@
  * @vitest-environment node
  */
 
-import { describe, it, expect, vi } from 'vitest';
-import { encryptData, decryptData } from './encryption';
-import type { IEncryptedPayload } from './types';
+import { describe, expect, it, vi } from 'vitest';
 import {
-  FILE_FORMAT_VERSION,
   ERROR_DECRYPTION_FAILED,
   ERROR_ENCRYPTION_FAILED,
+  FILE_FORMAT_VERSION,
 } from './constants';
+import { decryptData, encryptData } from './encryption';
+import type { IEncryptedPayload } from './types';
 
 describe('encryptData', () => {
   const testPassword = 'test-password-12345';

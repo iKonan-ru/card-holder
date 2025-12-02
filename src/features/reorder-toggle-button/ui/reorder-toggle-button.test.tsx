@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ReorderToggleButton } from './reorder-toggle-button';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ParentClassProvider } from '@shared/lib';
+import { ReorderToggleButton } from './reorder-toggle-button';
 
 const TEST_PARENT_CLASS = 'test-parent';
 

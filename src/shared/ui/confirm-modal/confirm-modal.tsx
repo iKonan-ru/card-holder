@@ -1,10 +1,11 @@
 import { type FC } from 'react';
 import {
   bem,
-  useClassName,
-  useAnimatedModalClose,
   ParentClassProvider,
+  useAnimatedModalClose,
+  useClassName,
 } from '@shared/lib';
+import type { Procedure } from '@shared/types';
 import { Button } from '../button';
 import {
   CONFIRM_MODAL_BLOCK,
@@ -17,8 +18,8 @@ interface IConfirmModalProps {
   message: string;
   confirmText?: string;
   cancelText?: string;
-  onConfirm: () => void;
-  onCancel?: () => void;
+  onConfirm: Procedure;
+  onCancel?: Procedure;
 }
 
 export const ConfirmModal: FC<IConfirmModalProps> = ({

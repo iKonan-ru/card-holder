@@ -1,11 +1,11 @@
-import type { IBankCard } from '@entities/bank-card';
 import { type FC, type MouseEvent } from 'react';
 import { FiEdit } from 'react-icons/fi';
+import type { IBankCard } from '@entities/bank-card';
 import {
-  bem,
-  maskValue,
   ARIA_HIDDEN_TRUE,
+  bem,
   BUTTON_TYPE_BUTTON,
+  maskValue,
 } from '@shared/lib';
 import { CopyableField } from '@shared/ui';
 import { BANK_CARD_BLOCK, BANK_CARD_EDIT_LABEL } from '../../lib';

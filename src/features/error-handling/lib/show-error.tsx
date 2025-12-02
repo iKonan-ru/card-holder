@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
-import { type IModalContext, generateRandomId } from '@shared/lib';
+import { generateRandomId, type IModalContext } from '@shared/lib';
 import { ErrorContent } from '../ui';
-import { translateError } from './utils';
 import { ERROR_CONTENT_ID_PREFIX, ERROR_CONTENT_TITLE } from './constants';
+import { translateError } from './utils';
 
 let modalContextRef: IModalContext | null = null;
 

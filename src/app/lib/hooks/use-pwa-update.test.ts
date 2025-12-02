@@ -1,8 +1,8 @@
 import { renderHook } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { usePWAUpdate } from './use-pwa-update';
 
-interface RegisterSWConfig {
+interface IRegisterSWConfig {
   onRegisteredSW?: (
     url: string,
     registration: ServiceWorkerRegistration | undefined
@@ -10,7 +10,7 @@ interface RegisterSWConfig {
   onRegisterError?: (error: Error) => void;
 }
 
-interface RegisterSWReturn {
+interface IRegisterSWReturn {
   needRefresh: [boolean, (value: boolean) => void];
   updateServiceWorker: (reloadPage?: boolean) => Promise<void>;
 }
@@ -21,8 +21,8 @@ const mockUpdateServiceWorker = vi.fn(() => Promise.resolve()) as unknown as (
 const mockUseRegisterSW = vi.fn();
 
 vi.mock('virtual:pwa-register/react', () => ({
-  useRegisterSW: (config?: RegisterSWConfig) =>
-    mockUseRegisterSW(config) as RegisterSWReturn,
+  useRegisterSW: (config?: IRegisterSWConfig) =>
+    mockUseRegisterSW(config) as IRegisterSWReturn,
 }));
 
 describe('usePWAUpdate', () => {
@@ -84,10 +84,10 @@ describe('usePWAUpdate', () => {
       value: true,
     });
 
-    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisteredSW) {
           capturedOnRegisteredSW = config.onRegisteredSW;
         }
@@ -123,11 +123,11 @@ describe('usePWAUpdate', () => {
     const testError = new Error('Test error');
 
     let capturedOnRegisterError:
-      | RegisterSWConfig['onRegisterError']
+      | IRegisterSWConfig['onRegisterError']
       | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisterError) {
           capturedOnRegisterError = config.onRegisterError;
         }
@@ -155,10 +155,10 @@ describe('usePWAUpdate', () => {
   });
 
   it('не должен запускать проверку обновлений если registration отсутствует', () => {
-    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisteredSW) {
           capturedOnRegisteredSW = config.onRegisteredSW;
         }
@@ -215,10 +215,10 @@ describe('usePWAUpdate', () => {
       value: true,
     });
 
-    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisteredSW) {
           capturedOnRegisteredSW = config.onRegisteredSW;
         }
@@ -265,10 +265,10 @@ describe('usePWAUpdate', () => {
       value: true,
     });
 
-    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisteredSW) {
           capturedOnRegisteredSW = config.onRegisteredSW;
         }
@@ -309,10 +309,10 @@ describe('usePWAUpdate', () => {
       value: false,
     });
 
-    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisteredSW) {
           capturedOnRegisteredSW = config.onRegisteredSW;
         }
@@ -357,10 +357,10 @@ describe('usePWAUpdate', () => {
       value: true,
     });
 
-    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisteredSW) {
           capturedOnRegisteredSW = config.onRegisteredSW;
         }
@@ -407,10 +407,10 @@ describe('usePWAUpdate', () => {
       value: true,
     });
 
-    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisteredSW) {
           capturedOnRegisteredSW = config.onRegisteredSW;
         }
@@ -466,10 +466,10 @@ describe('usePWAUpdate', () => {
       value: 'visible',
     });
 
-    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisteredSW) {
           capturedOnRegisteredSW = config.onRegisteredSW;
         }
@@ -533,10 +533,10 @@ describe('usePWAUpdate', () => {
       value: 'hidden',
     });
 
-    let capturedOnRegisteredSW: RegisterSWConfig['onRegisteredSW'] | undefined;
+    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
 
     mockUseRegisterSW.mockImplementation(
-      (config?: RegisterSWConfig): RegisterSWReturn => {
+      (config?: IRegisterSWConfig): IRegisterSWReturn => {
         if (config?.onRegisteredSW) {
           capturedOnRegisteredSW = config.onRegisteredSW;
         }

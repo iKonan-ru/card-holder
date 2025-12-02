@@ -1,41 +1,42 @@
-import { type FC, useCallback, useMemo } from 'react';
+import { useCallback, useMemo, type FC } from 'react';
+import { CardPreview } from '@features/card-preview';
 import type { IBankCard } from '@entities/bank-card';
 import {
   bem,
-  useClassName,
-  useModal,
-  BUTTON_TYPE_SUBMIT,
   BUTTON_TYPE_BUTTON,
+  BUTTON_TYPE_SUBMIT,
   FormProvider,
   ParentClassProvider,
+  useClassName,
+  useModal,
 } from '@shared/lib';
-import { ValidatedField, ConfirmModal, Button } from '@shared/ui';
-import { CardPreview } from '@features/card-preview';
+import type { Procedure } from '@shared/types';
+import { Button, ConfirmModal, ValidatedField } from '@shared/ui';
 import {
-  useCardForm,
-  CARD_FORM_BLOCK,
-  SUBMIT_BUTTON_TEXT,
-  SUBMIT_BUTTON_EDIT_TEXT,
-  DELETE_BUTTON_TEXT,
   CANCEL_BUTTON_TEXT,
-  DELETE_MODAL_TITLE,
-  DELETE_MODAL_MESSAGE,
-  DELETE_CONFIRM_TEXT,
-  DELETE_CANCEL_TEXT,
-  PAN_FIELD_CONFIG,
-  NAME_FIELD_CONFIG,
-  EXPIRES_FIELD_CONFIG,
+  CARD_FORM_BLOCK,
   CVV_FIELD_CONFIG,
-  PIN_FIELD_CONFIG,
-  TYPE_FIELD_CONFIG,
+  DELETE_BUTTON_TEXT,
+  DELETE_CANCEL_TEXT,
+  DELETE_CONFIRM_TEXT,
+  DELETE_MODAL_MESSAGE,
+  DELETE_MODAL_TITLE,
+  EXPIRES_FIELD_CONFIG,
+  NAME_FIELD_CONFIG,
+  PAN_FIELD_CONFIG,
   PHRASE_FIELD_CONFIG,
+  PIN_FIELD_CONFIG,
+  SUBMIT_BUTTON_EDIT_TEXT,
+  SUBMIT_BUTTON_TEXT,
+  TYPE_FIELD_CONFIG,
+  useCardForm,
 } from '../../lib';
 import './card-form.less';
 
 interface ICardFormProps {
   initialCard?: Partial<IBankCard>;
-  onSuccess?: () => void;
-  onCancel?: () => void;
+  onSuccess?: Procedure;
+  onCancel?: Procedure;
 }
 
 export const CardForm: FC<ICardFormProps> = ({

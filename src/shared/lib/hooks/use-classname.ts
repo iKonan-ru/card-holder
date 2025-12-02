@@ -1,9 +1,9 @@
 import { useMemo } from 'react';
-import { bem } from '../utils';
-import { useParentClass } from '../context';
 import { EMPTY_STRING, SPACE_CHAR } from '../constants';
+import { useParentClass } from '../context';
+import { bem } from '../utils';
 
-interface IUseClassNameOptions {
+interface IUseClassNameParams {
   blockName: string;
   modifiers?: string[];
   elementName?: string;
@@ -17,7 +17,7 @@ export const useClassName = ({
   modifiers,
   elementName,
   additionalClasses = DEFAULT_ADDITIONAL_CLASSES,
-}: IUseClassNameOptions): string => {
+}: IUseClassNameParams): string => {
   const parentClass = useParentClass();
 
   return useMemo(() => {

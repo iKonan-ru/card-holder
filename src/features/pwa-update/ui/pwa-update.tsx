@@ -1,18 +1,23 @@
-import { type FC, useState, useCallback } from 'react';
-import { bem, ParentClassProvider, useClassName } from '@shared/lib';
-import { useAnimatedModalClose } from '@shared/lib';
+import { useCallback, useState, type FC } from 'react';
+import {
+  bem,
+  ParentClassProvider,
+  useAnimatedModalClose,
+  useClassName,
+} from '@shared/lib';
+import type { Procedure } from '@shared/types';
 import { Button } from '@shared/ui';
 import {
   PWA_UPDATE_BLOCK,
-  PWA_UPDATE_MESSAGE,
   PWA_UPDATE_BUTTON_TEXT,
   PWA_UPDATE_DISMISS_BUTTON_TEXT,
+  PWA_UPDATE_MESSAGE,
 } from '../lib';
 import './pwa-update.less';
 
 interface IPWAUpdateProps {
   onUpdate: () => Promise<void>;
-  onDismiss?: () => void;
+  onDismiss?: Procedure;
 }
 
 export const PWAUpdate: FC<IPWAUpdateProps> = ({ onUpdate, onDismiss }) => {

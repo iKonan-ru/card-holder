@@ -1,6 +1,6 @@
-import type { IBaseInputFieldProps, IInputChangeHandler } from '@shared/types';
-import { type FC, useMemo } from 'react';
+import { useMemo, type FC } from 'react';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
+import type { IBaseInputFieldProps, IInputChangeHandler } from '@shared/types';
 import { FORM_FIELD_BLOCK } from './lib';
 import './form-field.less';
 

@@ -1,19 +1,19 @@
-import { type FC, useMemo } from 'react';
+import { useMemo, type FC } from 'react';
+import { closestCenter, DndContext, DragOverlay } from '@dnd-kit/core';
+import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
+import { CardListDragOverlay } from '@widgets/card-list';
 import { ParentClassProvider, useClassName } from '@shared/lib';
 import {
-  useCardList,
-  useDndSensors,
-  useCardListDrag,
-  CARD_LIST_BLOCK,
   CARD_LIST_ARIA_LABEL,
-  DROP_ANIMATION,
+  CARD_LIST_BLOCK,
   CARD_LIST_MODIFIERS_DRAGGING,
   CARD_LIST_MODIFIERS_EMPTY,
+  DROP_ANIMATION,
+  useCardList,
+  useCardListDrag,
+  useDndSensors,
 } from '../../lib';
-import { DndContext, closestCenter, DragOverlay } from '@dnd-kit/core';
-import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import { CardListGrid } from '../card-list-grid';
-import { CardListDragOverlay } from '../card-list-drag-overlay';
 import './card-list.less';
 
 export const CardList: FC = () => {

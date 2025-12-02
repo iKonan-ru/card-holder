@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
-import { BankCardFront } from './bank-card-front';
 import { MOCK_CARD } from '@test';
+import { cleanup, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { IBank } from '@entities/bank';
 import type { TPaymentSystem } from '@entities/payment-system';
+import { BankCardFront } from './bank-card-front';
 
 const MOCK_BANK: IBank = {
   id: 'sberbank',

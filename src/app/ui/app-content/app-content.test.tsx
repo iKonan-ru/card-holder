@@ -1,8 +1,8 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
 import type { PropsWithChildren } from 'react';
+import { cleanup, render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
+import { AppContent } from '@app/ui';
 import { ModalProvider } from '@shared/lib';
-import { AppContent } from './app-content';
 
 vi.mock('@pages/main-page', () => ({
   MainPage: () => <div data-testid="main-page">MainPage</div>,

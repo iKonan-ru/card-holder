@@ -1,7 +1,7 @@
 import {
-  SPACE_CHAR,
-  BEM_MODIFIER_SEPARATOR,
   BEM_ELEMENT_SEPARATOR,
+  BEM_MODIFIER_SEPARATOR,
+  SPACE_CHAR,
 } from '../constants';
 
 export const bem = (

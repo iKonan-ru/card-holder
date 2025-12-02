@@ -1,10 +1,10 @@
 import type { IBankCard } from '@entities/bank-card';
 import { getAllCards, logError } from '@shared/lib';
 
-type CardOperationFunction = () => Promise<void>;
+type TCardOperationFunction = () => Promise<void>;
 
 interface IExecuteCardOperationParams {
-  operation: CardOperationFunction;
+  operation: TCardOperationFunction;
   errorMessage: string;
   onSuccess: (cards: IBankCard[]) => void;
   context: string;

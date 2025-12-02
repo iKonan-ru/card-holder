@@ -1,9 +1,9 @@
-type LogLevel = 'error' | 'warn' | 'info';
+type TLogLevel = 'error' | 'warn' | 'info';
 
 interface ILoggerParams {
   message: string;
   error?: unknown;
-  level?: LogLevel;
+  level?: TLogLevel;
   context?: string;
   silent?: boolean;
 }

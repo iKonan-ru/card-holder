@@ -1,5 +1,5 @@
-import { describe, it, expect, afterEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+import { afterEach, describe, expect, it } from 'vitest';
 import { Portal } from './portal';
 
 const PORTAL_CONTENT_TEXT = 'Portal Content';

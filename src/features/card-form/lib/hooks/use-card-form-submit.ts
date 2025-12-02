@@ -1,20 +1,21 @@
 import { useCallback, type FormEvent } from 'react';
-import type { IBankCard } from '@entities/bank-card';
 import { useCardManagementStore } from '@features/card-management';
+import type { IBankCard } from '@entities/bank-card';
 import {
   checkCardExists,
-  logError,
   ERROR_FAILED_TO_ADD_CARD,
   ERROR_FAILED_TO_DELETE_CARD,
+  logError,
 } from '@shared/lib';
+import type { Procedure } from '@shared/types';
+import { ERROR_CARD_ALREADY_EXISTS } from '../constants';
+import type { IValidationErrors } from '../types';
 import {
-  filterDigitsOnly,
-  validateCardForm,
   checkHasErrors,
   checkIsValidBankCard,
+  filterDigitsOnly,
+  validateCardForm,
 } from '../utils';
-import type { IValidationErrors } from '../types';
-import { ERROR_CARD_ALREADY_EXISTS } from '../constants';
 
 interface IUseCardFormSubmitParams {
   formData: Partial<IBankCard>;
@@ -22,9 +23,14 @@ interface IUseCardFormSubmitParams {
   originalPan?: string;
   setErrors: (errors: IValidationErrors) => void;
   setIsSubmitting: (value: boolean) => void;
-  resetForm: () => void;
-  resetErrors: () => void;
-  onSuccess?: () => void;
+  resetForm: Procedure;
+  resetErrors: Procedure;
+  onSuccess?: Procedure;
+}
+
+interface IUseCardFormSubmitResult {
+  handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleDelete: () => Promise<void>;
 }
 
 export const useCardFormSubmit = ({
@@ -36,7 +42,7 @@ export const useCardFormSubmit = ({
   resetForm,
   resetErrors,
   onSuccess,
-}: IUseCardFormSubmitParams) => {
+}: IUseCardFormSubmitParams): IUseCardFormSubmitResult => {
   const { addCard, updateCard, deleteCard } = useCardManagementStore();
 
   const handleSubmit = useCallback(

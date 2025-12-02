@@ -1,5 +1,6 @@
-import { type FC, useMemo } from 'react';
-import { FiMove, FiCheck } from 'react-icons/fi';
+import { useMemo, type FC } from 'react';
+import { FiCheck, FiMove } from 'react-icons/fi';
+import type { Procedure } from '@shared/types';
 import { FabButton } from '@shared/ui';
 import {
   REORDER_BUTTON_ARIA_LABEL_ACTIVE,
@@ -8,7 +9,7 @@ import {
 
 interface IReorderToggleButtonProps {
   isActive: boolean;
-  onClick: () => void;
+  onClick: Procedure;
 }
 
 export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({

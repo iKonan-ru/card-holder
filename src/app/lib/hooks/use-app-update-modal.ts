@@ -1,6 +1,6 @@
-import { useEffect, useRef, createElement } from 'react';
+import { createElement, useEffect, useRef } from 'react';
+import { PWA_UPDATE_TITLE, PWAUpdate } from '@features/pwa-update';
 import { useModal } from '@shared/lib';
-import { PWAUpdate, PWA_UPDATE_TITLE } from '@features/pwa-update';
 import { usePWAUpdate } from './use-pwa-update';
 
 export const useAppUpdateModal = (): void => {

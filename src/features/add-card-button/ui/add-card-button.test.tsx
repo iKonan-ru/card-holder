@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { render, screen, cleanup } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { AddCardButton } from './add-card-button';
-import { ADD_CARD_BUTTON_ARIA_LABEL } from '../lib';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ParentClassProvider } from '@shared/lib';
+import { ADD_CARD_BUTTON_ARIA_LABEL } from '../lib';
+import { AddCardButton } from './add-card-button';
 
 const TEST_PARENT_CLASS = 'parent-class';
 

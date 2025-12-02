@@ -1,6 +1,6 @@
-import type { IBanksRecord } from './types';
+import type { TBanksRecord } from './types';
 
-export const BANKS_BINS: IBanksRecord = {
+export const BANKS_BINS: TBanksRecord = {
   sberbank: [
     '220220',
     '402333',

@@ -66,10 +66,8 @@ const calculateDelay = (attempts: number): number => {
   }
 
   const attemptsOverThreshold = attempts - MAX_ATTEMPTS_BEFORE_DELAY;
-  const exponentialDelay =
-    DELAY_BASE_MS * Math.pow(DELAY_MULTIPLIER, attemptsOverThreshold);
 
-  return exponentialDelay;
+  return DELAY_BASE_MS * Math.pow(DELAY_MULTIPLIER, attemptsOverThreshold);
 };
 
 export const applyRateLimit = async (): Promise<void> => {

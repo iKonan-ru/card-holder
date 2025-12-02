@@ -1,6 +1,5 @@
 import type { IBankCard } from '@entities/bank-card';
-import { EMPTY_STRING, TYPE_STRING, TYPE_NUMBER } from '@shared/lib';
-import type { IValidationErrors } from '../types';
+import { EMPTY_STRING, TYPE_NUMBER, TYPE_STRING } from '@shared/lib';
 import {
   CVV_FIELD_CONFIG,
   EXPIRES_FIELD_CONFIG,
@@ -8,6 +7,7 @@ import {
   PAN_FIELD_CONFIG,
   PIN_FIELD_CONFIG,
 } from '../constants';
+import type { IValidationErrors } from '../types';
 
 const VALIDATABLE_FIELDS = [
   PAN_FIELD_CONFIG,

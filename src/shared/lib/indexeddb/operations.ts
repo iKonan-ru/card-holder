@@ -1,14 +1,14 @@
-import { getDatabase } from './database';
 import {
   INDEXEDDB_MODE_READONLY,
   INDEXEDDB_MODE_READWRITE,
 } from '../constants';
+import { getDatabase } from './database';
 
-type IDBMode = typeof INDEXEDDB_MODE_READONLY | typeof INDEXEDDB_MODE_READWRITE;
+type TDBMode = typeof INDEXEDDB_MODE_READONLY | typeof INDEXEDDB_MODE_READWRITE;
 
 interface IExecuteOperationParams<T> {
   storeName: string;
-  mode: IDBMode;
+  mode: TDBMode;
   operation: (store: IDBObjectStore) => IDBRequest<T>;
   errorMessage: string;
 }

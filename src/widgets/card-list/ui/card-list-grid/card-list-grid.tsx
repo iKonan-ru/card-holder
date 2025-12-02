@@ -1,8 +1,9 @@
 import { type FC } from 'react';
-import { useClassName, ParentClassProvider } from '@shared/lib';
-import { BankCard, type IBankCard } from '@entities/bank-card';
 import { AddCardButton } from '@features/add-card-button';
 import { SortableCardItem } from '@features/sortable-card-item';
+import { BankCard, type IBankCard } from '@entities/bank-card';
+import { ParentClassProvider, useClassName } from '@shared/lib';
+import type { Procedure } from '@shared/types';
 import { CARD_LIST_GRID_BLOCK } from '../../lib';
 import './card-list-grid.less';
 
@@ -12,7 +13,7 @@ interface ICardListGridProps {
   isReorderMode: boolean;
   onFlipCard: (pan: string) => void;
   onEditCard: (card: IBankCard) => void;
-  onShowForm: () => void;
+  onShowForm: Procedure;
 }
 
 export const CardListGrid: FC<ICardListGridProps> = ({

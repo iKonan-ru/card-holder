@@ -2,16 +2,17 @@ import type { FC } from 'react';
 import {
   bem,
   ParentClassProvider,
-  useClassName,
   useAnimatedModalClose,
+  useClassName,
 } from '@shared/lib';
+import type { Procedure } from '@shared/types';
 import { Button } from '@shared/ui';
 import { SUCCESS_MODAL_BLOCK, SUCCESS_MODAL_BUTTON_TEXT } from '../../lib';
 import './success-modal.less';
 
 interface ISuccessModalProps {
   message: string;
-  onClose?: () => void;
+  onClose?: Procedure;
 }
 
 export const SuccessModal: FC<ISuccessModalProps> = ({ message, onClose }) => {

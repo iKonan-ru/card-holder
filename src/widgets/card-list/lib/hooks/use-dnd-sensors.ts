@@ -4,6 +4,8 @@ import {
   TouchSensor,
   useSensor,
   useSensors,
+  type SensorDescriptor,
+  type SensorOptions,
 } from '@dnd-kit/core';
 import { sortableKeyboardCoordinates } from '@dnd-kit/sortable';
 import {
@@ -12,7 +14,7 @@ import {
   TOUCH_SENSOR_ACTIVATION_TOLERANCE,
 } from '../constants';
 
-export const useDndSensors = () => {
+export const useDndSensors = (): SensorDescriptor<SensorOptions>[] => {
   return useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {

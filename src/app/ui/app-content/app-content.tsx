@@ -1,8 +1,8 @@
 import { type FC } from 'react';
+import { useAppUpdateModal } from '@app/lib';
 import { MainPage } from '@pages/main-page';
-import { ModalContainer } from '@shared/ui';
 import { ErrorHandlerProvider } from '@features/error-handling';
-import { useAppUpdateModal } from '../../lib';
+import { ModalContainer } from '@shared/ui';
 
 export const AppContent: FC = () => {
   useAppUpdateModal();

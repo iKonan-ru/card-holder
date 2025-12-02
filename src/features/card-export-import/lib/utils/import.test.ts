@@ -1,14 +1,13 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from 'vitest';
+import type { IBankCard } from '@entities/bank-card';
+import { FILE_FORMAT_VERSION, type IEncryptedPayload } from '@shared/lib';
+import { ERROR_CORRUPTED_FILE, ERROR_UNSUPPORTED_VERSION } from '../constants';
 import {
+  mergeCards,
+  parseDecryptedCards,
   parseImportedFile,
   validateImportedPayload,
-  parseDecryptedCards,
-  mergeCards,
 } from './import';
-import type { IEncryptedPayload } from '@shared/lib';
-import type { IBankCard } from '@entities/bank-card';
-import { FILE_FORMAT_VERSION } from '@shared/lib';
-import { ERROR_CORRUPTED_FILE, ERROR_UNSUPPORTED_VERSION } from '../constants';
 
 describe('parseImportedFile', () => {
   it('должен парсить валидный JSON', () => {

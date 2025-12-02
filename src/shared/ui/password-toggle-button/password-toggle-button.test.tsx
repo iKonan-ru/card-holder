@@ -1,7 +1,7 @@
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { describe, expect, it, vi } from 'vitest';
 import { PasswordToggleButton } from './password-toggle-button';
 
 describe('PasswordToggleButton', () => {

@@ -2,16 +2,17 @@ import type { FC } from 'react';
 import {
   bem,
   ParentClassProvider,
-  useClassName,
   useAnimatedModalClose,
+  useClassName,
 } from '@shared/lib';
+import type { Procedure } from '@shared/types';
 import { Button } from '@shared/ui';
 import { ERROR_CONTENT_BLOCK, ERROR_CONTENT_CLOSE_TEXT } from '../../lib';
 import './error-content.less';
 
 interface IErrorContentProps {
   message: string;
-  onClose?: () => void;
+  onClose?: Procedure;
 }
 
 export const ErrorContent: FC<IErrorContentProps> = ({ message, onClose }) => {

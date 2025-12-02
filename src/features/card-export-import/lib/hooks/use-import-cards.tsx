@@ -1,45 +1,46 @@
-import { useState, useCallback, type ReactNode } from 'react';
+import { useCallback, useState, type ReactNode } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import {
-  decryptData,
-  uploadFile,
-  readFileAsText,
-  useModalContext,
-  FILE_EXTENSION,
   checkIsFileSelectionCancelled,
+  decryptData,
+  FILE_EXTENSION,
+  readFileAsText,
+  uploadFile,
+  useModalContext,
   withRateLimit,
 } from '@shared/lib';
-import {
-  parseImportedFile,
-  validateImportedPayload,
-  parseDecryptedCards,
-  mergeCards,
-  handleError,
-  createImportSuccessMessage,
-} from '../utils';
+import type { Procedure } from '@shared/types';
 import { PasswordModal, SuccessModal } from '../../ui';
 import {
-  PASSWORD_MODAL_TITLE_IMPORT,
-  PASSWORD_MODAL_ID_IMPORT,
-  SUCCESS_MODAL_ID_IMPORT,
   FALLBACK_ERROR_IMPORT,
+  PASSWORD_MODAL_ID_IMPORT,
+  PASSWORD_MODAL_TITLE_IMPORT,
+  SUCCESS_MODAL_ID_IMPORT,
   SUCCESS_MODAL_TITLE_IMPORT,
 } from '../constants';
+import {
+  createImportSuccessMessage,
+  handleError,
+  mergeCards,
+  parseDecryptedCards,
+  parseImportedFile,
+  validateImportedPayload,
+} from '../utils';
 
 interface IUseImportCardsParams {
   cards: IBankCard[];
   onImport: (cards: IBankCard[]) => Promise<void>;
-  onUnflipCards: () => void;
+  onUnflipCards: Procedure;
 }
 
-interface IUseImportCards {
+interface IUseImportCardsResult {
   isImporting: boolean;
   importCards: () => Promise<void>;
 }
 
 export const useImportCards = (
   params: IUseImportCardsParams
-): IUseImportCards => {
+): IUseImportCardsResult => {
   const { cards, onImport, onUnflipCards } = params;
   const [isImporting, setIsImporting] = useState(false);
   const { openModal } = useModalContext();
@@ -57,7 +58,7 @@ export const useImportCards = (
 
       const handleImportWithPassword = async (
         password: string,
-        closePasswordModal: () => void,
+        closePasswordModal: Procedure,
         setPasswordError: (error: string) => void
       ) => {
         try {

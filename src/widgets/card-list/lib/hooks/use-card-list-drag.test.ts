@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useCardListDrag } from './use-card-list-drag';
-import type { IBankCard } from '@entities/bank-card';
-import type { DragStartEvent, DragOverEvent } from '@dnd-kit/core';
+import type { DragOverEvent, DragStartEvent } from '@dnd-kit/core';
 import { MOCK_CARD, MOCK_CARD_SECOND } from '@test';
+import { act, renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import type { IBankCard } from '@entities/bank-card';
+import { useCardListDrag } from './use-card-list-drag';
 
 const MOCK_CARDS: IBankCard[] = [MOCK_CARD, MOCK_CARD_SECOND];
 

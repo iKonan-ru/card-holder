@@ -1,7 +1,8 @@
-import { describe, it, expect, vi, afterEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useCopyableField } from './use-copyable-field';
+import { type KeyboardEvent, type MouseEvent } from 'react';
+import { act, renderHook } from '@testing-library/react';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import * as utils from '../utils';
+import { useCopyableField } from './use-copyable-field';
 
 vi.mock('../utils', () => ({
   copyToClipboard: vi.fn(),
@@ -97,7 +98,7 @@ describe('useCopyableField', () => {
     await act(async () => {
       result.current.handleClick({
         stopPropagation: vi.fn(),
-      } as unknown as React.MouseEvent);
+      } as unknown as MouseEvent);
     });
 
     expect(copyMock).toHaveBeenCalledWith(TEST_VALUE);
@@ -116,7 +117,7 @@ describe('useCopyableField', () => {
     await act(async () => {
       result.current.handleClick({
         stopPropagation: vi.fn(),
-      } as unknown as React.MouseEvent);
+      } as unknown as MouseEvent);
     });
 
     expect(result.current.isCopied).toBe(true);
@@ -136,7 +137,7 @@ describe('useCopyableField', () => {
     await act(async () => {
       result.current.handleClick({
         stopPropagation: vi.fn(),
-      } as unknown as React.MouseEvent);
+      } as unknown as MouseEvent);
     });
 
     expect(result.current.isCopied).toBe(true);
@@ -168,7 +169,7 @@ describe('useCopyableField', () => {
     await act(async () => {
       result.current.handleClick({
         stopPropagation: vi.fn(),
-      } as unknown as React.MouseEvent);
+      } as unknown as MouseEvent);
     });
 
     expect(result.current.isCopied).toBe(true);
@@ -192,7 +193,7 @@ describe('useCopyableField', () => {
     await act(async () => {
       result.current.handleClick({
         stopPropagation: stopPropagationMock,
-      } as unknown as React.MouseEvent);
+      } as unknown as MouseEvent);
     });
 
     expect(stopPropagationMock).toHaveBeenCalled();
@@ -213,7 +214,7 @@ describe('useCopyableField', () => {
     await act(async () => {
       result.current.handleClick({
         stopPropagation: vi.fn(),
-      } as unknown as React.MouseEvent);
+      } as unknown as MouseEvent);
     });
 
     expect(logErrorMock).toHaveBeenCalled();
@@ -235,7 +236,7 @@ describe('useCopyableField', () => {
       result.current.handleKeyDown({
         key: 'Enter',
         preventDefault: preventDefaultMock,
-      } as unknown as React.KeyboardEvent<HTMLDivElement>);
+      } as unknown as KeyboardEvent<HTMLDivElement>);
     });
 
     expect(preventDefaultMock).toHaveBeenCalled();
@@ -257,7 +258,7 @@ describe('useCopyableField', () => {
       result.current.handleKeyDown({
         key: ' ',
         preventDefault: preventDefaultMock,
-      } as unknown as React.KeyboardEvent<HTMLDivElement>);
+      } as unknown as KeyboardEvent<HTMLDivElement>);
     });
 
     expect(preventDefaultMock).toHaveBeenCalled();
@@ -279,7 +280,7 @@ describe('useCopyableField', () => {
       result.current.handleKeyDown({
         key: 'Escape',
         preventDefault: preventDefaultMock,
-      } as unknown as React.KeyboardEvent<HTMLDivElement>);
+      } as unknown as KeyboardEvent<HTMLDivElement>);
     });
 
     expect(preventDefaultMock).not.toHaveBeenCalled();
@@ -300,7 +301,7 @@ describe('useCopyableField', () => {
     await act(async () => {
       result.current.handleClick({
         stopPropagation: vi.fn(),
-      } as unknown as React.MouseEvent);
+      } as unknown as MouseEvent);
     });
 
     expect(result.current.isCopied).toBe(true);
@@ -308,7 +309,7 @@ describe('useCopyableField', () => {
     await act(async () => {
       result.current.handleClick({
         stopPropagation: vi.fn(),
-      } as unknown as React.MouseEvent);
+      } as unknown as MouseEvent);
     });
 
     expect(clearTimeoutSpy).toHaveBeenCalled();

@@ -1,8 +1,8 @@
 import { type FormEvent } from 'react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useCardForm } from './use-card-form';
+import { act, renderHook } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as sharedLib from '@shared/lib';
+import { useCardForm } from './use-card-form';
 
 const { mockUseCardManagementStore } = vi.hoisted(() => ({
   mockUseCardManagementStore: vi.fn(),

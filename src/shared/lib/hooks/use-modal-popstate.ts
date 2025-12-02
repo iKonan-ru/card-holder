@@ -1,11 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, type RefObject } from 'react';
+import type { Procedure } from '@shared/types';
 import type { IModalItem } from '../context';
 
 interface IUseModalPopstateParams {
   modals: IModalItem[];
-  closeTop: () => void;
-  modalRequestCloseRef: React.MutableRefObject<Map<string, () => void>>;
-  isClosingFromHistoryRef: React.MutableRefObject<boolean>;
+  closeTop: Procedure;
+  modalRequestCloseRef: RefObject<Map<string, Procedure>>;
+  isClosingFromHistoryRef: RefObject<boolean>;
 }
 
 export const useModalPopstate = ({
@@ -13,7 +14,7 @@ export const useModalPopstate = ({
   closeTop,
   modalRequestCloseRef,
   isClosingFromHistoryRef,
-}: IUseModalPopstateParams) => {
+}: IUseModalPopstateParams): void => {
   useEffect(() => {
     const handlePopState = () => {
       const topModalId = modals[modals.length - 1]?.id;

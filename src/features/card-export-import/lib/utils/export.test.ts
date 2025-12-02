@@ -1,7 +1,7 @@
-import { describe, it, expect } from 'vitest';
-import { validateCardsForExport, prepareCardsForExport } from './export';
+import { describe, expect, it } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
 import { ERROR_NO_CARDS_TO_EXPORT } from '../constants';
+import { prepareCardsForExport, validateCardsForExport } from './export';
 
 describe('validateCardsForExport', () => {
   it('должен выбрасывать ошибку при пустом массиве карт', () => {

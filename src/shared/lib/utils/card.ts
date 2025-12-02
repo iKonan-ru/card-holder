@@ -1,8 +1,8 @@
-import { BANKS_BINS } from '@shared/data';
 import type {
-  TPaymentSystem,
   IPaymentSystemRule,
+  TPaymentSystem,
 } from '@entities/payment-system';
+import { BANKS_BINS } from '@shared/data';
 
 const FIRST_DIGIT_INDEX = 0;
 const FIRST_TWO_DIGITS_LENGTH = 2;
@@ -104,16 +104,22 @@ export function getBankByCardNumber(cardNumber: string): string | null {
   return null;
 }
 
-export const maskPan = (number: string, showValue = DEFAULT_SHOW_VALUE) => {
+export const maskPan = (
+  number: string,
+  showValue = DEFAULT_SHOW_VALUE
+): string => {
   const format = showValue ? PAN_VISIBLE_FORMAT : PAN_MASKED_FORMAT;
 
   return number.replace(PAN_MASK_PATTERN, format);
 };
 
-export const maskValue = (value: string, showValue = DEFAULT_SHOW_VALUE) => {
+export const maskValue = (
+  value: string,
+  showValue = DEFAULT_SHOW_VALUE
+): string => {
   return showValue ? value : MASK_CHAR.repeat(value.length);
 };
 
-export const formatExpiryDate = (date: string) => {
+export const formatExpiryDate = (date: string): string => {
   return date.replace(EXPIRES_FORMAT_PATTERN, EXPIRES_FORMAT_REPLACEMENT);
 };

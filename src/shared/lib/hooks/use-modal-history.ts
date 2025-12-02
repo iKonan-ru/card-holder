@@ -1,14 +1,19 @@
-import { useEffect, useRef } from 'react';
-import type { IModalItem } from '../context';
+import { useEffect, useRef, type RefObject } from 'react';
+import type { Procedure } from '@shared/types';
 import { MODAL_STATE_KEY } from '../constants';
+import type { IModalItem } from '../context';
 
 interface IUseModalHistoryParams {
   modals: IModalItem[];
-  push: (id: string, onClose: () => void) => void;
+  push: (id: string, onClose: Procedure) => void;
   remove: (id: string) => void;
   closeModal: (id: string) => void;
-  userActionRef: React.MutableRefObject<boolean>;
-  modalRequestCloseRef: React.MutableRefObject<Map<string, () => void>>;
+  userActionRef: RefObject<boolean>;
+  modalRequestCloseRef: RefObject<Map<string, Procedure>>;
+}
+
+interface IUseModalHistoryResult {
+  isClosingFromHistoryRef: RefObject<boolean>;
 }
 
 export const useModalHistory = ({
@@ -18,7 +23,7 @@ export const useModalHistory = ({
   closeModal,
   userActionRef,
   modalRequestCloseRef,
-}: IUseModalHistoryParams) => {
+}: IUseModalHistoryParams): IUseModalHistoryResult => {
   const previousModalIdsRef = useRef<Set<string>>(new Set());
   const isClosingFromHistoryRef = useRef(false);
 

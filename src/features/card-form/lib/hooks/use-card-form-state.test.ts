@@ -1,6 +1,6 @@
-import { describe, it, expect } from 'vitest';
-import { renderHook, act } from '@testing-library/react';
-import { useCardFormState } from './use-card-form-state';
+import { act, renderHook } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
+import { useCardFormState } from '@features/card-form';
 import type { IBankCard } from '@entities/bank-card';
 
 describe('useCardFormState', () => {

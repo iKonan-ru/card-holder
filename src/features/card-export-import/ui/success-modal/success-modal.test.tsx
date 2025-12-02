@@ -1,8 +1,8 @@
-import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { SuccessModal } from './success-modal';
+import { describe, expect, it, vi } from 'vitest';
 import { SUCCESS_MODAL_BUTTON_TEXT } from '../../lib';
+import { SuccessModal } from './success-modal';
 
 describe('SuccessModal', () => {
   it('должен отрисовываться с сообщением', () => {

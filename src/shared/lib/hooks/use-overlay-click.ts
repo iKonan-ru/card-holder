@@ -1,17 +1,24 @@
-import { useRef, useCallback, useMemo, type MouseEvent } from 'react';
+import { useCallback, useMemo, useRef, type MouseEvent } from 'react';
+import type { Procedure } from '@shared/types';
 
-interface IUseOverlayClickReturn {
-  handleOverlayMouseDown: () => void;
-  handleOverlayMouseUp: () => void;
+interface IUseOverlayClickParams {
+  onOverlayClick: Procedure;
+  isTopModal: boolean;
+  preventClose?: boolean;
+}
+
+interface IUseOverlayClickResult {
+  handleOverlayMouseDown: Procedure;
+  handleOverlayMouseUp: Procedure;
   handleContentClick: (event: MouseEvent<HTMLDivElement>) => void;
   handleContentMouseDown: (event: MouseEvent<HTMLDivElement>) => void;
 }
 
-export const useOverlayClick = (
-  onOverlayClick: () => void,
-  isTopModal: boolean,
-  preventClose = false
-): IUseOverlayClickReturn => {
+export const useOverlayClick = ({
+  onOverlayClick,
+  isTopModal,
+  preventClose = false,
+}: IUseOverlayClickParams): IUseOverlayClickResult => {
   const isMouseDownOnOverlayRef = useRef(false);
 
   const handleOverlayMouseDown = useCallback(() => {

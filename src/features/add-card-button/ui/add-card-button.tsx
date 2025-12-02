@@ -1,11 +1,12 @@
 import type { FC } from 'react';
 import { IoAdd } from 'react-icons/io5';
 import { bem, useClassName } from '@shared/lib';
-import { ADD_CARD_BUTTON_BLOCK, ADD_CARD_BUTTON_ARIA_LABEL } from '../lib';
+import type { Procedure } from '@shared/types';
+import { ADD_CARD_BUTTON_ARIA_LABEL, ADD_CARD_BUTTON_BLOCK } from '../lib';
 import './add-card-button.less';
 
 interface IAddCardButtonProps {
-  onClick: () => void;
+  onClick: Procedure;
 }
 
 export const AddCardButton: FC<IAddCardButtonProps> = ({ onClick }) => {

@@ -1,16 +1,17 @@
 /* eslint-disable react-refresh/only-export-components */
 import {
   createContext,
-  useState,
   useCallback,
-  useRef,
+  useContext,
   useMemo,
+  useRef,
+  useState,
   type FC,
   type PropsWithChildren,
   type ReactNode,
   type RefObject,
-  useContext,
 } from 'react';
+import type { Procedure } from '@shared/types';
 
 export interface IModalItem {
   id: string;
@@ -23,7 +24,7 @@ export interface IModalContext {
   modals: IModalItem[];
   openModal: (id: string, content: ReactNode, title?: string) => void;
   closeModal: (id: string) => void;
-  closeAllModals: () => void;
+  closeAllModals: Procedure;
   updateModalPreventClose: (id: string, preventClose: boolean) => void;
   userActionRef: RefObject<boolean>;
 }
@@ -31,7 +32,7 @@ export interface IModalContext {
 const Modal = createContext<IModalContext | null>(null);
 
 interface IModalProviderProps extends PropsWithChildren {
-  onModalOpen?: () => void;
+  onModalOpen?: Procedure;
 }
 
 export const ModalProvider: FC<IModalProviderProps> = ({
