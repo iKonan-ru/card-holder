@@ -5,7 +5,7 @@ import { usePWAUpdate } from './use-pwa-update';
 
 export const useAppUpdateModal = (): void => {
   const { needRefresh, updateServiceWorker } = usePWAUpdate();
-  const updateModal = useModal();
+  const { open, close } = useModal();
   const wasOpenedRef = useRef(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ export const useAppUpdateModal = (): void => {
     };
 
     const handleDismissUpdate = () => {
-      updateModal.close();
+      close();
     };
 
     const modalContent = createElement(PWAUpdate, {
@@ -34,6 +34,6 @@ export const useAppUpdateModal = (): void => {
       onDismiss: handleDismissUpdate,
     });
 
-    updateModal.open(modalContent, PWA_UPDATE_TITLE);
-  }, [needRefresh, updateServiceWorker, updateModal]);
+    open(modalContent, PWA_UPDATE_TITLE);
+  }, [needRefresh, updateServiceWorker, open, close]);
 };

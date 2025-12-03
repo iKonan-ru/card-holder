@@ -10,26 +10,23 @@ interface IUseCardListResult {
   isLoading: boolean;
   isReorderMode: boolean;
   handleShowForm: Procedure;
-  handleEditCard: (card: IBankCard) => void;
   handleDragEnd: (reorderedCards: IBankCard[]) => void;
   handleToggleReorderMode: Procedure;
-  handleFlipCard: (pan: string) => void;
 }
 
 export const useCardList = (): IUseCardListResult => {
-  const {
-    cards,
-    flippedPan,
-    isLoading,
-    isReorderMode,
-    loadCards,
-    reorderCards,
-    setCards,
-    toggleReorderMode,
-    flipCard,
-  } = useCardManagementStore();
+  const cards = useCardManagementStore((state) => state.cards);
+  const flippedPan = useCardManagementStore((state) => state.flippedPan);
+  const isLoading = useCardManagementStore((state) => state.isLoading);
+  const isReorderMode = useCardManagementStore((state) => state.isReorderMode);
+  const loadCards = useCardManagementStore((state) => state.loadCards);
+  const reorderCards = useCardManagementStore((state) => state.reorderCards);
+  const setCards = useCardManagementStore((state) => state.setCards);
+  const toggleReorderMode = useCardManagementStore(
+    (state) => state.toggleReorderMode
+  );
 
-  const { openAddCardForm, openEditCardForm } = useCardFormModal();
+  const { openAddCardForm } = useCardFormModal();
 
   useEffect(() => {
     loadCards();
@@ -47,22 +44,13 @@ export const useCardList = (): IUseCardListResult => {
     toggleReorderMode();
   }, [toggleReorderMode]);
 
-  const handleFlipCard = useCallback(
-    (pan: string) => {
-      flipCard(pan);
-    },
-    [flipCard]
-  );
-
   return {
     cards,
     flippedPan,
     isLoading,
     isReorderMode,
     handleShowForm: openAddCardForm,
-    handleEditCard: openEditCardForm,
     handleDragEnd,
     handleToggleReorderMode,
-    handleFlipCard,
   };
 };

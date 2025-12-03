@@ -36,6 +36,7 @@ describe('Modal', () => {
     );
 
     const overlay = container.querySelector('.modal');
+
     if (overlay) {
       await user.click(overlay);
 

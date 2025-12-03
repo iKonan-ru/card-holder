@@ -12,19 +12,19 @@ interface IUseCardFormModalResult {
 }
 
 export const useCardFormModal = (): IUseCardFormModalResult => {
-  const modal = useModal();
+  const { open } = useModal();
   const unflipCards = useCardManagementStore((state) => state.unflipCards);
 
   const openAddCardForm = useCallback(() => {
-    modal.open(<CardFormModal />, CARD_FORM_TITLE);
+    open(<CardFormModal />, CARD_FORM_TITLE);
     unflipCards();
-  }, [modal, unflipCards]);
+  }, [open, unflipCards]);
 
   const openEditCardForm = useCallback(
     (card: IBankCard) => {
-      modal.open(<CardFormModal initialCard={card} />, CARD_FORM_EDIT_TITLE);
+      open(<CardFormModal initialCard={card} />, CARD_FORM_EDIT_TITLE);
     },
-    [modal]
+    [open]
   );
 
   return {

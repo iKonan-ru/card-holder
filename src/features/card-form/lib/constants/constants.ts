@@ -1,3 +1,5 @@
+import type { IBankCard } from '@entities/bank-card';
+
 export const CARD_FORM_BLOCK = 'card-form';
 
 export const CARD_FORM_TITLE = 'Добавление карты';
@@ -13,7 +15,7 @@ export const DELETE_MODAL_MESSAGE = 'Вы уверены, что хотите у
 export const DELETE_CONFIRM_TEXT = 'Удалить';
 export const DELETE_CANCEL_TEXT = 'Отмена';
 
-export const EMPTY_CARD_FORM = {
+export const EMPTY_CARD_FORM: Partial<IBankCard> = {
   pan: '',
   expires: '',
   name: '',

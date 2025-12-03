@@ -1,18 +1,16 @@
 import { type FC } from 'react';
 import { AddCardButton } from '@features/add-card-button';
-import { SortableCardItem } from '@features/sortable-card-item';
-import { BankCard, type IBankCard } from '@entities/bank-card';
+import type { IBankCard } from '@entities/bank-card';
 import { ParentClassProvider, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { CARD_LIST_GRID_BLOCK } from '../../lib';
+import { CardItemWrapper } from '../card-item-wrapper';
 import './card-list-grid.less';
 
 interface ICardListGridProps {
   cards: IBankCard[];
   flippedPan: string | null;
   isReorderMode: boolean;
-  onFlipCard: (pan: string) => void;
-  onEditCard: (card: IBankCard) => void;
   onShowForm: Procedure;
 }
 
@@ -20,8 +18,6 @@ export const CardListGrid: FC<ICardListGridProps> = ({
   cards,
   flippedPan,
   isReorderMode,
-  onFlipCard,
-  onEditCard,
   onShowForm,
 }) => {
   const className = useClassName({
@@ -38,19 +34,12 @@ export const CardListGrid: FC<ICardListGridProps> = ({
           const isFlipped = flippedPan === card.pan;
 
           return (
-            <SortableCardItem
+            <CardItemWrapper
               key={card.pan}
-              id={card.pan}
+              card={card}
+              isFlipped={isFlipped}
               isReorderMode={isReorderMode}
-            >
-              <BankCard
-                card={card}
-                isFlipped={isFlipped}
-                onFlip={onFlipCard}
-                onEdit={onEditCard}
-                isReorderMode={isReorderMode}
-              />
-            </SortableCardItem>
+            />
           );
         })}
 

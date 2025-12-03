@@ -55,7 +55,7 @@ export const CardForm: FC<ICardFormProps> = ({
     handleDelete,
   } = useCardForm({ initialCard, onSuccess });
 
-  const deleteModal = useModal();
+  const { open } = useModal();
 
   const handleCancelClick = useCallback(() => {
     if (onCancel) {
@@ -68,7 +68,7 @@ export const CardForm: FC<ICardFormProps> = ({
   }, [handleDelete]);
 
   const handleDeleteClick = useCallback(() => {
-    deleteModal.open(
+    open(
       <ConfirmModal
         message={DELETE_MODAL_MESSAGE}
         confirmText={DELETE_CONFIRM_TEXT}
@@ -77,7 +77,7 @@ export const CardForm: FC<ICardFormProps> = ({
       />,
       DELETE_MODAL_TITLE
     );
-  }, [deleteModal, handleConfirmDelete]);
+  }, [open, handleConfirmDelete]);
 
   const panFieldRightContent = useMemo(
     () => <CardPreview pan={formData.pan || ''} />,

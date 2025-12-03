@@ -3,10 +3,25 @@ import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
 import { MOCK_CARD, MOCK_CARD_SECOND } from '@test';
 import { cleanup, render, screen } from '@testing-library/react';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
-import { ParentClassProvider } from '@shared/lib';
+import { ModalProvider, ParentClassProvider } from '@shared/lib';
 import { CardListGrid } from './card-list-grid';
+
+const { mockUseCardManagementStore, mockOpenEditCardForm } = vi.hoisted(() => ({
+  mockUseCardManagementStore: vi.fn(),
+  mockOpenEditCardForm: vi.fn(),
+}));
+
+vi.mock('@features/card-management', () => ({
+  useCardManagementStore: mockUseCardManagementStore,
+}));
+
+vi.mock('@features/card-form', () => ({
+  useCardFormModal: () => ({
+    openEditCardForm: mockOpenEditCardForm,
+  }),
+}));
 
 vi.mock('@entities/bank-card', () => ({
   BankCard: ({ card }: { card: IBankCard }) => (
@@ -22,13 +37,30 @@ const DndWrapper: FC<PropsWithChildren> = ({ children }) => {
   const ids = MOCK_CARDS.map((card) => card.pan);
 
   return (
-    <DndContext>
-      <SortableContext items={ids}>{children}</SortableContext>
-    </DndContext>
+    <ModalProvider>
+      <DndContext>
+        <SortableContext items={ids}>{children}</SortableContext>
+      </DndContext>
+    </ModalProvider>
   );
 };
 
 describe('CardListGrid', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      const mockStore = {
+        flipCard: vi.fn(),
+      };
+
+      if (selector) {
+        return selector(mockStore);
+      }
+
+      return mockStore;
+    });
+  });
+
   afterEach(() => {
     cleanup();
   });
@@ -41,8 +73,6 @@ describe('CardListGrid', () => {
             cards={MOCK_CARDS}
             flippedPan={null}
             isReorderMode={false}
-            onFlipCard={vi.fn()}
-            onEditCard={vi.fn()}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -62,8 +92,6 @@ describe('CardListGrid', () => {
             cards={MOCK_CARDS}
             flippedPan={null}
             isReorderMode={false}
-            onFlipCard={vi.fn()}
-            onEditCard={vi.fn()}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -82,8 +110,6 @@ describe('CardListGrid', () => {
             cards={MOCK_CARDS}
             flippedPan={null}
             isReorderMode={false}
-            onFlipCard={vi.fn()}
-            onEditCard={vi.fn()}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -102,8 +128,6 @@ describe('CardListGrid', () => {
             cards={[]}
             flippedPan={null}
             isReorderMode={false}
-            onFlipCard={vi.fn()}
-            onEditCard={vi.fn()}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -125,8 +149,6 @@ describe('CardListGrid', () => {
             cards={MOCK_CARDS}
             flippedPan={null}
             isReorderMode={false}
-            onFlipCard={vi.fn()}
-            onEditCard={vi.fn()}
             onShowForm={vi.fn()}
           />
         </DndWrapper>

@@ -76,6 +76,7 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
           error={passwordError}
           onChange={handlePasswordChange}
           autoComplete="new-password"
+          disabled={isSubmitting}
           autoFocus={true}
           required={true}
           isPasswordVisible={isPasswordVisible}
@@ -91,6 +92,7 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
             error={confirmError}
             onChange={handleConfirmPasswordChange}
             autoComplete="new-password"
+            disabled={isSubmitting}
             required={true}
             isPasswordVisible={isPasswordVisible}
             onPasswordVisibilityChange={handlePasswordVisibilityChange}

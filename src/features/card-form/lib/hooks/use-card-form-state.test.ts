@@ -98,41 +98,6 @@ describe('useCardFormState', () => {
     });
   });
 
-  it('должен обновлять данные при изменении initialCard', () => {
-    const initialCard: Partial<IBankCard> = {
-      pan: '5536914125525541',
-      expires: '1225',
-      name: 'INITIAL USER',
-      cvv: '123',
-      pin: '1234',
-    };
-
-    const { result, rerender } = renderHook(
-      ({ card }) => useCardFormState({ initialCard: card }),
-      { initialProps: { card: initialCard } }
-    );
-
-    expect(result.current.formData.name).toBe('INITIAL USER');
-
-    const updatedCard: Partial<IBankCard> = {
-      pan: '4276300015876543',
-      expires: '0626',
-      name: 'UPDATED USER',
-      cvv: '456',
-      pin: '5678',
-    };
-
-    rerender({ card: updatedCard });
-
-    expect(result.current.formData).toEqual({
-      pan: '4276 3000 1587 6543',
-      expires: '06/26',
-      name: 'UPDATED USER',
-      cvv: '456',
-      pin: '5678',
-    });
-  });
-
   it('должен корректно определять isEditMode', () => {
     const { result: resultEmpty } = renderHook(() => useCardFormState({}));
 

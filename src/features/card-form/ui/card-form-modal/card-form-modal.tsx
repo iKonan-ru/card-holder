@@ -17,6 +17,7 @@ export const CardFormModal: FC<ICardFormModalProps> = ({
 
   const handleSuccess = useCallback(() => {
     closeModal();
+
     if (onComplete) {
       onComplete();
     }

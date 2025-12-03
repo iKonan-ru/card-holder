@@ -139,18 +139,6 @@ describe('useCardList', () => {
     expect(mockOpenAddCardForm).toHaveBeenCalled();
   });
 
-  it('handleEditCard должен открывать модальное окно с карточкой', () => {
-    const { result } = renderHook(() => useCardList(), {
-      wrapper: TestWrapper,
-    });
-
-    act(() => {
-      result.current.handleEditCard(MOCK_CARD);
-    });
-
-    expect(mockUnflipCards).not.toHaveBeenCalled();
-  });
-
   it('не должен вызывать loadCards повторно при обновлении', async () => {
     const { rerender } = renderHook(() => useCardList(), {
       wrapper: TestWrapper,
@@ -163,29 +151,5 @@ describe('useCardList', () => {
     await waitFor(() => {
       expect(mockLoadCards).not.toHaveBeenCalled();
     });
-  });
-
-  it('должен вызывать flipCard при вызове handleFlipCard', () => {
-    const mockFlipCard = vi.fn();
-    mockUseCardManagementStore.mockImplementation(() => ({
-      ...createMockStore({
-        cards: [MOCK_CARD],
-        loadCards: mockLoadCards,
-        reorderCards: mockReorderCards,
-        setCards: mockSetCards,
-        toggleReorderMode: mockToggleReorderMode,
-        flipCard: mockFlipCard,
-      }),
-    }));
-
-    const { result } = renderHook(() => useCardList(), {
-      wrapper: TestWrapper,
-    });
-
-    act(() => {
-      result.current.handleFlipCard(MOCK_CARD.pan);
-    });
-
-    expect(mockFlipCard).toHaveBeenCalledWith(MOCK_CARD.pan);
   });
 });

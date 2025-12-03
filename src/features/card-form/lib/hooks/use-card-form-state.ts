@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import type { Procedure } from '@shared/types';
 import { EMPTY_CARD_FORM } from '../constants';
-import { formatExpires, formatPan } from '../utils';
+import { getInitialFormData } from '../utils';
 
 interface IUseCardFormStateParams {
   initialCard?: Partial<IBankCard>;
@@ -21,23 +21,13 @@ interface IUseCardFormStateResult {
 export const useCardFormState = ({
   initialCard,
 }: IUseCardFormStateParams): IUseCardFormStateResult => {
-  const [formData, setFormData] = useState<Partial<IBankCard>>(EMPTY_CARD_FORM);
+  const [formData, setFormData] = useState<Partial<IBankCard>>(() =>
+    getInitialFormData(initialCard)
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isEditMode = Boolean(initialCard);
   const originalPan = initialCard?.pan;
-
-  useEffect(() => {
-    if (initialCard) {
-      const formattedCard = {
-        ...initialCard,
-        pan: formatPan(initialCard.pan || ''),
-        expires: formatExpires(initialCard.expires || ''),
-      };
-
-      setFormData(formattedCard);
-    }
-  }, [initialCard]);
 
   const handleFieldChange = useCallback((fieldName: string, value: string) => {
     setFormData((previousData) => ({

@@ -49,6 +49,7 @@ export const useImportCards = (
     if (isImporting) {
       return;
     }
+
     try {
       const file = await uploadFile(FILE_EXTENSION);
       const content = await readFileAsText(file);

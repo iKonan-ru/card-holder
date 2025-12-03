@@ -22,9 +22,7 @@ export const CardList: FC = () => {
     flippedPan,
     isReorderMode,
     handleShowForm,
-    handleEditCard,
     handleDragEnd: handleDragEndStore,
-    handleFlipCard,
   } = useCardList();
 
   const sensors = useDndSensors();
@@ -70,17 +68,12 @@ export const CardList: FC = () => {
               cards={cards}
               flippedPan={flippedPan}
               isReorderMode={isReorderMode}
-              onFlipCard={handleFlipCard}
-              onEditCard={handleEditCard}
               onShowForm={handleShowForm}
             />
           </SortableContext>
 
           <DragOverlay dropAnimation={DROP_ANIMATION}>
-            <CardListDragOverlay
-              activeCard={activeCard}
-              onEditCard={handleEditCard}
-            />
+            <CardListDragOverlay activeCard={activeCard} />
           </DragOverlay>
         </DndContext>
       </ParentClassProvider>

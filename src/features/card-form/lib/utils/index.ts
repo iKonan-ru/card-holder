@@ -5,3 +5,5 @@ export * from './luhn';
 export * from './field-validators';
 
 export * from './validation';
+
+export * from './form-data';
