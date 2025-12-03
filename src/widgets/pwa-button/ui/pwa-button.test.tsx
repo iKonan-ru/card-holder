@@ -1,10 +1,10 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import * as pwaButtonLib from '../lib';
+import * as hooks from '../hooks';
 import { PWAButton } from './pwa-button';
 
-vi.mock('../lib', async () => {
-  const actual = await vi.importActual('../lib');
+vi.mock('../hooks', async () => {
+  const actual = await vi.importActual('../hooks');
 
   return {
     ...actual,
@@ -26,7 +26,7 @@ describe('PWAButton', () => {
   it('должна рендериться когда canInstall true и isInstalled false', () => {
     const handleInstallMock = vi.fn();
 
-    vi.mocked(pwaButtonLib.usePWAInstall).mockReturnValue({
+    vi.mocked(hooks.usePWAInstall).mockReturnValue({
       canInstall: true,
       isInstalled: false,
       handleInstall: handleInstallMock,
@@ -40,7 +40,7 @@ describe('PWAButton', () => {
   it('не должна рендериться когда canInstall false', () => {
     const handleInstallMock = vi.fn();
 
-    vi.mocked(pwaButtonLib.usePWAInstall).mockReturnValue({
+    vi.mocked(hooks.usePWAInstall).mockReturnValue({
       canInstall: false,
       isInstalled: false,
       handleInstall: handleInstallMock,
@@ -54,7 +54,7 @@ describe('PWAButton', () => {
   it('не должна рендериться когда isInstalled true', () => {
     const handleInstallMock = vi.fn();
 
-    vi.mocked(pwaButtonLib.usePWAInstall).mockReturnValue({
+    vi.mocked(hooks.usePWAInstall).mockReturnValue({
       canInstall: true,
       isInstalled: true,
       handleInstall: handleInstallMock,
@@ -68,7 +68,7 @@ describe('PWAButton', () => {
   it('не должна рендериться когда canInstall false и isInstalled true', () => {
     const handleInstallMock = vi.fn();
 
-    vi.mocked(pwaButtonLib.usePWAInstall).mockReturnValue({
+    vi.mocked(hooks.usePWAInstall).mockReturnValue({
       canInstall: false,
       isInstalled: true,
       handleInstall: handleInstallMock,
@@ -82,7 +82,7 @@ describe('PWAButton', () => {
   it('должна вызывать handleInstall при клике', () => {
     const handleInstallMock = vi.fn();
 
-    vi.mocked(pwaButtonLib.usePWAInstall).mockReturnValue({
+    vi.mocked(hooks.usePWAInstall).mockReturnValue({
       canInstall: true,
       isInstalled: false,
       handleInstall: handleInstallMock,
@@ -99,7 +99,7 @@ describe('PWAButton', () => {
   it('должна иметь корректный className', () => {
     const handleInstallMock = vi.fn();
 
-    vi.mocked(pwaButtonLib.usePWAInstall).mockReturnValue({
+    vi.mocked(hooks.usePWAInstall).mockReturnValue({
       canInstall: true,
       isInstalled: false,
       handleInstall: handleInstallMock,

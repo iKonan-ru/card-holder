@@ -11,7 +11,7 @@ import {
   CONFIRM_MODAL_BLOCK,
   DEFAULT_CANCEL_TEXT,
   DEFAULT_CONFIRM_TEXT,
-} from './lib';
+} from './constants';
 import './confirm-modal.less';
 
 interface IConfirmModalProps {

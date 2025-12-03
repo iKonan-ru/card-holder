@@ -1,7 +1,7 @@
 import { cleanup, render } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ModalProvider } from '@shared/lib';
-import * as showErrorModule from '../../lib';
+import * as utils from '../../utils';
 import { ErrorHandlerProvider } from './error-handler-provider';
 
 describe('ErrorHandlerProvider', () => {
@@ -24,7 +24,7 @@ describe('ErrorHandlerProvider', () => {
   });
 
   it('должен инициализировать контекст модальных окон', () => {
-    const setModalContextSpy = vi.spyOn(showErrorModule, 'setModalContext');
+    const setModalContextSpy = vi.spyOn(utils, 'setModalContext');
 
     render(
       <ModalProvider>

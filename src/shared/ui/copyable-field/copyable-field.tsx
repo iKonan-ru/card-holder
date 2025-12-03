@@ -8,7 +8,7 @@ import {
   useClassName,
   useCopyableField,
 } from '@shared/lib';
-import { COPY_TITLE_TEXT, COPYABLE_FIELD_BLOCK } from './lib';
+import { COPY_TITLE_TEXT, COPYABLE_FIELD_BLOCK } from './constants';
 import './copyable-field.less';
 
 interface ICopyableFieldProps {

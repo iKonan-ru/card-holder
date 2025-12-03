@@ -1,6 +1,6 @@
 import { useEffect, useState, type FC, type PropsWithChildren } from 'react';
 import { createPortal } from 'react-dom';
-import { DEFAULT_CONTAINER_ID } from './lib';
+import { DEFAULT_CONTAINER_ID } from './constants';
 
 interface IPortalProps extends PropsWithChildren {
   containerId?: string;

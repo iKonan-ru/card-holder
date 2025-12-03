@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
-import { SUCCESS_MODAL_BUTTON_TEXT } from '../../lib';
+import { SUCCESS_MODAL_BUTTON_TEXT } from '../../constants';
 import { SuccessModal } from './success-modal';
 
 describe('SuccessModal', () => {

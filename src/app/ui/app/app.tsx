@@ -1,5 +1,5 @@
 import { type FC } from 'react';
-import { useApp } from '@app/lib';
+import { useApp } from '@app/hooks';
 import { AppContent } from '@app/ui';
 import { ModalProvider } from '@shared/lib';
 import '@shared/assets/styles/index.less';

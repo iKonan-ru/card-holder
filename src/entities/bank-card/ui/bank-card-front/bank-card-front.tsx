@@ -5,7 +5,7 @@ import {
   type IBankCardCommonProps,
 } from '@entities/bank-card';
 import { bem } from '@shared/lib';
-import { BANK_CARD_BLOCK } from '../../lib';
+import { BANK_CARD_BLOCK } from '../../constants';
 import { BankCardHeader } from '../bank-card-header';
 
 interface IBankCardFrontProps extends IBankCardCommonProps {

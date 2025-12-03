@@ -6,7 +6,7 @@ import {
 } from 'react';
 import { FiLoader } from 'react-icons/fi';
 import { bem, useClassName } from '@shared/lib';
-import { BUTTON_BLOCK } from './lib';
+import { BUTTON_BLOCK } from './constants';
 import './button.less';
 
 interface IButtonProps

@@ -4,9 +4,9 @@ import {
   BANK_CARD_BLOCK,
   DEFAULT_IS_FLIPPED,
   DEFAULT_IS_REORDER_MODE,
-  useBankCard,
-} from '../../lib';
-import type { IBankCard } from '../../model';
+} from '../../constants';
+import { useBankCard } from '../../hooks';
+import type { IBankCard } from '../../types';
 import { BankCardBack } from '../bank-card-back';
 import { BankCardFront } from '../bank-card-front';
 import './bank-card.less';

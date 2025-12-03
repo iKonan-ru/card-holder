@@ -22,7 +22,7 @@ const { mockUseAppUpdateModal } = vi.hoisted(() => ({
   mockUseAppUpdateModal: vi.fn(),
 }));
 
-vi.mock('../../lib', () => ({
+vi.mock('@app/hooks', () => ({
   useAppUpdateModal: () => {
     mockUseAppUpdateModal();
   },

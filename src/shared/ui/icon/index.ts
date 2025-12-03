@@ -1,3 +1,3 @@
 export * from './icon';
 
-export * from './lib';
+export * from './constants';

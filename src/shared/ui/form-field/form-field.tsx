@@ -1,7 +1,7 @@
 import { useMemo, type FC } from 'react';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
 import type { IBaseInputFieldProps, IInputChangeHandler } from '@shared/types';
-import { FORM_FIELD_BLOCK } from './lib';
+import { FORM_FIELD_BLOCK } from './constants';
 import './form-field.less';
 
 export interface IFormFieldProps

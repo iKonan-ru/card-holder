@@ -2,7 +2,7 @@ import { type FC } from 'react';
 import { BankCard, type IBankCard } from '@entities/bank-card';
 import { ParentClassProvider, useClassName } from '@shared/lib';
 import { DragHandle } from '@shared/ui';
-import { CARD_LIST_DRAG_OVERLAY_BLOCK } from '../../lib';
+import { CARD_LIST_DRAG_OVERLAY_BLOCK } from '../../constants';
 import './card-list-drag-overlay.less';
 
 interface ICardListDragOverlayProps {

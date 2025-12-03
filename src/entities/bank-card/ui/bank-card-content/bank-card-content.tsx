@@ -2,7 +2,7 @@ import { type FC } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import { bem, formatExpiryDate, maskPan } from '@shared/lib';
 import { CopyableField } from '@shared/ui';
-import { BANK_CARD_BLOCK } from '../../lib';
+import { BANK_CARD_BLOCK } from '../../constants';
 
 interface IBankCardContentProps {
   card: IBankCard;

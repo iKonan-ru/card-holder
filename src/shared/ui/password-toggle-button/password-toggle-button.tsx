@@ -1,7 +1,7 @@
 import { type ComponentType, type FC } from 'react';
 import { bem, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
-import { PASSWORD_TOGGLE_BUTTON_BLOCK } from './lib';
+import { PASSWORD_TOGGLE_BUTTON_BLOCK } from './constants';
 import './password-toggle-button.less';
 
 interface IPasswordToggleButtonProps {

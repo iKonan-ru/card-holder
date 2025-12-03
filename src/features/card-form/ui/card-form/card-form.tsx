@@ -29,8 +29,8 @@ import {
   SUBMIT_BUTTON_EDIT_TEXT,
   SUBMIT_BUTTON_TEXT,
   TYPE_FIELD_CONFIG,
-  useCardForm,
-} from '../../lib';
+} from '../../constants';
+import { useCardForm } from '../../hooks';
 import './card-form.less';
 
 interface ICardFormProps {

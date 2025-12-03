@@ -1,6 +1,6 @@
 import { type ComponentType, type FC, type HTMLAttributes } from 'react';
 import { useClassName } from '@shared/lib';
-import { ICON_BLOCK } from './lib';
+import { ICON_BLOCK } from './constants';
 import './icon.less';
 
 interface IIconBaseProps extends HTMLAttributes<HTMLOrSVGElement> {

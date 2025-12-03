@@ -3,8 +3,8 @@ import userEvent from '@testing-library/user-event';
 import type { IconType } from 'react-icons';
 import { describe, expect, it, vi } from 'vitest';
 import { ParentClassProvider } from '@shared/lib';
+import { FAB_BUTTON_BLOCK } from './constants';
 import { FabButton } from './fab-button';
-import { FAB_BUTTON_BLOCK } from './lib';
 
 const MockIcon: IconType = ({ className, 'aria-hidden': ariaHidden }) => (
   <span

@@ -4,8 +4,8 @@ import {
   PWA_BUTTON_ARIA_LABEL,
   PWA_BUTTON_BLOCK,
   PWA_BUTTON_TEXT,
-  usePWAInstall,
-} from '../lib';
+} from '../constants';
+import { usePWAInstall } from '../hooks';
 import './pwa-button.less';
 
 export const PWAButton: FC = () => {

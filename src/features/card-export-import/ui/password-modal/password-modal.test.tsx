@@ -10,7 +10,7 @@ import {
   PASSWORD_MODAL_BUTTON_IMPORT,
   PASSWORD_MODAL_LABEL,
   PASSWORD_MODAL_LABEL_CONFIRM,
-} from '../../lib';
+} from '../../constants';
 import { PasswordModal } from './password-modal';
 
 vi.mock('@shared/lib', async () => {

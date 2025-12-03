@@ -5,7 +5,7 @@ import { FabButton } from '@shared/ui';
 import {
   REORDER_BUTTON_ARIA_LABEL_ACTIVE,
   REORDER_BUTTON_ARIA_LABEL_INACTIVE,
-} from '../lib';
+} from '../constants';
 
 interface IReorderToggleButtonProps {
   isActive: boolean;

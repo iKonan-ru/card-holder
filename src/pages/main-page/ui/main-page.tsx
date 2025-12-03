@@ -3,7 +3,7 @@ import { ActionButtons } from '@widgets/action-buttons';
 import { CardList } from '@widgets/card-list';
 import { PWAButton } from '@widgets/pwa-button';
 import { bem, ParentClassProvider } from '@shared/lib';
-import { MAIN_PAGE_BLOCK } from '../lib';
+import { MAIN_PAGE_BLOCK } from '../constants';
 import './main-page.less';
 
 export const MainPage: FC = () => {

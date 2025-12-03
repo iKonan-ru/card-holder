@@ -6,7 +6,7 @@ import {
   PWA_UPDATE_BUTTON_TEXT,
   PWA_UPDATE_DISMISS_BUTTON_TEXT,
   PWA_UPDATE_MESSAGE,
-} from '../lib';
+} from '../constants';
 import { PWAUpdate } from './pwa-update';
 
 vi.mock('@shared/ui', async () => {

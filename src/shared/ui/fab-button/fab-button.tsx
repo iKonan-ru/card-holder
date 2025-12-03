@@ -2,7 +2,7 @@ import { useMemo, type FC } from 'react';
 import type { IconType } from 'react-icons';
 import { bem, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
-import { FAB_BUTTON_BLOCK } from './lib';
+import { FAB_BUTTON_BLOCK } from './constants';
 import './fab-button.less';
 
 interface IFabButtonProps {

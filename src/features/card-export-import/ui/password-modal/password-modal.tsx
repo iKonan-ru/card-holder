@@ -14,9 +14,9 @@ import {
   PASSWORD_MODAL_ID_IMPORT,
   PASSWORD_MODAL_LABEL,
   PASSWORD_MODAL_LABEL_CONFIRM,
-  usePasswordModal,
-} from '../../lib';
-import type { TPasswordModalMode } from '../../model';
+} from '../../constants';
+import { usePasswordModal } from '../../hooks';
+import type { TPasswordModalMode } from '../../types';
 import './password-modal.less';
 
 interface IPasswordModalProps {

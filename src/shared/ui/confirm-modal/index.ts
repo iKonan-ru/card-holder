@@ -1,3 +1,3 @@
 export * from './confirm-modal';
 
-export * from './lib';
+export * from './constants';

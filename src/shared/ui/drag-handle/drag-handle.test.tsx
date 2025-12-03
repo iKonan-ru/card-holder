@@ -1,8 +1,8 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { DRAG_HANDLE_ARIA_LABEL, DRAG_HANDLE_BLOCK } from './constants';
 import { DragHandle } from './drag-handle';
-import { DRAG_HANDLE_ARIA_LABEL, DRAG_HANDLE_BLOCK } from './lib';
 
 describe('DragHandle', () => {
   afterEach(() => {

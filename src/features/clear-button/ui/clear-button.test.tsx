@@ -2,11 +2,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as cardManagementModule from '@features/card-management';
-import * as useClearDataModule from '../lib';
+import * as hooks from '../hooks';
 import { ClearButton } from './clear-button';
 
 vi.mock('@features/card-management');
-vi.mock('../lib');
+vi.mock('../hooks');
 
 describe('ClearButton', () => {
   const mockClearAllCards = vi.fn();
@@ -39,7 +39,7 @@ describe('ClearButton', () => {
       }
     );
 
-    vi.mocked(useClearDataModule.useClearData).mockReturnValue({
+    vi.mocked(hooks.useClearData).mockReturnValue({
       isClearing: false,
       clearData: mockClearData,
     });
@@ -80,13 +80,13 @@ describe('ClearButton', () => {
   it('должна передавать clearAllCards в useClearData', () => {
     render(<ClearButton />);
 
-    expect(useClearDataModule.useClearData).toHaveBeenCalledWith({
+    expect(hooks.useClearData).toHaveBeenCalledWith({
       onClear: mockClearAllCards,
     });
   });
 
   it('должна быть отключена во время очистки', () => {
-    vi.mocked(useClearDataModule.useClearData).mockReturnValue({
+    vi.mocked(hooks.useClearData).mockReturnValue({
       isClearing: true,
       clearData: mockClearData,
     });
@@ -123,7 +123,7 @@ describe('ClearButton', () => {
   });
 
   it('не должна вызывать clearData при клике если disabled', async () => {
-    vi.mocked(useClearDataModule.useClearData).mockReturnValue({
+    vi.mocked(hooks.useClearData).mockReturnValue({
       isClearing: true,
       clearData: mockClearData,
     });

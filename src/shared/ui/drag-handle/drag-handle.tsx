@@ -1,7 +1,7 @@
 import { forwardRef, useMemo, type ButtonHTMLAttributes } from 'react';
 import { FiMove } from 'react-icons/fi';
 import { bem, useClassName } from '@shared/lib';
-import { DRAG_HANDLE_ARIA_LABEL, DRAG_HANDLE_BLOCK } from './lib';
+import { DRAG_HANDLE_ARIA_LABEL, DRAG_HANDLE_BLOCK } from './constants';
 import './drag-handle.less';
 
 interface IDragHandleProps extends ButtonHTMLAttributes<HTMLButtonElement> {

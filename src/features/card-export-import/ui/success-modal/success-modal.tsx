@@ -7,7 +7,10 @@ import {
 } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { Button } from '@shared/ui';
-import { SUCCESS_MODAL_BLOCK, SUCCESS_MODAL_BUTTON_TEXT } from '../../lib';
+import {
+  SUCCESS_MODAL_BLOCK,
+  SUCCESS_MODAL_BUTTON_TEXT,
+} from '../../constants';
 import './success-modal.less';
 
 interface ISuccessModalProps {

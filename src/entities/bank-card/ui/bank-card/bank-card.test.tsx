@@ -1,6 +1,6 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { IBankCard } from '../../model';
+import type { IBankCard } from '../../types';
 import { BankCard } from './bank-card';
 
 const MOCK_CARD: IBankCard = {

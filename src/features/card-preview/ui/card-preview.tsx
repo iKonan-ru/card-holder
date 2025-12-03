@@ -13,7 +13,7 @@ import {
   useClassName,
 } from '@shared/lib';
 import { Icon } from '@shared/ui/icon';
-import { CARD_PREVIEW_BLOCK } from '../lib';
+import { CARD_PREVIEW_BLOCK } from '../constants';
 import './card-preview.less';
 
 interface ICardPreviewProps {

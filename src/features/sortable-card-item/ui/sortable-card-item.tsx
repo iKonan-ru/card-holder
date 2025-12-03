@@ -7,7 +7,7 @@ import {
   SORTABLE_CARD_ITEM_BLOCK,
   SORTABLE_CARD_ITEM_DEFAULT_OPACITY,
   SORTABLE_CARD_ITEM_DRAGGING_OPACITY,
-} from '../lib';
+} from '../constants';
 import './sortable-card-item.less';
 
 export interface ISortableCardItemProps extends PropsWithChildren {

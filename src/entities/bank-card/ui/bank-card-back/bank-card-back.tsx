@@ -8,7 +8,7 @@ import {
   maskValue,
 } from '@shared/lib';
 import { CopyableField } from '@shared/ui';
-import { BANK_CARD_BLOCK, BANK_CARD_EDIT_LABEL } from '../../lib';
+import { BANK_CARD_BLOCK, BANK_CARD_EDIT_LABEL } from '../../constants';
 
 interface IBankCardBackProps {
   card: IBankCard;

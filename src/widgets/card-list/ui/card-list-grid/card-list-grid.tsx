@@ -3,7 +3,7 @@ import { AddCardButton } from '@features/add-card-button';
 import type { IBankCard } from '@entities/bank-card';
 import { ParentClassProvider, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
-import { CARD_LIST_GRID_BLOCK } from '../../lib';
+import { CARD_LIST_GRID_BLOCK } from '../../constants';
 import { CardItemWrapper } from '../card-item-wrapper';
 import './card-list-grid.less';
 

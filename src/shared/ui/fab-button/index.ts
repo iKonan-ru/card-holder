@@ -1,3 +1,3 @@
 export * from './fab-button';
 
-export * from './lib';
+export * from './constants';

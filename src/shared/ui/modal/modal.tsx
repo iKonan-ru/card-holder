@@ -11,7 +11,7 @@ import {
   useOverlayClick,
 } from '@shared/lib';
 import type { Procedure } from '@shared/types';
-import { MODAL_BLOCK, MODAL_MODIFIERS_CLOSING } from './lib';
+import { MODAL_BLOCK, MODAL_MODIFIERS_CLOSING } from './constants';
 import './modal.less';
 
 interface IModalProps extends PropsWithChildren {

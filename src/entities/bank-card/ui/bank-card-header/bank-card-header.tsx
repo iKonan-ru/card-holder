@@ -3,8 +3,8 @@ import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
 import { ARIA_HIDDEN_TRUE, bem } from '@shared/lib';
 import { Icon } from '@shared/ui/icon';
-import { BANK_CARD_BLOCK } from '../../lib';
-import type { IBankCardCommonProps } from '../../model';
+import { BANK_CARD_BLOCK } from '../../constants';
+import type { IBankCardCommonProps } from '../../types';
 
 type TBankCardHeaderProps = IBankCardCommonProps;
 

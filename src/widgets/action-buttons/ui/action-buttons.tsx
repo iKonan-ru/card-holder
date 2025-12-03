@@ -4,7 +4,7 @@ import { useCardManagementStore } from '@features/card-management';
 import { ClearButton } from '@features/clear-button';
 import { ReorderToggleButton } from '@features/reorder-toggle-button';
 import { ParentClassProvider, useClassName } from '@shared/lib';
-import { ACTION_BUTTONS_BLOCK } from '../lib';
+import { ACTION_BUTTONS_BLOCK } from '../constants';
 import './action-buttons.less';
 
 export const ActionButtons: FC = () => {

@@ -39,8 +39,8 @@ const { mockUseCardListDrag } = vi.hoisted(() => ({
   mockUseCardListDrag: vi.fn(),
 }));
 
-vi.mock('../../lib', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('../../lib')>();
+vi.mock('../../hooks', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('../../hooks')>();
 
   return {
     ...actual,

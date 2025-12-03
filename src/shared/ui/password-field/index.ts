@@ -1,3 +1,3 @@
 export * from './password-field';
 
-export * from './lib';
+export * from './constants';
