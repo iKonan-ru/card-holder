@@ -51,6 +51,7 @@
   padding: @spacing-md;
   overflow-y: auto;
   animation: fadeInOverlay @duration-medium @easing-ease-out;
+  will-change: opacity;
 
   &_closing {
     animation: fadeOutOverlay @duration-medium @easing-ease forwards;
@@ -63,7 +64,7 @@
     padding: @card-padding;
     border-radius: @border-radius;
     background: var(--bg-primary);
-    box-shadow: @shadow-lg;
+    box-shadow: @shadow-xl;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
