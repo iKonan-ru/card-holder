@@ -1,4 +1,5 @@
 import { type FC } from 'react';
+import { PWAButton } from '@widgets/pwa-button';
 import { ExportButton, ImportButton } from '@features/card-export-import';
 import { useCardManagementStore } from '@features/card-management';
 import { ClearButton } from '@features/clear-button';
@@ -35,6 +36,8 @@ export const ActionButtons: FC = () => {
             <ClearButton />
           </>
         )}
+
+        <PWAButton />
       </ParentClassProvider>
     </div>
   );

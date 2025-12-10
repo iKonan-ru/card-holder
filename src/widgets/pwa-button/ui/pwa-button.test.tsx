@@ -1,5 +1,6 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { PWA_BUTTON_ARIA_LABEL, PWA_BUTTON_TEXT } from '../constants';
 import * as hooks from '../hooks';
 import { PWAButton } from './pwa-button';
 
@@ -11,8 +12,6 @@ vi.mock('../hooks', async () => {
     usePWAInstall: vi.fn(),
   };
 });
-
-const BUTTON_TEXT = 'Установить приложение';
 
 describe('PWAButton', () => {
   beforeEach(() => {
@@ -34,7 +33,10 @@ describe('PWAButton', () => {
 
     render(<PWAButton />);
 
-    expect(screen.getByText(BUTTON_TEXT)).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: PWA_BUTTON_ARIA_LABEL })
+    ).toBeInTheDocument();
+    expect(screen.getByText(PWA_BUTTON_TEXT)).toBeInTheDocument();
   });
 
   it('не должна рендериться когда canInstall false', () => {
@@ -48,7 +50,9 @@ describe('PWAButton', () => {
 
     render(<PWAButton />);
 
-    expect(screen.queryByText(BUTTON_TEXT)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: PWA_BUTTON_ARIA_LABEL })
+    ).not.toBeInTheDocument();
   });
 
   it('не должна рендериться когда isInstalled true', () => {
@@ -62,7 +66,9 @@ describe('PWAButton', () => {
 
     render(<PWAButton />);
 
-    expect(screen.queryByText(BUTTON_TEXT)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: PWA_BUTTON_ARIA_LABEL })
+    ).not.toBeInTheDocument();
   });
 
   it('не должна рендериться когда canInstall false и isInstalled true', () => {
@@ -76,7 +82,9 @@ describe('PWAButton', () => {
 
     render(<PWAButton />);
 
-    expect(screen.queryByText(BUTTON_TEXT)).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole('button', { name: PWA_BUTTON_ARIA_LABEL })
+    ).not.toBeInTheDocument();
   });
 
   it('должна вызывать handleInstall при клике', () => {
@@ -90,7 +98,7 @@ describe('PWAButton', () => {
 
     render(<PWAButton />);
 
-    const button = screen.getByText(BUTTON_TEXT);
+    const button = screen.getByRole('button', { name: PWA_BUTTON_ARIA_LABEL });
     fireEvent.click(button);
 
     expect(handleInstallMock).toHaveBeenCalledTimes(1);
@@ -107,8 +115,41 @@ describe('PWAButton', () => {
 
     render(<PWAButton />);
 
-    const button = screen.getByText(BUTTON_TEXT);
+    const button = screen.getByRole('button', { name: PWA_BUTTON_ARIA_LABEL });
     expect(button).toHaveClass('pwa-button');
     expect(button).toHaveClass('pwa-button_primary');
+  });
+
+  it('должна иметь корректный aria-label', () => {
+    const handleInstallMock = vi.fn();
+
+    vi.mocked(hooks.usePWAInstall).mockReturnValue({
+      canInstall: true,
+      isInstalled: false,
+      handleInstall: handleInstallMock,
+    });
+
+    render(<PWAButton />);
+
+    const button = screen.getByRole('button', { name: PWA_BUTTON_ARIA_LABEL });
+    expect(button).toHaveAttribute('aria-label', PWA_BUTTON_ARIA_LABEL);
+  });
+
+  it('должна иметь иконку с aria-hidden', () => {
+    const handleInstallMock = vi.fn();
+
+    vi.mocked(hooks.usePWAInstall).mockReturnValue({
+      canInstall: true,
+      isInstalled: false,
+      handleInstall: handleInstallMock,
+    });
+
+    render(<PWAButton />);
+
+    const icon = screen
+      .getByRole('button', { name: PWA_BUTTON_ARIA_LABEL })
+      .querySelector('svg');
+    expect(icon).toBeInTheDocument();
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
   });
 });

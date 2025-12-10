@@ -1,7 +1,6 @@
 import type { FC } from 'react';
 import { ActionButtons } from '@widgets/action-buttons';
 import { CardList } from '@widgets/card-list';
-import { PWAButton } from '@widgets/pwa-button';
 import { bem, ParentClassProvider } from '@shared/lib';
 import { MAIN_PAGE_BLOCK } from '../constants';
 import './main-page.less';
@@ -11,9 +10,6 @@ export const MainPage: FC = () => {
     <main className={MAIN_PAGE_BLOCK}>
       <ParentClassProvider parentClass={MAIN_PAGE_BLOCK}>
         <div className={bem(MAIN_PAGE_BLOCK, 'content')}>
-          <div className={bem(MAIN_PAGE_BLOCK, 'header')}>
-            <PWAButton />
-          </div>
           <CardList />
           <ActionButtons />
         </div>

@@ -1,10 +1,10 @@
 @import '@shared/assets/styles/variables.less';
 
 .pwa-button {
-  padding: @spacing-sm 1.25rem;
+  padding: @spacing-md;
   border: none;
-  border-radius: @border-radius-sm;
-  font-size: @font-size-base;
+  border-radius: @border-radius-full;
+  font-size: @font-size-lg;
   font-weight: @font-weight-medium;
   cursor: pointer;
   transition: @transition-medium;
@@ -32,6 +32,21 @@
 
     &:active {
       background: var(--gray-500);
+    }
+  }
+
+  &__text {
+    @media (max-width: @tablet) {
+      display: none;
+    }
+  }
+
+  &__icon {
+    display: none;
+    font-size: @font-size-xl;
+
+    @media (max-width: @tablet) {
+      display: block;
     }
   }
 }

@@ -36,13 +36,13 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
 
   const modifiers = useMemo(() => (modifier ? [modifier] : []), [modifier]);
 
-  const wrapperClassName = useClassName({
+  const className = useClassName({
     blockName: COPYABLE_FIELD_BLOCK,
     modifiers,
   });
 
   return (
-    <div className={wrapperClassName}>
+    <div className={className}>
       {label && (
         <div className={bem(COPYABLE_FIELD_BLOCK, 'label')}>{label}</div>
       )}

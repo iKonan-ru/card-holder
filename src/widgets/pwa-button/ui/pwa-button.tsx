@@ -1,5 +1,6 @@
 import { useMemo, type FC } from 'react';
-import { useClassName } from '@shared/lib';
+import { MdInstallMobile } from 'react-icons/md';
+import { bem, useClassName } from '@shared/lib';
 import {
   PWA_BUTTON_ARIA_LABEL,
   PWA_BUTTON_BLOCK,
@@ -29,7 +30,11 @@ export const PWAButton: FC = () => {
       aria-label={PWA_BUTTON_ARIA_LABEL}
       type="button"
     >
-      {PWA_BUTTON_TEXT}
+      <span className={bem(PWA_BUTTON_BLOCK, 'text')}>{PWA_BUTTON_TEXT}</span>
+      <MdInstallMobile
+        className={bem(PWA_BUTTON_BLOCK, 'icon')}
+        aria-hidden="true"
+      />
     </button>
   );
 };

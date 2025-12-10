@@ -42,13 +42,6 @@ describe('MainPage', () => {
     expect(contentElement).toBeInTheDocument();
   });
 
-  it('должна содержать header блок', () => {
-    render(<MainPage />);
-
-    const headerElement = document.querySelector('.main-page__header');
-    expect(headerElement).toBeInTheDocument();
-  });
-
   it('должна рендерить CardList', () => {
     render(<MainPage />);
 
