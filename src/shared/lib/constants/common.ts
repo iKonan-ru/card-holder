@@ -25,7 +25,6 @@ export const ARIA_ROLE_BUTTON = 'button';
 export const ARIA_ROLE_DIALOG = 'dialog';
 export const ARIA_MODAL_TRUE = 'true';
 export const ARIA_HIDDEN_TRUE = 'true';
-export const ARIA_TABINDEX_INTERACTIVE = 0;
 
 export const BUTTON_TYPE_SUBMIT = 'submit';
 export const BUTTON_TYPE_BUTTON = 'button';

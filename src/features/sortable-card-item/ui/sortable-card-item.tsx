@@ -28,6 +28,7 @@ export const SortableCardItem: FC<ISortableCardItemProps> = ({
     transform,
     transition,
     isDragging,
+    index,
   } = useSortable({
     id,
     disabled: !isReorderMode,
@@ -66,6 +67,7 @@ export const SortableCardItem: FC<ISortableCardItemProps> = ({
       style={style}
       className={className}
       {...attributes}
+      tabIndex={index}
     >
       <ParentClassProvider parentClass={SORTABLE_CARD_ITEM_BLOCK}>
         {children}

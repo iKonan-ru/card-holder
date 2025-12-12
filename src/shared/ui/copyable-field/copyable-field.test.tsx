@@ -107,7 +107,6 @@ describe('CopyableField', () => {
     );
 
     const element = screen.getByRole('button');
-    expect(element).toHaveAttribute('tabIndex', '0');
     expect(element).toHaveAttribute('aria-label');
   });
 

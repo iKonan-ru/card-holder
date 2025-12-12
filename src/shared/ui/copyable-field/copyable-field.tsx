@@ -3,7 +3,6 @@ import { FiCheck } from 'react-icons/fi';
 import {
   ARIA_HIDDEN_TRUE,
   ARIA_ROLE_BUTTON,
-  ARIA_TABINDEX_INTERACTIVE,
   bem,
   useClassName,
   useCopyableField,
@@ -50,7 +49,6 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
       <div className={bem(COPYABLE_FIELD_BLOCK, 'copy-wrapper')}>
         <div
           role={ARIA_ROLE_BUTTON}
-          tabIndex={ARIA_TABINDEX_INTERACTIVE}
           className={bem(COPYABLE_FIELD_BLOCK, 'value')}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
