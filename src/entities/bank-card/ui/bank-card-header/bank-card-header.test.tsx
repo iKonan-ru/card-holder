@@ -52,7 +52,7 @@ describe('BankCardHeader', () => {
       <BankCardHeader
         bank={MOCK_BANK_WITH_NAME}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     if (MOCK_BANK_WITH_NAME.name) {
@@ -65,7 +65,7 @@ describe('BankCardHeader', () => {
       <BankCardHeader
         bank={MOCK_BANK_WITH_NAME}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     if (MOCK_BANK_WITH_NAME.name) {
@@ -78,7 +78,7 @@ describe('BankCardHeader', () => {
       <BankCardHeader
         bank={MOCK_BANK_WITHOUT_NAME}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     const bankNameElement = container.querySelector('.bank-card__bank-name');
@@ -91,7 +91,7 @@ describe('BankCardHeader', () => {
       <BankCardHeader
         bank={MOCK_BANK_WITH_NAME}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     const logoElement = container.querySelector('.bank-card__logo');
@@ -105,11 +105,11 @@ describe('BankCardHeader', () => {
       <BankCardHeader
         bank={MOCK_BANK_WITH_NAME}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     const paymentSystemElement = container.querySelector(
-      '.bank-card__payment-system'
+      '.bank-card__payment-system',
     );
 
     expect(paymentSystemElement).toBeInTheDocument();
@@ -121,11 +121,11 @@ describe('BankCardHeader', () => {
       <BankCardHeader
         bank={MOCK_BANK_WITH_NAME}
         paymentSystem={null}
-      />
+      />,
     );
 
     const paymentSystemElement = container.querySelector(
-      '.bank-card__payment-system'
+      '.bank-card__payment-system',
     );
 
     expect(paymentSystemElement).not.toBeInTheDocument();
@@ -145,7 +145,7 @@ describe('BankCardHeader', () => {
       <BankCardHeader
         bank={bankWithoutLogo}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     const logoElement = container.querySelector('.bank-card__logo');

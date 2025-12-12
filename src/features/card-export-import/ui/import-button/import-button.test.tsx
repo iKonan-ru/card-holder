@@ -53,7 +53,7 @@ describe('ImportButton', () => {
     render(
       <TestWrapper>
         <ImportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const button = screen.getByRole('button', { name: /импортировать карты/i });
@@ -65,7 +65,7 @@ describe('ImportButton', () => {
     render(
       <TestWrapper>
         <ImportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const button = screen.getByRole('button', { name: /импортировать карты/i });
@@ -77,7 +77,7 @@ describe('ImportButton', () => {
     const { container } = render(
       <TestWrapper>
         <ImportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const icon = container.querySelector('svg');
@@ -91,7 +91,7 @@ describe('ImportButton', () => {
         <TestWrapper>
           <ImportButton />
         </TestWrapper>
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const button = screen.getByRole('button', { name: /импортировать карты/i });
@@ -103,7 +103,7 @@ describe('ImportButton', () => {
     render(
       <TestWrapper>
         <ImportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(mockUseCardManagementStore).toHaveBeenCalled();
@@ -113,11 +113,11 @@ describe('ImportButton', () => {
     render(
       <TestWrapper>
         <ImportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(mockUseCardManagementStore).toHaveBeenCalledWith(
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -125,11 +125,11 @@ describe('ImportButton', () => {
     render(
       <TestWrapper>
         <ImportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(mockUseCardManagementStore).toHaveBeenCalledWith(
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -147,7 +147,7 @@ describe('ImportButton', () => {
     render(
       <TestWrapper>
         <ImportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const button = screen.getByRole('button', { name: /импортировать карты/i });
@@ -159,7 +159,7 @@ describe('ImportButton', () => {
     render(
       <TestWrapper>
         <ImportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const button = screen.getByRole('button', { name: /импортировать карты/i });

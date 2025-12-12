@@ -111,7 +111,7 @@ describe('useImportCards', () => {
       stats: mockStats,
     });
     vi.mocked(utils.createImportSuccessMessage).mockReturnValue(
-      'Successfully imported 1 card(s)'
+      'Successfully imported 1 card(s)',
     );
     vi.mocked(sharedLib.checkIsFileSelectionCancelled).mockReturnValue(false);
     mockOnImport.mockResolvedValue(undefined);
@@ -123,7 +123,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     expect(result.current.importCards).toBeDefined();
@@ -136,7 +136,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -152,7 +152,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -168,7 +168,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -185,7 +185,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -201,7 +201,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -216,14 +216,14 @@ describe('useImportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
     await waitFor(() => {
       expect(sharedLib.decryptData).toHaveBeenCalledWith(
         mockPayload,
-        MOCK_PASSWORD
+        MOCK_PASSWORD,
       );
     });
   });
@@ -234,7 +234,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -249,7 +249,7 @@ describe('useImportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -264,7 +264,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -279,14 +279,14 @@ describe('useImportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
     await waitFor(() => {
       expect(utils.mergeCards).toHaveBeenCalledWith(
         mockCards,
-        mockImportedCards
+        mockImportedCards,
       );
     });
   });
@@ -297,7 +297,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -312,7 +312,7 @@ describe('useImportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -327,7 +327,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -342,7 +342,7 @@ describe('useImportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -357,7 +357,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -372,7 +372,7 @@ describe('useImportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -387,7 +387,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -402,7 +402,7 @@ describe('useImportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -417,7 +417,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -432,7 +432,7 @@ describe('useImportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -450,7 +450,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -463,7 +463,7 @@ describe('useImportCards', () => {
 
     await act(async () => {
       await expect(
-        onConfirm(MOCK_PASSWORD, mockClosePasswordModal, mockSetPasswordError)
+        onConfirm(MOCK_PASSWORD, mockClosePasswordModal, mockSetPasswordError),
       ).rejects.toThrow('Decryption error');
     });
 
@@ -483,7 +483,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -496,7 +496,7 @@ describe('useImportCards', () => {
 
     await act(async () => {
       await expect(
-        onConfirm(MOCK_PASSWORD, mockClosePasswordModal, mockSetPasswordError)
+        onConfirm(MOCK_PASSWORD, mockClosePasswordModal, mockSetPasswordError),
       ).rejects.toThrow('Import error');
     });
 
@@ -507,7 +507,7 @@ describe('useImportCards', () => {
 
   it('должен игнорировать отмену выбора файла', async () => {
     vi.mocked(sharedLib.uploadFile).mockRejectedValue(
-      new Error('User cancelled')
+      new Error('User cancelled'),
     );
     vi.mocked(sharedLib.checkIsFileSelectionCancelled).mockReturnValue(true);
 
@@ -516,7 +516,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -537,7 +537,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -546,7 +546,7 @@ describe('useImportCards', () => {
 
     expect(utils.handleError).toHaveBeenCalledWith(
       mockError,
-      expect.any(String)
+      expect.any(String),
     );
   });
 
@@ -556,7 +556,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -571,7 +571,7 @@ describe('useImportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -589,7 +589,7 @@ describe('useImportCards', () => {
         cards: mockCards,
         onImport: mockOnImport,
         onUnflipCards: mockOnUnflipCards,
-      })
+      }),
     );
 
     await act(async () => {
@@ -602,7 +602,7 @@ describe('useImportCards', () => {
 
     await act(async () => {
       await expect(
-        onConfirm(MOCK_PASSWORD, mockClosePasswordModal, mockSetPasswordError)
+        onConfirm(MOCK_PASSWORD, mockClosePasswordModal, mockSetPasswordError),
       ).rejects.toThrow('Decryption error');
     });
 

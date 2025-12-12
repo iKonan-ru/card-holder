@@ -13,7 +13,7 @@ let databaseInstance: IDBDatabase | null = null;
 const INDEX_UNIQUE_FALSE = false;
 
 const checkIsIDBOpenDBRequest = (
-  target: EventTarget | null
+  target: EventTarget | null,
 ): target is IDBOpenDBRequest => {
   return target !== null && 'result' in target && 'transaction' in target;
 };

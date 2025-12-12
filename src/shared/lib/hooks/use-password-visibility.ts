@@ -21,7 +21,7 @@ interface IUsePasswordVisibilityResult {
 }
 
 export const usePasswordVisibility = (
-  params: IUsePasswordVisibilityParams
+  params: IUsePasswordVisibilityParams,
 ): IUsePasswordVisibilityResult => {
   const { isControlled, externalIsVisible, onExternalChange } = params;
   const [internalIsVisible, setInternalIsVisible] = useState(false);

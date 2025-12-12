@@ -31,7 +31,7 @@ vi.mock('@features/pwa-update', () => ({
         <button onClick={onUpdate}>Обновить</button>
         <button onClick={onDismiss}>Отклонить</button>
       </div>
-    )
+    ),
   ),
   PWA_UPDATE_TITLE: 'Обновление приложения',
 }));

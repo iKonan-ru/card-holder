@@ -41,7 +41,7 @@ export const useCardListDrag = ({
         setActiveCard(card);
       }
     },
-    [cards]
+    [cards],
   );
 
   const handleDragOver = useCallback(
@@ -61,7 +61,7 @@ export const useCardListDrag = ({
         setCards(arrayMove(cards, oldIndex, newIndex));
       }
     },
-    [cards]
+    [cards],
   );
 
   const handleDragEndInternal = useCallback(() => {

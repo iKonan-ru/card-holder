@@ -123,7 +123,7 @@ describe('IndexedDB cards', () => {
 
   it('getCardByPan должна возвращать карту по номеру', async () => {
     const request = (mockStore.get as (pan: string) => IMockRequest)(
-      MOCK_CARD.pan
+      MOCK_CARD.pan,
     ) as IMockRequest;
     request.result = MOCK_CARD;
 
@@ -140,7 +140,7 @@ describe('IndexedDB cards', () => {
 
   it('checkCardExists должна возвращать true если карта существует', async () => {
     const request = (mockStore.get as (pan: string) => IMockRequest)(
-      MOCK_CARD.pan
+      MOCK_CARD.pan,
     ) as IMockRequest;
     request.result = MOCK_CARD;
 
@@ -157,7 +157,7 @@ describe('IndexedDB cards', () => {
 
   it('checkCardExists должна возвращать false если карта не существует', async () => {
     const request = (mockStore.get as (pan: string) => IMockRequest)(
-      MOCK_CARD.pan
+      MOCK_CARD.pan,
     ) as IMockRequest;
     request.result = undefined;
 
@@ -174,7 +174,7 @@ describe('IndexedDB cards', () => {
 
   it('addCard должна добавлять карту в хранилище', async () => {
     const request = (mockStore.add as (card: IBankCard) => IMockRequest)(
-      MOCK_CARD
+      MOCK_CARD,
     ) as IMockRequest;
 
     setTimeout(() => {
@@ -189,7 +189,7 @@ describe('IndexedDB cards', () => {
 
   it('updateCard должна обновлять карту в хранилище', async () => {
     const request = (mockStore.put as (card: IBankCard) => IMockRequest)(
-      MOCK_CARD
+      MOCK_CARD,
     ) as IMockRequest;
 
     setTimeout(() => {
@@ -204,7 +204,7 @@ describe('IndexedDB cards', () => {
 
   it('deleteCard должна удалять карту из хранилища', async () => {
     const request = (mockStore.delete as (pan: string) => IMockRequest)(
-      MOCK_CARD.pan
+      MOCK_CARD.pan,
     ) as IMockRequest;
 
     setTimeout(() => {
@@ -268,7 +268,7 @@ describe('IndexedDB cards', () => {
     }, 0);
 
     await expect(updateCardsOrder(MOCK_CARDS)).rejects.toThrow(
-      'Не удалось обновить порядок карт'
+      'Не удалось обновить порядок карт',
     );
   });
 });

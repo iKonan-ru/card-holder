@@ -35,13 +35,13 @@ describe('parseImportedFile', () => {
 
   it('должен выбрасывать ошибку при невалидном JSON', () => {
     expect(() => parseImportedFile('not a json')).toThrowError(
-      ERROR_CORRUPTED_FILE
+      ERROR_CORRUPTED_FILE,
     );
   });
 
   it('должен выбрасывать ошибку при частично валидном JSON', () => {
     expect(() => parseImportedFile('{"key": "value"')).toThrowError(
-      ERROR_CORRUPTED_FILE
+      ERROR_CORRUPTED_FILE,
     );
   });
 });
@@ -66,7 +66,7 @@ describe('validateImportedPayload', () => {
     } as unknown as IEncryptedPayload;
 
     expect(() => validateImportedPayload(invalid)).toThrowError(
-      ERROR_CORRUPTED_FILE
+      ERROR_CORRUPTED_FILE,
     );
   });
 
@@ -74,7 +74,7 @@ describe('validateImportedPayload', () => {
     const invalid = { ...validPayload, version: 999 };
 
     expect(() => validateImportedPayload(invalid)).toThrowError(
-      ERROR_UNSUPPORTED_VERSION
+      ERROR_UNSUPPORTED_VERSION,
     );
   });
 
@@ -85,7 +85,7 @@ describe('validateImportedPayload', () => {
     } as unknown as IEncryptedPayload;
 
     expect(() => validateImportedPayload(invalid)).toThrowError(
-      ERROR_CORRUPTED_FILE
+      ERROR_CORRUPTED_FILE,
     );
   });
 
@@ -96,7 +96,7 @@ describe('validateImportedPayload', () => {
     } as unknown as IEncryptedPayload;
 
     expect(() => validateImportedPayload(invalid)).toThrowError(
-      ERROR_CORRUPTED_FILE
+      ERROR_CORRUPTED_FILE,
     );
   });
 
@@ -107,7 +107,7 @@ describe('validateImportedPayload', () => {
     } as unknown as IEncryptedPayload;
 
     expect(() => validateImportedPayload(invalid)).toThrowError(
-      ERROR_CORRUPTED_FILE
+      ERROR_CORRUPTED_FILE,
     );
   });
 
@@ -118,7 +118,7 @@ describe('validateImportedPayload', () => {
     } as unknown as IEncryptedPayload;
 
     expect(() => validateImportedPayload(invalid)).toThrowError(
-      ERROR_CORRUPTED_FILE
+      ERROR_CORRUPTED_FILE,
     );
   });
 });
@@ -152,7 +152,7 @@ describe('parseDecryptedCards', () => {
 
   it('должен выбрасывать ошибку при невалидном JSON', () => {
     expect(() => parseDecryptedCards('invalid json')).toThrowError(
-      ERROR_CORRUPTED_FILE
+      ERROR_CORRUPTED_FILE,
     );
   });
 
@@ -160,7 +160,7 @@ describe('parseDecryptedCards', () => {
     const notArray = JSON.stringify({ key: 'value' });
 
     expect(() => parseDecryptedCards(notArray)).toThrowError(
-      ERROR_CORRUPTED_FILE
+      ERROR_CORRUPTED_FILE,
     );
   });
 

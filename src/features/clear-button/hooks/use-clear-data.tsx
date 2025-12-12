@@ -20,7 +20,7 @@ interface IUseClearDataResult {
 }
 
 export const useClearData = (
-  params: IUseClearDataParams
+  params: IUseClearDataParams,
 ): IUseClearDataResult => {
   const { onClear } = params;
   const [isClearing, setIsClearing] = useState(false);

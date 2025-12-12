@@ -17,7 +17,7 @@ let errorModalHandler:
 export const setErrorModalHandler = (
   handler:
     | ((params: { message: string; error?: unknown; context?: string }) => void)
-    | null
+    | null,
 ) => {
   errorModalHandler = handler;
 };

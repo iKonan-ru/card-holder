@@ -24,17 +24,17 @@ export const generateExportFileName = (): string => {
   const year = now.getFullYear();
   const month = String(now.getMonth() + MONTH_OFFSET).padStart(
     TWO_DIGIT_PADDING,
-    ZERO_CHAR
+    ZERO_CHAR,
   );
   const day = String(now.getDate()).padStart(TWO_DIGIT_PADDING, ZERO_CHAR);
   const hours = String(now.getHours()).padStart(TWO_DIGIT_PADDING, ZERO_CHAR);
   const minutes = String(now.getMinutes()).padStart(
     TWO_DIGIT_PADDING,
-    ZERO_CHAR
+    ZERO_CHAR,
   );
   const seconds = String(now.getSeconds()).padStart(
     TWO_DIGIT_PADDING,
-    ZERO_CHAR
+    ZERO_CHAR,
   );
 
   const timestamp = `${year}-${month}-${day}-${hours}-${minutes}-${seconds}`;
@@ -56,7 +56,7 @@ export const readFileAsText = async (file: File): Promise<string> => {
   }
 
   const isMimeTypeAllowed = ALLOWED_MIME_TYPES.includes(
-    file.type as (typeof ALLOWED_MIME_TYPES)[number]
+    file.type as (typeof ALLOWED_MIME_TYPES)[number],
   );
 
   if (!isMimeTypeAllowed) {

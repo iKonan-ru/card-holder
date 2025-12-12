@@ -50,12 +50,12 @@ describe('deriveKeyFromPassword', () => {
     const encrypted1 = await crypto.subtle.encrypt(
       { name: ENCRYPTION_ALGORITHM, iv },
       key1,
-      data
+      data,
     );
     const encrypted2 = await crypto.subtle.encrypt(
       { name: ENCRYPTION_ALGORITHM, iv },
       key2,
-      data
+      data,
     );
 
     expect(new Uint8Array(encrypted1)).toEqual(new Uint8Array(encrypted2));
@@ -75,12 +75,12 @@ describe('deriveKeyFromPassword', () => {
     const encrypted1 = await crypto.subtle.encrypt(
       { name: ENCRYPTION_ALGORITHM, iv },
       key1,
-      data
+      data,
     );
     const encrypted2 = await crypto.subtle.encrypt(
       { name: ENCRYPTION_ALGORITHM, iv },
       key2,
-      data
+      data,
     );
 
     expect(new Uint8Array(encrypted1)).not.toEqual(new Uint8Array(encrypted2));
@@ -100,12 +100,12 @@ describe('deriveKeyFromPassword', () => {
     const encrypted1 = await crypto.subtle.encrypt(
       { name: ENCRYPTION_ALGORITHM, iv },
       key1,
-      data
+      data,
     );
     const encrypted2 = await crypto.subtle.encrypt(
       { name: ENCRYPTION_ALGORITHM, iv },
       key2,
-      data
+      data,
     );
 
     expect(new Uint8Array(encrypted1)).not.toEqual(new Uint8Array(encrypted2));

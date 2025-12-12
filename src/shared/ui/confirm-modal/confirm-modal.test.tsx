@@ -14,7 +14,7 @@ describe('ConfirmModal', () => {
         message="Сообщение"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText('Сообщение')).toBeInTheDocument();
@@ -26,11 +26,11 @@ describe('ConfirmModal', () => {
         message="Сообщение"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
     expect(
-      screen.getByRole('button', { name: 'Подтвердить' })
+      screen.getByRole('button', { name: 'Подтвердить' }),
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Отмена' })).toBeInTheDocument();
   });
@@ -43,7 +43,7 @@ describe('ConfirmModal', () => {
         cancelText="Нет"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByRole('button', { name: 'Да' })).toBeInTheDocument();
@@ -59,7 +59,7 @@ describe('ConfirmModal', () => {
         message="Сообщение"
         onConfirm={handleConfirm}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
     const confirmButton = screen.getByRole('button', {
@@ -81,7 +81,7 @@ describe('ConfirmModal', () => {
         message="Сообщение"
         onConfirm={vi.fn()}
         onCancel={handleCancel}
-      />
+      />,
     );
 
     const cancelButton = screen.getByRole('button', { name: 'Отмена' });

@@ -151,7 +151,7 @@ export const useCardFormSubmit = ({
       resetForm,
       resetErrors,
       onSuccess,
-    ]
+    ],
   );
 
   const handleDelete = useCallback(async () => {

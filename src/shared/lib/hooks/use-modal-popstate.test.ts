@@ -31,7 +31,7 @@ describe('useModalPopstate', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         isClosingFromHistoryRef: mockIsClosingFromHistoryRef,
-      })
+      }),
     );
 
     expect(mockCloseTop).not.toHaveBeenCalled();
@@ -46,7 +46,7 @@ describe('useModalPopstate', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         isClosingFromHistoryRef: mockIsClosingFromHistoryRef,
-      })
+      }),
     );
 
     const event = new PopStateEvent('popstate');
@@ -67,7 +67,7 @@ describe('useModalPopstate', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         isClosingFromHistoryRef: mockIsClosingFromHistoryRef,
-      })
+      }),
     );
 
     const event = new PopStateEvent('popstate');
@@ -85,7 +85,7 @@ describe('useModalPopstate', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         isClosingFromHistoryRef: mockIsClosingFromHistoryRef,
-      })
+      }),
     );
 
     const event = new PopStateEvent('popstate');
@@ -103,7 +103,7 @@ describe('useModalPopstate', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         isClosingFromHistoryRef: mockIsClosingFromHistoryRef,
-      })
+      }),
     );
 
     const event = new PopStateEvent('popstate');

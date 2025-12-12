@@ -151,7 +151,7 @@ describe('useCardManagementStore', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] [CardManagementStore.loadCards] Не удалось загрузить карты',
-      mockError
+      mockError,
     );
     expect(useCardManagementStore.getState().isLoading).toBe(false);
 
@@ -205,7 +205,7 @@ describe('useCardManagementStore', () => {
     await expect(addCard(mockCard)).rejects.toThrow(mockError);
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] [CardManagementStore.addCard] Не удалось добавить карту',
-      mockError
+      mockError,
     );
 
     consoleErrorSpy.mockRestore();
@@ -225,7 +225,7 @@ describe('useCardManagementStore', () => {
 
     vi.mocked(sharedLib.updateCard).mockResolvedValueOnce(undefined);
     vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce(
-      expectedCardsAfterUpdate
+      expectedCardsAfterUpdate,
     );
 
     const { updateCard } = useCardManagementStore.getState();
@@ -256,7 +256,7 @@ describe('useCardManagementStore', () => {
     await expect(updateCard(mockCard)).rejects.toThrow(mockError);
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] [CardManagementStore.updateCard] Не удалось обновить карту',
-      mockError
+      mockError,
     );
 
     consoleErrorSpy.mockRestore();
@@ -268,7 +268,7 @@ describe('useCardManagementStore', () => {
 
     vi.mocked(sharedLib.deleteCard).mockResolvedValueOnce(undefined);
     vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce(
-      expectedCardsAfterDelete
+      expectedCardsAfterDelete,
     );
 
     const { deleteCard } = useCardManagementStore.getState();
@@ -291,7 +291,7 @@ describe('useCardManagementStore', () => {
     await expect(deleteCard('5559494202595236')).rejects.toThrow(mockError);
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] [CardManagementStore.deleteCard] Не удалось удалить карту',
-      mockError
+      mockError,
     );
 
     consoleErrorSpy.mockRestore();
@@ -405,7 +405,7 @@ describe('useCardManagementStore', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] [CardManagementStore.reorderCards] Не удалось изменить порядок карт',
-      mockError
+      mockError,
     );
 
     consoleErrorSpy.mockRestore();
@@ -601,7 +601,7 @@ describe('useCardManagementStore', () => {
 
       expect(consoleErrorSpy).toHaveBeenCalledWith(
         '[Card Holder] [CardManagementStore.clearAllCards] Не удалось очистить карты',
-        mockError
+        mockError,
       );
 
       consoleErrorSpy.mockRestore();

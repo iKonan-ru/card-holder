@@ -46,7 +46,7 @@ describe('useClearData', () => {
     expect(mockOpenModal).toHaveBeenCalledWith(
       'confirm-clear-all',
       expect.anything(),
-      'Подтверждение удаления'
+      'Подтверждение удаления',
     );
   });
 

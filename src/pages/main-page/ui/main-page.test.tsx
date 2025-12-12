@@ -61,7 +61,7 @@ describe('MainPage', () => {
     const contentElement = mainPage?.querySelector('.main-page__content');
     const cardList = contentElement?.querySelector('[data-testid="card-list"]');
     const actionButtons = contentElement?.querySelector(
-      '[data-testid="action-buttons"]'
+      '[data-testid="action-buttons"]',
     );
 
     expect(mainPage).toBeInTheDocument();
@@ -76,17 +76,17 @@ describe('MainPage', () => {
     const contentElement = container.querySelector('.main-page__content');
     const cardList = contentElement?.querySelector('[data-testid="card-list"]');
     const actionButtons = contentElement?.querySelector(
-      '[data-testid="action-buttons"]'
+      '[data-testid="action-buttons"]',
     );
 
     expect(cardList).toBeInTheDocument();
     expect(actionButtons).toBeInTheDocument();
 
     const cardListIndex = Array.from(contentElement?.children || []).indexOf(
-      cardList!
+      cardList!,
     );
     const actionButtonsIndex = Array.from(
-      contentElement?.children || []
+      contentElement?.children || [],
     ).indexOf(actionButtons!);
 
     expect(actionButtonsIndex).toBeGreaterThan(cardListIndex);

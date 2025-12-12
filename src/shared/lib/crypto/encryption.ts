@@ -35,7 +35,7 @@ const base64ToArrayBuffer = (base64: string): ArrayBuffer => {
 
 export const encryptData = async (
   data: string,
-  password: string
+  password: string,
 ): Promise<IEncryptedPayload> => {
   try {
     const encoder = new TextEncoder();
@@ -52,7 +52,7 @@ export const encryptData = async (
         iv,
       },
       key,
-      dataBuffer
+      dataBuffer,
     );
 
     return {
@@ -69,7 +69,7 @@ export const encryptData = async (
 
 export const decryptData = async (
   payload: IEncryptedPayload,
-  password: string
+  password: string,
 ): Promise<string> => {
   try {
     const salt = new Uint8Array(base64ToArrayBuffer(payload.salt!));
@@ -84,7 +84,7 @@ export const decryptData = async (
         iv,
       },
       key,
-      encryptedData
+      encryptedData,
     );
 
     const decoder = new TextDecoder();

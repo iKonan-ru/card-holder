@@ -29,7 +29,7 @@ describe('CopyableField', () => {
     render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <CopyableField value={TEST_VALUE} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(screen.getByText(TEST_VALUE)).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe('CopyableField', () => {
           value={TEST_VALUE}
           label={TEST_LABEL}
         />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(screen.getByText(TEST_LABEL)).toBeInTheDocument();
@@ -52,7 +52,7 @@ describe('CopyableField', () => {
     render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <CopyableField value={TEST_VALUE} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(screen.queryByText(TEST_LABEL)).not.toBeInTheDocument();
@@ -65,7 +65,7 @@ describe('CopyableField', () => {
           value={TEST_VALUE}
           title={TEST_TITLE}
         />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const element = screen.getByTitle(TEST_TITLE);
@@ -81,7 +81,7 @@ describe('CopyableField', () => {
           value={TEST_VALUE}
           maskFn={maskFn}
         />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(screen.getByText(`masked-${TEST_VALUE}`)).toBeInTheDocument();
@@ -91,7 +91,7 @@ describe('CopyableField', () => {
     const { container } = render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <CopyableField value={TEST_VALUE} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const element = container.querySelector('.copyable-field');
@@ -103,7 +103,7 @@ describe('CopyableField', () => {
     render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <CopyableField value={TEST_VALUE} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const element = screen.getByRole('button');
@@ -115,7 +115,7 @@ describe('CopyableField', () => {
     const { container } = render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <CopyableField value={TEST_VALUE} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const button = screen.getByRole('button');

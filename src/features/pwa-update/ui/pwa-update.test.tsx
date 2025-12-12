@@ -33,7 +33,7 @@ describe('UpdateModal', () => {
     render(<PWAUpdate onUpdate={vi.fn()} />);
 
     expect(
-      screen.getByRole('button', { name: PWA_UPDATE_BUTTON_TEXT })
+      screen.getByRole('button', { name: PWA_UPDATE_BUTTON_TEXT }),
     ).toBeInTheDocument();
   });
 
@@ -42,11 +42,11 @@ describe('UpdateModal', () => {
       <PWAUpdate
         onUpdate={vi.fn()}
         onDismiss={vi.fn()}
-      />
+      />,
     );
 
     expect(
-      screen.getByRole('button', { name: PWA_UPDATE_DISMISS_BUTTON_TEXT })
+      screen.getByRole('button', { name: PWA_UPDATE_DISMISS_BUTTON_TEXT }),
     ).toBeInTheDocument();
   });
 
@@ -54,7 +54,7 @@ describe('UpdateModal', () => {
     render(<PWAUpdate onUpdate={vi.fn()} />);
 
     expect(
-      screen.queryByRole('button', { name: PWA_UPDATE_DISMISS_BUTTON_TEXT })
+      screen.queryByRole('button', { name: PWA_UPDATE_DISMISS_BUTTON_TEXT }),
     ).not.toBeInTheDocument();
   });
 
@@ -82,7 +82,7 @@ describe('UpdateModal', () => {
       <PWAUpdate
         onUpdate={vi.fn()}
         onDismiss={handleDismiss}
-      />
+      />,
     );
 
     const dismissButton = screen.getByRole('button', {
@@ -179,7 +179,7 @@ describe('UpdateModal', () => {
       () => {
         expect(handleUpdate).toHaveBeenCalledTimes(1);
       },
-      { timeout: 1000 }
+      { timeout: 1000 },
     );
 
     await waitFor(
@@ -187,7 +187,7 @@ describe('UpdateModal', () => {
         expect(updateButton).not.toBeDisabled();
         expect(screen.queryByLabelText('Загрузка')).not.toBeInTheDocument();
       },
-      { timeout: 2000 }
+      { timeout: 2000 },
     );
 
     consoleErrorSpy.mockRestore();
@@ -198,7 +198,7 @@ describe('UpdateModal', () => {
       <PWAUpdate
         onUpdate={vi.fn()}
         onDismiss={vi.fn()}
-      />
+      />,
     );
 
     const updateButton = screen.getByRole('button', {
@@ -211,7 +211,7 @@ describe('UpdateModal', () => {
     expect(updateButton).toHaveAttribute('aria-label', PWA_UPDATE_BUTTON_TEXT);
     expect(dismissButton).toHaveAttribute(
       'aria-label',
-      PWA_UPDATE_DISMISS_BUTTON_TEXT
+      PWA_UPDATE_DISMISS_BUTTON_TEXT,
     );
   });
 

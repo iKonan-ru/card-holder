@@ -36,7 +36,7 @@ export const PWAUpdate: FC<IPWAUpdateProps> = ({ onUpdate, onDismiss }) => {
       } finally {
         setIsUpdating(false);
       }
-    }, [onUpdate])
+    }, [onUpdate]),
   );
 
   const handleDismiss = useAnimatedModalClose(
@@ -44,7 +44,7 @@ export const PWAUpdate: FC<IPWAUpdateProps> = ({ onUpdate, onDismiss }) => {
       if (onDismiss) {
         onDismiss();
       }
-    }, [onDismiss])
+    }, [onDismiss]),
   );
 
   return (

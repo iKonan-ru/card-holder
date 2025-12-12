@@ -72,7 +72,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       await act(async () => {
@@ -99,7 +99,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       const mockEvent = {
@@ -133,7 +133,7 @@ describe('useCardFormSubmit', () => {
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
           onSuccess: mockOnSuccess,
-        })
+        }),
       );
 
       await act(async () => {
@@ -159,7 +159,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       await act(async () => {
@@ -185,7 +185,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       await act(async () => {
@@ -214,7 +214,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       await act(async () => {
@@ -241,7 +241,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       await act(async () => {
@@ -275,7 +275,7 @@ describe('useCardFormSubmit', () => {
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
           onSuccess: mockOnSuccess,
-        })
+        }),
       );
 
       const mockEvent = {
@@ -311,7 +311,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       const mockEvent = {
@@ -352,7 +352,7 @@ describe('useCardFormSubmit', () => {
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
           onSuccess: mockOnSuccess,
-        })
+        }),
       );
 
       const mockEvent = {
@@ -393,7 +393,7 @@ describe('useCardFormSubmit', () => {
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
           onSuccess: mockOnSuccess,
-        })
+        }),
       );
 
       const mockEvent = {
@@ -429,7 +429,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       const mockEvent = {
@@ -466,7 +466,7 @@ describe('useCardFormSubmit', () => {
           resetForm: customResetForm,
           resetErrors: customResetErrors,
           onSuccess: mockOnSuccess,
-        })
+        }),
       );
 
       await act(async () => {
@@ -488,7 +488,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       expect(typeof result.current.handleSubmit).toBe('function');
@@ -521,7 +521,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       const mockEvent = {
@@ -564,7 +564,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       const mockEvent = {
@@ -602,7 +602,7 @@ describe('useCardFormSubmit', () => {
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
-        })
+        }),
       );
 
       const mockEvent = {
@@ -638,7 +638,7 @@ describe('useCardFormSubmit', () => {
           resetForm: mockResetForm,
           resetErrors: mockResetErrors,
           onSuccess: mockOnSuccess,
-        })
+        }),
       );
 
       const mockEvent = {

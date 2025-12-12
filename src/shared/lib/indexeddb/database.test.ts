@@ -69,7 +69,7 @@ describe('IndexedDB database', () => {
 
     expect(mockIndexedDB.open).toHaveBeenCalledWith(
       DATABASE_NAME,
-      DATABASE_VERSION
+      DATABASE_VERSION,
     );
     expect(result).toBe(mockDatabase);
   });
@@ -128,13 +128,13 @@ describe('IndexedDB database', () => {
     await promise;
 
     expect(mockDatabase.objectStoreNames.contains).toHaveBeenCalledWith(
-      CARDS_STORE_NAME
+      CARDS_STORE_NAME,
     );
     expect(mockDatabase.createObjectStore).toHaveBeenCalledWith(
       CARDS_STORE_NAME,
       {
         keyPath: CARDS_KEY_PATH,
-      }
+      },
     );
   });
 
@@ -181,7 +181,7 @@ describe('IndexedDB database', () => {
     await promise;
 
     expect(mockDatabase.objectStoreNames.contains).toHaveBeenCalledWith(
-      CARDS_STORE_NAME
+      CARDS_STORE_NAME,
     );
     expect(mockDatabase.createObjectStore).not.toHaveBeenCalled();
   });
@@ -234,7 +234,7 @@ describe('IndexedDB database', () => {
 
     expect(mockIndexedDB.open).toHaveBeenCalledWith(
       DATABASE_NAME,
-      DATABASE_VERSION
+      DATABASE_VERSION,
     );
     expect(result).toBe(mockDatabase);
   });

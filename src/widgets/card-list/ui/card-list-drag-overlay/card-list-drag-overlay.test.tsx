@@ -30,7 +30,7 @@ describe('CardListDragOverlay', () => {
     const { container } = render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <CardListDragOverlay activeCard={null} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(container.firstChild).toBeNull();
@@ -40,7 +40,7 @@ describe('CardListDragOverlay', () => {
     const { container } = render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <CardListDragOverlay activeCard={MOCK_CARD} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const overlay = container.querySelector('.card-list-drag-overlay');
@@ -51,7 +51,7 @@ describe('CardListDragOverlay', () => {
     const { getByTestId } = render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <CardListDragOverlay activeCard={MOCK_CARD} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(getByTestId('overlay-card-5559494202595236')).toBeInTheDocument();
@@ -61,7 +61,7 @@ describe('CardListDragOverlay', () => {
     render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <CardListDragOverlay activeCard={MOCK_CARD} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(true).toBe(true);

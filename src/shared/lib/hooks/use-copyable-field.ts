@@ -68,7 +68,7 @@ export const useCopyableField = ({
       event.stopPropagation();
       handleCopy();
     },
-    [handleCopy]
+    [handleCopy],
   );
 
   const handleKeyDown = useCallback(
@@ -81,7 +81,7 @@ export const useCopyableField = ({
         handleCopy();
       }
     },
-    [handleCopy]
+    [handleCopy],
   );
 
   const ariaLabel = useMemo(
@@ -89,7 +89,7 @@ export const useCopyableField = ({
       label
         ? `${title}: ${label}`
         : `${title}: ${maskFn ? maskFn(value, false) : value}`,
-    [label, title, value, maskFn]
+    [label, title, value, maskFn],
   );
 
   const displayValue = maskFn ? maskFn(value, isCopied) : value;

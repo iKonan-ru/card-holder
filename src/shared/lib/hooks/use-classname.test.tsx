@@ -22,7 +22,7 @@ describe('useClassName', () => {
   it('должен генерировать базовый className без modifiers', () => {
     const { result } = renderHook(
       () => useClassName({ blockName: 'test-block' }),
-      { wrapper: createWrapper() }
+      { wrapper: createWrapper() },
     );
 
     expect(result.current).toBe('test-block');
@@ -35,7 +35,7 @@ describe('useClassName', () => {
           blockName: 'test-block',
           modifiers: ['active', 'large'],
         }),
-      { wrapper: createWrapper() }
+      { wrapper: createWrapper() },
     );
 
     expect(result.current).toContain('test-block');
@@ -46,7 +46,7 @@ describe('useClassName', () => {
   it('должен использовать parentClass из контекста', () => {
     const { result } = renderHook(
       () => useClassName({ blockName: 'test-block' }),
-      { wrapper: createWrapper('parent-block') }
+      { wrapper: createWrapper('parent-block') },
     );
 
     expect(result.current).toContain('test-block');
@@ -60,7 +60,7 @@ describe('useClassName', () => {
           blockName: 'test-block',
           modifiers: ['active'],
         }),
-      { wrapper: createWrapper('parent-block') }
+      { wrapper: createWrapper('parent-block') },
     );
 
     expect(result.current).toContain('test-block');
@@ -75,7 +75,7 @@ describe('useClassName', () => {
           blockName: 'test-block',
           modifiers: [],
         }),
-      { wrapper: createWrapper('parent-block') }
+      { wrapper: createWrapper('parent-block') },
     );
 
     expect(result.current).toContain('test-block');
@@ -89,7 +89,7 @@ describe('useClassName', () => {
           blockName: 'test-block',
           elementName: 'title',
         }),
-      { wrapper: createWrapper() }
+      { wrapper: createWrapper() },
     );
 
     expect(result.current).toBe('test-block');
@@ -102,7 +102,7 @@ describe('useClassName', () => {
           blockName: 'test-block',
           elementName: 'title',
         }),
-      { wrapper: createWrapper('parent-block') }
+      { wrapper: createWrapper('parent-block') },
     );
 
     expect(result.current).toContain('test-block');
@@ -116,7 +116,7 @@ describe('useClassName', () => {
           blockName: 'test-block',
           additionalClasses: ['extra-class'],
         }),
-      { wrapper: createWrapper() }
+      { wrapper: createWrapper() },
     );
 
     expect(result.current).toContain('test-block');
@@ -130,7 +130,7 @@ describe('useClassName', () => {
           blockName: 'test-block',
           modifiers: ['active'],
         }),
-      { wrapper: createWrapper('parent') }
+      { wrapper: createWrapper('parent') },
     );
 
     const firstResult = result.current;

@@ -343,7 +343,7 @@ describe('rate-limiter', () => {
       const mockOperation = vi.fn().mockResolvedValue('success');
 
       await expect(withRateLimit(mockOperation)).rejects.toThrow(
-        /Слишком много/
+        /Слишком много/,
       );
 
       expect(mockOperation).not.toHaveBeenCalled();

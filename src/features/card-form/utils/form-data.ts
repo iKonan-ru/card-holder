@@ -3,7 +3,7 @@ import { EMPTY_CARD_FORM } from '../constants';
 import { formatExpires, formatPan } from './masks';
 
 export const getInitialFormData = (
-  initialCard?: Partial<IBankCard>
+  initialCard?: Partial<IBankCard>,
 ): Partial<IBankCard> => {
   if (!initialCard) {
     return EMPTY_CARD_FORM;

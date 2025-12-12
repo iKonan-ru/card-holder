@@ -22,7 +22,7 @@ export const usePWAUpdate = (): IUsePWAUpdateResult => {
   } = useRegisterSW({
     onRegisteredSW(
       _swUrl: string,
-      registration: ServiceWorkerRegistration | undefined
+      registration: ServiceWorkerRegistration | undefined,
     ) {
       if (!registration) {
         return;

@@ -36,7 +36,7 @@ describe('ClearButton', () => {
         };
 
         return selector(state);
-      }
+      },
     );
 
     vi.mocked(hooks.useClearData).mockReturnValue({

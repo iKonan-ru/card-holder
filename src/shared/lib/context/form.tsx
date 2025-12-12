@@ -32,7 +32,7 @@ export const FormProvider: FC<IFormProviderProps> = ({
 }) => {
   const contextValue = useMemo(
     () => ({ onChange, onValidate }),
-    [onChange, onValidate]
+    [onChange, onValidate],
   );
 
   return <Form.Provider value={contextValue}>{children}</Form.Provider>;

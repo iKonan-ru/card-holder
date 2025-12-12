@@ -52,7 +52,7 @@ const PAYMENT_SYSTEM_RULES: IPaymentSystemRule[] = [
       const hasSufficientLength = pan.length >= FIRST_TWO_DIGITS_LENGTH;
       const firstTwoDigits = pan.substring(
         FIRST_DIGIT_INDEX,
-        FIRST_TWO_DIGITS_LENGTH
+        FIRST_TWO_DIGITS_LENGTH,
       );
 
       return hasSufficientLength && firstTwoDigits === JCB_PREFIX;
@@ -74,7 +74,7 @@ export function getPaymentSystem(pan: string): TPaymentSystem | null {
   }
 
   const matchedRule = PAYMENT_SYSTEM_RULES.find((rule) =>
-    rule.checkPrefix(pan)
+    rule.checkPrefix(pan),
   );
 
   return matchedRule ? matchedRule.system : null;
@@ -90,7 +90,7 @@ export function getBankByCardNumber(cardNumber: string): string | null {
 
   const prefix = cardNumber.substring(
     FIRST_DIGIT_INDEX,
-    MIN_CARD_PREFIX_LENGTH
+    MIN_CARD_PREFIX_LENGTH,
   );
 
   for (const [bankId, prefixes] of Object.entries(BANKS_BINS)) {
@@ -106,7 +106,7 @@ export function getBankByCardNumber(cardNumber: string): string | null {
 
 export const maskPan = (
   number: string,
-  showValue = DEFAULT_SHOW_VALUE
+  showValue = DEFAULT_SHOW_VALUE,
 ): string => {
   const format = showValue ? PAN_VISIBLE_FORMAT : PAN_MASKED_FORMAT;
 
@@ -115,7 +115,7 @@ export const maskPan = (
 
 export const maskValue = (
   value: string,
-  showValue = DEFAULT_SHOW_VALUE
+  showValue = DEFAULT_SHOW_VALUE,
 ): string => {
   return showValue ? value : MASK_CHAR.repeat(value.length);
 };

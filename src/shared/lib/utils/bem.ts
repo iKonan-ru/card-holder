@@ -6,7 +6,7 @@ import {
 
 export const bem = (
   blockName: string,
-  className?: string | string[]
+  className?: string | string[],
 ): string => {
   if (className) {
     const result: string[] = [];

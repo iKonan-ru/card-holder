@@ -22,7 +22,7 @@ export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({
       isActive
         ? REORDER_BUTTON_ARIA_LABEL_ACTIVE
         : REORDER_BUTTON_ARIA_LABEL_INACTIVE,
-    [isActive]
+    [isActive],
   );
 
   return (

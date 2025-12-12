@@ -68,7 +68,7 @@ describe('useAnimatedModalClose', () => {
       ({ callback }) => useAnimatedModalClose(callback),
       {
         initialProps: { callback: mockCallback1 },
-      }
+      },
     );
 
     const firstResult = result.current;

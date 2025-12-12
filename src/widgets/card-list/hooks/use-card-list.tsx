@@ -23,7 +23,7 @@ export const useCardList = (): IUseCardListResult => {
   const reorderCards = useCardManagementStore((state) => state.reorderCards);
   const setCards = useCardManagementStore((state) => state.setCards);
   const toggleReorderMode = useCardManagementStore(
-    (state) => state.toggleReorderMode
+    (state) => state.toggleReorderMode,
   );
 
   const { openAddCardForm } = useCardFormModal();
@@ -37,7 +37,7 @@ export const useCardList = (): IUseCardListResult => {
       setCards(reorderedCards);
       reorderCards(reorderedCards);
     },
-    [setCards, reorderCards]
+    [setCards, reorderCards],
   );
 
   const handleToggleReorderMode = useCallback(() => {

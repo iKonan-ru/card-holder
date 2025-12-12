@@ -5,7 +5,7 @@ import { usePWAUpdate } from './use-pwa-update';
 interface IRegisterSWConfig {
   onRegisteredSW?: (
     url: string,
-    registration: ServiceWorkerRegistration | undefined
+    registration: ServiceWorkerRegistration | undefined,
   ) => void;
   onRegisterError?: (error: Error) => void;
 }
@@ -16,7 +16,7 @@ interface IRegisterSWReturn {
 }
 
 const mockUpdateServiceWorker = vi.fn(() => Promise.resolve()) as unknown as (
-  reloadPage?: boolean
+  reloadPage?: boolean,
 ) => Promise<void>;
 const mockUseRegisterSW = vi.fn();
 
@@ -96,7 +96,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -136,7 +136,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -149,7 +149,7 @@ describe('usePWAUpdate', () => {
 
     expect(mockConsoleError).toHaveBeenCalledWith(
       'SW registration error',
-      testError
+      testError,
     );
     mockConsoleError.mockRestore();
   });
@@ -167,7 +167,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -191,7 +191,7 @@ describe('usePWAUpdate', () => {
       },
       {
         initialProps: { needRefresh: false },
-      }
+      },
     );
 
     expect(result.current.needRefresh).toBe(false);
@@ -227,7 +227,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -277,7 +277,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -321,7 +321,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -369,7 +369,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -383,7 +383,7 @@ describe('usePWAUpdate', () => {
     expect(mockUpdate).toHaveBeenCalled();
     expect(mockConsoleError).toHaveBeenCalledWith(
       'SW update check error',
-      testError
+      testError,
     );
 
     mockConsoleError.mockRestore();
@@ -419,7 +419,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -453,7 +453,7 @@ describe('usePWAUpdate', () => {
     const originalOnLine = Object.getOwnPropertyDescriptor(navigator, 'onLine');
     const originalVisibilityState = Object.getOwnPropertyDescriptor(
       document,
-      'visibilityState'
+      'visibilityState',
     );
 
     Object.defineProperty(navigator, 'onLine', {
@@ -478,7 +478,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -505,7 +505,7 @@ describe('usePWAUpdate', () => {
       Object.defineProperty(
         document,
         'visibilityState',
-        originalVisibilityState
+        originalVisibilityState,
       );
     }
   });
@@ -520,7 +520,7 @@ describe('usePWAUpdate', () => {
     const originalOnLine = Object.getOwnPropertyDescriptor(navigator, 'onLine');
     const originalVisibilityState = Object.getOwnPropertyDescriptor(
       document,
-      'visibilityState'
+      'visibilityState',
     );
 
     Object.defineProperty(navigator, 'onLine', {
@@ -545,7 +545,7 @@ describe('usePWAUpdate', () => {
           needRefresh: [false, vi.fn()],
           updateServiceWorker: mockUpdateServiceWorker,
         };
-      }
+      },
     );
 
     renderHook(() => usePWAUpdate());
@@ -572,7 +572,7 @@ describe('usePWAUpdate', () => {
       Object.defineProperty(
         document,
         'visibilityState',
-        originalVisibilityState
+        originalVisibilityState,
       );
     }
   });

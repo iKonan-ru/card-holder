@@ -73,7 +73,7 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
       if (instantValidateLength) {
         const unformattedLength = processedValue.replace(
           NON_DIGIT_PATTERN,
-          ''
+          '',
         ).length;
         const shouldInstantValidate =
           validator && unformattedLength === instantValidateLength;
@@ -98,7 +98,7 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
       instantValidateLength,
       validator,
       onValidate,
-    ]
+    ],
   );
 
   return (

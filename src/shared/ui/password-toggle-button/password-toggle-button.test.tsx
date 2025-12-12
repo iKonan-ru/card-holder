@@ -11,7 +11,7 @@ describe('PasswordToggleButton', () => {
         ariaLabel="Показать пароль"
         Icon={FiEye}
         onToggle={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -26,7 +26,7 @@ describe('PasswordToggleButton', () => {
         ariaLabel={ariaLabel}
         Icon={FiEye}
         onToggle={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -39,7 +39,7 @@ describe('PasswordToggleButton', () => {
         ariaLabel="Показать пароль"
         Icon={FiEye}
         onToggle={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -52,7 +52,7 @@ describe('PasswordToggleButton', () => {
         ariaLabel="Показать пароль"
         Icon={FiEye}
         onToggle={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -68,7 +68,7 @@ describe('PasswordToggleButton', () => {
         ariaLabel="Показать пароль"
         Icon={FiEye}
         onToggle={handleToggle}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -83,7 +83,7 @@ describe('PasswordToggleButton', () => {
         ariaLabel="Показать пароль"
         Icon={FiEye}
         onToggle={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -97,7 +97,7 @@ describe('PasswordToggleButton', () => {
         ariaLabel="Скрыть пароль"
         Icon={FiEyeOff}
         onToggle={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -109,7 +109,7 @@ describe('PasswordToggleButton', () => {
         ariaLabel="Показать пароль"
         Icon={FiEye}
         onToggle={vi.fn()}
-      />
+      />,
     );
 
     const updatedIcon = button.querySelector('svg');
@@ -122,7 +122,7 @@ describe('PasswordToggleButton', () => {
         ariaLabel="Показать пароль"
         Icon={FiEye}
         onToggle={vi.fn()}
-      />
+      />,
     );
 
     const button = container.querySelector('.password-toggle-button');

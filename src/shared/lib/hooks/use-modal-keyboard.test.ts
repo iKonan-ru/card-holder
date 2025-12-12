@@ -35,7 +35,7 @@ describe('useModalKeyboard', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         userActionRef: mockUserActionRef,
-      })
+      }),
     );
 
     expect(mockCloseTop).not.toHaveBeenCalled();
@@ -50,7 +50,7 @@ describe('useModalKeyboard', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         userActionRef: mockUserActionRef,
-      })
+      }),
     );
 
     const event = new KeyboardEvent('keydown', { key: KEY_ESC });
@@ -69,7 +69,7 @@ describe('useModalKeyboard', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         userActionRef: mockUserActionRef,
-      })
+      }),
     );
 
     const event = new KeyboardEvent('keydown', { key: KEY_ESC });
@@ -89,7 +89,7 @@ describe('useModalKeyboard', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         userActionRef: mockUserActionRef,
-      })
+      }),
     );
 
     const event = new KeyboardEvent('keydown', { key: KEY_ESC });
@@ -109,7 +109,7 @@ describe('useModalKeyboard', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         userActionRef: mockUserActionRef,
-      })
+      }),
     );
 
     const event = new KeyboardEvent('keydown', { key: 'Enter' });
@@ -127,7 +127,7 @@ describe('useModalKeyboard', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         userActionRef: mockUserActionRef,
-      })
+      }),
     );
 
     expect(document.body.style.overflow).toBe('hidden');
@@ -144,7 +144,7 @@ describe('useModalKeyboard', () => {
         }),
       {
         initialProps: { modals: [createMockModal('modal-1')] },
-      }
+      },
     );
 
     expect(document.body.style.overflow).toBe('hidden');
@@ -163,7 +163,7 @@ describe('useModalKeyboard', () => {
         closeTop: mockCloseTop,
         modalRequestCloseRef: mockModalRequestCloseRef,
         userActionRef: mockUserActionRef,
-      })
+      }),
     );
 
     const event = new KeyboardEvent('keydown', { key: KEY_ESC });

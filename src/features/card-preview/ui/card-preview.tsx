@@ -23,13 +23,13 @@ interface ICardPreviewProps {
 export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {
   const cleanPan = useMemo(
     () => pan.replace(SPACE_REMOVAL_PATTERN, EMPTY_STRING),
-    [pan]
+    [pan],
   );
   const paymentSystem = useMemo(() => getPaymentSystem(cleanPan), [cleanPan]);
   const bankId = useMemo(() => getBankByCardNumber(cleanPan), [cleanPan]);
   const bank = useMemo(
     () => BANKS_LIST.find((bank) => bank.id === bankId) || DEFAULT_BANK,
-    [bankId]
+    [bankId],
   );
 
   const hasPaymentSystem = Boolean(paymentSystem);
@@ -44,7 +44,7 @@ export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {
 
   const modifiers = useMemo(
     () => (isDarkText ? ['dark-text'] : []),
-    [isDarkText]
+    [isDarkText],
   );
 
   const className = useClassName({

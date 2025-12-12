@@ -39,7 +39,7 @@ export const DragHandle = forwardRef<HTMLButtonElement, IDragHandleProps>(
         />
       </button>
     );
-  }
+  },
 );
 
 DragHandle.displayName = 'DragHandle';

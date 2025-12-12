@@ -55,7 +55,7 @@ describe('useOverlayClick', () => {
       useOverlayClick({
         onOverlayClick: mockOnOverlayClick,
         isTopModal: true,
-      })
+      }),
     );
 
     expect(result.current.handleOverlayMouseDown).toBeDefined();
@@ -72,7 +72,7 @@ describe('useOverlayClick', () => {
       <TestComponent
         onOverlayClick={mockOnOverlayClick}
         isTopModal={true}
-      />
+      />,
     );
 
     const overlay = screen.getByTestId('overlay');
@@ -90,7 +90,7 @@ describe('useOverlayClick', () => {
       <TestComponent
         onOverlayClick={mockOnOverlayClick}
         isTopModal={false}
-      />
+      />,
     );
 
     const overlay = screen.getByTestId('overlay');
@@ -109,7 +109,7 @@ describe('useOverlayClick', () => {
         onOverlayClick={mockOnOverlayClick}
         isTopModal={true}
         preventClose={true}
-      />
+      />,
     );
 
     const overlay = screen.getByTestId('overlay');
@@ -127,7 +127,7 @@ describe('useOverlayClick', () => {
       <TestComponent
         onOverlayClick={mockOnOverlayClick}
         isTopModal={true}
-      />
+      />,
     );
 
     const content = screen.getByTestId('content');
@@ -144,7 +144,7 @@ describe('useOverlayClick', () => {
       <TestComponent
         onOverlayClick={mockOnOverlayClick}
         isTopModal={true}
-      />
+      />,
     );
 
     const content = container.querySelector('[data-testid="content"]');
@@ -166,7 +166,7 @@ describe('useOverlayClick', () => {
       <TestComponent
         onOverlayClick={mockOnOverlayClick}
         isTopModal={true}
-      />
+      />,
     );
 
     const content = screen.getByTestId('content');

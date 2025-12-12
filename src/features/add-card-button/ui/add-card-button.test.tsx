@@ -103,11 +103,11 @@ describe('AddCardButton', () => {
     const { container } = render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
         <AddCardButton onClick={handleClick} />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const button = container.querySelector(
-      `.${TEST_PARENT_CLASS}__add-card-button`
+      `.${TEST_PARENT_CLASS}__add-card-button`,
     );
     expect(button).toBeInTheDocument();
   });

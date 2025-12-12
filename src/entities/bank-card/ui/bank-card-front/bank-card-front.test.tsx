@@ -45,7 +45,7 @@ describe('BankCardFront', () => {
         card={MOCK_CARD}
         bank={MOCK_BANK}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     expect(screen.getByTestId('bank-card-header')).toBeInTheDocument();
@@ -57,7 +57,7 @@ describe('BankCardFront', () => {
         card={MOCK_CARD}
         bank={MOCK_BANK}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     expect(screen.getByTestId('bank-card-header')).toBeInTheDocument();
@@ -69,7 +69,7 @@ describe('BankCardFront', () => {
         card={MOCK_CARD}
         bank={MOCK_BANK}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     expect(screen.getByTestId('bank-card-content')).toBeInTheDocument();
@@ -81,11 +81,11 @@ describe('BankCardFront', () => {
         card={MOCK_CARD}
         bank={MOCK_BANK}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     expect(
-      screen.getByText(`${MOCK_BANK.name} - ${MOCK_PAYMENT_SYSTEM}`)
+      screen.getByText(`${MOCK_BANK.name} - ${MOCK_PAYMENT_SYSTEM}`),
     ).toBeInTheDocument();
   });
 
@@ -95,7 +95,7 @@ describe('BankCardFront', () => {
         card={MOCK_CARD}
         bank={MOCK_BANK}
         paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />
+      />,
     );
 
     expect(screen.getByText(MOCK_CARD.pan)).toBeInTheDocument();
@@ -107,7 +107,7 @@ describe('BankCardFront', () => {
         card={MOCK_CARD}
         bank={MOCK_BANK}
         paymentSystem={null}
-      />
+      />,
     );
 
     expect(screen.getByTestId('bank-card-header')).toBeInTheDocument();

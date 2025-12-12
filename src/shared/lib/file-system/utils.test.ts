@@ -29,7 +29,7 @@ describe('generateExportFileName', () => {
     const fileName = generateExportFileName();
 
     expect(fileName).toBe(
-      `${FILE_NAME_PREFIX}-2025-11-09-15-30-45${FILE_EXTENSION}`
+      `${FILE_NAME_PREFIX}-2025-11-09-15-30-45${FILE_EXTENSION}`,
     );
   });
 
@@ -40,7 +40,7 @@ describe('generateExportFileName', () => {
     const fileName = generateExportFileName();
 
     expect(fileName).toBe(
-      `${FILE_NAME_PREFIX}-2025-01-05-08-03-07${FILE_EXTENSION}`
+      `${FILE_NAME_PREFIX}-2025-01-05-08-03-07${FILE_EXTENSION}`,
     );
   });
 
@@ -133,7 +133,7 @@ describe('readFileAsText', () => {
     const file = new File(['test'], 'test.txt', { type: 'text/plain' });
 
     await expect(readFileAsText(file)).rejects.toThrow(
-      'Недопустимый тип файла'
+      'Недопустимый тип файла',
     );
   });
 
@@ -152,7 +152,7 @@ describe('readFileAsText', () => {
     });
 
     vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
-      this: FileReader
+      this: FileReader,
     ) {
       if (this.onerror) {
         const errorEvent = Object.create(ProgressEvent.prototype, {
@@ -174,7 +174,7 @@ describe('readFileAsText', () => {
     });
 
     vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
-      this: FileReader
+      this: FileReader,
     ) {
       if (this.onload) {
         Object.defineProperty(this, 'result', {
@@ -190,7 +190,7 @@ describe('readFileAsText', () => {
     });
 
     await expect(readFileAsText(file)).rejects.toThrow(
-      'Failed to read file as text'
+      'Failed to read file as text',
     );
 
     vi.restoreAllMocks();
@@ -202,7 +202,7 @@ describe('readFileAsText', () => {
     });
 
     vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
-      this: FileReader
+      this: FileReader,
     ) {
       if (this.onload) {
         Object.defineProperty(this, 'result', {
@@ -218,7 +218,7 @@ describe('readFileAsText', () => {
     });
 
     await expect(readFileAsText(file)).rejects.toThrow(
-      'Failed to read file as text'
+      'Failed to read file as text',
     );
 
     vi.restoreAllMocks();
@@ -230,7 +230,7 @@ describe('readFileAsText', () => {
     });
 
     vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
-      this: FileReader
+      this: FileReader,
     ) {
       if (this.onload) {
         Object.defineProperty(this, 'result', {
@@ -246,7 +246,7 @@ describe('readFileAsText', () => {
     });
 
     await expect(readFileAsText(file)).rejects.toThrow(
-      'Failed to read file as text'
+      'Failed to read file as text',
     );
 
     vi.restoreAllMocks();
@@ -259,7 +259,7 @@ describe('readFileAsText', () => {
     });
 
     vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
-      this: FileReader
+      this: FileReader,
     ) {
       if (this.onload) {
         Object.defineProperty(this, 'result', {

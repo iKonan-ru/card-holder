@@ -34,7 +34,7 @@ export const MOCK_CARDS: IBankCard[] = [
 ];
 
 export const createMockCard = (
-  overrides: Partial<IBankCard> = {}
+  overrides: Partial<IBankCard> = {},
 ): IBankCard => ({
   ...MOCK_CARD,
   ...overrides,

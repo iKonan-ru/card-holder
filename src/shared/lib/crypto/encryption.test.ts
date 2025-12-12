@@ -79,7 +79,7 @@ describe('encryptData', () => {
       .mockRejectedValue(new Error('Encryption error'));
 
     await expect(encryptData(testData, testPassword)).rejects.toThrowError(
-      ERROR_ENCRYPTION_FAILED
+      ERROR_ENCRYPTION_FAILED,
     );
 
     encryptSpy.mockRestore();
@@ -116,7 +116,7 @@ describe('decryptData', () => {
     const encrypted = await encryptData(testData, testPassword);
 
     await expect(decryptData(encrypted, 'wrong-password')).rejects.toThrowError(
-      ERROR_DECRYPTION_FAILED
+      ERROR_DECRYPTION_FAILED,
     );
   });
 
@@ -128,7 +128,7 @@ describe('decryptData', () => {
     };
 
     await expect(decryptData(corrupted, testPassword)).rejects.toThrowError(
-      ERROR_DECRYPTION_FAILED
+      ERROR_DECRYPTION_FAILED,
     );
   });
 
@@ -140,7 +140,7 @@ describe('decryptData', () => {
     };
 
     await expect(decryptData(corrupted, testPassword)).rejects.toThrowError(
-      ERROR_DECRYPTION_FAILED
+      ERROR_DECRYPTION_FAILED,
     );
   });
 
@@ -152,7 +152,7 @@ describe('decryptData', () => {
     };
 
     await expect(decryptData(corrupted, testPassword)).rejects.toThrowError(
-      ERROR_DECRYPTION_FAILED
+      ERROR_DECRYPTION_FAILED,
     );
   });
 });

@@ -10,7 +10,7 @@ describe('SuccessModal', () => {
       <SuccessModal
         message="Success message"
         onClose={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText('Success message')).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe('SuccessModal', () => {
       <SuccessModal
         message="Success message"
         onClose={vi.fn()}
-      />
+      />,
     );
 
     const closeButton = screen.getByRole('button', {
@@ -39,7 +39,7 @@ describe('SuccessModal', () => {
       <SuccessModal
         message="Success message"
         onClose={handleClose}
-      />
+      />,
     );
 
     const closeButton = screen.getByRole('button', {
@@ -57,7 +57,7 @@ describe('SuccessModal', () => {
       <SuccessModal
         message="First message"
         onClose={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText('First message')).toBeInTheDocument();
@@ -66,7 +66,7 @@ describe('SuccessModal', () => {
       <SuccessModal
         message="Second message"
         onClose={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText('Second message')).toBeInTheDocument();

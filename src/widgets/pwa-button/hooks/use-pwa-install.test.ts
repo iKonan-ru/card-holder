@@ -3,7 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { usePWAInstall } from './use-pwa-install';
 
 const createMockBeforeInstallPromptEvent = (
-  outcome: 'accepted' | 'dismissed' = 'accepted'
+  outcome: 'accepted' | 'dismissed' = 'accepted',
 ) => {
   const promptMock = vi.fn().mockResolvedValue(undefined);
   const userChoiceMock = Promise.resolve({ outcome });
@@ -30,7 +30,7 @@ describe('usePWAInstall', () => {
           addEventListener: vi.fn(),
           removeEventListener: vi.fn(),
           dispatchEvent: vi.fn(),
-        }) as MediaQueryList
+        }) as MediaQueryList,
     );
   });
 
@@ -51,11 +51,11 @@ describe('usePWAInstall', () => {
 
     expect(window.addEventListener).toHaveBeenCalledWith(
       'beforeinstallprompt',
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(window.addEventListener).toHaveBeenCalledWith(
       'appinstalled',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -66,11 +66,11 @@ describe('usePWAInstall', () => {
 
     expect(window.removeEventListener).toHaveBeenCalledWith(
       'beforeinstallprompt',
-      expect.any(Function)
+      expect.any(Function),
     );
     expect(window.removeEventListener).toHaveBeenCalledWith(
       'appinstalled',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -82,7 +82,7 @@ describe('usePWAInstall', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const handler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'beforeinstallprompt'
+        (call) => call[0] === 'beforeinstallprompt',
       )?.[1] as EventListener;
       handler?.(mockEvent as unknown as Event);
     });
@@ -100,7 +100,7 @@ describe('usePWAInstall', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const beforeInstallHandler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'beforeinstallprompt'
+        (call) => call[0] === 'beforeinstallprompt',
       )?.[1] as EventListener;
       beforeInstallHandler?.(mockEvent as unknown as Event);
     });
@@ -112,7 +112,7 @@ describe('usePWAInstall', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const appInstalledHandler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'appinstalled'
+        (call) => call[0] === 'appinstalled',
       )?.[1] as EventListener;
       appInstalledHandler?.(new Event('appinstalled'));
     });
@@ -135,7 +135,7 @@ describe('usePWAInstall', () => {
           addEventListener: vi.fn(),
           removeEventListener: vi.fn(),
           dispatchEvent: vi.fn(),
-        }) as MediaQueryList
+        }) as MediaQueryList,
     );
 
     const { result } = renderHook(() => usePWAInstall());
@@ -180,7 +180,7 @@ describe('usePWAInstall', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const handler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'beforeinstallprompt'
+        (call) => call[0] === 'beforeinstallprompt',
       )?.[1] as EventListener;
       handler?.(mockEvent as unknown as Event);
     });
@@ -207,7 +207,7 @@ describe('usePWAInstall', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const handler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'beforeinstallprompt'
+        (call) => call[0] === 'beforeinstallprompt',
       )?.[1] as EventListener;
       handler?.(mockEvent as unknown as Event);
     });
@@ -234,7 +234,7 @@ describe('usePWAInstall', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const handler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'beforeinstallprompt'
+        (call) => call[0] === 'beforeinstallprompt',
       )?.[1] as EventListener;
       handler?.(mockEvent);
     });

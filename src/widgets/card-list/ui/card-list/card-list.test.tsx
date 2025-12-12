@@ -162,7 +162,7 @@ describe('CardList', () => {
 
     MOCK_CARDS.forEach((card: IBankCard) => {
       const cardElement = container.querySelector(
-        `[data-testid="bank-card-${card.pan}"]`
+        `[data-testid="bank-card-${card.pan}"]`,
       );
       expect(cardElement).toBeInTheDocument();
     });

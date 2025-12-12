@@ -18,7 +18,7 @@ export const useModal = (): IUseModalResult => {
     (content: ReactNode, title?: string) => {
       openModal(modalId, content, title);
     },
-    [modalId, openModal]
+    [modalId, openModal],
   );
 
   const close = useCallback(() => {
@@ -30,7 +30,7 @@ export const useModal = (): IUseModalResult => {
     (preventClose: boolean) => {
       updateModalPreventClose(modalId, preventClose);
     },
-    [modalId, updateModalPreventClose]
+    [modalId, updateModalPreventClose],
   );
 
   return {

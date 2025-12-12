@@ -21,7 +21,7 @@ const PERCENT_BASE = 100;
 const HASH_CHAR = '#';
 
 export const hexToRgb = (
-  hex: string
+  hex: string,
 ): { r: number; g: number; b: number } | null => {
   const cleanHex = hex.replace(HASH_CHAR, EMPTY_STRING);
   const isValidHex = HEX_COLOR_PATTERN.test(cleanHex);
@@ -33,11 +33,11 @@ export const hexToRgb = (
   const r = parseInt(cleanHex.substring(RGB_RED_START, RGB_RED_END), HEX_RADIX);
   const g = parseInt(
     cleanHex.substring(RGB_GREEN_START, RGB_GREEN_END),
-    HEX_RADIX
+    HEX_RADIX,
   );
   const b = parseInt(
     cleanHex.substring(RGB_BLUE_START, RGB_BLUE_END),
-    HEX_RADIX
+    HEX_RADIX,
   );
 
   return { r, g, b };
@@ -46,7 +46,7 @@ export const hexToRgb = (
 export const rgbToHex = (r: number, g: number, b: number): string => {
   const convertToHex = (value: number) => {
     const clampedValue = Math.round(
-      Math.max(MIN_RGB_VALUE, Math.min(MAX_RGB_VALUE, value))
+      Math.max(MIN_RGB_VALUE, Math.min(MAX_RGB_VALUE, value)),
     );
     const hex = clampedValue.toString(HEX_RADIX);
     const needsPadding = hex.length === SINGLE_HEX_DIGIT_LENGTH;

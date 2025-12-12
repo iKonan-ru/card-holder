@@ -105,7 +105,7 @@ describe('checkSecureProtocol', () => {
 
     expect(consoleWarnSpy).toHaveBeenCalledOnce();
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      'ВНИМАНИЕ: Приложение работает по незащищенному соединению! Для безопасности используйте HTTPS.'
+      'ВНИМАНИЕ: Приложение работает по незащищенному соединению! Для безопасности используйте HTTPS.',
     );
 
     Object.defineProperty(window, 'location', {

@@ -33,7 +33,7 @@ export const usePWAInstall = (): IUsePWAInstallResult => {
 
     const checkIfInstalled = () => {
       const isStandalone = window.matchMedia(
-        '(display-mode: standalone)'
+        '(display-mode: standalone)',
       ).matches;
       const isNavigatorStandalone =
         checkHasNavigatorStandalone(window.navigator) &&
@@ -53,7 +53,7 @@ export const usePWAInstall = (): IUsePWAInstallResult => {
     return () => {
       window.removeEventListener(
         'beforeinstallprompt',
-        handleBeforeInstallPrompt
+        handleBeforeInstallPrompt,
       );
       window.removeEventListener('appinstalled', handleAppInstalled);
     };

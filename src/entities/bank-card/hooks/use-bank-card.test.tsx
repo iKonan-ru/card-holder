@@ -38,7 +38,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     expect(result.current.paymentSystem).toBe('mastercard');
@@ -50,7 +50,7 @@ describe('useBankCard', () => {
         card: MOCK_VISA,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     expect(result.current.paymentSystem).toBe('visa');
@@ -62,7 +62,7 @@ describe('useBankCard', () => {
         card: MOCK_MIR,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     expect(result.current.paymentSystem).toBe('mir');
@@ -74,7 +74,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     expect(result.current.bank).toBeDefined();
@@ -89,7 +89,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     expect(result.current.cardStyle).toHaveProperty('--color');
@@ -102,7 +102,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: true,
         isReorderMode: false,
-      })
+      }),
     );
 
     expect(result.current.modifiers).toContain('flipped');
@@ -114,7 +114,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     expect(result.current.modifiers).not.toContain('flipped');
@@ -126,7 +126,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: false,
         isReorderMode: true,
-      })
+      }),
     );
 
     expect(result.current.modifiers).toContain('reorder-mode');
@@ -138,7 +138,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     expect(result.current.modifiers).not.toContain('reorder-mode');
@@ -150,7 +150,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: true,
         isReorderMode: true,
-      })
+      }),
     );
 
     expect(result.current.modifiers).toContain('flipped');
@@ -166,7 +166,7 @@ describe('useBankCard', () => {
         isFlipped: false,
         isReorderMode: false,
         onFlip: onFlipMock,
-      })
+      }),
     );
 
     const mockEvent = {
@@ -184,7 +184,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     const mockEvent = {
@@ -205,7 +205,7 @@ describe('useBankCard', () => {
         isFlipped: false,
         isReorderMode: true,
         onFlip: onFlipMock,
-      })
+      }),
     );
 
     const mockEvent = {
@@ -226,7 +226,7 @@ describe('useBankCard', () => {
         isFlipped: false,
         isReorderMode: false,
         onFlip: onFlipMock,
-      })
+      }),
     );
 
     const actionsElement = document.createElement('div');
@@ -253,7 +253,7 @@ describe('useBankCard', () => {
         isFlipped: false,
         isReorderMode: false,
         onEdit: onEditMock,
-      })
+      }),
     );
 
     const mockEvent = {
@@ -274,7 +274,7 @@ describe('useBankCard', () => {
         card: MOCK_MASTERCARD,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     const mockEvent = {
@@ -296,7 +296,7 @@ describe('useBankCard', () => {
           isFlipped: false,
           isReorderMode: false,
         }),
-      { initialProps: { card: MOCK_MASTERCARD } }
+      { initialProps: { card: MOCK_MASTERCARD } },
     );
 
     expect(result.current.paymentSystem).toBe('mastercard');
@@ -314,7 +314,7 @@ describe('useBankCard', () => {
           isFlipped,
           isReorderMode: false,
         }),
-      { initialProps: { isFlipped: false } }
+      { initialProps: { isFlipped: false } },
     );
 
     expect(result.current.modifiers).not.toContain('flipped');
@@ -332,7 +332,7 @@ describe('useBankCard', () => {
           isFlipped: false,
           isReorderMode,
         }),
-      { initialProps: { isReorderMode: false } }
+      { initialProps: { isReorderMode: false } },
     );
 
     expect(result.current.modifiers).not.toContain('reorder-mode');
@@ -357,7 +357,7 @@ describe('useBankCard', () => {
         card: unknownCard,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     expect(result.current.bank).toBeDefined();
@@ -379,11 +379,11 @@ describe('useBankCard', () => {
         card: raiffeisenCard,
         isFlipped: false,
         isReorderMode: false,
-      })
+      }),
     );
 
     const hasDarkTextModifier = result.current.modifiers.some(
-      (modifier) => modifier === 'dark-text'
+      (modifier) => modifier === 'dark-text',
     );
 
     const bankHasDarkText = result.current.bank.isDarkText === true;

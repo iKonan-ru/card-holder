@@ -39,7 +39,7 @@ export const FormField: FC<IFormFieldProps> = ({
         hasError && 'has-error',
         hasRightContent && 'has-right-content',
       ].filter(Boolean) as string[],
-    [hasValue, hasError, hasRightContent]
+    [hasValue, hasError, hasRightContent],
   );
 
   const className = useClassName({
@@ -50,7 +50,7 @@ export const FormField: FC<IFormFieldProps> = ({
   const errorId = useMemo(() => `${id}-error`, [id]);
   const ariaDescribedBy = useMemo(
     () => (hasError ? errorId : undefined),
-    [hasError, errorId]
+    [hasError, errorId],
   );
 
   return (

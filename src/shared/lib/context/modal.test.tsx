@@ -53,7 +53,7 @@ const TestComponent = () => {
     openModal(
       'test-modal-metadata',
       <div>Modal with metadata</div>,
-      'Modal Title'
+      'Modal Title',
     );
   };
 
@@ -127,7 +127,7 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider>
         <TestComponent />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     expect(screen.getByTestId('modals-count')).toHaveTextContent('0');
@@ -147,7 +147,7 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider>
         <TestComponent />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open Modal'));
@@ -171,7 +171,7 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider>
         <TestComponent />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open Modal'));
@@ -188,7 +188,7 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider>
         <TestComponent />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open Modal'));
@@ -211,7 +211,7 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider>
         <TestComponent />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open Modal'));
@@ -232,7 +232,7 @@ describe('ModalProvider', () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByTestId('prevent-close-flag')
+        screen.queryByTestId('prevent-close-flag'),
       ).not.toBeInTheDocument();
     });
   });
@@ -256,7 +256,7 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider onModalOpen={onModalOpen}>
         <TestComponent />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open Modal'));
@@ -272,7 +272,7 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider>
         <TestComponent />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open Modal'));
@@ -294,14 +294,14 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider>
         <TestComponent />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open Modal With Metadata'));
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('modal-title-test-modal-metadata')
+        screen.getByTestId('modal-title-test-modal-metadata'),
       ).toHaveTextContent('Modal Title');
     });
   });
@@ -310,7 +310,7 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider>
         <TestComponent />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     const userActionRefElement = screen.getByTestId('user-action-ref');
@@ -356,7 +356,7 @@ describe('ModalProvider', () => {
     render(
       <ModalProvider>
         <TestComponentWithUpdate />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open Modal'));
@@ -369,7 +369,7 @@ describe('ModalProvider', () => {
 
     await waitFor(() => {
       expect(
-        screen.queryByTestId('prevent-close-flag')
+        screen.queryByTestId('prevent-close-flag'),
       ).not.toBeInTheDocument();
     });
   });

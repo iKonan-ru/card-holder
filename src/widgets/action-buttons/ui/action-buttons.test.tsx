@@ -51,7 +51,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const container = document.querySelector('.action-buttons');
@@ -62,7 +62,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const importButton = screen.getByRole('button', {
@@ -76,7 +76,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const exportButton = screen.getByRole('button', {
@@ -90,7 +90,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const reorderButton = screen.getByRole('button', {
@@ -104,7 +104,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const clearButton = screen.getByRole('button', {
@@ -132,7 +132,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const exportButton = screen.queryByRole('button', {
@@ -160,7 +160,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const reorderButton = screen.queryByRole('button', {
@@ -188,7 +188,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const clearButton = screen.queryByRole('button', {
@@ -216,7 +216,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const reorderButton = screen.getByRole('button', {
@@ -244,7 +244,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const reorderButton = screen.getByRole('button', {
@@ -260,7 +260,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const reorderButton = screen.getByRole('button', {
@@ -276,7 +276,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(mockUseCardManagementStore).toHaveBeenCalled();
@@ -286,7 +286,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(mockUseCardManagementStore).toHaveBeenCalled();
@@ -296,7 +296,7 @@ describe('ActionButtons', () => {
     render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(mockUseCardManagementStore).toHaveBeenCalled();
@@ -306,7 +306,7 @@ describe('ActionButtons', () => {
     const { container } = render(
       <TestWrapper>
         <ActionButtons />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const actionButtonsContainer = container.querySelector('.action-buttons');

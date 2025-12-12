@@ -16,7 +16,7 @@ describe('logError', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] Test message',
-      testError
+      testError,
     );
   });
 
@@ -44,7 +44,7 @@ describe('logError', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] [TestContext] Test message',
-      testError
+      testError,
     );
   });
 
@@ -62,7 +62,7 @@ describe('logError', () => {
 
     expect(consoleWarnSpy).toHaveBeenCalledWith(
       '[Card Holder] Test message',
-      testError
+      testError,
     );
   });
 
@@ -93,7 +93,7 @@ describe('logError', () => {
 
     expect(consoleInfoSpy).toHaveBeenCalledWith(
       '[Card Holder] Test message',
-      testError
+      testError,
     );
   });
 
@@ -122,7 +122,7 @@ describe('logError', () => {
     });
 
     expect(consoleWarnSpy).toHaveBeenCalledWith(
-      '[Card Holder] [TestContext] Test message'
+      '[Card Holder] [TestContext] Test message',
     );
   });
 
@@ -138,7 +138,7 @@ describe('logError', () => {
     });
 
     expect(consoleInfoSpy).toHaveBeenCalledWith(
-      '[Card Holder] [TestContext] Test message'
+      '[Card Holder] [TestContext] Test message',
     );
   });
 

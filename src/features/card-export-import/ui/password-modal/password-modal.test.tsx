@@ -54,7 +54,7 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       expect(getPasswordInput()).toBeInTheDocument();
@@ -67,13 +67,13 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       expect(
         screen.getByRole('button', {
           name: new RegExp(PASSWORD_MODAL_BUTTON_EXPORT, 'i'),
-        })
+        }),
       ).toBeInTheDocument();
     });
 
@@ -84,7 +84,7 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -106,7 +106,7 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -130,7 +130,7 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -146,7 +146,7 @@ describe('PasswordModal', () => {
       expect(mockOnConfirm).toHaveBeenCalledWith(
         '12345678',
         expect.any(Function),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -157,12 +157,12 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
       const toggleButtons = screen.getAllByLabelText(
-        /показать пароль|скрыть пароль/i
+        /показать пароль|скрыть пароль/i,
       );
 
       expect(passwordInput).toHaveAttribute('type', 'password');
@@ -183,13 +183,13 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
       const confirmInput = getConfirmInput();
       const toggleButtons = screen.getAllByLabelText(
-        /показать пароль|скрыть пароль/i
+        /показать пароль|скрыть пароль/i,
       );
 
       expect(passwordInput).toHaveAttribute('type', 'password');
@@ -208,7 +208,7 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -224,7 +224,7 @@ describe('PasswordModal', () => {
       await user.type(passwordInput, '8');
 
       expect(
-        screen.queryByText(ERROR_PASSWORD_TOO_SHORT)
+        screen.queryByText(ERROR_PASSWORD_TOO_SHORT),
       ).not.toBeInTheDocument();
     });
 
@@ -235,7 +235,7 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -254,7 +254,7 @@ describe('PasswordModal', () => {
       await user.type(confirmInput, '1');
 
       expect(
-        screen.queryByText(ERROR_PASSWORD_MISMATCH)
+        screen.queryByText(ERROR_PASSWORD_MISMATCH),
       ).not.toBeInTheDocument();
     });
   });
@@ -266,12 +266,12 @@ describe('PasswordModal', () => {
           mode="import"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       expect(getPasswordInput()).toBeInTheDocument();
       expect(
-        screen.queryByLabelText(PASSWORD_MODAL_LABEL_CONFIRM)
+        screen.queryByLabelText(PASSWORD_MODAL_LABEL_CONFIRM),
       ).not.toBeInTheDocument();
     });
 
@@ -281,13 +281,13 @@ describe('PasswordModal', () => {
           mode="import"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       expect(
         screen.getByRole('button', {
           name: new RegExp(PASSWORD_MODAL_BUTTON_IMPORT, 'i'),
-        })
+        }),
       ).toBeInTheDocument();
     });
 
@@ -298,7 +298,7 @@ describe('PasswordModal', () => {
           mode="import"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const submitButton = screen.getByRole('button', {
@@ -310,7 +310,7 @@ describe('PasswordModal', () => {
       expect(mockOnConfirm).toHaveBeenCalledWith(
         '',
         expect.any(Function),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -321,7 +321,7 @@ describe('PasswordModal', () => {
           mode="import"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -335,7 +335,7 @@ describe('PasswordModal', () => {
       expect(mockOnConfirm).toHaveBeenCalledWith(
         '123',
         expect.any(Function),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -346,7 +346,7 @@ describe('PasswordModal', () => {
           mode="import"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -360,7 +360,7 @@ describe('PasswordModal', () => {
       expect(mockOnConfirm).toHaveBeenCalledWith(
         '12345678',
         expect.any(Function),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
   });
@@ -373,7 +373,7 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const cancelButton = screen.getByRole('button', {
@@ -393,11 +393,11 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       expect(
-        screen.getByRole('button', { name: PASSWORD_MODAL_BUTTON_CANCEL })
+        screen.getByRole('button', { name: PASSWORD_MODAL_BUTTON_CANCEL }),
       ).toBeInTheDocument();
     });
 
@@ -407,7 +407,7 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -424,7 +424,7 @@ describe('PasswordModal', () => {
           mode="import"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -434,7 +434,7 @@ describe('PasswordModal', () => {
       expect(mockOnConfirm).toHaveBeenCalledWith(
         '12345678',
         expect.any(Function),
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -445,7 +445,7 @@ describe('PasswordModal', () => {
           mode="export"
           onConfirm={mockOnConfirm}
           onCancel={mockOnCancel}
-        />
+        />,
       );
 
       const passwordInput = getPasswordInput();
@@ -463,7 +463,7 @@ describe('PasswordModal', () => {
       await user.type(passwordInput, '9');
 
       expect(
-        screen.queryByText(ERROR_PASSWORD_MISMATCH)
+        screen.queryByText(ERROR_PASSWORD_MISMATCH),
       ).not.toBeInTheDocument();
     });
   });

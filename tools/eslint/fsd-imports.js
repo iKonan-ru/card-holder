@@ -86,7 +86,7 @@ export default {
               node.importKind === 'type' ||
               node.specifiers.every(
                 (spec) =>
-                  spec.type === 'ImportSpecifier' && spec.importKind === 'type'
+                  spec.type === 'ImportSpecifier' && spec.importKind === 'type',
               );
             const isSharedImportingFromEntities =
               currentLayer === 'shared' && importLayer === 'entities';

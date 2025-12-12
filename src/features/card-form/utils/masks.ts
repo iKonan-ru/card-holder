@@ -35,11 +35,11 @@ export const formatExpires = (value: string): string => {
 
   const monthString = digitsOnly.slice(
     MONTH_EXPIRES_SLICE_START,
-    MONTH_EXPIRES_SLICE_END
+    MONTH_EXPIRES_SLICE_END,
   );
   const yearString = digitsOnly.slice(
     YEAR_EXPIRES_SLICE_START,
-    YEAR_EXPIRES_SLICE_END
+    YEAR_EXPIRES_SLICE_END,
   );
 
   return `${monthString}${SLASH_CHAR}${yearString}`;
@@ -56,7 +56,7 @@ export const filterAlphanumeric = (value: string): string => {
 export const formatName = (value: string): string => {
   const latinLettersAndSpaces = value.replace(
     LATIN_LETTERS_SPACES_PATTERN,
-    EMPTY_STRING
+    EMPTY_STRING,
   );
 
   return latinLettersAndSpaces.toUpperCase();

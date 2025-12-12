@@ -38,7 +38,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: null };
 
     const { result } = renderHook(() =>
-      useModalClosingState({ onClose: mockOnClose, overlayRef })
+      useModalClosingState({ onClose: mockOnClose, overlayRef }),
     );
 
     expect(result.current.isClosing).toBe(false);
@@ -49,7 +49,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: document.createElement('div') };
 
     const { result } = renderHook(() =>
-      useModalClosingState({ onClose: mockOnClose, overlayRef })
+      useModalClosingState({ onClose: mockOnClose, overlayRef }),
     );
 
     act(() => {
@@ -64,7 +64,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: null };
 
     const { result } = renderHook(() =>
-      useModalClosingState({ onClose: mockOnClose, overlayRef })
+      useModalClosingState({ onClose: mockOnClose, overlayRef }),
     );
 
     act(() => {
@@ -89,7 +89,7 @@ describe('useModalClosingState', () => {
 
       await waitFor(() => {
         expect(
-          container.querySelector('[data-closing="true"]')
+          container.querySelector('[data-closing="true"]'),
         ).toBeInTheDocument();
       });
 
@@ -128,7 +128,7 @@ describe('useModalClosingState', () => {
 
       await waitFor(() => {
         expect(
-          container.querySelector('[data-closing="true"]')
+          container.querySelector('[data-closing="true"]'),
         ).toBeInTheDocument();
       });
 
@@ -157,7 +157,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: null };
 
     const { result } = renderHook(() =>
-      useModalClosingState({ onClose: mockOnClose, overlayRef })
+      useModalClosingState({ onClose: mockOnClose, overlayRef }),
     );
 
     act(() => {
@@ -172,7 +172,7 @@ describe('useModalClosingState', () => {
     const overlayRef = { current: document.createElement('div') };
 
     const { result } = renderHook(() =>
-      useModalClosingState({ onClose: mockOnClose, overlayRef })
+      useModalClosingState({ onClose: mockOnClose, overlayRef }),
     );
 
     act(() => {

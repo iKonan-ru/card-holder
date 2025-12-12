@@ -53,13 +53,13 @@ export const useModalClosingState = ({
 
     overlayElement.addEventListener(
       'animationend',
-      handleAnimationEnd as EventListener
+      handleAnimationEnd as EventListener,
     );
 
     return () => {
       overlayElement.removeEventListener(
         'animationend',
-        handleAnimationEnd as EventListener
+        handleAnimationEnd as EventListener,
       );
     };
   }, [isClosing, onClose, overlayRef]);

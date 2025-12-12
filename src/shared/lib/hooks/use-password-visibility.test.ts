@@ -9,7 +9,7 @@ describe('usePasswordVisibility', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
-        })
+        }),
       );
 
       expect(result.current.isVisible).toBe(false);
@@ -19,7 +19,7 @@ describe('usePasswordVisibility', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
-        })
+        }),
       );
 
       expect(result.current.inputType).toBe('password');
@@ -29,7 +29,7 @@ describe('usePasswordVisibility', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
-        })
+        }),
       );
 
       expect(result.current.Icon).toBe(FiEye);
@@ -39,7 +39,7 @@ describe('usePasswordVisibility', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
-        })
+        }),
       );
 
       expect(result.current.ariaLabel).toBe('Показать пароль');
@@ -49,7 +49,7 @@ describe('usePasswordVisibility', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
-        })
+        }),
       );
 
       expect(result.current.isVisible).toBe(false);
@@ -65,7 +65,7 @@ describe('usePasswordVisibility', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
-        })
+        }),
       );
 
       act(() => {
@@ -79,7 +79,7 @@ describe('usePasswordVisibility', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
-        })
+        }),
       );
 
       act(() => {
@@ -93,7 +93,7 @@ describe('usePasswordVisibility', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
-        })
+        }),
       );
 
       act(() => {
@@ -107,7 +107,7 @@ describe('usePasswordVisibility', () => {
       const { result } = renderHook(() =>
         usePasswordVisibility({
           isControlled: false,
-        })
+        }),
       );
 
       act(() => {
@@ -132,7 +132,7 @@ describe('usePasswordVisibility', () => {
           isControlled: true,
           externalIsVisible: true,
           onExternalChange,
-        })
+        }),
       );
 
       expect(result.current.isVisible).toBe(true);
@@ -145,7 +145,7 @@ describe('usePasswordVisibility', () => {
           isControlled: true,
           externalIsVisible: undefined,
           onExternalChange,
-        })
+        }),
       );
 
       expect(result.current.isVisible).toBe(false);
@@ -158,7 +158,7 @@ describe('usePasswordVisibility', () => {
           isControlled: true,
           externalIsVisible: false,
           onExternalChange,
-        })
+        }),
       );
 
       act(() => {
@@ -175,7 +175,7 @@ describe('usePasswordVisibility', () => {
           isControlled: true,
           externalIsVisible: true,
           onExternalChange,
-        })
+        }),
       );
 
       act(() => {
@@ -192,7 +192,7 @@ describe('usePasswordVisibility', () => {
           isControlled: true,
           externalIsVisible: true,
           onExternalChange,
-        })
+        }),
       );
 
       expect(result.current.inputType).toBe('text');
@@ -205,7 +205,7 @@ describe('usePasswordVisibility', () => {
           isControlled: true,
           externalIsVisible: true,
           onExternalChange,
-        })
+        }),
       );
 
       expect(result.current.Icon).toBe(FiEyeOff);
@@ -220,7 +220,7 @@ describe('usePasswordVisibility', () => {
             externalIsVisible,
             onExternalChange,
           }),
-        { initialProps: { externalIsVisible: false } }
+        { initialProps: { externalIsVisible: false } },
       );
 
       expect(result.current.inputType).toBe('password');
@@ -237,7 +237,7 @@ describe('usePasswordVisibility', () => {
           isControlled: true,
           externalIsVisible: false,
           onExternalChange,
-        })
+        }),
       );
 
       act(() => {

@@ -39,7 +39,7 @@ interface IUseImportCardsResult {
 }
 
 export const useImportCards = (
-  params: IUseImportCardsParams
+  params: IUseImportCardsParams,
 ): IUseImportCardsResult => {
   const { cards, onImport, onUnflipCards } = params;
   const [isImporting, setIsImporting] = useState(false);
@@ -60,7 +60,7 @@ export const useImportCards = (
       const handleImportWithPassword = async (
         password: string,
         closePasswordModal: Procedure,
-        setPasswordError: (error: string) => void
+        setPasswordError: (error: string) => void,
       ) => {
         try {
           setIsImporting(true);
@@ -73,7 +73,7 @@ export const useImportCards = (
 
           const { cards: mergedCards, stats } = mergeCards(
             cards,
-            importedCards
+            importedCards,
           );
 
           await onImport(mergedCards);
@@ -88,7 +88,7 @@ export const useImportCards = (
           openModal(
             SUCCESS_MODAL_ID_IMPORT,
             successContent,
-            SUCCESS_MODAL_TITLE_IMPORT
+            SUCCESS_MODAL_TITLE_IMPORT,
           );
         } catch (error) {
           const errorMessage =
@@ -111,7 +111,7 @@ export const useImportCards = (
       openModal(
         PASSWORD_MODAL_ID_IMPORT,
         modalContent,
-        PASSWORD_MODAL_TITLE_IMPORT
+        PASSWORD_MODAL_TITLE_IMPORT,
       );
     } catch (error) {
       const isSelectionCancelled = checkIsFileSelectionCancelled(error);

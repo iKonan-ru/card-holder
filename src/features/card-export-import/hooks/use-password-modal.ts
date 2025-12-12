@@ -23,7 +23,7 @@ interface IUsePasswordModalParams {
   onConfirm: (
     password: string,
     closeModal: Procedure,
-    setError: (error: string) => void
+    setError: (error: string) => void,
   ) => Promise<void>;
   onCancel?: Procedure;
 }
@@ -46,7 +46,7 @@ interface IUsePasswordModalResult {
 }
 
 export const usePasswordModal = (
-  params: IUsePasswordModalParams
+  params: IUsePasswordModalParams,
 ): IUsePasswordModalResult => {
   const { mode, onConfirm, onCancel } = params;
 
@@ -81,7 +81,7 @@ export const usePasswordModal = (
       setPasswordError(undefined);
       setConfirmError(undefined);
     },
-    []
+    [],
   );
 
   const handleConfirmPasswordChange = useCallback(
@@ -90,7 +90,7 @@ export const usePasswordModal = (
       setConfirmPassword(newConfirmPassword);
       setConfirmError(undefined);
     },
-    []
+    [],
   );
 
   const handlePasswordVisibilityChange = useCallback((isVisible: boolean) => {
@@ -146,7 +146,7 @@ export const usePasswordModal = (
         setIsSubmitting(false);
       }
     },
-    [validatePasswords, password, onConfirm, closeModal]
+    [validatePasswords, password, onConfirm, closeModal],
   );
 
   return {

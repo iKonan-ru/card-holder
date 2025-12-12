@@ -34,7 +34,7 @@ describe('PWAButton', () => {
     render(<PWAButton />);
 
     expect(
-      screen.getByRole('button', { name: PWA_BUTTON_ARIA_LABEL })
+      screen.getByRole('button', { name: PWA_BUTTON_ARIA_LABEL }),
     ).toBeInTheDocument();
     expect(screen.getByText(PWA_BUTTON_TEXT)).toBeInTheDocument();
   });
@@ -51,7 +51,7 @@ describe('PWAButton', () => {
     render(<PWAButton />);
 
     expect(
-      screen.queryByRole('button', { name: PWA_BUTTON_ARIA_LABEL })
+      screen.queryByRole('button', { name: PWA_BUTTON_ARIA_LABEL }),
     ).not.toBeInTheDocument();
   });
 
@@ -67,7 +67,7 @@ describe('PWAButton', () => {
     render(<PWAButton />);
 
     expect(
-      screen.queryByRole('button', { name: PWA_BUTTON_ARIA_LABEL })
+      screen.queryByRole('button', { name: PWA_BUTTON_ARIA_LABEL }),
     ).not.toBeInTheDocument();
   });
 
@@ -83,7 +83,7 @@ describe('PWAButton', () => {
     render(<PWAButton />);
 
     expect(
-      screen.queryByRole('button', { name: PWA_BUTTON_ARIA_LABEL })
+      screen.queryByRole('button', { name: PWA_BUTTON_ARIA_LABEL }),
     ).not.toBeInTheDocument();
   });
 

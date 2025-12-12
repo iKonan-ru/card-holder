@@ -53,7 +53,7 @@ describe('executeIndexedDBOperation', () => {
     expect(database.getDatabase).toHaveBeenCalled();
     expect(mockDatabase.transaction).toHaveBeenCalledWith(
       [STORE_NAME],
-      'readonly'
+      'readonly',
     );
     expect(mockOperation).toHaveBeenCalledWith(mockStore);
   });
@@ -94,7 +94,7 @@ describe('executeIndexedDBOperation', () => {
         mode: 'readwrite',
         operation: mockOperation,
         errorMessage: ERROR_MESSAGE,
-      })
+      }),
     ).rejects.toThrow(ERROR_MESSAGE);
   });
 
@@ -137,7 +137,7 @@ describe('executeIndexedDBOperation', () => {
 
     expect(mockDatabase.transaction).toHaveBeenCalledWith(
       [STORE_NAME],
-      'readwrite'
+      'readwrite',
     );
   });
 });

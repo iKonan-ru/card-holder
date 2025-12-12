@@ -29,7 +29,7 @@ describe('usePasswordModal', () => {
 
     it('должен инициализироваться с пустыми значениями', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       expect(result.current.password).toBe('');
@@ -42,7 +42,7 @@ describe('usePasswordModal', () => {
 
     it('должен устанавливать isExportMode в true', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       expect(result.current.isExportMode).toBe(true);
@@ -50,7 +50,7 @@ describe('usePasswordModal', () => {
 
     it('должен возвращать заголовок экспорта', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       expect(result.current.title).toBe('Экспорт карт');
@@ -58,7 +58,7 @@ describe('usePasswordModal', () => {
 
     it('должен возвращать текст кнопки экспорта', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       expect(result.current.buttonText).toBe('Экспортировать');
@@ -66,7 +66,7 @@ describe('usePasswordModal', () => {
 
     it('должен обновлять пароль при handlePasswordChange', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       const event = {
@@ -82,7 +82,7 @@ describe('usePasswordModal', () => {
 
     it('должен очищать ошибки при изменении пароля', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       const mockFormEvent = {
@@ -109,7 +109,7 @@ describe('usePasswordModal', () => {
 
     it('должен обновлять confirmPassword при handleConfirmPasswordChange', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       const event = {
@@ -125,7 +125,7 @@ describe('usePasswordModal', () => {
 
     it('должен переключать видимость пароля', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       expect(result.current.isPasswordVisible).toBe(false);
@@ -139,7 +139,7 @@ describe('usePasswordModal', () => {
 
     it('должен показывать ошибку при коротком пароле', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       const passwordEvent = {
@@ -163,7 +163,7 @@ describe('usePasswordModal', () => {
 
     it('должен показывать ошибку при несовпадении паролей', () => {
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       const passwordEvent = {
@@ -193,7 +193,7 @@ describe('usePasswordModal', () => {
     it('должен вызывать onConfirm при валидных данных', async () => {
       const mockOnConfirm = vi.fn().mockResolvedValue(undefined);
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm: mockOnConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm: mockOnConfirm, onCancel }),
       );
 
       const passwordEvent = {
@@ -220,7 +220,7 @@ describe('usePasswordModal', () => {
       expect(mockOnConfirm).toHaveBeenCalledWith(
         'password123',
         mockCloseModal,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
 
@@ -233,7 +233,7 @@ describe('usePasswordModal', () => {
       const mockOnConfirm = vi.fn().mockReturnValue(promise);
 
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm: mockOnConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm: mockOnConfirm, onCancel }),
       );
 
       const passwordEvent = {
@@ -270,7 +270,7 @@ describe('usePasswordModal', () => {
       const mockOnConfirm = vi.fn().mockRejectedValue(new Error('Test error'));
 
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm: mockOnConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm: mockOnConfirm, onCancel }),
       );
 
       const passwordEvent = {
@@ -304,14 +304,14 @@ describe('usePasswordModal', () => {
           async (
             _password: string,
             _closeModal: Procedure,
-            setError: (error: string) => void
+            setError: (error: string) => void,
           ) => {
             setError('Неверный пароль');
-          }
+          },
         );
 
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm: mockOnConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm: mockOnConfirm, onCancel }),
       );
 
       const passwordEvent = {
@@ -351,7 +351,7 @@ describe('usePasswordModal', () => {
       const onConfirm = vi.fn();
       const onCancel = vi.fn();
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       expect(result.current.isExportMode).toBe(false);
@@ -361,7 +361,7 @@ describe('usePasswordModal', () => {
       const onConfirm = vi.fn();
       const onCancel = vi.fn();
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       expect(result.current.title).toBe('Импорт карт');
@@ -371,7 +371,7 @@ describe('usePasswordModal', () => {
       const onConfirm = vi.fn();
       const onCancel = vi.fn();
       const { result } = renderHook(() =>
-        usePasswordModal({ mode, onConfirm, onCancel })
+        usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
       expect(result.current.buttonText).toBe('Импортировать');
@@ -385,7 +385,7 @@ describe('usePasswordModal', () => {
           mode,
           onConfirm: mockOnConfirm,
           onCancel: mockOnCancel,
-        })
+        }),
       );
 
       const passwordEvent = {
@@ -416,7 +416,7 @@ describe('usePasswordModal', () => {
           mode,
           onConfirm: mockOnConfirm,
           onCancel: mockOnCancel,
-        })
+        }),
       );
 
       const passwordEvent = {
@@ -438,7 +438,7 @@ describe('usePasswordModal', () => {
       expect(mockOnConfirm).toHaveBeenCalledWith(
         'password123',
         mockCloseModal,
-        expect.any(Function)
+        expect.any(Function),
       );
     });
   });
@@ -451,7 +451,7 @@ describe('usePasswordModal', () => {
           mode: 'export',
           onConfirm: vi.fn(),
           onCancel: mockOnCancel,
-        })
+        }),
       );
 
       act(() => {
@@ -466,7 +466,7 @@ describe('usePasswordModal', () => {
         usePasswordModal({
           mode: 'export',
           onConfirm: vi.fn(),
-        })
+        }),
       );
 
       expect(() => {

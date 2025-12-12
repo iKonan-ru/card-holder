@@ -22,7 +22,7 @@ export const useCardFormState = ({
   initialCard,
 }: IUseCardFormStateParams): IUseCardFormStateResult => {
   const [formData, setFormData] = useState<Partial<IBankCard>>(() =>
-    getInitialFormData(initialCard)
+    getInitialFormData(initialCard),
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
 

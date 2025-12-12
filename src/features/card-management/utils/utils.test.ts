@@ -58,7 +58,7 @@ describe('executeCardOperation', () => {
         errorMessage: 'Failed to execute',
         context: 'TestContext',
         onSuccess: mockOnSuccess,
-      })
+      }),
     ).rejects.toThrow(testError);
 
     expect(mockOperation).toHaveBeenCalled();

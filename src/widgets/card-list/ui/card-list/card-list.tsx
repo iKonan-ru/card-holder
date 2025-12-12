@@ -37,7 +37,7 @@ export const CardList: FC = () => {
   const modifiers = useMemo(
     () =>
       isDragging ? CARD_LIST_MODIFIERS_DRAGGING : CARD_LIST_MODIFIERS_EMPTY,
-    [isDragging]
+    [isDragging],
   );
 
   const className = useClassName({

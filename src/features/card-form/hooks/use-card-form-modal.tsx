@@ -24,7 +24,7 @@ export const useCardFormModal = (): IUseCardFormModalResult => {
     (card: IBankCard) => {
       open(<CardFormModal initialCard={card} />, CARD_FORM_EDIT_TITLE);
     },
-    [open]
+    [open],
   );
 
   return {

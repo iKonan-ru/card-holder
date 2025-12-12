@@ -15,7 +15,7 @@ describe('ValidatedField', () => {
         label="Тестовое поле"
         value=""
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByRole('textbox')).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe('ValidatedField', () => {
         label="Тестовое поле"
         value=""
         onChange={handleChange}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -53,7 +53,7 @@ describe('ValidatedField', () => {
         value=""
         formatter={formatter}
         onChange={handleChange}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -78,7 +78,7 @@ describe('ValidatedField', () => {
         instantValidateLength={3}
         onChange={handleChange}
         onValidate={handleValidate}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -102,7 +102,7 @@ describe('ValidatedField', () => {
         instantValidateLength={4}
         onChange={handleChange}
         onValidate={handleValidate}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -127,7 +127,7 @@ describe('ValidatedField', () => {
         validator={validator}
         onChange={handleChange}
         onValidate={handleValidate}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -148,7 +148,7 @@ describe('ValidatedField', () => {
         value=""
         validator={validator}
         onChange={handleChange}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -165,7 +165,7 @@ describe('ValidatedField', () => {
         value=""
         maxLength={3}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox') as HTMLInputElement;
@@ -180,7 +180,7 @@ describe('ValidatedField', () => {
         value=""
         disabled={true}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByRole('textbox')).toBeDisabled();
@@ -194,7 +194,7 @@ describe('ValidatedField', () => {
         value=""
         required={true}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText(/Тестовое поле \*/)).toBeInTheDocument();
@@ -208,7 +208,7 @@ describe('ValidatedField', () => {
         value=""
         error="Ошибка валидации"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText('Ошибка валидации')).toBeInTheDocument();
@@ -222,7 +222,7 @@ describe('ValidatedField', () => {
         name="test"
         label="Тестовое поле"
         value=""
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox') as HTMLInputElement;
@@ -242,7 +242,7 @@ describe('ValidatedField', () => {
         value=""
         maxLength={3}
         onChange={handleChange}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -255,8 +255,8 @@ describe('ValidatedField', () => {
     const allValues = allCalls.map((call) => call[1]).filter(Boolean);
     const maxLengthValue = Math.max(
       ...allValues.map((value) =>
-        typeof value === 'string' ? value.length : 0
-      )
+        typeof value === 'string' ? value.length : 0,
+      ),
     );
     expect(maxLengthValue).toBeLessThanOrEqual(3);
   });
@@ -270,7 +270,7 @@ describe('ValidatedField', () => {
         label="Тестовое поле"
         value=""
         maxLength={3}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox') as HTMLInputElement;
@@ -292,7 +292,7 @@ describe('ValidatedField', () => {
         maxLength={3}
         formatter={formatter}
         onChange={handleChange}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -301,8 +301,8 @@ describe('ValidatedField', () => {
     const allValues = handleChange.mock.calls.map((call) => call[1]);
     const maxLengthValue = Math.max(
       ...allValues.map((value) =>
-        typeof value === 'string' ? value.length : 0
-      )
+        typeof value === 'string' ? value.length : 0,
+      ),
     );
 
     expect(maxLengthValue).toBeLessThanOrEqual(3);

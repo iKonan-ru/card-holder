@@ -61,7 +61,7 @@ describe('CardPreview', () => {
     const { container } = render(<CardPreview pan="4276300000000001" />);
     expect(container.querySelector('.card-preview')).toBeInTheDocument();
     expect(
-      container.querySelector('.card-preview__color-indicator')
+      container.querySelector('.card-preview__color-indicator'),
     ).toBeInTheDocument();
   });
 
@@ -76,7 +76,7 @@ describe('CardPreview', () => {
     const { container } = render(<CardPreview pan="4276300000000001" />);
 
     const colorIndicator = container.querySelector(
-      '.card-preview__color-indicator'
+      '.card-preview__color-indicator',
     );
     expect(colorIndicator).toBeInTheDocument();
     expect(colorIndicator).toHaveAttribute('style');
@@ -104,7 +104,7 @@ describe('CardPreview', () => {
     expect(preview).toBeInTheDocument();
 
     const hasDarkTextModifier = preview?.classList.contains(
-      'card-preview--dark-text'
+      'card-preview--dark-text',
     );
 
     if (hasDarkTextModifier) {

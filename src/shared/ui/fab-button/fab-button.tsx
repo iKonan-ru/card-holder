@@ -25,9 +25,9 @@ export const FabButton: FC<IFabButtonProps> = ({
   const modifiers = useMemo(
     () =>
       [isActive && 'active', disabled && 'disabled'].filter(
-        Boolean
+        Boolean,
       ) as string[],
-    [isActive, disabled]
+    [isActive, disabled],
   );
 
   const className = useClassName({

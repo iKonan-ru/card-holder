@@ -42,7 +42,7 @@ describe('useModalBackHandler', () => {
 
     expect(window.addEventListener).toHaveBeenCalledWith(
       'popstate',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -50,14 +50,14 @@ describe('useModalBackHandler', () => {
     const onClose = vi.fn();
 
     const { unmount } = renderHook(() =>
-      useModalBackHandler({ isOpen: true, onClose })
+      useModalBackHandler({ isOpen: true, onClose }),
     );
 
     unmount();
 
     expect(window.removeEventListener).toHaveBeenCalledWith(
       'popstate',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -69,7 +69,7 @@ describe('useModalBackHandler', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const handler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'popstate'
+        (call) => call[0] === 'popstate',
       )?.[1] as EventListener;
       handler?.(new PopStateEvent('popstate'));
     });
@@ -104,7 +104,7 @@ describe('useModalBackHandler', () => {
 
     expect(window.addEventListener).not.toHaveBeenCalledWith(
       'popstate',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 
@@ -115,7 +115,7 @@ describe('useModalBackHandler', () => {
       (props) => useModalBackHandler(props),
       {
         initialProps: { isOpen: true, onClose },
-      }
+      },
     );
 
     expect(mockPushState).toHaveBeenCalledTimes(1);
@@ -141,7 +141,7 @@ describe('useModalBackHandler', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const handler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'popstate'
+        (call) => call[0] === 'popstate',
       )?.[1] as EventListener;
       handler?.(new PopStateEvent('popstate'));
     });
@@ -162,7 +162,7 @@ describe('useModalBackHandler', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const handler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'popstate'
+        (call) => call[0] === 'popstate',
       )?.[1] as EventListener;
       handler?.(new PopStateEvent('popstate'));
     });
@@ -180,7 +180,7 @@ describe('useModalBackHandler', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const handler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'popstate'
+        (call) => call[0] === 'popstate',
       )?.[1] as EventListener;
       handler?.(new PopStateEvent('popstate'));
     });
@@ -234,7 +234,7 @@ describe('useModalBackHandler', () => {
     act(() => {
       const addEventListenerMock = vi.mocked(window.addEventListener);
       const handler = addEventListenerMock.mock.calls.find(
-        (call) => call[0] === 'popstate'
+        (call) => call[0] === 'popstate',
       )?.[1] as EventListener;
       handler?.(new PopStateEvent('popstate'));
     });

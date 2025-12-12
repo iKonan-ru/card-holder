@@ -30,7 +30,7 @@ export const getAllCards = async (): Promise<IBankCard[]> => {
 };
 
 export const getCardByPan = async (
-  pan: IBankCard['pan']
+  pan: IBankCard['pan'],
 ): Promise<IBankCard | undefined> => {
   return executeIndexedDBOperation({
     storeName: CARDS_STORE_NAME,
@@ -41,7 +41,7 @@ export const getCardByPan = async (
 };
 
 export const checkCardExists = async (
-  pan: IBankCard['pan']
+  pan: IBankCard['pan'],
 ): Promise<boolean> => {
   const card = await getCardByPan(pan);
 
@@ -90,7 +90,7 @@ export const updateCardsOrder = async (cards: IBankCard[]): Promise<void> => {
   return new Promise((resolve, reject) => {
     const transaction = database.transaction(
       [CARDS_STORE_NAME],
-      INDEXEDDB_MODE_READWRITE
+      INDEXEDDB_MODE_READWRITE,
     );
     const store = transaction.objectStore(CARDS_STORE_NAME);
 

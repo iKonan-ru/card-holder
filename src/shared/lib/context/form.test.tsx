@@ -52,7 +52,7 @@ describe('FormContext', () => {
     render(
       <FormProvider onChange={handleChange}>
         <TestComponent />
-      </FormProvider>
+      </FormProvider>,
     );
 
     const changeButton = screen.getByTestId('change-button');
@@ -69,7 +69,7 @@ describe('FormContext', () => {
     render(
       <FormProvider onValidate={handleValidate}>
         <TestComponent />
-      </FormProvider>
+      </FormProvider>,
     );
 
     const validateButton = screen.getByTestId('validate-button');
@@ -90,7 +90,7 @@ describe('FormContext', () => {
         onValidate={handleValidate}
       >
         <TestComponent />
-      </FormProvider>
+      </FormProvider>,
     );
 
     const changeButton = screen.getByTestId('change-button');
@@ -113,7 +113,7 @@ describe('FormContext', () => {
         onValidate={handleValidate}
       >
         <TestComponent />
-      </FormProvider>
+      </FormProvider>,
     );
 
     const firstChange = handleChange;
@@ -124,7 +124,7 @@ describe('FormContext', () => {
         onValidate={handleValidate}
       >
         <TestComponent />
-      </FormProvider>
+      </FormProvider>,
     );
 
     const changeButton = screen.getByTestId('change-button');
@@ -141,7 +141,7 @@ describe('FormContext', () => {
     const { rerender } = render(
       <FormProvider onChange={firstHandleChange}>
         <TestComponent />
-      </FormProvider>
+      </FormProvider>,
     );
 
     const changeButton = screen.getByTestId('change-button');
@@ -153,7 +153,7 @@ describe('FormContext', () => {
     rerender(
       <FormProvider onChange={secondHandleChange}>
         <TestComponent />
-      </FormProvider>
+      </FormProvider>,
     );
 
     changeButton.click();
@@ -172,7 +172,7 @@ describe('FormContext', () => {
         onValidate={handleValidate}
       >
         <TestComponent />
-      </FormProvider>
+      </FormProvider>,
     );
 
     expect(handleChange).toBeDefined();
@@ -204,14 +204,14 @@ describe('FormContext', () => {
         onValidate={handleValidate}
       >
         <TestContextComponent />
-      </FormProvider>
+      </FormProvider>,
     );
 
     expect(screen.getByTestId('has-onchange')).toHaveTextContent(
-      'has-onchange'
+      'has-onchange',
     );
     expect(screen.getByTestId('has-onvalidate')).toHaveTextContent(
-      'has-onvalidate'
+      'has-onvalidate',
     );
   });
 });

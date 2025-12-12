@@ -16,7 +16,7 @@ describe('Modal', () => {
         isTopModal={true}
       >
         <div>Содержимое модального окна</div>
-      </Modal>
+      </Modal>,
     );
 
     expect(screen.getByText('Содержимое модального окна')).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe('Modal', () => {
         isTopModal={true}
       >
         <div>Содержимое</div>
-      </Modal>
+      </Modal>,
     );
 
     const overlay = container.querySelector('.modal');
@@ -66,7 +66,7 @@ describe('Modal', () => {
         isTopModal={true}
       >
         <div>Содержимое</div>
-      </Modal>
+      </Modal>,
     );
 
     const content = screen.getByText('Содержимое');
@@ -86,7 +86,7 @@ describe('Modal', () => {
         preventClose={true}
       >
         <div>Содержимое</div>
-      </Modal>
+      </Modal>,
     );
 
     const overlay = container.querySelector('.modal');
@@ -108,7 +108,7 @@ describe('Modal', () => {
           <p>Текст</p>
           <button>Кнопка</button>
         </div>
-      </Modal>
+      </Modal>,
     );
 
     expect(screen.getByText('Заголовок')).toBeInTheDocument();
@@ -126,7 +126,7 @@ describe('Modal', () => {
         isTopModal={false}
       >
         <div>Содержимое</div>
-      </Modal>
+      </Modal>,
     );
 
     const overlay = container.querySelector('.modal');
@@ -147,7 +147,7 @@ describe('Modal', () => {
           <button>Первая кнопка</button>
           <button>Вторая кнопка</button>
         </div>
-      </Modal>
+      </Modal>,
     );
 
     const firstButton = screen.getByRole('button', { name: 'Первая кнопка' });
@@ -167,7 +167,7 @@ describe('Modal', () => {
           <button>Вторая кнопка</button>
           <button>Третья кнопка</button>
         </div>
-      </Modal>
+      </Modal>,
     );
 
     const firstButton = screen.getByRole('button', { name: 'Первая кнопка' });
@@ -198,7 +198,7 @@ describe('Modal', () => {
           <button>Вторая кнопка</button>
           <button>Третья кнопка</button>
         </div>
-      </Modal>
+      </Modal>,
     );
 
     const firstButton = screen.getByRole('button', { name: 'Первая кнопка' });
@@ -220,7 +220,7 @@ describe('Modal', () => {
         isTopModal={true}
       >
         <div>Содержимое</div>
-      </Modal>
+      </Modal>,
     );
 
     const dialog = container.querySelector('[role="dialog"]');
@@ -237,7 +237,7 @@ describe('Modal', () => {
           <button>Первая кнопка</button>
           <button>Вторая кнопка</button>
         </div>
-      </Modal>
+      </Modal>,
     );
 
     const firstButton = screen.getByRole('button', { name: 'Первая кнопка' });
@@ -253,11 +253,11 @@ describe('Modal', () => {
         >
           <div>Содержимое</div>
         </Modal>
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(
-      container.querySelector('.custom-parent__modal')
+      container.querySelector('.custom-parent__modal'),
     ).toBeInTheDocument();
   });
 
@@ -270,7 +270,7 @@ describe('Modal', () => {
         isTopModal={true}
       >
         <div>Содержимое</div>
-      </Modal>
+      </Modal>,
     );
 
     const content = screen.getByText('Содержимое');
@@ -296,7 +296,7 @@ describe('Modal', () => {
         title="Тестовый заголовок"
       >
         <div>Содержимое</div>
-      </Modal>
+      </Modal>,
     );
 
     expect(screen.getByText('Тестовый заголовок')).toBeInTheDocument();

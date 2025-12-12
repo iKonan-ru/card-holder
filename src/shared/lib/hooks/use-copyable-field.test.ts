@@ -22,7 +22,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     expect(result.current.isCopied).toBe(false);
@@ -32,7 +32,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     expect(result.current.displayValue).toBe(TEST_VALUE);
@@ -42,11 +42,11 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     expect(result.current.ariaLabel).toBe(
-      `Кликните для копирования: ${TEST_VALUE}`
+      `Кликните для копирования: ${TEST_VALUE}`,
     );
   });
 
@@ -55,7 +55,7 @@ describe('useCopyableField', () => {
       useCopyableField({
         value: TEST_VALUE,
         title: TEST_TITLE,
-      })
+      }),
     );
 
     expect(result.current.ariaLabel).toBe(`${TEST_TITLE}: ${TEST_VALUE}`);
@@ -66,7 +66,7 @@ describe('useCopyableField', () => {
       useCopyableField({
         value: TEST_VALUE,
         label: TEST_LABEL,
-      })
+      }),
     );
 
     expect(result.current.ariaLabel).toContain(TEST_LABEL);
@@ -79,7 +79,7 @@ describe('useCopyableField', () => {
       useCopyableField({
         value: TEST_VALUE,
         maskFn,
-      })
+      }),
     );
 
     expect(result.current.displayValue).toBe(`masked-${TEST_VALUE}`);
@@ -92,7 +92,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     await act(async () => {
@@ -111,7 +111,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     await act(async () => {
@@ -131,7 +131,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     await act(async () => {
@@ -154,14 +154,14 @@ describe('useCopyableField', () => {
     const copyMock = vi.mocked(utils.copyToClipboard);
     copyMock.mockResolvedValue(undefined);
     const maskFn = vi.fn((value: string, revealed: boolean) =>
-      revealed ? value : `masked-${value}`
+      revealed ? value : `masked-${value}`,
     );
 
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
         maskFn,
-      })
+      }),
     );
 
     expect(maskFn).toHaveBeenCalledWith(TEST_VALUE, false);
@@ -187,7 +187,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     await act(async () => {
@@ -208,7 +208,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     await act(async () => {
@@ -229,7 +229,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     await act(async () => {
@@ -251,7 +251,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     await act(async () => {
@@ -273,7 +273,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     await act(async () => {
@@ -295,7 +295,7 @@ describe('useCopyableField', () => {
     const { result } = renderHook(() =>
       useCopyableField({
         value: TEST_VALUE,
-      })
+      }),
     );
 
     await act(async () => {
@@ -323,7 +323,7 @@ describe('useCopyableField', () => {
         useCopyableField({
           value,
         }),
-      { initialProps: { value: TEST_VALUE } }
+      { initialProps: { value: TEST_VALUE } },
     );
 
     const initialAriaLabel = result.current.ariaLabel;
@@ -341,7 +341,7 @@ describe('useCopyableField', () => {
           value: TEST_VALUE,
           label,
         }),
-      { initialProps: { label: TEST_LABEL } }
+      { initialProps: { label: TEST_LABEL } },
     );
 
     const initialAriaLabel = result.current.ariaLabel;

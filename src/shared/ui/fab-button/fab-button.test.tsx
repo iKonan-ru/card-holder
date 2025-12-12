@@ -23,7 +23,7 @@ describe('FabButton', () => {
         icon={MockIcon}
         ariaLabel="Test button"
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -37,7 +37,7 @@ describe('FabButton', () => {
         icon={MockIcon}
         ariaLabel="Test button"
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const icon = screen.getByTestId('mock-icon');
@@ -54,7 +54,7 @@ describe('FabButton', () => {
         icon={MockIcon}
         ariaLabel="Test button"
         onClick={handleClick}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -71,7 +71,7 @@ describe('FabButton', () => {
         icon={MockIcon}
         ariaLabel={ariaLabel}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: ariaLabel });
@@ -87,7 +87,7 @@ describe('FabButton', () => {
         icon={MockIcon}
         ariaLabel={title}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: title });
@@ -102,7 +102,7 @@ describe('FabButton', () => {
         ariaLabel="Test button"
         onClick={vi.fn()}
         disabled={true}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -120,7 +120,7 @@ describe('FabButton', () => {
         ariaLabel="Test button"
         onClick={handleClick}
         disabled={true}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -136,7 +136,7 @@ describe('FabButton', () => {
         ariaLabel="Test button"
         onClick={vi.fn()}
         isActive={true}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -151,7 +151,7 @@ describe('FabButton', () => {
         ariaLabel="Test button"
         onClick={vi.fn()}
         disabled={true}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -166,7 +166,7 @@ describe('FabButton', () => {
         ariaLabel="Test button"
         onClick={vi.fn()}
         ariaPressed={true}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -180,7 +180,7 @@ describe('FabButton', () => {
         icon={MockIcon}
         ariaLabel="Test button"
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -198,7 +198,7 @@ describe('FabButton', () => {
           ariaLabel="Test button"
           onClick={vi.fn()}
         />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -212,7 +212,7 @@ describe('FabButton', () => {
         icon={MockIcon}
         ariaLabel="Test button"
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', { name: 'Test button' });
@@ -226,7 +226,7 @@ describe('FabButton', () => {
         icon={MockIcon}
         ariaLabel="Test button"
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const icon = screen.getByTestId('mock-icon');
@@ -240,7 +240,7 @@ describe('FabButton', () => {
         icon={MockIcon}
         ariaLabel="Test button"
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const icon = screen.getByTestId('mock-icon');

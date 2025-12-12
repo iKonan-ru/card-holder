@@ -75,7 +75,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));
@@ -93,7 +93,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));
@@ -110,7 +110,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));
@@ -142,7 +142,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));
@@ -177,7 +177,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));
@@ -212,7 +212,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));
@@ -255,7 +255,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));
@@ -287,7 +287,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     const portal = container.querySelector('#modal-root');
@@ -301,7 +301,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));
@@ -326,7 +326,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));
@@ -353,7 +353,7 @@ describe('ModalContainer', () => {
       <ModalProvider>
         <TestComponent />
         <ModalContainer />
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     await user.click(screen.getByText('Open First Modal'));

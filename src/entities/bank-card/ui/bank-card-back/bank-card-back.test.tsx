@@ -23,7 +23,7 @@ describe('BankCardBack', () => {
       <BankCardBack
         card={MOCK_CARD}
         onEditClick={mockOnEditClick}
-      />
+      />,
     );
 
     expect(screen.getByTestId('copyable-field-CVV')).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe('BankCardBack', () => {
       <BankCardBack
         card={MOCK_CARD}
         onEditClick={mockOnEditClick}
-      />
+      />,
     );
 
     expect(screen.getByTestId('copyable-field-CVV')).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe('BankCardBack', () => {
       <BankCardBack
         card={MOCK_CARD}
         onEditClick={mockOnEditClick}
-      />
+      />,
     );
 
     const editButton = container.querySelector('.bank-card__edit-button');
@@ -61,7 +61,7 @@ describe('BankCardBack', () => {
       <BankCardBack
         card={MOCK_CARD}
         onEditClick={mockOnEditClick}
-      />
+      />,
     );
 
     const editButton = container.querySelector('.bank-card__edit-button');
@@ -77,12 +77,12 @@ describe('BankCardBack', () => {
       <BankCardBack
         card={MOCK_CARD}
         onEditClick={mockOnEditClick}
-      />
+      />,
     );
 
     if (MOCK_CARD.phrase) {
       expect(
-        screen.getByTestId('copyable-field-Кодовая фраза')
+        screen.getByTestId('copyable-field-Кодовая фраза'),
       ).toBeInTheDocument();
       expect(screen.getByText(MOCK_CARD.phrase)).toBeInTheDocument();
     }
@@ -98,11 +98,11 @@ describe('BankCardBack', () => {
       <BankCardBack
         card={cardWithoutPhrase}
         onEditClick={mockOnEditClick}
-      />
+      />,
     );
 
     expect(
-      screen.queryByTestId('copyable-field-Кодовая фраза')
+      screen.queryByTestId('copyable-field-Кодовая фраза'),
     ).not.toBeInTheDocument();
   });
 
@@ -111,7 +111,7 @@ describe('BankCardBack', () => {
       <BankCardBack
         card={MOCK_CARD}
         onEditClick={mockOnEditClick}
-      />
+      />,
     );
 
     if (MOCK_CARD.pin) {
@@ -130,7 +130,7 @@ describe('BankCardBack', () => {
       <BankCardBack
         card={cardWithoutPin}
         onEditClick={mockOnEditClick}
-      />
+      />,
     );
 
     expect(screen.queryByTestId('copyable-field-PIN')).not.toBeInTheDocument();
@@ -141,7 +141,7 @@ describe('BankCardBack', () => {
       <BankCardBack
         card={MOCK_CARD}
         onEditClick={mockOnEditClick}
-      />
+      />,
     );
 
     const stripeElement = container.querySelector('.bank-card__stripe');

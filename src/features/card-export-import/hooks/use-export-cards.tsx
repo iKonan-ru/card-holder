@@ -30,7 +30,7 @@ interface IUseExportCardsResult {
 }
 
 export const useExportCards = (
-  params: IUseExportCardsParams
+  params: IUseExportCardsParams,
 ): IUseExportCardsResult => {
   const { cards } = params;
   const [isExporting, setIsExporting] = useState(false);
@@ -40,7 +40,7 @@ export const useExportCards = (
     async (
       password: string,
       closePasswordModal: Procedure,
-      setPasswordError: (error: string) => void
+      setPasswordError: (error: string) => void,
     ) => {
       try {
         setIsExporting(true);
@@ -65,7 +65,7 @@ export const useExportCards = (
         setIsExporting(false);
       }
     },
-    [cards]
+    [cards],
   );
 
   const exportCards = useCallback(async () => {
@@ -82,7 +82,7 @@ export const useExportCards = (
       openModal(
         PASSWORD_MODAL_ID_EXPORT,
         modalContent,
-        PASSWORD_MODAL_TITLE_EXPORT
+        PASSWORD_MODAL_TITLE_EXPORT,
       );
     } catch (error) {
       handleError(error, FALLBACK_ERROR_EXPORT);

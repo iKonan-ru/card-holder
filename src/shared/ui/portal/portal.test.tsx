@@ -24,7 +24,7 @@ describe('Portal', () => {
     render(
       <Portal>
         <div>{PORTAL_CONTENT_TEXT}</div>
-      </Portal>
+      </Portal>,
     );
 
     expect(screen.getByText(PORTAL_CONTENT_TEXT)).toBeInTheDocument();
@@ -37,7 +37,7 @@ describe('Portal', () => {
     render(
       <Portal containerId={CUSTOM_CONTAINER_ID}>
         <div>{PORTAL_CONTENT_TEXT}</div>
-      </Portal>
+      </Portal>,
     );
 
     const container = document.getElementById(CUSTOM_CONTAINER_ID);
@@ -53,7 +53,7 @@ describe('Portal', () => {
     render(
       <Portal>
         <div>{PORTAL_CONTENT_TEXT}</div>
-      </Portal>
+      </Portal>,
     );
 
     const containers = document.querySelectorAll(`#${DEFAULT_CONTAINER_ID}`);
@@ -64,7 +64,7 @@ describe('Portal', () => {
     const { unmount } = render(
       <Portal>
         <div>{PORTAL_CONTENT_TEXT}</div>
-      </Portal>
+      </Portal>,
     );
 
     const containerBeforeUnmount =

@@ -98,7 +98,7 @@ describe('checkForServiceWorkerUpdate', () => {
     expect(mockUpdate).toHaveBeenCalledTimes(1);
     expect(mockConsoleError).toHaveBeenCalledWith(
       'SW update check error',
-      testError
+      testError,
     );
 
     mockConsoleError.mockRestore();

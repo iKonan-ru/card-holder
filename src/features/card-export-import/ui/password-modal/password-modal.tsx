@@ -24,7 +24,7 @@ interface IPasswordModalProps {
   onConfirm: (
     password: string,
     closeModal: Procedure,
-    setError: (error: string) => void
+    setError: (error: string) => void,
   ) => Promise<void>;
   onCancel?: Procedure;
 }

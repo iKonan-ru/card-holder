@@ -21,7 +21,7 @@ interface IUseCardFormResult {
   handleFieldChange: (fieldName: string, value: string) => void;
   handleFieldValidation: (
     fieldName: keyof IValidationErrors,
-    error: string | undefined
+    error: string | undefined,
   ) => void;
   handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
   handleDelete: () => Promise<void>;

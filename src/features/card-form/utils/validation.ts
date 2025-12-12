@@ -18,7 +18,7 @@ const VALIDATABLE_FIELDS = [
 ] as const;
 
 export const validateCardForm = (
-  card: Partial<IBankCard>
+  card: Partial<IBankCard>,
 ): IValidationErrors => {
   return VALIDATABLE_FIELDS.reduce<IValidationErrors>((errors, fieldConfig) => {
     const { name, validator } = fieldConfig;
@@ -49,13 +49,13 @@ export const checkHasErrors = (errors: IValidationErrors): boolean => {
 };
 
 export const checkIsValidBankCard = (
-  card: Partial<IBankCard>
+  card: Partial<IBankCard>,
 ): card is IBankCard => {
   return Boolean(
     card.pan &&
       card.expires &&
       card.name &&
       card.cvv &&
-      typeof card.order === TYPE_NUMBER
+      typeof card.order === TYPE_NUMBER,
   );
 };

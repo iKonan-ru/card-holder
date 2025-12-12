@@ -93,16 +93,16 @@ describe('CardItemWrapper', () => {
           isFlipped={false}
           isReorderMode={false}
         />
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     const sortableItem = container.querySelector(
-      `[data-testid="sortable-${MOCK_CARD.pan}"]`
+      `[data-testid="sortable-${MOCK_CARD.pan}"]`,
     );
     expect(sortableItem).toBeInTheDocument();
 
     const bankCard = container.querySelector(
-      `[data-testid="bank-card-${MOCK_CARD.pan}"]`
+      `[data-testid="bank-card-${MOCK_CARD.pan}"]`,
     );
     expect(bankCard).toBeInTheDocument();
     expect(bankCard).toHaveTextContent(MOCK_CARD.name);
@@ -116,11 +116,11 @@ describe('CardItemWrapper', () => {
           isFlipped={true}
           isReorderMode={false}
         />
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     const bankCard = container.querySelector(
-      `[data-testid="bank-card-${MOCK_CARD.pan}"]`
+      `[data-testid="bank-card-${MOCK_CARD.pan}"]`,
     );
     expect(bankCard).toHaveAttribute('data-flipped', 'true');
   });
@@ -133,11 +133,11 @@ describe('CardItemWrapper', () => {
           isFlipped={false}
           isReorderMode={true}
         />
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     const bankCard = container.querySelector(
-      `[data-testid="bank-card-${MOCK_CARD.pan}"]`
+      `[data-testid="bank-card-${MOCK_CARD.pan}"]`,
     );
     expect(bankCard).toHaveAttribute('data-reorder', 'true');
   });
@@ -150,7 +150,7 @@ describe('CardItemWrapper', () => {
           isFlipped={false}
           isReorderMode={false}
         />
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     expect(mockUseCardManagementStore).toHaveBeenCalled();
@@ -164,7 +164,7 @@ describe('CardItemWrapper', () => {
           isFlipped={false}
           isReorderMode={false}
         />
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     expect(mockOpenEditCardForm).toBeDefined();
@@ -187,11 +187,11 @@ describe('CardItemWrapper', () => {
           isFlipped={true}
           isReorderMode={true}
         />
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     const bankCard = container.querySelector(
-      `[data-testid="bank-card-${anotherCard.pan}"]`
+      `[data-testid="bank-card-${anotherCard.pan}"]`,
     );
     expect(bankCard).toBeInTheDocument();
     expect(bankCard).toHaveTextContent(anotherCard.name);
@@ -207,7 +207,7 @@ describe('CardItemWrapper', () => {
           isFlipped={false}
           isReorderMode={false}
         />
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     mockFlipCard.mockClear();
@@ -219,7 +219,7 @@ describe('CardItemWrapper', () => {
           isFlipped={false}
           isReorderMode={false}
         />
-      </DndWrapper>
+      </DndWrapper>,
     );
   });
 });

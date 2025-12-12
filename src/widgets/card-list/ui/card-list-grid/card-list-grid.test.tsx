@@ -76,7 +76,7 @@ describe('CardListGrid', () => {
             onShowForm={vi.fn()}
           />
         </DndWrapper>
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const grid = container.querySelector('.card-list-grid');
@@ -95,7 +95,7 @@ describe('CardListGrid', () => {
             onShowForm={vi.fn()}
           />
         </DndWrapper>
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(screen.getByTestId('card-5559494202595236')).toBeInTheDocument();
@@ -113,7 +113,7 @@ describe('CardListGrid', () => {
             onShowForm={vi.fn()}
           />
         </DndWrapper>
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const addButton = container.querySelector('.add-card-button');
@@ -131,7 +131,7 @@ describe('CardListGrid', () => {
             onShowForm={vi.fn()}
           />
         </DndWrapper>
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const grid = container.querySelector('.card-list-grid');
@@ -152,7 +152,7 @@ describe('CardListGrid', () => {
             onShowForm={vi.fn()}
           />
         </DndWrapper>
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const grid = container.querySelector('.card-list-grid');

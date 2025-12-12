@@ -53,7 +53,7 @@ describe('SortableCardItem', () => {
         >
           {TEST_CHILDREN}
         </SortableCardItem>
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     expect(container.querySelector('.sortable-card-item')).toBeInTheDocument();
@@ -69,11 +69,11 @@ describe('SortableCardItem', () => {
         >
           {TEST_CHILDREN}
         </SortableCardItem>
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     const wrapper = container.querySelector(
-      '.sortable-card-item'
+      '.sortable-card-item',
     ) as HTMLElement;
 
     expect(wrapper).toBeInTheDocument();
@@ -89,7 +89,7 @@ describe('SortableCardItem', () => {
         >
           {TEST_CHILDREN}
         </SortableCardItem>
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     const wrapper = container.querySelector('.sortable-card-item');
@@ -105,11 +105,11 @@ describe('SortableCardItem', () => {
         >
           {TEST_CHILDREN}
         </SortableCardItem>
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     const wrapper = container.querySelector(
-      '.sortable-card-item'
+      '.sortable-card-item',
     ) as HTMLElement;
 
     expect(wrapper.style.opacity).toBeDefined();
@@ -163,7 +163,7 @@ describe('SortableCardItem', () => {
         >
           {TEST_CHILDREN}
         </SortableCardItem>
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     const wrapper = container.querySelector('.sortable-card-item_dragging');
@@ -179,7 +179,7 @@ describe('SortableCardItem', () => {
         >
           {TEST_CHILDREN}
         </SortableCardItem>
-      </DndWrapper>
+      </DndWrapper>,
     );
 
     const wrapper = container.querySelector('.sortable-card-item_reorder');

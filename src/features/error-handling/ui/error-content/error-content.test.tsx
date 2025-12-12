@@ -16,7 +16,7 @@ describe('ErrorContent', () => {
       <ErrorContent
         message={message}
         onClose={onClose}
-      />
+      />,
     );
 
     expect(screen.getByText(message)).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe('ErrorContent', () => {
       <ErrorContent
         message="Тестовая ошибка"
         onClose={onClose}
-      />
+      />,
     );
 
     const closeButton = screen.getByRole('button', { name: 'Закрыть' });
@@ -45,7 +45,7 @@ describe('ErrorContent', () => {
       <ErrorContent
         message="Тестовая ошибка"
         onClose={onClose}
-      />
+      />,
     );
 
     const closeButton = screen.getByRole('button', { name: 'Закрыть' });
@@ -66,7 +66,7 @@ describe('ErrorContent', () => {
       <ErrorContent
         message={longMessage}
         onClose={onClose}
-      />
+      />,
     );
 
     expect(screen.getByText(longMessage)).toBeInTheDocument();
@@ -78,7 +78,7 @@ describe('ErrorContent', () => {
       <ErrorContent
         message="Тестовая ошибка"
         onClose={onClose}
-      />
+      />,
     );
 
     const errorContent = container.querySelector('.error-content');

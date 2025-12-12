@@ -40,7 +40,7 @@ export const useOverlayClick = ({
     (event: MouseEvent<HTMLDivElement>) => {
       event.stopPropagation();
     },
-    []
+    [],
   );
 
   const handleContentMouseDown = useCallback(
@@ -48,7 +48,7 @@ export const useOverlayClick = ({
       event.stopPropagation();
       isMouseDownOnOverlayRef.current = false;
     },
-    []
+    [],
   );
 
   return useMemo(
@@ -63,6 +63,6 @@ export const useOverlayClick = ({
       handleOverlayMouseUp,
       handleContentClick,
       handleContentMouseDown,
-    ]
+    ],
   );
 };

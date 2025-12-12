@@ -53,7 +53,7 @@ export const useBankCard = ({
 
   const bank = useMemo(
     () => BANKS_LIST.find((bankItem) => bankItem.id === bankId) || DEFAULT_BANK,
-    [bankId]
+    [bankId],
   );
 
   const { color, isDarkText } = bank;
@@ -65,14 +65,14 @@ export const useBankCard = ({
       }
 
       const isClickOnActions = (event.target as HTMLElement).closest(
-        `.${bem(BANK_CARD_BLOCK, 'actions')}`
+        `.${bem(BANK_CARD_BLOCK, 'actions')}`,
       );
 
       if (!isClickOnActions && onFlip) {
         onFlip(card.pan);
       }
     },
-    [isReorderMode, onFlip, card.pan]
+    [isReorderMode, onFlip, card.pan],
   );
 
   const handleEditClick = useCallback(
@@ -83,7 +83,7 @@ export const useBankCard = ({
         onEdit(card);
       }
     },
-    [onEdit, card]
+    [onEdit, card],
   );
 
   const cardStyle = useMemo(
@@ -93,7 +93,7 @@ export const useBankCard = ({
         '--color-dark': darkenColor(color, CARD_COLOR_DARKEN_PERCENTAGE),
         ...getTextColorStyle(isDarkText),
       }) as CSSProperties,
-    [color, isDarkText]
+    [color, isDarkText],
   );
 
   const modifiers = useMemo(
@@ -103,7 +103,7 @@ export const useBankCard = ({
         isReorderMode && BANK_CARD_MODIFIER_REORDER_MODE,
         isDarkText && BANK_CARD_MODIFIER_DARK_TEXT,
       ].filter(Boolean) as string[],
-    [isFlipped, isReorderMode, isDarkText]
+    [isFlipped, isReorderMode, isDarkText],
   );
 
   return {

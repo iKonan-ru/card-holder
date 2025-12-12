@@ -12,7 +12,7 @@ describe('PasswordField', () => {
         label="Пароль"
         value=""
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByLabelText('Пароль')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('PasswordField', () => {
         label="Пароль"
         value=""
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByLabelText('Пароль');
@@ -42,7 +42,7 @@ describe('PasswordField', () => {
         label="Пароль"
         value=""
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByLabelText('Показать пароль')).toBeInTheDocument();
@@ -58,7 +58,7 @@ describe('PasswordField', () => {
         label="Пароль"
         value="test123"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByLabelText('Пароль');
@@ -83,7 +83,7 @@ describe('PasswordField', () => {
         label="Пароль"
         value=""
         onChange={handleChange}
-      />
+      />,
     );
 
     const input = screen.getByLabelText('Пароль');
@@ -102,7 +102,7 @@ describe('PasswordField', () => {
         value=""
         error="Слишком короткий пароль"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText('Слишком короткий пароль')).toBeInTheDocument();
@@ -117,7 +117,7 @@ describe('PasswordField', () => {
         value=""
         onChange={vi.fn()}
         showPasswordToggle={false}
-      />
+      />,
     );
 
     expect(screen.queryByLabelText('Показать пароль')).not.toBeInTheDocument();
@@ -136,7 +136,7 @@ describe('PasswordField', () => {
         onChange={vi.fn()}
         isPasswordVisible={false}
         onPasswordVisibilityChange={handleVisibilityChange}
-      />
+      />,
     );
 
     const input = screen.getByLabelText('Пароль');
@@ -157,7 +157,7 @@ describe('PasswordField', () => {
         onChange={vi.fn()}
         isPasswordVisible={true}
         onPasswordVisibilityChange={handleVisibilityChange}
-      />
+      />,
     );
 
     expect(input).toHaveAttribute('type', 'text');
@@ -172,7 +172,7 @@ describe('PasswordField', () => {
         value=""
         onChange={vi.fn()}
         autoFocus={true}
-      />
+      />,
     );
 
     const input = screen.getByLabelText('Пароль');
@@ -189,7 +189,7 @@ describe('PasswordField', () => {
         value=""
         onChange={vi.fn()}
         disabled={true}
-      />
+      />,
     );
 
     const input = screen.getByLabelText('Пароль');
@@ -206,7 +206,7 @@ describe('PasswordField', () => {
         value=""
         onChange={vi.fn()}
         required={true}
-      />
+      />,
     );
 
     const input = container.querySelector('#password') as HTMLInputElement;
@@ -223,7 +223,7 @@ describe('PasswordField', () => {
         value=""
         onChange={vi.fn()}
         autoComplete="new-password"
-      />
+      />,
     );
 
     const input = screen.getByLabelText('Пароль');
@@ -239,7 +239,7 @@ describe('PasswordField', () => {
         label="Пароль"
         value="mypassword"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByLabelText('Пароль') as HTMLInputElement;
@@ -274,7 +274,7 @@ describe('PasswordField', () => {
           isPasswordVisible={isVisible}
           onPasswordVisibilityChange={handleVisibilityChange}
         />
-      </>
+      </>,
     );
 
     const toggleButton1 = screen.getAllByLabelText('Показать пароль')[0];
@@ -303,7 +303,7 @@ describe('PasswordField', () => {
           isPasswordVisible={true}
           onPasswordVisibilityChange={handleVisibilityChange}
         />
-      </>
+      </>,
     );
 
     const input1 = screen.getByLabelText('Пароль 1');

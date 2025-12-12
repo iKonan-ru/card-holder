@@ -16,7 +16,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -29,7 +29,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={true}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -45,7 +45,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={handleClick}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -59,7 +59,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const icon = container.querySelector('.fab-button__icon');
@@ -74,7 +74,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={true}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = container.querySelector('.fab-button_active');
@@ -88,7 +88,7 @@ describe('ReorderToggleButton', () => {
           isActive={false}
           onClick={vi.fn()}
         />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const button = container.querySelector('.test-parent__fab-button');
@@ -100,7 +100,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = container.querySelector('.fab-button_active');
@@ -112,7 +112,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');
@@ -124,7 +124,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const button = container.querySelector('.fab-button');
@@ -136,7 +136,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     const icon = container.querySelector('.fab-button__icon');
@@ -148,7 +148,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={false}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     let icon = container.querySelector('.fab-button__icon');
@@ -158,7 +158,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={true}
         onClick={vi.fn()}
-      />
+      />,
     );
 
     icon = container.querySelector('.fab-button__icon');
@@ -173,7 +173,7 @@ describe('ReorderToggleButton', () => {
       <ReorderToggleButton
         isActive={true}
         onClick={handleClick}
-      />
+      />,
     );
 
     const button = screen.getByRole('button');

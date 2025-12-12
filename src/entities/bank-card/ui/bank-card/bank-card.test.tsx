@@ -52,7 +52,7 @@ describe('BankCard', () => {
       <BankCard
         card={MOCK_CARD}
         isFlipped={true}
-      />
+      />,
     );
     const cardElement = container.querySelector('.bank-card_flipped');
 
@@ -64,7 +64,7 @@ describe('BankCard', () => {
       <BankCard
         card={MOCK_CARD}
         isFlipped={false}
-      />
+      />,
     );
     const cardElement = container.querySelector('.bank-card_flipped');
 
@@ -106,7 +106,7 @@ describe('BankCard', () => {
   it('должна отображать логотип платежной системы', () => {
     const { container } = render(<BankCard card={MOCK_CARD} />);
     const paymentSystemElement = container.querySelector(
-      '.bank-card__payment-system'
+      '.bank-card__payment-system',
     );
 
     expect(paymentSystemElement).toBeInTheDocument();
@@ -140,7 +140,7 @@ describe('BankCard', () => {
       <BankCard
         card={MOCK_CARD}
         isReorderMode={true}
-      />
+      />,
     );
 
     const cardElement = container.querySelector('.bank-card_reorder-mode');

@@ -19,7 +19,7 @@ describe('useCardListDrag', () => {
       useCardListDrag({
         storeCards: MOCK_CARDS,
         onDragEnd: mockOnDragEnd,
-      })
+      }),
     );
 
     expect(result.current.cards).toEqual(MOCK_CARDS);
@@ -31,7 +31,7 @@ describe('useCardListDrag', () => {
       useCardListDrag({
         storeCards: MOCK_CARDS,
         onDragEnd: mockOnDragEnd,
-      })
+      }),
     );
 
     const mockStartEvent = {
@@ -52,7 +52,7 @@ describe('useCardListDrag', () => {
       useCardListDrag({
         storeCards: MOCK_CARDS,
         onDragEnd: mockOnDragEnd,
-      })
+      }),
     );
 
     const mockEvent = {
@@ -77,7 +77,7 @@ describe('useCardListDrag', () => {
       useCardListDrag({
         storeCards: MOCK_CARDS,
         onDragEnd: mockOnDragEnd,
-      })
+      }),
     );
 
     const mockEvent = {
@@ -99,7 +99,7 @@ describe('useCardListDrag', () => {
       useCardListDrag({
         storeCards: MOCK_CARDS,
         onDragEnd: mockOnDragEnd,
-      })
+      }),
     );
 
     const mockEvent = {
@@ -131,7 +131,7 @@ describe('useCardListDrag', () => {
         }),
       {
         initialProps: { storeCards: MOCK_CARDS },
-      }
+      },
     );
 
     const updatedCards = [MOCK_CARDS[0]];
@@ -150,7 +150,7 @@ describe('useCardListDrag', () => {
         }),
       {
         initialProps: { storeCards: MOCK_CARDS },
-      }
+      },
     );
 
     const mockEvent = {
@@ -175,7 +175,7 @@ describe('useCardListDrag', () => {
       useCardListDrag({
         storeCards: MOCK_CARDS,
         onDragEnd: mockOnDragEnd,
-      })
+      }),
     );
 
     const mockEvent = {
@@ -196,7 +196,7 @@ describe('useCardListDrag', () => {
       useCardListDrag({
         storeCards: MOCK_CARDS,
         onDragEnd: mockOnDragEnd,
-      })
+      }),
     );
 
     const mockEvent = {

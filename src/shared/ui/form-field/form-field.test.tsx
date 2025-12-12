@@ -17,7 +17,7 @@ describe('FormField', () => {
         label="Тестовое поле"
         value=""
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByRole('textbox')).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe('FormField', () => {
         label="Тестовое поле"
         value="Тестовое значение"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByRole('textbox')).toHaveValue('Тестовое значение');
@@ -49,7 +49,7 @@ describe('FormField', () => {
         label="Тестовое поле"
         value=""
         onChange={handleChange}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -67,7 +67,7 @@ describe('FormField', () => {
         value=""
         error="Ошибка валидации"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText('Ошибка валидации')).toBeInTheDocument();
@@ -81,11 +81,11 @@ describe('FormField', () => {
         label="Тестовое поле"
         value="Значение"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(
-      container.querySelector('.form-field_has-value')
+      container.querySelector('.form-field_has-value'),
     ).toBeInTheDocument();
   });
 
@@ -98,11 +98,11 @@ describe('FormField', () => {
         value=""
         error="Ошибка"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(
-      container.querySelector('.form-field_has-error')
+      container.querySelector('.form-field_has-error'),
     ).toBeInTheDocument();
   });
 
@@ -115,7 +115,7 @@ describe('FormField', () => {
         value=""
         maxLength={5}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox') as HTMLInputElement;
@@ -131,7 +131,7 @@ describe('FormField', () => {
         value=""
         disabled={true}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByRole('textbox')).toBeDisabled();
@@ -146,7 +146,7 @@ describe('FormField', () => {
         value=""
         required={true}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByText(/Тестовое поле \*/)).toBeInTheDocument();
@@ -162,7 +162,7 @@ describe('FormField', () => {
         error="Ошибка"
         required={true}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.queryByText(/Тестовое поле \*/)).not.toBeInTheDocument();
@@ -178,12 +178,12 @@ describe('FormField', () => {
         value=""
         rightContent={<span data-testid="right-content">Right</span>}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByTestId('right-content')).toBeInTheDocument();
     expect(
-      container.querySelector('.form-field__right-content')
+      container.querySelector('.form-field__right-content'),
     ).toBeInTheDocument();
   });
 
@@ -196,11 +196,11 @@ describe('FormField', () => {
         value=""
         rightContent={<span>Right</span>}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     expect(
-      container.querySelector('.form-field_has-right-content')
+      container.querySelector('.form-field_has-right-content'),
     ).toBeInTheDocument();
   });
 
@@ -213,7 +213,7 @@ describe('FormField', () => {
         value=""
         inputMode="numeric"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox') as HTMLInputElement;
@@ -229,7 +229,7 @@ describe('FormField', () => {
         value=""
         error="Ошибка валидации"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -244,7 +244,7 @@ describe('FormField', () => {
         label="Тестовое поле"
         value=""
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -260,7 +260,7 @@ describe('FormField', () => {
         value=""
         required={true}
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -276,7 +276,7 @@ describe('FormField', () => {
         value=""
         error="Ошибка валидации"
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -291,7 +291,7 @@ describe('FormField', () => {
         label="Тестовое поле"
         value=""
         onChange={vi.fn()}
-      />
+      />,
     );
 
     const input = screen.getByRole('textbox');
@@ -308,11 +308,11 @@ describe('FormField', () => {
           value=""
           onChange={vi.fn()}
         />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(
-      container.querySelector('.custom-parent__form-field')
+      container.querySelector('.custom-parent__form-field'),
     ).toBeInTheDocument();
   });
 });

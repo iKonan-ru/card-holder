@@ -54,7 +54,7 @@ export const parseDecryptedCards = (decryptedData: string): IBankCard[] => {
 
 export const mergeCards = (
   existingCards: IBankCard[],
-  importedCards: IBankCard[]
+  importedCards: IBankCard[],
 ): { cards: IBankCard[]; stats: IImportResult } => {
   const existingPans = new Set(existingCards.map((card) => card.pan));
 
@@ -68,7 +68,7 @@ export const mergeCards = (
 
     if (cardExists) {
       const existingIndex = mergedCards.findIndex(
-        (card) => card.pan === importedCard.pan
+        (card) => card.pan === importedCard.pan,
       );
       mergedCards[existingIndex] = importedCard;
       replacedCount++;

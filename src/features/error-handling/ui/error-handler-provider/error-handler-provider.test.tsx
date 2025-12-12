@@ -15,7 +15,7 @@ describe('ErrorHandlerProvider', () => {
         <ErrorHandlerProvider>
           <div data-testid="test-child">Test Child</div>
         </ErrorHandlerProvider>
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     const child = document.querySelector('[data-testid="test-child"]');
@@ -31,7 +31,7 @@ describe('ErrorHandlerProvider', () => {
         <ErrorHandlerProvider>
           <div>Test</div>
         </ErrorHandlerProvider>
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     expect(setModalContextSpy).toHaveBeenCalledTimes(1);
@@ -40,7 +40,7 @@ describe('ErrorHandlerProvider', () => {
         openModal: expect.any(Function),
         closeModal: expect.any(Function),
         closeAllModals: expect.any(Function),
-      })
+      }),
     );
 
     setModalContextSpy.mockRestore();
@@ -54,17 +54,17 @@ describe('ErrorHandlerProvider', () => {
           <div data-testid="child-2">Child 2</div>
           <div data-testid="child-3">Child 3</div>
         </ErrorHandlerProvider>
-      </ModalProvider>
+      </ModalProvider>,
     );
 
     expect(
-      document.querySelector('[data-testid="child-1"]')
+      document.querySelector('[data-testid="child-1"]'),
     ).toBeInTheDocument();
     expect(
-      document.querySelector('[data-testid="child-2"]')
+      document.querySelector('[data-testid="child-2"]'),
     ).toBeInTheDocument();
     expect(
-      document.querySelector('[data-testid="child-3"]')
+      document.querySelector('[data-testid="child-3"]'),
     ).toBeInTheDocument();
   });
 });

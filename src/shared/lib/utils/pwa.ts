@@ -1,7 +1,7 @@
 import type { IBeforeInstallPromptEvent } from '../../types';
 
 export const checkForServiceWorkerUpdate = async (
-  registration: ServiceWorkerRegistration
+  registration: ServiceWorkerRegistration,
 ): Promise<void> => {
   if (registration.installing || !navigator.onLine) {
     return;
@@ -15,13 +15,13 @@ export const checkForServiceWorkerUpdate = async (
 };
 
 export const checkIsBeforeInstallPromptEvent = (
-  event: Event
+  event: Event,
 ): event is IBeforeInstallPromptEvent => {
   return 'prompt' in event && 'userChoice' in event;
 };
 
 export const checkHasNavigatorStandalone = (
-  navigator: Navigator
+  navigator: Navigator,
 ): navigator is Navigator & { standalone: boolean } => {
   return 'standalone' in navigator;
 };

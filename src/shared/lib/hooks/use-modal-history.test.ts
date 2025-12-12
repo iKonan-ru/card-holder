@@ -38,7 +38,7 @@ describe('useModalHistory', () => {
         closeModal: mockCloseModal,
         userActionRef: mockUserActionRef,
         modalRequestCloseRef: mockModalRequestCloseRef,
-      })
+      }),
     );
 
     expect(mockPush).not.toHaveBeenCalled();
@@ -55,13 +55,13 @@ describe('useModalHistory', () => {
         closeModal: mockCloseModal,
         userActionRef: mockUserActionRef,
         modalRequestCloseRef: mockModalRequestCloseRef,
-      })
+      }),
     );
 
     expect(mockPush).toHaveBeenCalledWith('modal-1', expect.any(Function));
     expect(window.history.pushState).toHaveBeenCalledWith(
       { [MODAL_STATE_KEY]: true },
-      ''
+      '',
     );
   });
 
@@ -78,7 +78,7 @@ describe('useModalHistory', () => {
         }),
       {
         initialProps: { modals: [createMockModal('modal-1')] },
-      }
+      },
     );
 
     expect(mockPush).toHaveBeenCalledWith('modal-1', expect.any(Function));
@@ -101,7 +101,7 @@ describe('useModalHistory', () => {
         }),
       {
         initialProps: { modals: [createMockModal('modal-1')] },
-      }
+      },
     );
 
     rerender({ modals: [] });
@@ -122,7 +122,7 @@ describe('useModalHistory', () => {
         }),
       {
         initialProps: { modals: [createMockModal('modal-1')] },
-      }
+      },
     );
 
     rerender({ modals: [] });
@@ -145,7 +145,7 @@ describe('useModalHistory', () => {
         }),
       {
         initialProps: { modals: [createMockModal('modal-1')] },
-      }
+      },
     );
 
     rerender({ modals: [] });
@@ -169,7 +169,7 @@ describe('useModalHistory', () => {
         }),
       {
         initialProps: { modals: [createMockModal('modal-1')] },
-      }
+      },
     );
 
     rerender({ modals: [] });
@@ -188,7 +188,7 @@ describe('useModalHistory', () => {
         closeModal: mockCloseModal,
         userActionRef: mockUserActionRef,
         modalRequestCloseRef: mockModalRequestCloseRef,
-      })
+      }),
     );
 
     expect(mockPush).toHaveBeenCalledTimes(2);
@@ -211,7 +211,7 @@ describe('useModalHistory', () => {
         }),
       {
         initialProps: { modals },
-      }
+      },
     );
 
     mockPush.mockClear();
@@ -232,7 +232,7 @@ describe('useModalHistory', () => {
         closeModal: mockCloseModal,
         userActionRef: mockUserActionRef,
         modalRequestCloseRef: mockModalRequestCloseRef,
-      })
+      }),
     );
 
     const pushCall = mockPush.mock.calls[0];

@@ -69,7 +69,7 @@ describe('DragHandle', () => {
       <DragHandle
         isVisible={false}
         data-testid={testId}
-      />
+      />,
     );
 
     const button = screen.getByTestId(testId);
@@ -84,7 +84,7 @@ describe('DragHandle', () => {
       <DragHandle
         isVisible={false}
         onClick={handleClick}
-      />
+      />,
     );
 
     const button = screen.getByRole('button', {
@@ -100,7 +100,7 @@ describe('DragHandle', () => {
       <DragHandle
         isVisible={false}
         disabled
-      />
+      />,
     );
 
     const button = screen.getByRole('button', {
@@ -118,7 +118,7 @@ describe('DragHandle', () => {
         isVisible={false}
         onClick={handleClick}
         disabled
-      />
+      />,
     );
 
     const button = screen.getByRole('button', {
@@ -156,7 +156,7 @@ describe('DragHandle', () => {
       <DragHandle
         isVisible={false}
         ref={ref}
-      />
+      />,
     );
 
     expect(ref).toHaveBeenCalled();

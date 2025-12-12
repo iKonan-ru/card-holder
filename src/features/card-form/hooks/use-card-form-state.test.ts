@@ -112,7 +112,7 @@ describe('useCardFormState', () => {
     };
 
     const { result: resultWithCard } = renderHook(() =>
-      useCardFormState({ initialCard })
+      useCardFormState({ initialCard }),
     );
 
     expect(resultWithCard.current.isEditMode).toBe(true);

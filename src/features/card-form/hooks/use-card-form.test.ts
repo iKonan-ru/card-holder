@@ -154,7 +154,7 @@ describe('useCardForm', () => {
         cvv: '123',
         pin: '1234',
         order: 0,
-      })
+      }),
     );
     expect(result.current.formData).toEqual({
       pan: '',
@@ -171,7 +171,7 @@ describe('useCardForm', () => {
   it('должен вызывать onSuccess после успешного добавления', async () => {
     const mockOnSuccess = vi.fn();
     const { result } = renderHook(() =>
-      useCardForm({ onSuccess: mockOnSuccess })
+      useCardForm({ onSuccess: mockOnSuccess }),
     );
 
     act(() => {
@@ -246,7 +246,7 @@ describe('useCardForm', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] [CardFormSubmit] Не удалось добавить карту',
-      mockError
+      mockError,
     );
     expect(result.current.isSubmitting).toBe(false);
 
@@ -335,7 +335,7 @@ describe('useCardForm', () => {
         name: 'JANE DOE',
         cvv: '123',
         pin: '1234',
-      })
+      }),
     );
   });
 
@@ -386,7 +386,7 @@ describe('useCardForm', () => {
         name: 'JOHN DOE',
         cvv: '123',
         pin: '1234',
-      })
+      }),
     );
   });
 
@@ -445,7 +445,7 @@ describe('useCardForm', () => {
     };
 
     const { result } = renderHook(() =>
-      useCardForm({ initialCard, onSuccess: mockOnSuccess })
+      useCardForm({ initialCard, onSuccess: mockOnSuccess }),
     );
 
     await act(async () => {
@@ -526,7 +526,7 @@ describe('useCardForm', () => {
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] [CardFormDelete] Не удалось удалить карту',
-      mockError
+      mockError,
     );
     expect(result.current.isSubmitting).toBe(false);
 

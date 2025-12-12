@@ -50,7 +50,7 @@ export const ModalProvider: FC<IModalProviderProps> = ({
 
       setModals((prevModals) => {
         const existingModalIndex = prevModals.findIndex(
-          (modal) => modal.id === id
+          (modal) => modal.id === id,
         );
 
         if (existingModalIndex !== -1) {
@@ -60,7 +60,7 @@ export const ModalProvider: FC<IModalProviderProps> = ({
         return [...prevModals, { id, content, title }];
       });
     },
-    [onModalOpen]
+    [onModalOpen],
   );
 
   const closeModal = useCallback((id: string) => {
@@ -83,7 +83,7 @@ export const ModalProvider: FC<IModalProviderProps> = ({
         });
       });
     },
-    []
+    [],
   );
 
   const value: IModalContext = useMemo(
@@ -95,7 +95,7 @@ export const ModalProvider: FC<IModalProviderProps> = ({
       updateModalPreventClose,
       userActionRef,
     }),
-    [modals, openModal, closeModal, closeAllModals, updateModalPreventClose]
+    [modals, openModal, closeModal, closeAllModals, updateModalPreventClose],
   );
 
   return <Modal.Provider value={value}>{children}</Modal.Provider>;

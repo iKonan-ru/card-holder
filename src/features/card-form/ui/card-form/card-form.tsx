@@ -75,13 +75,13 @@ export const CardForm: FC<ICardFormProps> = ({
         cancelText={DELETE_CANCEL_TEXT}
         onConfirm={handleConfirmDelete}
       />,
-      DELETE_MODAL_TITLE
+      DELETE_MODAL_TITLE,
     );
   }, [open, handleConfirmDelete]);
 
   const panFieldRightContent = useMemo(
     () => <CardPreview pan={formData.pan || ''} />,
-    [formData.pan]
+    [formData.pan],
   );
 
   const submitButtonText = isEditMode

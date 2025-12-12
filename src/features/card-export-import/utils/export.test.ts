@@ -8,7 +8,7 @@ describe('validateCardsForExport', () => {
     const emptyCards: IBankCard[] = [];
 
     expect(() => validateCardsForExport(emptyCards)).toThrowError(
-      ERROR_NO_CARDS_TO_EXPORT
+      ERROR_NO_CARDS_TO_EXPORT,
     );
   });
 

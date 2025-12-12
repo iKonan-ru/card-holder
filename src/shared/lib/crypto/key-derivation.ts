@@ -13,7 +13,7 @@ export const generateSalt = (): Uint8Array => {
 
 export const deriveKeyFromPassword = async (
   password: string,
-  salt: Uint8Array
+  salt: Uint8Array,
 ): Promise<CryptoKey> => {
   const encoder = new TextEncoder();
   const passwordBuffer = encoder.encode(password);
@@ -23,7 +23,7 @@ export const deriveKeyFromPassword = async (
     passwordBuffer,
     PBKDF2_ALGORITHM,
     false,
-    ['deriveKey']
+    ['deriveKey'],
   );
 
   return await crypto.subtle.deriveKey(
@@ -39,6 +39,6 @@ export const deriveKeyFromPassword = async (
       length: KEY_LENGTH,
     },
     false,
-    ['encrypt', 'decrypt']
+    ['encrypt', 'decrypt'],
   );
 };

@@ -18,7 +18,7 @@ describe('ParentClassContext', () => {
     render(
       <ParentClassProvider parentClass="test-parent">
         <TestComponent />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
     expect(screen.getByTestId('test')).toHaveTextContent('test-parent');
   });
@@ -36,7 +36,7 @@ describe('ParentClassContext', () => {
         <ParentClassProvider parentClass="inner">
           <InnerComponent />
         </ParentClassProvider>
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(screen.getByTestId('inner')).toHaveTextContent('inner');
@@ -46,7 +46,7 @@ describe('ParentClassContext', () => {
     render(
       <ParentClassProvider>
         <TestComponent />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
     expect(screen.getByTestId('test')).toHaveTextContent('no-parent-class');
   });
@@ -61,11 +61,11 @@ describe('ParentClassContext', () => {
     render(
       <ParentClassProvider parentClass="test-parent-class">
         <TestContextComponent />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(screen.getByTestId('context-value')).toHaveTextContent(
-      'test-parent-class'
+      'test-parent-class',
     );
   });
 
@@ -79,7 +79,7 @@ describe('ParentClassContext', () => {
     render(
       <ParentClassProvider>
         <TestContextComponent />
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     expect(screen.getByTestId('context-value')).toHaveTextContent('none');

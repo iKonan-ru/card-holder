@@ -18,7 +18,7 @@ export const useFocusTrap = ({
     }
 
     const focusableElements = contentRef.current.querySelectorAll<HTMLElement>(
-      FOCUSABLE_ELEMENTS_SELECTOR
+      FOCUSABLE_ELEMENTS_SELECTOR,
     );
 
     if (focusableElements.length === 0) {

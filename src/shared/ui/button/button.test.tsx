@@ -127,7 +127,7 @@ describe('Button', () => {
         disabled={true}
       >
         Кнопка
-      </Button>
+      </Button>,
     );
 
     const button = screen.getByRole('button');
@@ -147,7 +147,7 @@ describe('Button', () => {
         isLoading={true}
       >
         Кнопка
-      </Button>
+      </Button>,
     );
 
     const button = screen.getByRole('button');

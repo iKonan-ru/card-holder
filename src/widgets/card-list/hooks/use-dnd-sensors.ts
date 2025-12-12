@@ -29,6 +29,6 @@ export const useDndSensors = (): SensorDescriptor<SensorOptions>[] => {
     }),
     useSensor(KeyboardSensor, {
       coordinateGetter: sortableKeyboardCoordinates,
-    })
+    }),
   );
 };

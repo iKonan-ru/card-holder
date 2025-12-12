@@ -41,7 +41,7 @@ describe('ExportButton', () => {
     render(
       <TestWrapper>
         <ExportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const button = screen.getByRole('button', {
@@ -55,7 +55,7 @@ describe('ExportButton', () => {
     render(
       <TestWrapper>
         <ExportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const button = screen.getByRole('button', {
@@ -69,7 +69,7 @@ describe('ExportButton', () => {
     render(
       <TestWrapper>
         <ExportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(mockUseCardManagementStore).toHaveBeenCalled();
@@ -79,7 +79,7 @@ describe('ExportButton', () => {
     render(
       <TestWrapper>
         <ExportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const button = screen.getByRole('button', {
@@ -93,7 +93,7 @@ describe('ExportButton', () => {
     const { container } = render(
       <TestWrapper>
         <ExportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const icon = container.querySelector('svg');
@@ -107,7 +107,7 @@ describe('ExportButton', () => {
         <TestWrapper>
           <ExportButton />
         </TestWrapper>
-      </ParentClassProvider>
+      </ParentClassProvider>,
     );
 
     const button = screen.getByRole('button', {
@@ -124,7 +124,7 @@ describe('ExportButton', () => {
     render(
       <TestWrapper>
         <ExportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     expect(mockUseCardManagementStore).toHaveBeenCalled();
@@ -136,7 +136,7 @@ describe('ExportButton', () => {
     render(
       <TestWrapper>
         <ExportButton />
-      </TestWrapper>
+      </TestWrapper>,
     );
 
     const button = screen.getByRole('button', {

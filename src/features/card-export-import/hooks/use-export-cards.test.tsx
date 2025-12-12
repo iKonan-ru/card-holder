@@ -113,7 +113,7 @@ describe('useExportCards', () => {
 
     expect(utils.handleError).toHaveBeenCalledWith(
       mockError,
-      expect.any(String)
+      expect.any(String),
     );
     expect(mockOpenModal).not.toHaveBeenCalled();
   });
@@ -133,7 +133,7 @@ describe('useExportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -159,17 +159,17 @@ describe('useExportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
     await waitFor(() => {
       expect(sharedLib.createBlobFromPayload).toHaveBeenCalledWith(
-        MOCK_ENCRYPTED_PAYLOAD
+        MOCK_ENCRYPTED_PAYLOAD,
       );
       expect(sharedLib.downloadFile).toHaveBeenCalledWith(
         MOCK_BLOB,
-        MOCK_FILE_NAME
+        MOCK_FILE_NAME,
       );
     });
   });
@@ -189,7 +189,7 @@ describe('useExportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -213,7 +213,7 @@ describe('useExportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -240,7 +240,7 @@ describe('useExportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -270,7 +270,7 @@ describe('useExportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -294,7 +294,7 @@ describe('useExportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -321,7 +321,7 @@ describe('useExportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 
@@ -348,7 +348,7 @@ describe('useExportCards', () => {
       await onConfirm(
         MOCK_PASSWORD,
         mockClosePasswordModal,
-        mockSetPasswordError
+        mockSetPasswordError,
       );
     });
 

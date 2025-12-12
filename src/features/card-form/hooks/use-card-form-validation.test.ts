@@ -50,7 +50,7 @@ describe('useCardFormValidation', () => {
       result.current.handleFieldValidation('pan', 'Номер карты обязателен');
       result.current.handleFieldValidation(
         'expires',
-        'Срок действия обязателен'
+        'Срок действия обязателен',
       );
       result.current.handleFieldValidation('cvv', 'CVV обязателен');
     });

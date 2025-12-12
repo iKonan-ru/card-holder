@@ -10,7 +10,7 @@ interface IUseAppResult {
 
 export const useApp = (): IUseAppResult => {
   const setReorderMode = useCardManagementStore(
-    (state) => state.setReorderMode
+    (state) => state.setReorderMode,
   );
 
   useEffect(() => {

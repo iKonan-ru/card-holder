@@ -93,7 +93,7 @@ describe('CardForm', () => {
     render(<CardForm />, { wrapper: TestWrapper });
 
     expect(
-      screen.getByRole('button', { name: 'Добавить карту' })
+      screen.getByRole('button', { name: 'Добавить карту' }),
     ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Отмена' })).toBeInTheDocument();
   });
@@ -171,10 +171,10 @@ describe('CardForm', () => {
     render(<CardForm initialCard={mockCard} />, { wrapper: TestWrapper });
 
     expect(
-      screen.getByRole('button', { name: 'Удалить карту' })
+      screen.getByRole('button', { name: 'Удалить карту' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole('button', { name: 'Сохранить изменения' })
+      screen.getByRole('button', { name: 'Сохранить изменения' }),
     ).toBeInTheDocument();
   });
 
@@ -194,7 +194,7 @@ describe('CardForm', () => {
     await user.click(deleteButton);
 
     expect(
-      screen.getByText('Вы уверены, что хотите удалить эту карту?')
+      screen.getByText('Вы уверены, что хотите удалить эту карту?'),
     ).toBeInTheDocument();
   });
 

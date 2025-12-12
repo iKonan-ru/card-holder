@@ -11,7 +11,7 @@ export interface IUseFormValidationResult<T> {
   setErrors: Dispatch<SetStateAction<T>>;
   handleFieldValidation: (
     fieldName: keyof T,
-    error: string | undefined
+    error: string | undefined,
   ) => void;
   resetErrors: Procedure;
   hasErrors: () => boolean;
@@ -44,7 +44,7 @@ export function useFormValidation<
         return updatedErrors;
       });
     },
-    []
+    [],
   );
 
   const resetErrors = useCallback(() => {
@@ -59,7 +59,7 @@ export function useFormValidation<
     (fieldName: keyof T): string | undefined => {
       return errors[fieldName];
     },
-    [errors]
+    [errors],
   );
 
   const setMultipleErrors = useCallback((newErrors: Partial<T>) => {
@@ -73,7 +73,7 @@ export function useFormValidation<
     (fieldName: keyof T) => {
       handleFieldValidation(fieldName, undefined);
     },
-    [handleFieldValidation]
+    [handleFieldValidation],
   );
 
   return {
