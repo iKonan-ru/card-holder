@@ -1,44 +1,15 @@
-# Dependencies
 node_modules
-
-# Build outputs
 dist
 dist-ssr
 dev-dist
 coverage
-
-# Logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
-
-# Lock files
 package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
-# Generated files
 *.min.js
 *.min.css
-
-# IDE
 .vscode
 .idea
-*.swp
-*.swo
-*~
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Test snapshots
-**/__snapshots__
-
-# Other
 *.local
 .env
 .env.*
