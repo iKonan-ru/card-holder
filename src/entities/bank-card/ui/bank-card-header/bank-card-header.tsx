@@ -30,13 +30,11 @@ export const BankCardHeader: FC<TBankCardHeaderProps> = ({
             </div>
           )}
 
-          {bank.name && (
-            <div className={bem(BANK_CARD_BLOCK, 'bank-name')}>{bank.name}</div>
-          )}
+          <div className={bem(BANK_CARD_BLOCK, 'bank-name')}>{bank.name}</div>
         </>
       )}
 
-      {paymentSystemLogo && paymentSystem && (
+      {paymentSystemLogo && (
         <div
           className={bem(BANK_CARD_BLOCK, 'payment-system')}
           aria-hidden={ARIA_HIDDEN_TRUE}
