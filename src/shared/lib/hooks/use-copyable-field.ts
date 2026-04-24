@@ -1,5 +1,6 @@
 import {
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -40,6 +41,14 @@ export const useCopyableField = ({
 }: IUseCopyableFieldParams): IUseCopyableFieldResult => {
   const [isCopied, setIsCopied] = useState(INITIAL_IS_COPIED);
   const timeoutRef = useRef<number | null>(INITIAL_TIMEOUT_REF);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleCopy = useCallback(async () => {
     try {

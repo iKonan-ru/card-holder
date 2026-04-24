@@ -1,6 +1,7 @@
 import { DECIMAL_RADIX, SPACE_REMOVAL_PATTERN } from '@shared/lib';
 import {
   CVV_MAX_LENGTH,
+  DIGITS_ONLY_PATTERN,
   ERROR_CVV_INVALID_LENGTH,
   ERROR_CVV_REQUIRED,
   ERROR_EXPIRES_MONTH,
@@ -80,7 +81,7 @@ export const validateCvv = (value: string): string | undefined => {
     return ERROR_CVV_REQUIRED;
   }
 
-  if (value.length !== CVV_MAX_LENGTH) {
+  if (value.length !== CVV_MAX_LENGTH || !DIGITS_ONLY_PATTERN.test(value)) {
     return ERROR_CVV_INVALID_LENGTH;
   }
 

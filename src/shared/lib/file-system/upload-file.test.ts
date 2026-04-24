@@ -17,6 +17,7 @@ describe('uploadFile', () => {
       click: vi.fn(),
       onchange: null,
       oncancel: null,
+      parentNode: document.body,
     } as unknown as HTMLInputElement;
 
     createElementSpy = vi

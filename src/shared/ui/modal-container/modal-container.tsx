@@ -5,6 +5,7 @@ import {
   useModalKeyboard,
   useModalPopstate,
   useModalStack,
+  type IModalItem,
 } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { Modal } from '../modal';
@@ -38,39 +39,34 @@ export const ModalContainer: FC = () => {
     userActionRef,
   });
 
-  if (modals.length === 0) {
+  if (!modals.length) {
     return null;
   }
 
   const topModalId = modals[modals.length - 1]?.id;
 
-  const handleModalClose = (modalId: string) => {
-    userActionRef.current = true;
-    closeModal(modalId);
+  const renderModal = ({ id, preventClose, title, content }: IModalItem) => {
+    const isTopModal = id === topModalId;
+    const handleClose = () => {
+      userActionRef.current = true;
+      closeModal(id);
+    };
+    const handleRegisterClose = (closeWithAnimation: Procedure) =>
+      modalRequestCloseRef.current.set(id, closeWithAnimation);
+
+    return (
+      <Modal
+        key={id}
+        onClose={handleClose}
+        onRegisterClose={handleRegisterClose}
+        isTopModal={isTopModal}
+        preventClose={preventClose}
+        title={title}
+      >
+        {content}
+      </Modal>
+    );
   };
 
-  return (
-    <Portal>
-      {modals.map((modal) => {
-        const isTopModal = modal.id === topModalId;
-
-        return (
-          <Modal
-            key={modal.id}
-            onClose={() => {
-              handleModalClose(modal.id);
-            }}
-            onRegisterClose={(closeWithAnimation) => {
-              modalRequestCloseRef.current.set(modal.id, closeWithAnimation);
-            }}
-            isTopModal={isTopModal}
-            preventClose={modal.preventClose}
-            title={modal.title}
-          >
-            {modal.content}
-          </Modal>
-        );
-      })}
-    </Portal>
-  );
+  return <Portal>{modals.map(renderModal)}</Portal>;
 };

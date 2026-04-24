@@ -17,10 +17,12 @@ export const parseImportedFile = (fileContent: string): IEncryptedPayload => {
 
 export const validateImportedPayload = (payload: IEncryptedPayload): void => {
   const hasVersion = typeof payload.version === 'number';
-  const hasTimestamp = typeof payload.timestamp === 'number';
-  const hasSalt = typeof payload.salt === 'string';
-  const hasIv = typeof payload.iv === 'string';
-  const hasEncrypted = typeof payload.encrypted === 'string';
+  const hasTimestamp =
+    typeof payload.timestamp === 'number' && isFinite(payload.timestamp);
+  const hasSalt = typeof payload.salt === 'string' && payload.salt.length > 0;
+  const hasIv = typeof payload.iv === 'string' && payload.iv.length > 0;
+  const hasEncrypted =
+    typeof payload.encrypted === 'string' && payload.encrypted.length > 0;
 
   const isValidStructure =
     hasVersion && hasTimestamp && hasSalt && hasIv && hasEncrypted;
@@ -36,17 +38,25 @@ export const validateImportedPayload = (payload: IEncryptedPayload): void => {
   }
 };
 
+const isValidBankCard = (card: unknown): card is IBankCard =>
+  typeof card === 'object' &&
+  card !== null &&
+  typeof (card as IBankCard).pan === 'string' &&
+  (card as IBankCard).pan.length > 0 &&
+  typeof (card as IBankCard).expires === 'string' &&
+  typeof (card as IBankCard).name === 'string' &&
+  typeof (card as IBankCard).cvv === 'string' &&
+  typeof (card as IBankCard).order === 'number';
+
 export const parseDecryptedCards = (decryptedData: string): IBankCard[] => {
   try {
-    const cards = JSON.parse(decryptedData) as IBankCard[];
+    const parsed = JSON.parse(decryptedData) as unknown;
 
-    const isArray = Array.isArray(cards);
-
-    if (!isArray) {
+    if (!Array.isArray(parsed)) {
       throw new Error(ERROR_CORRUPTED_FILE);
     }
 
-    return cards;
+    return parsed.filter(isValidBankCard);
   } catch {
     throw new Error(ERROR_CORRUPTED_FILE);
   }

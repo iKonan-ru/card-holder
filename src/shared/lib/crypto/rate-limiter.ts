@@ -1,36 +1,56 @@
+import { ERROR_RATE_LIMIT_LOCKOUT } from './constants';
+
 const DELAY_BASE_MS = 1000;
 const DELAY_MULTIPLIER = 2;
 const MAX_ATTEMPTS_BEFORE_DELAY = 3;
 const MAX_ATTEMPTS_BEFORE_LOCKOUT = 10;
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000;
 
-let failedAttempts = 0;
-let lockoutUntil: number | null = null;
+const STORAGE_KEY_ATTEMPTS = 'rateLimit_failedAttempts';
+const STORAGE_KEY_LOCKOUT = 'rateLimit_lockoutUntil';
+
+const getStoredAttempts = (): number => {
+  const stored = sessionStorage.getItem(STORAGE_KEY_ATTEMPTS);
+
+  return stored ? parseInt(stored, 10) : 0;
+};
+
+const getStoredLockout = (): number | null => {
+  const stored = sessionStorage.getItem(STORAGE_KEY_LOCKOUT);
+
+  return stored ? parseInt(stored, 10) : null;
+};
 
 export const resetFailedAttempts = (): void => {
-  failedAttempts = 0;
-  lockoutUntil = null;
+  sessionStorage.removeItem(STORAGE_KEY_ATTEMPTS);
+  sessionStorage.removeItem(STORAGE_KEY_LOCKOUT);
 };
 
 export const incrementFailedAttempts = (): void => {
-  failedAttempts++;
+  const attempts = getStoredAttempts() + 1;
+  sessionStorage.setItem(STORAGE_KEY_ATTEMPTS, String(attempts));
 
-  const shouldLockout = failedAttempts >= MAX_ATTEMPTS_BEFORE_LOCKOUT;
+  const shouldLockout = attempts >= MAX_ATTEMPTS_BEFORE_LOCKOUT;
 
   if (shouldLockout) {
-    lockoutUntil = Date.now() + LOCKOUT_DURATION_MS;
+    sessionStorage.setItem(
+      STORAGE_KEY_LOCKOUT,
+      String(Date.now() + LOCKOUT_DURATION_MS),
+    );
   }
 };
 
 export const getFailedAttempts = (): number => {
-  return failedAttempts;
+  return getStoredAttempts();
 };
 
 export const getLockoutUntil = (): number | null => {
-  return lockoutUntil;
+  return getStoredLockout();
 };
 
 export const checkIsLockedOut = (): boolean => {
+  const lockoutUntil = getStoredLockout();
+
   if (lockoutUntil === null) {
     return false;
   }
@@ -48,6 +68,8 @@ export const checkIsLockedOut = (): boolean => {
 };
 
 export const getRemainingLockoutTime = (): number => {
+  const lockoutUntil = getStoredLockout();
+
   if (lockoutUntil === null) {
     return 0;
   }
@@ -76,12 +98,11 @@ export const applyRateLimit = async (): Promise<void> => {
   if (isLocked) {
     const remainingTime = getRemainingLockoutTime();
     const remainingMinutes = Math.ceil(remainingTime / 60000);
-    const errorMessage = `Слишком много неудачных попыток. Попробуйте через ${remainingMinutes} мин.`;
 
-    throw new Error(errorMessage);
+    throw new Error(ERROR_RATE_LIMIT_LOCKOUT(remainingMinutes));
   }
 
-  const delay = calculateDelay(failedAttempts);
+  const delay = calculateDelay(getStoredAttempts());
   const hasDelay = delay > 0;
 
   if (hasDelay) {

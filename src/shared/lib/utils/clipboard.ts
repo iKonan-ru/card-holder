@@ -6,7 +6,7 @@ const copyWithExecCommand = (text: string): boolean => {
   textarea.value = text;
   textarea.style.position = 'fixed';
   textarea.style.top = `0px`;
-  textarea.style.left = `0}px`;
+  textarea.style.left = `0px`;
   textarea.style.width = '2em';
   textarea.style.height = '2em';
   textarea.style.padding = '0';

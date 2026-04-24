@@ -10,3 +10,6 @@ export const FILE_FORMAT_VERSION = 1;
 
 export const ERROR_ENCRYPTION_FAILED = 'Не удалось зашифровать данные';
 export const ERROR_DECRYPTION_FAILED = 'Ошибка при расшифровке данных';
+
+export const ERROR_RATE_LIMIT_LOCKOUT = (minutes: number): string =>
+  `Слишком много неудачных попыток. Попробуйте через ${minutes} мин.`;

@@ -8,21 +8,27 @@ export const uploadFile = (accept: string): Promise<File> => {
     input.accept = accept;
     input.style.display = 'none';
 
+    const cleanup = () => {
+      if (input.parentNode) {
+        input.parentNode.removeChild(input);
+      }
+    };
+
     input.onchange = () => {
       const file = input.files?.[0];
+
+      cleanup();
 
       if (file) {
         resolve(file);
       } else {
         reject(createFileSelectionCancelledError());
       }
-
-      document.body.removeChild(input);
     };
 
     input.oncancel = () => {
+      cleanup();
       reject(createFileSelectionCancelledError());
-      document.body.removeChild(input);
     };
 
     document.body.appendChild(input);
