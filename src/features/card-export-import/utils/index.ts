@@ -5,3 +5,5 @@ export * from './export';
 export * from './import';
 
 export * from './message';
+
+export * from './schemas';

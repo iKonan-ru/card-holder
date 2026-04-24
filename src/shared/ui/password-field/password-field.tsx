@@ -8,7 +8,8 @@ import {
 } from '@shared/ui';
 
 interface IPasswordFieldProps
-  extends Omit<IFormFieldProps, 'type' | 'rightContent'>,
+  extends
+    Omit<IFormFieldProps, 'type' | 'rightContent'>,
     TPropsWithParentClass {
   showPasswordToggle?: boolean;
   isPasswordVisible?: boolean;

@@ -14,8 +14,10 @@ const IconBase = ({ icon: Icon, className, ...rest }: IIconBaseProps) => (
   />
 );
 
-interface IIconProps
-  extends Omit<HTMLAttributes<HTMLOrSVGElement>, 'className'> {
+interface IIconProps extends Omit<
+  HTMLAttributes<HTMLOrSVGElement>,
+  'className'
+> {
   component?: FC<{ className?: string }>;
 }
 

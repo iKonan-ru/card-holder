@@ -8,15 +8,13 @@ import {
 import { useAnimatedModalClose, useModalClose } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import {
-  ERROR_PASSWORD_MISMATCH,
-  ERROR_PASSWORD_TOO_SHORT,
-  MIN_PASSWORD_LENGTH,
   PASSWORD_MODAL_BUTTON_EXPORT,
   PASSWORD_MODAL_BUTTON_IMPORT,
   PASSWORD_MODAL_TITLE_EXPORT,
   PASSWORD_MODAL_TITLE_IMPORT,
 } from '../constants';
 import type { TPasswordModalMode } from '../types';
+import { exportPasswordSchema } from '../utils/schemas';
 
 interface IUsePasswordModalParams {
   mode: TPasswordModalMode;
@@ -106,18 +104,15 @@ export const usePasswordModal = (
       return true;
     }
 
-    const isPasswordValid = password.length >= MIN_PASSWORD_LENGTH;
+    const result = exportPasswordSchema.safeParse({
+      password,
+      confirmPassword,
+    });
 
-    if (!isPasswordValid) {
-      setPasswordError(ERROR_PASSWORD_TOO_SHORT);
-
-      return false;
-    }
-
-    const doPasswordsMatch = password === confirmPassword;
-
-    if (!doPasswordsMatch) {
-      setConfirmError(ERROR_PASSWORD_MISMATCH);
+    if (!result.success) {
+      const fieldErrors = result.error.flatten().fieldErrors;
+      setPasswordError(fieldErrors.password?.[0]);
+      setConfirmError(fieldErrors.confirmPassword?.[0]);
 
       return false;
     }

@@ -9,10 +9,9 @@ import { bem, useClassName } from '@shared/lib';
 import { BUTTON_BLOCK } from './constants';
 import './button.less';
 
-interface IButtonProps
-  extends PropsWithChildren<
-    Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>
-  > {
+interface IButtonProps extends PropsWithChildren<
+  Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'>
+> {
   variant?: 'primary' | 'secondary' | 'danger';
   isLoading?: boolean;
   fullWidth?: boolean;

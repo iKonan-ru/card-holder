@@ -14,7 +14,8 @@ type TFieldFormatter = (value: string) => string;
 type TFieldValidator = (value: string) => string | undefined;
 
 interface IValidatedFieldProps
-  extends Omit<IFormFieldProps, 'id' | 'onChange' | 'type' | 'autoFocus'>,
+  extends
+    Omit<IFormFieldProps, 'id' | 'onChange' | 'type' | 'autoFocus'>,
     Partial<IFormFieldChangeHandler>,
     TPropsWithParentClass {
   formatter?: TFieldFormatter;
