@@ -1,4 +1,4 @@
-import { type ZodTypeAny } from 'zod';
+import { z } from 'zod';
 import {
   cvvSchema,
   expiresSchema,
@@ -8,7 +8,7 @@ import {
 } from './schemas';
 
 const makeValidator =
-  (schema: ZodTypeAny) =>
+  (schema: z.ZodType) =>
   (value: string): string | undefined => {
     const result = schema.safeParse(value);
 
