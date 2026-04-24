@@ -27,58 +27,65 @@ import { validateLuhn } from './luhn';
 
 export const panSchema = z.string().superRefine((val, ctx) => {
   if (!val) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, message: ERROR_PAN_REQUIRED });
+    ctx.addIssue({ code: 'custom', message: ERROR_PAN_REQUIRED });
 
     return z.NEVER;
   }
+
   const digits = val.replace(SPACE_REMOVAL_PATTERN, '');
+
   if (digits.length !== PAN_LENGTH) {
     ctx.addIssue({
-      code: z.ZodIssueCode.custom,
+      code: 'custom',
       message: ERROR_PAN_INVALID_LENGTH,
     });
 
     return z.NEVER;
   }
+
   if (!validateLuhn(digits)) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, message: ERROR_PAN_INVALID });
+    ctx.addIssue({ code: 'custom', message: ERROR_PAN_INVALID });
   }
 });
 
 export const expiresSchema = z.string().superRefine((val, ctx) => {
   if (!val) {
     ctx.addIssue({
-      code: z.ZodIssueCode.custom,
+      code: 'custom',
       message: ERROR_EXPIRES_REQUIRED,
     });
 
     return z.NEVER;
   }
+
   const digits = val.replace(NON_DIGIT_REMOVAL_PATTERN, '');
   const month = digits.slice(MONTH_START_INDEX, MONTH_END_INDEX);
   const year = digits.slice(MONTH_END_INDEX);
+
   if (!MONTH_VALIDATION_PATTERN.test(month)) {
     ctx.addIssue({
-      code: z.ZodIssueCode.custom,
+      code: 'custom',
       message: ERROR_EXPIRES_MONTH,
     });
 
     return z.NEVER;
   }
+
   if (parseInt(year, DECIMAL_RADIX) < MIN_YEAR) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, message: ERROR_EXPIRES_YEAR });
+    ctx.addIssue({ code: 'custom', message: ERROR_EXPIRES_YEAR });
   }
 });
 
 export const nameSchema = z.string().superRefine((val, ctx) => {
   if (!val) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, message: ERROR_NAME_REQUIRED });
+    ctx.addIssue({ code: 'custom', message: ERROR_NAME_REQUIRED });
 
     return z.NEVER;
   }
+
   if (val.trim().length < MIN_NAME_LENGTH) {
     ctx.addIssue({
-      code: z.ZodIssueCode.custom,
+      code: 'custom',
       message: ERROR_NAME_TOO_SHORT,
     });
   }
@@ -86,13 +93,14 @@ export const nameSchema = z.string().superRefine((val, ctx) => {
 
 export const cvvSchema = z.string().superRefine((val, ctx) => {
   if (!val) {
-    ctx.addIssue({ code: z.ZodIssueCode.custom, message: ERROR_CVV_REQUIRED });
+    ctx.addIssue({ code: 'custom', message: ERROR_CVV_REQUIRED });
 
     return z.NEVER;
   }
+
   if (val.length !== CVV_MAX_LENGTH || !DIGITS_ONLY_PATTERN.test(val)) {
     ctx.addIssue({
-      code: z.ZodIssueCode.custom,
+      code: 'custom',
       message: ERROR_CVV_INVALID_LENGTH,
     });
   }
@@ -102,7 +110,7 @@ const pinRefinement = (val: string | undefined, ctx: z.RefinementCtx): void => {
   if (!val) return;
   if (val.length !== PIN_MAX_LENGTH) {
     ctx.addIssue({
-      code: z.ZodIssueCode.custom,
+      code: 'custom',
       message: ERROR_PIN_INVALID_LENGTH,
     });
   }

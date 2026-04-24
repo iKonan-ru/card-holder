@@ -11,8 +11,6 @@ export const MAX_MONTH = 12;
 
 export const MONTH_START_INDEX = 0;
 export const MONTH_END_INDEX = 2;
-export const YEAR_START_INDEX = 2;
-export const YEAR_END_INDEX = 4;
 
 export const PAN_GROUP_SIZE = 4;
 export const MONTH_SEPARATOR_LENGTH = 2;
