@@ -15,6 +15,7 @@ describe('useCardFormState', () => {
       pin: '',
       type: '',
       phrase: '',
+      address: '',
     });
     expect(result.current.isSubmitting).toBe(false);
     expect(result.current.isEditMode).toBe(false);
@@ -70,6 +71,7 @@ describe('useCardFormState', () => {
       pin: '',
       type: '',
       phrase: '',
+      address: '',
     });
   });
 
@@ -95,6 +97,7 @@ describe('useCardFormState', () => {
       pin: '',
       type: '',
       phrase: '',
+      address: '',
     });
   });
 

@@ -69,6 +69,7 @@ describe('useCardForm', () => {
       pin: '',
       type: '',
       phrase: '',
+      address: '',
     });
     expect(result.current.errors).toEqual({});
     expect(result.current.isSubmitting).toBe(false);
@@ -164,6 +165,7 @@ describe('useCardForm', () => {
       pin: '',
       type: '',
       phrase: '',
+      address: '',
     });
     expect(result.current.errors).toEqual({});
   });
@@ -462,6 +464,7 @@ describe('useCardForm', () => {
       pin: '',
       type: '',
       phrase: '',
+      address: '',
     });
   });
 

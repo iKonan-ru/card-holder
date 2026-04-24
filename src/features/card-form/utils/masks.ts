@@ -11,6 +11,7 @@ import {
   MONTH_EXPIRES_SLICE_START,
   MONTH_SEPARATOR_LENGTH,
   PAN_GROUP_SIZE,
+  SPACES_PATTERN,
   YEAR_EXPIRES_SLICE_END,
   YEAR_EXPIRES_SLICE_START,
 } from '../constants';
@@ -51,6 +52,10 @@ export const filterDigitsOnly = (value: string): string => {
 
 export const filterAlphanumeric = (value: string): string => {
   return value.replace(ALPHANUMERIC_PATTERN, EMPTY_STRING);
+};
+
+export const filterNoSpaces = (value: string): string => {
+  return value.replace(SPACES_PATTERN, EMPTY_STRING);
 };
 
 export const formatName = (value: string): string => {

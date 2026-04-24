@@ -10,6 +10,7 @@ export interface IBankCard {
   order: number;
   type?: string;
   phrase?: string;
+  address?: string;
 }
 
 export interface IBankCardCommonProps {

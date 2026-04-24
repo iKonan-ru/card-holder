@@ -7,8 +7,8 @@ import {
   validatePin,
 } from '../utils/field-validators';
 import {
-  filterAlphanumeric,
   filterDigitsOnly,
+  filterNoSpaces,
   formatExpires,
   formatName,
   formatPan,
@@ -83,7 +83,7 @@ export const PHRASE_FIELD_CONFIG: IFieldConfig = {
   name: FIELD_NAME_PHRASE,
   label: PHRASE_LABEL,
   required: false,
-  formatter: filterAlphanumeric,
+  formatter: filterNoSpaces,
 };
 
 export const FIELD_NAME_NAME = 'name';
@@ -104,4 +104,13 @@ export const TYPE_FIELD_CONFIG: IFieldConfig = {
   label: TYPE_LABEL,
   required: false,
   inputMode: 'text',
+};
+
+export const FIELD_NAME_ADDRESS = 'address';
+export const ADDRESS_LABEL = 'Платёжный адрес';
+export const ADDRESS_FIELD_CONFIG: IFieldConfig = {
+  name: FIELD_NAME_ADDRESS,
+  label: ADDRESS_LABEL,
+  required: false,
+  multiline: true,
 };

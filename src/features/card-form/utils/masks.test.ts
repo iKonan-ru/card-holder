@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   filterAlphanumeric,
   filterDigitsOnly,
+  filterNoSpaces,
   formatExpires,
   formatName,
   formatPan,
@@ -76,6 +77,32 @@ describe('filterAlphanumeric', () => {
 
   it('должна обрабатывать пустую строку', () => {
     expect(filterAlphanumeric('')).toBe('');
+  });
+});
+
+describe('filterNoSpaces', () => {
+  it('должна удалять пробелы', () => {
+    expect(filterNoSpaces('hello world')).toBe('helloworld');
+  });
+
+  it('должна удалять табуляции и переносы строк', () => {
+    expect(filterNoSpaces('hello\tworld\nfoo')).toBe('helloworldfoo');
+  });
+
+  it('должна сохранять спецсимволы и цифры', () => {
+    expect(filterNoSpaces('abc!@#123')).toBe('abc!@#123');
+  });
+
+  it('должна сохранять кириллицу', () => {
+    expect(filterNoSpaces('Тест123!')).toBe('Тест123!');
+  });
+
+  it('должна обрабатывать строку из одних пробелов', () => {
+    expect(filterNoSpaces('   ')).toBe('');
+  });
+
+  it('должна обрабатывать пустую строку', () => {
+    expect(filterNoSpaces('')).toBe('');
   });
 });
 

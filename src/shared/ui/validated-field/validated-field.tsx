@@ -34,6 +34,7 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
   rightContent,
   inputMode,
   autoComplete,
+  multiline,
   formatter,
   validator,
   instantValidateLength,
@@ -48,7 +49,7 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
   const onValidate = onValidateProp ?? onValidateContext;
 
   const handleChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (!onChange) {
         return;
       }
@@ -116,6 +117,7 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
         rightContent={rightContent}
         inputMode={inputMode}
         autoComplete={autoComplete}
+        multiline={multiline}
       />
     </ParentClassProvider>
   );

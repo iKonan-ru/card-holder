@@ -315,4 +315,87 @@ describe('FormField', () => {
       container.querySelector('.custom-parent__form-field'),
     ).toBeInTheDocument();
   });
+
+  it('должен отображать textarea при multiline=true', () => {
+    render(
+      <FormField
+        id="test-field"
+        name="test"
+        label="Тестовое поле"
+        value=""
+        multiline={true}
+        onChange={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole('textbox').tagName).toBe('TEXTAREA');
+  });
+
+  it('должен отображать input по умолчанию (без multiline)', () => {
+    render(
+      <FormField
+        id="test-field"
+        name="test"
+        label="Тестовое поле"
+        value=""
+        onChange={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole('textbox').tagName).toBe('INPUT');
+  });
+
+  it('должен вызывать onChange при вводе в textarea', async () => {
+    const handleChange = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <FormField
+        id="test-field"
+        name="test"
+        label="Тестовое поле"
+        value=""
+        multiline={true}
+        onChange={handleChange}
+      />,
+    );
+
+    const textarea = screen.getByRole('textbox');
+    await user.type(textarea, 'abc');
+
+    expect(handleChange).toHaveBeenCalled();
+  });
+
+  it('должен устанавливать aria-invalid для textarea при наличии ошибки', () => {
+    render(
+      <FormField
+        id="test-field"
+        name="test"
+        label="Тестовое поле"
+        value=""
+        error="Ошибка"
+        multiline={true}
+        onChange={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole('textbox')).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('должен добавлять CSS-класс textarea к элементу textarea', () => {
+    const { container } = render(
+      <FormField
+        id="test-field"
+        name="test"
+        label="Тестовое поле"
+        value=""
+        multiline={true}
+        onChange={vi.fn()}
+      />,
+    );
+
+    expect(
+      container.querySelector('.form-field__input_textarea'),
+    ).toBeInTheDocument();
+  });
 });

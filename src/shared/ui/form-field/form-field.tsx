@@ -1,15 +1,17 @@
-import { useMemo, type FC } from 'react';
+import { useMemo, type ChangeEvent, type FC } from 'react';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
-import type { IBaseInputFieldProps, IInputChangeHandler } from '@shared/types';
+import type { IBaseInputFieldProps } from '@shared/types';
 import { FORM_FIELD_BLOCK } from './constants';
 import './form-field.less';
 
-export interface IFormFieldProps
-  extends IBaseInputFieldProps,
-    IInputChangeHandler {
+export interface IFormFieldProps extends IBaseInputFieldProps {
   id: string;
   type?: 'text' | 'password';
   autoFocus?: boolean;
+  multiline?: boolean;
+  onChange?: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
 }
 
 export const FormField: FC<IFormFieldProps> = ({
@@ -26,6 +28,7 @@ export const FormField: FC<IFormFieldProps> = ({
   inputMode,
   autoComplete,
   autoFocus,
+  multiline,
   onChange,
 }) => {
   const hasValue = Boolean(value);
@@ -58,23 +61,41 @@ export const FormField: FC<IFormFieldProps> = ({
       <ParentClassProvider parentClass={FORM_FIELD_BLOCK}>
         <div className={bem(FORM_FIELD_BLOCK, 'wrapper')}>
           <div className={bem(FORM_FIELD_BLOCK, 'container')}>
-            <input
-              type={type}
-              id={id}
-              name={name}
-              value={value}
-              onChange={onChange}
-              maxLength={maxLength}
-              placeholder={label}
-              disabled={disabled}
-              className={bem(FORM_FIELD_BLOCK, 'input')}
-              inputMode={inputMode}
-              autoComplete={autoComplete}
-              autoFocus={autoFocus}
-              aria-invalid={hasError}
-              aria-required={required}
-              aria-describedby={ariaDescribedBy}
-            />
+            {multiline ? (
+              <textarea
+                id={id}
+                name={name}
+                value={value}
+                onChange={onChange}
+                maxLength={maxLength}
+                placeholder={label}
+                disabled={disabled}
+                className={`${bem(FORM_FIELD_BLOCK, 'input')} ${bem(FORM_FIELD_BLOCK, 'input')}_textarea`}
+                autoComplete={autoComplete}
+                autoFocus={autoFocus}
+                aria-invalid={hasError}
+                aria-required={required}
+                aria-describedby={ariaDescribedBy}
+              />
+            ) : (
+              <input
+                type={type}
+                id={id}
+                name={name}
+                value={value}
+                onChange={onChange}
+                maxLength={maxLength}
+                placeholder={label}
+                disabled={disabled}
+                className={bem(FORM_FIELD_BLOCK, 'input')}
+                inputMode={inputMode}
+                autoComplete={autoComplete}
+                autoFocus={autoFocus}
+                aria-invalid={hasError}
+                aria-required={required}
+                aria-describedby={ariaDescribedBy}
+              />
+            )}
             <label
               htmlFor={id}
               className={bem(FORM_FIELD_BLOCK, 'label')}

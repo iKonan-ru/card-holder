@@ -307,4 +307,60 @@ describe('ValidatedField', () => {
 
     expect(maxLengthValue).toBeLessThanOrEqual(3);
   });
+
+  it('должен отображать textarea при multiline=true', () => {
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        multiline={true}
+        onChange={vi.fn()}
+      />,
+    );
+
+    expect(screen.getByRole('textbox').tagName).toBe('TEXTAREA');
+  });
+
+  it('должен вызывать onChange с именем и значением при вводе в textarea', async () => {
+    const handleChange = vi.fn();
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="address"
+        label="Адрес"
+        value=""
+        multiline={true}
+        onChange={handleChange}
+      />,
+    );
+
+    const textarea = screen.getByRole('textbox');
+    await user.type(textarea, 'a');
+
+    expect(handleChange).toHaveBeenCalledWith('address', 'a');
+  });
+
+  it('должен применять форматтер к вводу в textarea', async () => {
+    const handleChange = vi.fn();
+    const formatter = (value: string) => value.toUpperCase();
+    const user = userEvent.setup();
+
+    render(
+      <ValidatedField
+        name="test"
+        label="Тестовое поле"
+        value=""
+        multiline={true}
+        formatter={formatter}
+        onChange={handleChange}
+      />,
+    );
+
+    const textarea = screen.getByRole('textbox');
+    await user.type(textarea, 'a');
+
+    expect(handleChange).toHaveBeenCalledWith('test', 'A');
+  });
 });

@@ -38,8 +38,12 @@ interface IUsePasswordModalResult {
   isPasswordVisible: boolean;
   title: string;
   buttonText: string;
-  handlePasswordChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  handleConfirmPasswordChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handlePasswordChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
+  handleConfirmPasswordChange: (
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
   handlePasswordVisibilityChange: (isVisible: boolean) => void;
   handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
   handleCancel: Procedure;
@@ -75,7 +79,7 @@ export const usePasswordModal = (
   }, [isExportMode]);
 
   const handlePasswordChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const newPassword = event.target.value;
       setPassword(newPassword);
       setPasswordError(undefined);
@@ -85,7 +89,7 @@ export const usePasswordModal = (
   );
 
   const handleConfirmPasswordChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement>) => {
+    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const newConfirmPassword = event.target.value;
       setConfirmPassword(newConfirmPassword);
       setConfirmError(undefined);

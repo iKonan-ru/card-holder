@@ -13,6 +13,7 @@ import {
 import type { Procedure } from '@shared/types';
 import { Button, ConfirmModal, ValidatedField } from '@shared/ui';
 import {
+  ADDRESS_FIELD_CONFIG,
   CANCEL_BUTTON_TEXT,
   CARD_FORM_BLOCK,
   CVV_FIELD_CONFIG,
@@ -157,6 +158,14 @@ export const CardForm: FC<ICardFormProps> = ({
             {...PHRASE_FIELD_CONFIG}
             value={formData.phrase || ''}
             error={errors.phrase}
+            disabled={isSubmitting}
+            parentClass={CARD_FORM_BLOCK}
+          />
+
+          <ValidatedField
+            {...ADDRESS_FIELD_CONFIG}
+            value={formData.address || ''}
+            error={errors.address}
             disabled={isSubmitting}
             parentClass={CARD_FORM_BLOCK}
           />
