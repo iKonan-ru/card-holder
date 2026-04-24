@@ -14,6 +14,8 @@ export type TBankKeys =
   | 'psbbank'
   | 'ibt'
   | 'domrf'
+  | 'ozon'
+  | 'wb'
   | 'default';
 
 export type TBanksRecord = Record<Exclude<TBankKeys, 'default'>, string[]>;

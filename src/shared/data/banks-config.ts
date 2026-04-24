@@ -77,6 +77,16 @@ export const BANKS_LIST: IBank[] = [
     name: 'Дом РФ',
     color: '#2f444e',
   },
+  {
+    id: 'ozon',
+    name: 'Ozon Банк',
+    color: '#005bff',
+  },
+  {
+    id: 'wb',
+    name: 'WB Банк',
+    color: '#6626b6',
+  },
 ];
 
 export const DEFAULT_BANK: IBank = {

@@ -7,6 +7,7 @@ import Gazprombank from './gazprombank.svg?react';
 import Ibt from './ibt.svg?react';
 import Mkb from './mkb.svg?react';
 import Open from './open.svg?react';
+import Ozon from './ozon.svg?react';
 import Psbbank from './psbbank.svg?react';
 import Raiffeisen from './raiffeisen.svg?react';
 import Rosbank from './rosbank.svg?react';
@@ -15,6 +16,7 @@ import Tbank from './tbank.svg?react';
 import Unicredit from './unicredit.svg?react';
 import Uralsib from './uralsib.svg?react';
 import Vtb24 from './vtb24.svg?react';
+import Wb from './wb.svg?react';
 
 export const bankLogos: Partial<Record<TBankKeys, FC<{ className?: string }>>> =
   {
@@ -33,4 +35,6 @@ export const bankLogos: Partial<Record<TBankKeys, FC<{ className?: string }>>> =
     unicredit: Unicredit,
     uralsib: Uralsib,
     vtb24: Vtb24,
+    ozon: Ozon,
+    wb: Wb,
   };
