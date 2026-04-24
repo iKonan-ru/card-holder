@@ -27,6 +27,7 @@
     background: var(--bg-secondary);
     color: var(--text-primary);
     transition: @transition-fast;
+    font-family: @font-family-mono;
 
     &::placeholder {
       opacity: 0;
@@ -72,15 +73,14 @@
   }
 
   &__input_textarea {
-    resize: vertical;
-    min-height: 7rem;
-    max-height: 20rem;
-    line-height: 1.5;
+    resize: none;
+    height: 10rem;
+    scrollbar-width: thin;
   }
 
   &__label {
     position: absolute;
-    left: @border-radius;
+    left: calc(@border-radius - @spacing-xs);
     top: 0.875rem;
     font-size: @font-size-base;
     font-weight: @font-weight-medium;
@@ -92,6 +92,16 @@
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: calc(100% + @spacing-md);
+    padding-left: @spacing-xs;
+    padding-right: @spacing-xs;
+
+    &::before {
+      content: '';
+      position: absolute;
+      background-color: var(--bg-secondary-80);
+      z-index: -1;
+      inset: 0;
+    }
   }
 
   &_has-value &__label {
