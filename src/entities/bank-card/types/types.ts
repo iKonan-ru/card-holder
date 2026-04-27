@@ -1,6 +1,15 @@
 import type { IBank } from '@entities/bank';
 import type { TPaymentSystem } from '@entities/payment-system';
 
+export interface IBankCardAddress {
+  line1?: string;
+  line2?: string;
+  city?: string;
+  state?: string;
+  county?: string;
+  zip?: string;
+}
+
 export interface IBankCard {
   pan: string;
   expires: string;
@@ -10,7 +19,7 @@ export interface IBankCard {
   order: number;
   type?: string;
   phrase?: string;
-  address?: string;
+  address?: IBankCardAddress;
 }
 
 export interface IBankCardCommonProps {

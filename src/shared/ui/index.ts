@@ -1,5 +1,7 @@
 export * from './copyable-field';
 
+export * from './copy-button';
+
 export * from './form-field';
 
 export * from './validated-field';

@@ -15,7 +15,14 @@ describe('useCardFormState', () => {
       pin: '',
       type: '',
       phrase: '',
-      address: '',
+      address: {
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        county: '',
+        zip: '',
+      },
     });
     expect(result.current.isSubmitting).toBe(false);
     expect(result.current.isEditMode).toBe(false);
@@ -71,8 +78,28 @@ describe('useCardFormState', () => {
       pin: '',
       type: '',
       phrase: '',
-      address: '',
+      address: {
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        county: '',
+        zip: '',
+      },
     });
+  });
+
+  it('должен обновлять вложенное поле адреса через handleFieldChange', () => {
+    const { result } = renderHook(() => useCardFormState({}));
+
+    act(() => {
+      result.current.handleFieldChange('address.line1', '123 Main St');
+      result.current.handleFieldChange('address.zip', '12345');
+    });
+
+    expect(result.current.formData.address?.line1).toBe('123 Main St');
+    expect(result.current.formData.address?.zip).toBe('12345');
+    expect(result.current.formData.address?.line2).toBe('');
   });
 
   it('должен сбрасывать форму через resetForm', () => {
@@ -97,7 +124,14 @@ describe('useCardFormState', () => {
       pin: '',
       type: '',
       phrase: '',
-      address: '',
+      address: {
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        county: '',
+        zip: '',
+      },
     });
   });
 

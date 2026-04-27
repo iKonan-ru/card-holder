@@ -1,4 +1,4 @@
-import type { ChangeEvent, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export interface IBaseInputProps {
   name: string;
@@ -13,11 +13,8 @@ export interface IBaseInputProps {
 export interface IBaseInputFieldProps extends IBaseInputProps {
   label: string;
   error?: string;
+  leftContent?: ReactNode;
   rightContent?: ReactNode;
-}
-
-export interface IInputChangeHandler {
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface IFormFieldChangeHandler {

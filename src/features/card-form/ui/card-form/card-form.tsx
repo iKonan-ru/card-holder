@@ -13,7 +13,6 @@ import {
 import type { Procedure } from '@shared/types';
 import { Button, ConfirmModal, ValidatedField } from '@shared/ui';
 import {
-  ADDRESS_FIELD_CONFIG,
   CANCEL_BUTTON_TEXT,
   CARD_FORM_BLOCK,
   CVV_FIELD_CONFIG,
@@ -32,6 +31,7 @@ import {
   TYPE_FIELD_CONFIG,
 } from '../../constants';
 import { useCardForm } from '../../hooks';
+import { CardFormGroup } from '../card-form-group';
 import './card-form.less';
 
 interface ICardFormProps {
@@ -162,12 +162,9 @@ export const CardForm: FC<ICardFormProps> = ({
             parentClass={CARD_FORM_BLOCK}
           />
 
-          <ValidatedField
-            {...ADDRESS_FIELD_CONFIG}
-            value={formData.address || ''}
-            error={errors.address}
+          <CardFormGroup
+            address={formData.address!}
             disabled={isSubmitting}
-            parentClass={CARD_FORM_BLOCK}
           />
 
           <div className={bem(CARD_FORM_BLOCK, 'actions')}>

@@ -1,4 +1,4 @@
-import { useCallback, type ChangeEvent, type FC } from 'react';
+import { useCallback, useMemo, type ChangeEvent, type FC } from 'react';
 import {
   NON_DIGIT_PATTERN,
   ParentClassProvider,
@@ -8,7 +8,7 @@ import type {
   IFormFieldChangeHandler,
   TPropsWithParentClass,
 } from '@shared/types';
-import { FormField, type IFormFieldProps } from '@shared/ui';
+import { CopyButton, FormField, type IFormFieldProps } from '@shared/ui';
 
 type TFieldFormatter = (value: string) => string;
 type TFieldValidator = (value: string) => string | undefined;
@@ -32,6 +32,7 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
   maxLength,
   disabled,
   required,
+  leftContent,
   rightContent,
   inputMode,
   autoComplete,
@@ -103,6 +104,18 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
     ],
   );
 
+  const copyButton = useMemo(
+    () => (
+      <CopyButton
+        value={value}
+        disabled={disabled}
+      />
+    ),
+    [value, disabled],
+  );
+
+  const resolvedLeftContent = leftContent ?? copyButton;
+
   return (
     <ParentClassProvider parentClass={parentClass}>
       <FormField
@@ -115,6 +128,7 @@ export const ValidatedField: FC<IValidatedFieldProps> = ({
         maxLength={maxLength}
         disabled={disabled}
         required={required}
+        leftContent={resolvedLeftContent}
         rightContent={rightContent}
         inputMode={inputMode}
         autoComplete={autoComplete}

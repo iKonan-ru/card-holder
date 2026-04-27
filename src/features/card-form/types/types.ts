@@ -5,7 +5,6 @@ export interface IValidationErrors {
   cvv?: string;
   pin?: string;
   phrase?: string;
-  address?: string;
   [key: string]: string | undefined;
 }
 

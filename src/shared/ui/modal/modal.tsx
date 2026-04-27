@@ -1,4 +1,5 @@
 import { useEffect, useRef, type FC, type PropsWithChildren } from 'react';
+import { FiX } from 'react-icons/fi';
 import {
   ARIA_MODAL_TRUE,
   ARIA_ROLE_DIALOG,
@@ -64,7 +65,9 @@ export const Modal: FC<IModalProps> = ({
   });
 
   const contentClassName = bem(bem(MODAL_BLOCK, 'content'), modifiers);
+  const headerClassName = bem(MODAL_BLOCK, 'header');
   const titleClassName = bem(MODAL_BLOCK, 'title');
+  const closeClassName = bem(MODAL_BLOCK, 'close');
 
   return (
     <div
@@ -83,7 +86,18 @@ export const Modal: FC<IModalProps> = ({
       >
         <ModalCloseContext.Provider value={handleClose}>
           <ParentClassProvider parentClass={MODAL_BLOCK}>
-            {title && <h3 className={titleClassName}>{title}</h3>}
+            <div className={headerClassName}>
+              {title && <h3 className={titleClassName}>{title}</h3>}
+              <button
+                className={closeClassName}
+                type="button"
+                onClick={handleClose}
+                disabled={preventClose}
+                aria-label="Закрыть"
+              >
+                <FiX />
+              </button>
+            </div>
             {children}
           </ParentClassProvider>
         </ModalCloseContext.Provider>

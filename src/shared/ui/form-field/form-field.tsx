@@ -24,6 +24,7 @@ export const FormField: FC<IFormFieldProps> = ({
   maxLength,
   disabled,
   required,
+  leftContent,
   rightContent,
   inputMode,
   autoComplete,
@@ -33,6 +34,7 @@ export const FormField: FC<IFormFieldProps> = ({
 }) => {
   const hasValue = Boolean(value);
   const hasError = Boolean(error);
+  const hasLeftContent = Boolean(leftContent);
   const hasRightContent = Boolean(rightContent);
 
   const modifiers = useMemo(
@@ -40,9 +42,10 @@ export const FormField: FC<IFormFieldProps> = ({
       [
         hasValue && 'has-value',
         hasError && 'has-error',
+        hasLeftContent && 'has-left-content',
         hasRightContent && 'has-right-content',
       ].filter(Boolean) as string[],
-    [hasValue, hasError, hasRightContent],
+    [hasValue, hasError, hasLeftContent, hasRightContent],
   );
 
   const className = useClassName({
@@ -60,6 +63,12 @@ export const FormField: FC<IFormFieldProps> = ({
     <div className={className}>
       <ParentClassProvider parentClass={FORM_FIELD_BLOCK}>
         <div className={bem(FORM_FIELD_BLOCK, 'wrapper')}>
+          {leftContent && (
+            <div className={bem(FORM_FIELD_BLOCK, 'left-content')}>
+              {leftContent}
+            </div>
+          )}
+
           <div className={bem(FORM_FIELD_BLOCK, 'container')}>
             {multiline ? (
               <textarea
@@ -105,6 +114,7 @@ export const FormField: FC<IFormFieldProps> = ({
               {required && !error && ' *'}
             </label>
           </div>
+
           {rightContent && (
             <div className={bem(FORM_FIELD_BLOCK, 'right-content')}>
               {rightContent}

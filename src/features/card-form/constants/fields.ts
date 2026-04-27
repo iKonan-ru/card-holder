@@ -106,11 +106,59 @@ export const TYPE_FIELD_CONFIG: IFieldConfig = {
   inputMode: 'text',
 };
 
-export const FIELD_NAME_ADDRESS = 'address';
-export const ADDRESS_LABEL = 'Платёжный адрес';
-export const ADDRESS_FIELD_CONFIG: IFieldConfig = {
-  name: FIELD_NAME_ADDRESS,
-  label: ADDRESS_LABEL,
+export const ADDRESS_GROUP_LEGEND = 'Платёжный адрес';
+
+export const FIELD_NAME_ADDRESS_LINE1 = 'address.line1';
+export const ADDRESS_LINE1_LABEL = 'Адрес 1';
+export const ADDRESS_LINE1_FIELD_CONFIG: IFieldConfig = {
+  name: FIELD_NAME_ADDRESS_LINE1,
+  label: ADDRESS_LINE1_LABEL,
   required: false,
-  multiline: true,
+  autoComplete: 'address-line1',
+};
+
+export const FIELD_NAME_ADDRESS_LINE2 = 'address.line2';
+export const ADDRESS_LINE2_LABEL = 'Адрес 2';
+export const ADDRESS_LINE2_FIELD_CONFIG: IFieldConfig = {
+  name: FIELD_NAME_ADDRESS_LINE2,
+  label: ADDRESS_LINE2_LABEL,
+  required: false,
+  autoComplete: 'address-line2',
+};
+
+export const FIELD_NAME_ADDRESS_CITY = 'address.city';
+export const ADDRESS_CITY_LABEL = 'Город';
+export const ADDRESS_CITY_FIELD_CONFIG: IFieldConfig = {
+  name: FIELD_NAME_ADDRESS_CITY,
+  label: ADDRESS_CITY_LABEL,
+  required: false,
+  autoComplete: 'address-level2',
+};
+
+export const FIELD_NAME_ADDRESS_STATE = 'address.state';
+export const ADDRESS_STATE_LABEL = 'Штат / область';
+export const ADDRESS_STATE_FIELD_CONFIG: IFieldConfig = {
+  name: FIELD_NAME_ADDRESS_STATE,
+  label: ADDRESS_STATE_LABEL,
+  required: false,
+  autoComplete: 'address-level1',
+};
+
+export const FIELD_NAME_ADDRESS_COUNTY = 'address.county';
+export const ADDRESS_COUNTY_LABEL = 'Страна';
+export const ADDRESS_COUNTY_FIELD_CONFIG: IFieldConfig = {
+  name: FIELD_NAME_ADDRESS_COUNTY,
+  label: ADDRESS_COUNTY_LABEL,
+  required: false,
+};
+
+export const FIELD_NAME_ADDRESS_ZIP = 'address.zip';
+export const ADDRESS_ZIP_LABEL = 'Почтовый индекс';
+export const ADDRESS_ZIP_FIELD_CONFIG: IFieldConfig = {
+  name: FIELD_NAME_ADDRESS_ZIP,
+  label: ADDRESS_ZIP_LABEL,
+  required: false,
+  inputMode: 'numeric',
+  autoComplete: 'postal-code',
+  formatter: filterDigitsOnly,
 };

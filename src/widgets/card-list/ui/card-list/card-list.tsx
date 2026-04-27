@@ -31,7 +31,7 @@ export const CardList: FC = () => {
       onDragEnd: handleDragEndStore,
     });
 
-  const cardIds = useMemo(() => cards.map((card) => card.pan), [cards]);
+  const cardIds = useMemo(() => cards.map(({ pan }) => pan), [cards]);
   const isDragging = activeCard !== null;
 
   const modifiers = useMemo(

@@ -150,8 +150,8 @@ describe('Modal', () => {
       </Modal>,
     );
 
-    const firstButton = screen.getByRole('button', { name: 'Первая кнопка' });
-    expect(firstButton).toHaveFocus();
+    const closeButton = screen.getByRole('button', { name: 'Закрыть' });
+    expect(closeButton).toHaveFocus();
   });
 
   it('должен управлять фокусом с помощью Tab', async () => {
@@ -170,9 +170,13 @@ describe('Modal', () => {
       </Modal>,
     );
 
+    const closeButton = screen.getByRole('button', { name: 'Закрыть' });
     const firstButton = screen.getByRole('button', { name: 'Первая кнопка' });
     const lastButton = screen.getByRole('button', { name: 'Третья кнопка' });
 
+    expect(closeButton).toHaveFocus();
+
+    await user.tab();
     expect(firstButton).toHaveFocus();
 
     await user.tab();
@@ -182,7 +186,7 @@ describe('Modal', () => {
     expect(lastButton).toHaveFocus();
 
     await user.tab();
-    expect(firstButton).toHaveFocus();
+    expect(closeButton).toHaveFocus();
   });
 
   it('должен управлять фокусом с помощью Shift+Tab', async () => {
@@ -201,10 +205,10 @@ describe('Modal', () => {
       </Modal>,
     );
 
-    const firstButton = screen.getByRole('button', { name: 'Первая кнопка' });
+    const closeButton = screen.getByRole('button', { name: 'Закрыть' });
     const lastButton = screen.getByRole('button', { name: 'Третья кнопка' });
 
-    expect(firstButton).toHaveFocus();
+    expect(closeButton).toHaveFocus();
 
     await user.tab({ shift: true });
     expect(lastButton).toHaveFocus();

@@ -1,6 +1,7 @@
 import type { IBankCard } from '@entities/bank-card';
 
 export const CARD_FORM_BLOCK = 'card-form';
+export const CARD_FORM_GROUP_BLOCK = 'card-form-group';
 
 export const CARD_FORM_TITLE = 'Добавление карты';
 export const CARD_FORM_EDIT_TITLE = 'Редактирование карты';
@@ -23,5 +24,12 @@ export const EMPTY_CARD_FORM: Partial<IBankCard> = {
   pin: '',
   type: '',
   phrase: '',
-  address: '',
+  address: {
+    line1: '',
+    line2: '',
+    city: '',
+    state: '',
+    county: '',
+    zip: '',
+  },
 };

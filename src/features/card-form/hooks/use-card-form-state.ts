@@ -1,8 +1,10 @@
 import { useCallback, useState } from 'react';
-import type { IBankCard } from '@entities/bank-card';
+import type { IBankCard, IBankCardAddress } from '@entities/bank-card';
 import type { Procedure } from '@shared/types';
 import { EMPTY_CARD_FORM } from '../constants';
 import { getInitialFormData } from '../utils';
+
+const ADDRESS_PATH_PREFIX = 'address.';
 
 interface IUseCardFormStateParams {
   initialCard?: Partial<IBankCard>;
@@ -30,10 +32,26 @@ export const useCardFormState = ({
   const originalPan = initialCard?.pan;
 
   const handleFieldChange = useCallback((fieldName: string, value: string) => {
-    setFormData((previousData) => ({
-      ...previousData,
-      [fieldName]: value,
-    }));
+    setFormData((previousData) => {
+      if (fieldName.startsWith(ADDRESS_PATH_PREFIX)) {
+        const addressKey = fieldName.slice(
+          ADDRESS_PATH_PREFIX.length,
+        ) as keyof IBankCardAddress;
+
+        return {
+          ...previousData,
+          address: {
+            ...previousData.address,
+            [addressKey]: value,
+          },
+        };
+      }
+
+      return {
+        ...previousData,
+        [fieldName]: value,
+      };
+    });
   }, []);
 
   const resetForm = useCallback(() => {

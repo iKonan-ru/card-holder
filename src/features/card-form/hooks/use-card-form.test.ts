@@ -69,7 +69,14 @@ describe('useCardForm', () => {
       pin: '',
       type: '',
       phrase: '',
-      address: '',
+      address: {
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        county: '',
+        zip: '',
+      },
     });
     expect(result.current.errors).toEqual({});
     expect(result.current.isSubmitting).toBe(false);
@@ -165,7 +172,14 @@ describe('useCardForm', () => {
       pin: '',
       type: '',
       phrase: '',
-      address: '',
+      address: {
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        county: '',
+        zip: '',
+      },
     });
     expect(result.current.errors).toEqual({});
   });
@@ -464,7 +478,14 @@ describe('useCardForm', () => {
       pin: '',
       type: '',
       phrase: '',
-      address: '',
+      address: {
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        county: '',
+        zip: '',
+      },
     });
   });
 

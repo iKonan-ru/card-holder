@@ -14,6 +14,10 @@ export const getInitialFormData = (
 
   return {
     ...initialCard,
+    address: {
+      ...EMPTY_CARD_FORM.address,
+      ...initialCard.address,
+    },
     pan,
     expires,
   };

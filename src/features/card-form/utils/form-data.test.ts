@@ -3,6 +3,8 @@ import type { IBankCard } from '@entities/bank-card';
 import { EMPTY_CARD_FORM } from '../constants';
 import { getInitialFormData } from './form-data';
 
+const EMPTY_ADDRESS = EMPTY_CARD_FORM.address;
+
 describe('getInitialFormData', () => {
   it('должна возвращать пустую форму, если initialCard не передана', () => {
     const result = getInitialFormData();
@@ -33,6 +35,7 @@ describe('getInitialFormData', () => {
       name: 'TEST USER',
       cvv: '123',
       pin: '1234',
+      address: EMPTY_ADDRESS,
     });
   });
 
@@ -51,6 +54,7 @@ describe('getInitialFormData', () => {
       expires: '',
       name: 'TEST USER',
       cvv: '123',
+      address: EMPTY_ADDRESS,
     });
   });
 
@@ -75,6 +79,7 @@ describe('getInitialFormData', () => {
       pin: '5678',
       type: 'Дебетовая',
       phrase: 'Кодовое слово',
+      address: EMPTY_ADDRESS,
     });
   });
 
@@ -88,6 +93,7 @@ describe('getInitialFormData', () => {
     expect(result).toEqual({
       pan: '1234 5678 1234 5678',
       expires: '',
+      address: EMPTY_ADDRESS,
     });
   });
 
@@ -101,6 +107,7 @@ describe('getInitialFormData', () => {
     expect(result).toEqual({
       pan: '',
       expires: '06/28',
+      address: EMPTY_ADDRESS,
     });
   });
 
@@ -115,6 +122,38 @@ describe('getInitialFormData', () => {
     expect(result).toEqual({
       pan: '1234 5',
       expires: '12',
+      address: EMPTY_ADDRESS,
+    });
+  });
+
+  it('должна сохранять уже заполненный address из initialCard', () => {
+    const initialCard: Partial<IBankCard> = {
+      pan: '4377723769243191',
+      expires: '1225',
+      name: 'USER',
+      cvv: '123',
+      address: {
+        line1: '123 Main St',
+        city: 'Moscow',
+        zip: '101000',
+      },
+    };
+
+    const result = getInitialFormData(initialCard);
+
+    expect(result).toEqual({
+      pan: '4377 7237 6924 3191',
+      expires: '12/25',
+      name: 'USER',
+      cvv: '123',
+      address: {
+        line1: '123 Main St',
+        line2: '',
+        city: 'Moscow',
+        state: '',
+        county: '',
+        zip: '101000',
+      },
     });
   });
 });

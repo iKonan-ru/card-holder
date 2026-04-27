@@ -1,0 +1,28 @@
+@import '@shared/assets/styles/variables.less';
+
+.copy-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 @spacing-md;
+  border: 0;
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: @font-size-lg;
+  transition: @transition-fast;
+
+  &:hover:not(:disabled) {
+    background: var(--bg-tertiary-50);
+    color: var(--accent);
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: @opacity-high;
+    cursor: not-allowed;
+  }
+}
