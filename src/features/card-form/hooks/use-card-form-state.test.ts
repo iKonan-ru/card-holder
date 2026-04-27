@@ -46,6 +46,14 @@ describe('useCardFormState', () => {
       name: 'TEST USER',
       cvv: '123',
       pin: '1234',
+      address: {
+        line1: '',
+        line2: '',
+        city: '',
+        state: '',
+        county: '',
+        zip: '',
+      },
     });
     expect(result.current.isEditMode).toBe(true);
     expect(result.current.originalPan).toBe('5536914125525541');
