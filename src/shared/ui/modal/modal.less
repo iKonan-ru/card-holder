@@ -53,6 +53,10 @@
   animation: fadeInOverlay @duration-medium @easing-ease-out;
   will-change: opacity;
 
+  @media (max-width: @tablet) {
+    padding: @spacing-sm;
+  }
+
   &_closing {
     animation: fadeOutOverlay @duration-medium @easing-ease forwards;
     pointer-events: none;
@@ -71,6 +75,10 @@
 
     &_closing {
       animation: fadeOutModal @duration-medium @easing-ease forwards;
+    }
+
+    @media (max-width: @tablet) {
+      width: 100%;
     }
   }
 
@@ -119,6 +127,12 @@
     &:disabled {
       opacity: @opacity-high;
       cursor: not-allowed;
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: -@spacing-sm;
     }
   }
 }

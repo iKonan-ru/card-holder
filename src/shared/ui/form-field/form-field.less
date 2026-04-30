@@ -54,12 +54,6 @@
       opacity: @opacity-high;
     }
 
-    &:focus ~ .form-field__label,
-    &:not(:placeholder-shown) ~ .form-field__label {
-      transform: translateY(-0.8rem) scale(0.85);
-      color: var(--accent);
-    }
-
     &[type='password']::-ms-reveal,
     &[type='password']::-ms-clear {
       display: none;
@@ -74,6 +68,12 @@
       width: 0;
       margin: 0;
     }
+  }
+
+  &__input:focus ~ &__label,
+  &__input:not(:placeholder-shown) ~ &__label {
+    transform: translateY(-0.8rem) scale(0.85);
+    color: var(--accent);
   }
 
   &_has-right-content &__input {
