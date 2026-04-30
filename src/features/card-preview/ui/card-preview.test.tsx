@@ -60,9 +60,6 @@ describe('CardPreview', () => {
   it('должен отображать превью для Visa', () => {
     const { container } = render(<CardPreview pan="4276300000000001" />);
     expect(container.querySelector('.card-preview')).toBeInTheDocument();
-    expect(
-      container.querySelector('.card-preview__color-indicator'),
-    ).toBeInTheDocument();
   });
 
   it('должен отображать иконки платёжной системы и банка', () => {
@@ -70,16 +67,6 @@ describe('CardPreview', () => {
 
     const icons = container.querySelectorAll('.icon');
     expect(icons.length).toBeGreaterThan(0);
-  });
-
-  it('должен отображать цветовой индикатор банка', () => {
-    const { container } = render(<CardPreview pan="4276300000000001" />);
-
-    const colorIndicator = container.querySelector(
-      '.card-preview__color-indicator',
-    );
-    expect(colorIndicator).toBeInTheDocument();
-    expect(colorIndicator).toHaveAttribute('style');
   });
 
   it('должен работать с номерами карт с пробелами', () => {

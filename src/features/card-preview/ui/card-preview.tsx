@@ -3,7 +3,6 @@ import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
 import { BANKS_LIST, DEFAULT_BANK } from '@shared/data';
 import {
-  bem,
   EMPTY_STRING,
   getBankByCardNumber,
   getPaymentSystem,
@@ -65,11 +64,6 @@ export const CardPreview: FC<ICardPreviewProps> = ({ pan }) => {
       aria-hidden="true"
     >
       <ParentClassProvider parentClass={CARD_PREVIEW_BLOCK}>
-        <div
-          className={bem(CARD_PREVIEW_BLOCK, 'color-indicator')}
-          style={{ backgroundColor: bank.color }}
-          title={bank.name}
-        />
         {bankLogo && <Icon component={bankLogo} />}
         {paymentSystemLogo && <Icon component={paymentSystemLogo} />}
       </ParentClassProvider>
