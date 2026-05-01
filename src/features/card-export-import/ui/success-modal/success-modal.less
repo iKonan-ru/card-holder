@@ -1,19 +1,13 @@
-@import '@shared/assets/styles/variables.less';
+@import '@shared/assets/styles/mixins.less';
 
 .success-modal {
-  display: flex;
-  flex-direction: column;
+  .modal-layout();
 
   &__message {
-    margin: 0 0 @spacing-lg 0;
-    font-size: @font-size-lg;
-    line-height: 1.5;
-    color: var(--text-secondary);
+    .modal-message();
   }
 
   &__actions {
-    display: flex;
-    gap: @spacing-md;
-    justify-content: flex-end;
+    .modal-actions();
   }
 }

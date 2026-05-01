@@ -1,0 +1,28 @@
+@import './variables.less';
+
+.modal-layout() {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-message() {
+  margin: 0 0 @spacing-lg 0;
+  font-size: @font-size-lg;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.modal-actions(@justify: flex-end) {
+  display: flex;
+  gap: @spacing-md;
+  justify-content: @justify;
+
+  @media (max-width: @tablet) {
+    flex-wrap: wrap;
+    gap: @spacing-sm;
+
+    & > * {
+      flex-grow: 1;
+    }
+  }
+}
