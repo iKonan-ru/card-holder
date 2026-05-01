@@ -1,4 +1,4 @@
-import type { FC, PropsWithChildren } from 'react';
+import type { FC, PropsWithChildren, ReactNode } from 'react';
 import { DndContext } from '@dnd-kit/core';
 import { SortableContext } from '@dnd-kit/sortable';
 import { MOCK_CARD } from '@test';
@@ -26,13 +26,9 @@ vi.mock('@features/card-form', () => ({
 }));
 
 vi.mock('@features/sortable-card-item', () => ({
-  SortableCardItem: ({
-    children,
-    id,
-  }: {
-    children: React.ReactNode;
-    id: string;
-  }) => <div data-testid={`sortable-${id}`}>{children}</div>,
+  SortableCardItem: ({ children, id }: { children: ReactNode; id: string }) => (
+    <div data-testid={`sortable-${id}`}>{children}</div>
+  ),
 }));
 
 vi.mock('@entities/bank-card', () => ({

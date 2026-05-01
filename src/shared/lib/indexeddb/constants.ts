@@ -1,5 +1,5 @@
 export const DATABASE_NAME = 'card-holder-db';
-export const DATABASE_VERSION = 3;
+export const DATABASE_VERSION = 4;
 
 export const CARDS_STORE_NAME = 'cards';
 export const CARDS_KEY_PATH = 'pan';

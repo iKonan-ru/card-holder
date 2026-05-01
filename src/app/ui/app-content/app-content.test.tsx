@@ -10,6 +10,7 @@ vi.mock('@pages/main-page', () => ({
 
 vi.mock('@shared/ui', () => ({
   ModalContainer: () => <div data-testid="modal-container">ModalContainer</div>,
+  HttpWarningBanner: () => null,
 }));
 
 vi.mock('@features/error-handling', () => ({
@@ -17,6 +18,27 @@ vi.mock('@features/error-handling', () => ({
     <div data-testid="error-handler-provider">{children}</div>
   ),
 }));
+
+vi.mock('@features/app-lock', () => ({
+  useCryptoStore: (
+    selector: (state: { isUnlocked: boolean; cryptoKey: CryptoKey }) => unknown,
+  ) =>
+    selector({
+      isUnlocked: true,
+      cryptoKey: {} as CryptoKey,
+    }),
+  useInactivityLock: vi.fn(),
+  LockScreen: () => <div data-testid="lock-screen">LockScreen</div>,
+}));
+
+vi.mock('@shared/lib', async () => {
+  const actual = await vi.importActual('@shared/lib');
+
+  return {
+    ...(actual as Record<string, unknown>),
+    checkSecureProtocol: vi.fn().mockReturnValue(true),
+  };
+});
 
 const { mockUseAppUpdateModal } = vi.hoisted(() => ({
   mockUseAppUpdateModal: vi.fn(),

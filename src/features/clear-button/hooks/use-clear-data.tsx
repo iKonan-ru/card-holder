@@ -1,10 +1,8 @@
 import { useCallback, useState } from 'react';
+import { MasterPasswordConfirmModal } from '@features/app-lock';
 import { useModalContext } from '@shared/lib';
 import type { Procedure } from '@shared/types';
-import { ConfirmModal } from '@shared/ui';
 import {
-  CANCEL_CLEAR_BUTTON,
-  CONFIRM_CLEAR_BUTTON,
   CONFIRM_CLEAR_MESSAGE,
   CONFIRM_CLEAR_TITLE,
   CONFIRM_MODAL_ID,
@@ -24,29 +22,27 @@ export const useClearData = (
 ): IUseClearDataResult => {
   const { onClear } = params;
   const [isClearing, setIsClearing] = useState(false);
-  const { openModal, closeModal } = useModalContext();
+  const { openModal } = useModalContext();
 
   const handleConfirm = useCallback(async () => {
+    setIsClearing(true);
+
     try {
-      setIsClearing(true);
       await onClear();
-      closeModal(CONFIRM_MODAL_ID);
     } finally {
       setIsClearing(false);
     }
-  }, [onClear, closeModal]);
+  }, [onClear]);
 
   const clearData = useCallback(() => {
-    const modalContent = (
-      <ConfirmModal
+    openModal(
+      CONFIRM_MODAL_ID,
+      <MasterPasswordConfirmModal
         message={CONFIRM_CLEAR_MESSAGE}
-        confirmText={CONFIRM_CLEAR_BUTTON}
-        cancelText={CANCEL_CLEAR_BUTTON}
         onConfirm={handleConfirm}
-      />
+      />,
+      CONFIRM_CLEAR_TITLE,
     );
-
-    openModal(CONFIRM_MODAL_ID, modalContent, CONFIRM_CLEAR_TITLE);
   }, [handleConfirm, openModal]);
 
   return {

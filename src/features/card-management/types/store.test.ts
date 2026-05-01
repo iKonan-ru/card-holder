@@ -3,6 +3,22 @@ import type { IBankCard } from '@entities/bank-card';
 import * as sharedLib from '@shared/lib';
 import { useCardManagementStore } from './store';
 
+const MOCK_CRYPTO_KEY = {} as CryptoKey;
+
+vi.mock('@features/app-lock', () => ({
+  useCryptoStore: Object.assign(
+    (
+      selector: (state: {
+        cryptoKey: CryptoKey;
+        isUnlocked: boolean;
+      }) => unknown,
+    ) => selector({ cryptoKey: MOCK_CRYPTO_KEY, isUnlocked: true }),
+    {
+      getState: () => ({ cryptoKey: MOCK_CRYPTO_KEY, isUnlocked: true }),
+    },
+  ),
+}));
+
 vi.mock('@shared/lib', async () => {
   const actualModule = await vi.importActual('@shared/lib');
 
@@ -26,12 +42,14 @@ vi.mock('@shared/lib', async () => {
       },
     ]),
     getCardByPan: vi.fn().mockResolvedValue(undefined),
+    getAllRawCards: vi.fn().mockResolvedValue([]),
     checkCardExists: vi.fn().mockResolvedValue(false),
     addCard: vi.fn().mockResolvedValue(undefined),
     updateCard: vi.fn().mockResolvedValue(undefined),
     deleteCard: vi.fn().mockResolvedValue(undefined),
     clearAllCards: vi.fn().mockResolvedValue(undefined),
     updateCardsOrder: vi.fn().mockResolvedValue(undefined),
+    encryptCardFields: vi.fn().mockResolvedValue({}),
   };
 });
 
@@ -231,7 +249,10 @@ describe('useCardManagementStore', () => {
     const { updateCard } = useCardManagementStore.getState();
     await updateCard(mockUpdatedCard);
 
-    expect(sharedLib.updateCard).toHaveBeenCalledWith(mockUpdatedCard);
+    expect(sharedLib.updateCard).toHaveBeenCalledWith(
+      mockUpdatedCard,
+      MOCK_CRYPTO_KEY,
+    );
     expect(sharedLib.getAllCards).toHaveBeenCalled();
   });
 
@@ -378,7 +399,10 @@ describe('useCardManagementStore', () => {
     const { reorderCards } = useCardManagementStore.getState();
     await reorderCards(mockCards);
 
-    expect(sharedLib.updateCardsOrder).toHaveBeenCalledWith(mockCards);
+    expect(sharedLib.updateCardsOrder).toHaveBeenCalledWith(
+      mockCards,
+      MOCK_CRYPTO_KEY,
+    );
   });
 
   it('должна обрабатывать ошибки при переупорядочивании карт', async () => {
@@ -435,11 +459,17 @@ describe('useCardManagementStore', () => {
     const { updateCard } = useCardManagementStore.getState();
     await updateCard(mockCard);
 
-    expect(sharedLib.getCardByPan).toHaveBeenCalledWith(mockCard.pan);
-    expect(sharedLib.updateCard).toHaveBeenCalledWith({
-      ...mockCard,
-      order: 5,
-    });
+    expect(sharedLib.getCardByPan).toHaveBeenCalledWith(
+      mockCard.pan,
+      MOCK_CRYPTO_KEY,
+    );
+    expect(sharedLib.updateCard).toHaveBeenCalledWith(
+      {
+        ...mockCard,
+        order: 5,
+      },
+      MOCK_CRYPTO_KEY,
+    );
   });
 
   it('должна обновлять карту без order, используя DEFAULT_CARD_ORDER если карта не найдена', async () => {
@@ -458,11 +488,17 @@ describe('useCardManagementStore', () => {
     const { updateCard } = useCardManagementStore.getState();
     await updateCard(mockCard);
 
-    expect(sharedLib.getCardByPan).toHaveBeenCalledWith(mockCard.pan);
-    expect(sharedLib.updateCard).toHaveBeenCalledWith({
-      ...mockCard,
-      order: 0,
-    });
+    expect(sharedLib.getCardByPan).toHaveBeenCalledWith(
+      mockCard.pan,
+      MOCK_CRYPTO_KEY,
+    );
+    expect(sharedLib.updateCard).toHaveBeenCalledWith(
+      {
+        ...mockCard,
+        order: 0,
+      },
+      MOCK_CRYPTO_KEY,
+    );
   });
 
   describe('setReorderMode', () => {

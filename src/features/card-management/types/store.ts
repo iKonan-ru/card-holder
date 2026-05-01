@@ -1,4 +1,5 @@
 import { create, type StoreApi, type UseBoundStore } from 'zustand';
+import { useCryptoStore } from '@features/app-lock';
 import type { IBankCard } from '@entities/bank-card';
 import {
   addCard as addCardToDb,
@@ -28,6 +29,16 @@ const INITIAL_CARDS: IBankCard[] = [];
 const INITIAL_FLIPPED_PAN = null;
 const INITIAL_IS_LOADING = false;
 const INITIAL_IS_REORDER_MODE = false;
+
+const getCryptoKey = (): CryptoKey => {
+  const key = useCryptoStore.getState().cryptoKey;
+
+  if (!key) {
+    throw new Error('CryptoKey not available');
+  }
+
+  return key;
+};
 
 export const useCardManagementStore: UseBoundStore<
   StoreApi<ICardManagementState & ICardManagementActions>
@@ -68,11 +79,18 @@ export const useCardManagementStore: UseBoundStore<
   },
 
   loadCards: async () => {
+    const { isUnlocked } = useCryptoStore.getState();
+
+    if (!isUnlocked) {
+      return;
+    }
+
     set({ isLoading: true });
 
     try {
       await initDatabase();
-      const loadedCards = await getAllCards();
+      const cryptoKey = getCryptoKey();
+      const loadedCards = await getAllCards(cryptoKey);
 
       set({
         cards: loadedCards,
@@ -89,7 +107,8 @@ export const useCardManagementStore: UseBoundStore<
   },
 
   addCard: async (card: IBankCard) => {
-    const allCards = await getAllCards();
+    const cryptoKey = getCryptoKey();
+    const allCards = await getAllCards(cryptoKey);
     const maxOrder = allCards.length;
     const cardWithOrder: IBankCard = {
       ...card,
@@ -97,9 +116,10 @@ export const useCardManagementStore: UseBoundStore<
     };
 
     return executeCardOperation({
-      operation: () => addCardToDb(cardWithOrder),
+      operation: () => addCardToDb(cardWithOrder, cryptoKey),
       errorMessage: ERROR_FAILED_TO_ADD_CARD,
       context: 'CardManagementStore.addCard',
+      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },
@@ -107,20 +127,22 @@ export const useCardManagementStore: UseBoundStore<
   },
 
   updateCard: async (card: IBankCard) => {
+    const cryptoKey = getCryptoKey();
     const hasOrder = typeof card.order === TYPE_NUMBER;
 
     if (hasOrder) {
       return executeCardOperation({
-        operation: () => updateCardInDb(card),
+        operation: () => updateCardInDb(card, cryptoKey),
         errorMessage: ERROR_FAILED_TO_UPDATE_CARD,
         context: 'CardManagementStore.updateCard',
+        cryptoKey,
         onSuccess: (updatedCards) => {
           set({ cards: updatedCards });
         },
       });
     }
 
-    const existingCard = await getCardByPan(card.pan);
+    const existingCard = await getCardByPan(card.pan, cryptoKey);
     const cardOrder = existingCard?.order ?? DEFAULT_CARD_ORDER;
     const cardWithOrder: IBankCard = {
       ...card,
@@ -128,9 +150,10 @@ export const useCardManagementStore: UseBoundStore<
     };
 
     return executeCardOperation({
-      operation: () => updateCardInDb(cardWithOrder),
+      operation: () => updateCardInDb(cardWithOrder, cryptoKey),
       errorMessage: ERROR_FAILED_TO_UPDATE_CARD,
       context: 'CardManagementStore.updateCard',
+      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },
@@ -138,10 +161,13 @@ export const useCardManagementStore: UseBoundStore<
   },
 
   deleteCard: async (pan: IBankCard['pan']) => {
+    const cryptoKey = getCryptoKey();
+
     return executeCardOperation({
       operation: () => deleteCardFromDb(pan),
       errorMessage: ERROR_FAILED_TO_DELETE_CARD,
       context: 'CardManagementStore.deleteCard',
+      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },
@@ -149,10 +175,13 @@ export const useCardManagementStore: UseBoundStore<
   },
 
   clearAllCards: async () => {
+    const cryptoKey = getCryptoKey();
+
     return executeCardOperation({
       operation: () => clearAllCardsFromDb(),
       errorMessage: ERROR_FAILED_TO_CLEAR_CARDS,
       context: 'CardManagementStore.clearAllCards',
+      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },
@@ -164,10 +193,13 @@ export const useCardManagementStore: UseBoundStore<
   },
 
   reorderCards: async (cards: IBankCard[]) => {
+    const cryptoKey = getCryptoKey();
+
     return executeCardOperation({
-      operation: () => updateCardsOrderInDb(cards),
+      operation: () => updateCardsOrderInDb(cards, cryptoKey),
       errorMessage: ERROR_FAILED_TO_REORDER_CARDS,
       context: 'CardManagementStore.reorderCards',
+      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },

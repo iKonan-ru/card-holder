@@ -13,6 +13,8 @@ vi.mock('@shared/lib', async () => {
   };
 });
 
+const MOCK_CRYPTO_KEY = {} as CryptoKey;
+
 describe('executeCardOperation', () => {
   const mockCards = [
     {
@@ -40,6 +42,7 @@ describe('executeCardOperation', () => {
       errorMessage: 'Test error',
       context: 'TestContext',
       onSuccess: mockOnSuccess,
+      cryptoKey: MOCK_CRYPTO_KEY,
     });
 
     expect(mockOperation).toHaveBeenCalled();
@@ -58,6 +61,7 @@ describe('executeCardOperation', () => {
         errorMessage: 'Failed to execute',
         context: 'TestContext',
         onSuccess: mockOnSuccess,
+        cryptoKey: MOCK_CRYPTO_KEY,
       }),
     ).rejects.toThrow(testError);
 
@@ -94,6 +98,7 @@ describe('executeCardOperation', () => {
       errorMessage: 'Test error',
       context: 'AddCard',
       onSuccess: mockOnSuccess,
+      cryptoKey: MOCK_CRYPTO_KEY,
     });
 
     expect(mockOnSuccess).toHaveBeenCalledWith(updatedCards);

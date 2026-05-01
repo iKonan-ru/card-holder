@@ -1,4 +1,4 @@
-import { type ChangeEvent, type FormEvent } from 'react';
+import { type ChangeEvent, type SubmitEvent } from 'react';
 import { act, renderHook, waitFor } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { Procedure } from '@shared/types';
@@ -85,12 +85,12 @@ describe('usePasswordModal', () => {
         usePasswordModal({ mode, onConfirm, onCancel }),
       );
 
-      const mockFormEvent = {
+      const mockSubmitEvent = {
         preventDefault: vi.fn(),
-      } as unknown as FormEvent<HTMLFormElement>;
+      } as unknown as SubmitEvent<HTMLFormElement>;
 
       act(() => {
-        result.current.handleSubmit(mockFormEvent);
+        result.current.handleSubmit(mockSubmitEvent);
       });
 
       expect(result.current.passwordError).toBeDefined();
@@ -150,12 +150,12 @@ describe('usePasswordModal', () => {
         result.current.handlePasswordChange(passwordEvent);
       });
 
-      const mockFormEvent = {
+      const mockSubmitEvent = {
         preventDefault: vi.fn(),
-      } as unknown as FormEvent<HTMLFormElement>;
+      } as unknown as SubmitEvent<HTMLFormElement>;
 
       act(() => {
-        result.current.handleSubmit(mockFormEvent);
+        result.current.handleSubmit(mockSubmitEvent);
       });
 
       expect(result.current.passwordError).toBe('Введите минимум 8 символов');
@@ -179,12 +179,12 @@ describe('usePasswordModal', () => {
         result.current.handleConfirmPasswordChange(confirmEvent);
       });
 
-      const mockFormEvent = {
+      const mockSubmitEvent = {
         preventDefault: vi.fn(),
-      } as unknown as FormEvent<HTMLFormElement>;
+      } as unknown as SubmitEvent<HTMLFormElement>;
 
       act(() => {
-        result.current.handleSubmit(mockFormEvent);
+        result.current.handleSubmit(mockSubmitEvent);
       });
 
       expect(result.current.confirmError).toBe('Пароли не совпадают');
@@ -209,12 +209,12 @@ describe('usePasswordModal', () => {
         result.current.handleConfirmPasswordChange(confirmEvent);
       });
 
-      const mockFormEvent = {
+      const mockSubmitEvent = {
         preventDefault: vi.fn(),
-      } as unknown as FormEvent<HTMLFormElement>;
+      } as unknown as SubmitEvent<HTMLFormElement>;
 
       await act(async () => {
-        await result.current.handleSubmit(mockFormEvent);
+        await result.current.handleSubmit(mockSubmitEvent);
       });
 
       expect(mockOnConfirm).toHaveBeenCalledWith(
@@ -249,12 +249,12 @@ describe('usePasswordModal', () => {
         result.current.handleConfirmPasswordChange(confirmEvent);
       });
 
-      const mockFormEvent = {
+      const mockSubmitEvent = {
         preventDefault: vi.fn(),
-      } as unknown as FormEvent<HTMLFormElement>;
+      } as unknown as SubmitEvent<HTMLFormElement>;
 
       act(() => {
-        result.current.handleSubmit(mockFormEvent);
+        result.current.handleSubmit(mockSubmitEvent);
       });
 
       await waitFor(() => {
@@ -286,12 +286,12 @@ describe('usePasswordModal', () => {
         result.current.handleConfirmPasswordChange(confirmEvent);
       });
 
-      const mockFormEvent = {
+      const mockSubmitEvent = {
         preventDefault: vi.fn(),
-      } as unknown as FormEvent<HTMLFormElement>;
+      } as unknown as SubmitEvent<HTMLFormElement>;
 
       await act(async () => {
-        await result.current.handleSubmit(mockFormEvent);
+        await result.current.handleSubmit(mockSubmitEvent);
       });
 
       expect(result.current.isSubmitting).toBe(false);
@@ -327,12 +327,12 @@ describe('usePasswordModal', () => {
         result.current.handleConfirmPasswordChange(confirmEvent);
       });
 
-      const mockFormEvent = {
+      const mockSubmitEvent = {
         preventDefault: vi.fn(),
-      } as unknown as FormEvent<HTMLFormElement>;
+      } as unknown as SubmitEvent<HTMLFormElement>;
 
       await act(async () => {
-        await result.current.handleSubmit(mockFormEvent);
+        await result.current.handleSubmit(mockSubmitEvent);
       });
 
       expect(result.current.passwordError).toBe('Неверный пароль');
@@ -396,12 +396,12 @@ describe('usePasswordModal', () => {
         result.current.handlePasswordChange(passwordEvent);
       });
 
-      const mockFormEvent = {
+      const mockSubmitEvent = {
         preventDefault: vi.fn(),
-      } as unknown as FormEvent<HTMLFormElement>;
+      } as unknown as SubmitEvent<HTMLFormElement>;
 
       await act(async () => {
-        await result.current.handleSubmit(mockFormEvent);
+        await result.current.handleSubmit(mockSubmitEvent);
       });
 
       expect(result.current.passwordError).toBeUndefined();
@@ -427,12 +427,12 @@ describe('usePasswordModal', () => {
         result.current.handlePasswordChange(passwordEvent);
       });
 
-      const mockFormEvent = {
+      const mockSubmitEvent = {
         preventDefault: vi.fn(),
-      } as unknown as FormEvent<HTMLFormElement>;
+      } as unknown as SubmitEvent<HTMLFormElement>;
 
       await act(async () => {
-        await result.current.handleSubmit(mockFormEvent);
+        await result.current.handleSubmit(mockSubmitEvent);
       });
 
       expect(mockOnConfirm).toHaveBeenCalledWith(

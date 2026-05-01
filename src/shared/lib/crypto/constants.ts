@@ -1,3 +1,7 @@
+export const MASTER_KEY_SALT_STORAGE_KEY = 'card-holder-mk-salt';
+export const PASSWORD_VERIFY_STORAGE_KEY = 'card-holder-mk-verify';
+export const VERIFY_PLAINTEXT = 'card-holder-verified';
+
 export const ENCRYPTION_ALGORITHM = 'AES-GCM';
 export const PBKDF2_ALGORITHM = 'PBKDF2';
 export const PBKDF2_HASH = 'SHA-256';

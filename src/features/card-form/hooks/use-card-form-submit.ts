@@ -1,4 +1,4 @@
-import { useCallback, type FormEvent } from 'react';
+import { useCallback, type SubmitEvent } from 'react';
 import { useCardManagementStore } from '@features/card-management';
 import type { IBankCard } from '@entities/bank-card';
 import {
@@ -29,7 +29,7 @@ interface IUseCardFormSubmitParams {
 }
 
 interface IUseCardFormSubmitResult {
-  handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleSubmit: (event: SubmitEvent<HTMLFormElement>) => Promise<void>;
   handleDelete: () => Promise<void>;
 }
 
@@ -46,7 +46,7 @@ export const useCardFormSubmit = ({
   const { addCard, updateCard, deleteCard } = useCardManagementStore();
 
   const handleSubmit = useCallback(
-    async (event: FormEvent<HTMLFormElement>) => {
+    async (event: SubmitEvent<HTMLFormElement>) => {
       event.preventDefault();
 
       const cardDataToValidate: Partial<IBankCard> = {

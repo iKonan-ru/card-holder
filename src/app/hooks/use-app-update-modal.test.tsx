@@ -18,6 +18,14 @@ vi.mock('@shared/lib', () => ({
   useModal: () => mockUseModal(),
 }));
 
+vi.mock('@features/app-lock', () => ({
+  useCryptoStore: () => ({ cryptoKey: null, isUnlocked: false }),
+}));
+
+vi.mock('@features/card-management', () => ({
+  useCardManagementStore: () => ({ setReorderMode: vi.fn() }),
+}));
+
 vi.mock('@features/pwa-update', () => ({
   PWAUpdate: vi.fn(
     ({

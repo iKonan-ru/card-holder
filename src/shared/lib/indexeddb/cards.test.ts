@@ -1,6 +1,7 @@
 import { createMockCard, MOCK_CARD_THIRD } from '@test';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
+import type { IStoredEncryptedCard } from '../crypto';
 import {
   addCard,
   checkCardExists,
@@ -11,6 +12,27 @@ import {
   updateCard,
   updateCardsOrder,
 } from './cards';
+
+vi.mock('../crypto', async () => {
+  const actual = await vi.importActual<typeof import('../crypto')>('../crypto');
+
+  return {
+    ...actual,
+    encryptCardFields: vi.fn(
+      async (card: IBankCard): Promise<IStoredEncryptedCard> => ({
+        pan: card.pan,
+        order: card.order,
+        encryptedPayload: JSON.stringify(card),
+      }),
+    ),
+    decryptCardFields: vi.fn(
+      async (record: IStoredEncryptedCard): Promise<IBankCard> =>
+        JSON.parse(record.encryptedPayload) as IBankCard,
+    ),
+  };
+});
+
+const MOCK_CRYPTO_KEY = {} as CryptoKey;
 
 const MOCK_CARDS: IBankCard[] = [
   createMockCard({
@@ -101,12 +123,19 @@ vi.mock('./database', () => ({
   }),
 }));
 
+const toStored = (card: IBankCard): IStoredEncryptedCard => ({
+  pan: card.pan,
+  order: card.order,
+  encryptedPayload: JSON.stringify(card),
+});
+
 describe('IndexedDB cards', () => {
   const MOCK_CARD = createMockCard();
+  const MOCK_STORED_CARD = toStored(MOCK_CARD);
 
   it('getAllCards должна возвращать отсортированный список карт', async () => {
     const request = (mockStore.getAll as () => IMockRequest)() as IMockRequest;
-    request.result = [...MOCK_CARDS];
+    request.result = MOCK_CARDS.map(toStored);
 
     setTimeout(() => {
       if (request.onsuccess) {
@@ -114,7 +143,7 @@ describe('IndexedDB cards', () => {
       }
     }, 0);
 
-    const result = await getAllCards();
+    const result = await getAllCards(MOCK_CRYPTO_KEY);
 
     expect(result[0].order).toBe(0);
     expect(result[1].order).toBe(1);
@@ -125,7 +154,7 @@ describe('IndexedDB cards', () => {
     const request = (mockStore.get as (pan: string) => IMockRequest)(
       MOCK_CARD.pan,
     ) as IMockRequest;
-    request.result = MOCK_CARD;
+    request.result = MOCK_STORED_CARD;
 
     setTimeout(() => {
       if (request.onsuccess) {
@@ -133,7 +162,7 @@ describe('IndexedDB cards', () => {
       }
     }, 0);
 
-    const result = await getCardByPan(MOCK_CARD.pan);
+    const result = await getCardByPan(MOCK_CARD.pan, MOCK_CRYPTO_KEY);
 
     expect(result).toEqual(MOCK_CARD);
   });
@@ -142,7 +171,7 @@ describe('IndexedDB cards', () => {
     const request = (mockStore.get as (pan: string) => IMockRequest)(
       MOCK_CARD.pan,
     ) as IMockRequest;
-    request.result = MOCK_CARD;
+    request.result = MOCK_STORED_CARD;
 
     setTimeout(() => {
       if (request.onsuccess) {
@@ -173,9 +202,9 @@ describe('IndexedDB cards', () => {
   });
 
   it('addCard должна добавлять карту в хранилище', async () => {
-    const request = (mockStore.add as (card: IBankCard) => IMockRequest)(
-      MOCK_CARD,
-    ) as IMockRequest;
+    const request = (
+      mockStore.add as (card: IStoredEncryptedCard) => IMockRequest
+    )(MOCK_STORED_CARD) as IMockRequest;
 
     setTimeout(() => {
       if (request.onsuccess) {
@@ -183,14 +212,16 @@ describe('IndexedDB cards', () => {
       }
     }, 0);
 
-    await expect(addCard(MOCK_CARD)).resolves.toBeUndefined();
-    expect(mockStore.add).toHaveBeenCalledWith(MOCK_CARD);
+    await expect(addCard(MOCK_CARD, MOCK_CRYPTO_KEY)).resolves.toBeUndefined();
+    expect(mockStore.add).toHaveBeenCalledWith(
+      expect.objectContaining({ pan: MOCK_CARD.pan }),
+    );
   });
 
   it('updateCard должна обновлять карту в хранилище', async () => {
-    const request = (mockStore.put as (card: IBankCard) => IMockRequest)(
-      MOCK_CARD,
-    ) as IMockRequest;
+    const request = (
+      mockStore.put as (card: IStoredEncryptedCard) => IMockRequest
+    )(MOCK_STORED_CARD) as IMockRequest;
 
     setTimeout(() => {
       if (request.onsuccess) {
@@ -198,8 +229,12 @@ describe('IndexedDB cards', () => {
       }
     }, 0);
 
-    await expect(updateCard(MOCK_CARD)).resolves.toBeUndefined();
-    expect(mockStore.put).toHaveBeenCalledWith(MOCK_CARD);
+    await expect(
+      updateCard(MOCK_CARD, MOCK_CRYPTO_KEY),
+    ).resolves.toBeUndefined();
+    expect(mockStore.put).toHaveBeenCalledWith(
+      expect.objectContaining({ pan: MOCK_CARD.pan }),
+    );
   });
 
   it('deleteCard должна удалять карту из хранилища', async () => {
@@ -243,21 +278,20 @@ describe('IndexedDB cards', () => {
       }
     }, 0);
 
-    await expect(updateCardsOrder(cardsToReorder)).resolves.toBeUndefined();
+    await expect(
+      updateCardsOrder(cardsToReorder, MOCK_CRYPTO_KEY),
+    ).resolves.toBeUndefined();
 
     expect(mockStore.put).toHaveBeenCalledTimes(3);
-    expect(mockStore.put).toHaveBeenCalledWith({
-      ...cardsToReorder[0],
-      order: 0,
-    });
-    expect(mockStore.put).toHaveBeenCalledWith({
-      ...cardsToReorder[1],
-      order: 1,
-    });
-    expect(mockStore.put).toHaveBeenCalledWith({
-      ...cardsToReorder[2],
-      order: 2,
-    });
+    expect(mockStore.put).toHaveBeenCalledWith(
+      expect.objectContaining({ pan: cardsToReorder[0].pan, order: 0 }),
+    );
+    expect(mockStore.put).toHaveBeenCalledWith(
+      expect.objectContaining({ pan: cardsToReorder[1].pan, order: 1 }),
+    );
+    expect(mockStore.put).toHaveBeenCalledWith(
+      expect.objectContaining({ pan: cardsToReorder[2].pan, order: 2 }),
+    );
   });
 
   it('updateCardsOrder должна обрабатывать ошибки транзакции', async () => {
@@ -267,7 +301,7 @@ describe('IndexedDB cards', () => {
       }
     }, 0);
 
-    await expect(updateCardsOrder(MOCK_CARDS)).rejects.toThrow(
+    await expect(updateCardsOrder(MOCK_CARDS, MOCK_CRYPTO_KEY)).rejects.toThrow(
       'Не удалось обновить порядок карт',
     );
   });

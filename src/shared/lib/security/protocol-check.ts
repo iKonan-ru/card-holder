@@ -1,13 +1,13 @@
 import { logError } from '../utils';
+import {
+  HOSTNAME_127,
+  HOSTNAME_LOCALHOST,
+  HTTP_WARNING_MESSAGE,
+  PROTOCOL_HTTPS,
+  SECURITY_WARNING_CONTEXT,
+} from './constants';
 
-const PROTOCOL_HTTPS = 'https:';
-const HOSTNAME_LOCALHOST = 'localhost';
-const HOSTNAME_127 = '127.0.0.1';
-const WARNING_MESSAGE =
-  'ВНИМАНИЕ: Приложение работает по незащищенному соединению! Для безопасности используйте HTTPS.';
-const SECURITY_WARNING_CONTEXT = 'SecurityCheck';
-
-export const checkSecureProtocol = (): void => {
+export const checkSecureProtocol = (): boolean => {
   const isHttps = window.location.protocol === PROTOCOL_HTTPS;
   const isLocalhost =
     window.location.hostname === HOSTNAME_LOCALHOST ||
@@ -16,10 +16,12 @@ export const checkSecureProtocol = (): void => {
 
   if (!isSecure) {
     logError({
-      message: WARNING_MESSAGE,
+      message: HTTP_WARNING_MESSAGE,
       context: SECURITY_WARNING_CONTEXT,
     });
 
-    console.warn(WARNING_MESSAGE);
+    console.warn(HTTP_WARNING_MESSAGE);
   }
+
+  return isSecure;
 };

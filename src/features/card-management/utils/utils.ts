@@ -8,6 +8,7 @@ interface IExecuteCardOperationParams {
   errorMessage: string;
   onSuccess: (cards: IBankCard[]) => void;
   context: string;
+  cryptoKey: CryptoKey;
 }
 
 export const executeCardOperation = async ({
@@ -15,10 +16,11 @@ export const executeCardOperation = async ({
   errorMessage,
   onSuccess,
   context,
+  cryptoKey,
 }: IExecuteCardOperationParams): Promise<void> => {
   try {
     await operation();
-    const updatedCards = await getAllCards();
+    const updatedCards = await getAllCards(cryptoKey);
     onSuccess(updatedCards);
   } catch (error) {
     logError({ message: errorMessage, error, context });

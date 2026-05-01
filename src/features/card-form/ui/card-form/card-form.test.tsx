@@ -20,6 +20,7 @@ vi.mock('@shared/lib', async () => {
   return {
     ...actual,
     checkCardExists: vi.fn(),
+    verifyMasterPassword: vi.fn().mockResolvedValue(true),
   };
 });
 
@@ -227,9 +228,10 @@ describe('CardForm', () => {
     const deleteButton = screen.getByRole('button', { name: 'Удалить карту' });
     await user.click(deleteButton);
 
-    const confirmButton = screen.getByRole('button', {
-      name: 'Удалить',
-    });
+    const passwordField = await screen.findByLabelText(/Мастер-пароль/);
+    await user.type(passwordField, 'password123');
+
+    const confirmButton = screen.getByRole('button', { name: 'Подтвердить' });
     await user.click(confirmButton);
 
     await vi.waitFor(() => {

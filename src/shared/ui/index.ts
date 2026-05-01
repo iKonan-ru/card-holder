@@ -25,3 +25,5 @@ export * from './password-toggle-button';
 export * from './drag-handle';
 
 export * from './icon';
+
+export * from './http-warning-banner';

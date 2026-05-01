@@ -15,6 +15,37 @@ vi.mock('../lib', () => ({
   useAppUpdateModal: vi.fn(),
 }));
 
+vi.mock('@features/app-lock', () => ({
+  useCryptoStore: (
+    selector: (state: { isUnlocked: boolean; cryptoKey: CryptoKey }) => unknown,
+  ) =>
+    selector({
+      isUnlocked: true,
+      cryptoKey: {} as CryptoKey,
+    }),
+  useInactivityLock: vi.fn(),
+  LockScreen: () => null,
+}));
+
+vi.mock('@shared/lib', async () => {
+  const actual = await vi.importActual('@shared/lib');
+
+  return {
+    ...(actual as Record<string, unknown>),
+    checkSecureProtocol: vi.fn().mockReturnValue(true),
+  };
+});
+
+vi.mock('@shared/ui', async () => {
+  const actual = await vi.importActual('@shared/ui');
+
+  return {
+    ...(actual as Record<string, unknown>),
+    HttpWarningBanner: () => null,
+    ModalContainer: () => <div data-testid="modal-container" />,
+  };
+});
+
 describe('App', () => {
   afterEach(() => {
     cleanup();

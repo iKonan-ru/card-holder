@@ -1,4 +1,4 @@
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import type { Procedure } from '@shared/types';
 import {
@@ -23,7 +23,7 @@ interface IUseCardFormResult {
     fieldName: keyof IValidationErrors,
     error: string | undefined,
   ) => void;
-  handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleSubmit: (event: SubmitEvent<HTMLFormElement>) => Promise<void>;
   handleDelete: () => Promise<void>;
 }
 

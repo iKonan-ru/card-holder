@@ -100,7 +100,7 @@ describe('useClearData', () => {
     expect(mockOnClear).toHaveBeenCalledOnce();
   });
 
-  it('должен закрывать модальное окно после успешной очистки', async () => {
+  it('должен вызывать onClear и сбрасывать isClearing после успешной очистки', async () => {
     mockOnClear.mockResolvedValue(undefined);
 
     const { result } = renderHook(() => useClearData({ onClear: mockOnClear }));
@@ -115,7 +115,8 @@ describe('useClearData', () => {
       await modalContent.props.onConfirm();
     });
 
-    expect(mockCloseModal).toHaveBeenCalledWith('confirm-clear-all');
+    expect(mockOnClear).toHaveBeenCalledOnce();
+    expect(result.current.isClearing).toBe(false);
   });
 
   it('должен обрабатывать ошибки при очистке', async () => {

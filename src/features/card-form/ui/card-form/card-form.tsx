@@ -1,4 +1,5 @@
 import { useCallback, useMemo, type FC } from 'react';
+import { MasterPasswordConfirmModal } from '@features/app-lock';
 import { CardPreview } from '@features/card-preview';
 import type { IBankCard } from '@entities/bank-card';
 import {
@@ -11,14 +12,12 @@ import {
   useModal,
 } from '@shared/lib';
 import type { Procedure } from '@shared/types';
-import { Button, ConfirmModal, ValidatedField } from '@shared/ui';
+import { Button, ValidatedField } from '@shared/ui';
 import {
   CANCEL_BUTTON_TEXT,
   CARD_FORM_BLOCK,
   CVV_FIELD_CONFIG,
   DELETE_BUTTON_TEXT,
-  DELETE_CANCEL_TEXT,
-  DELETE_CONFIRM_TEXT,
   DELETE_MODAL_MESSAGE,
   DELETE_MODAL_TITLE,
   EXPIRES_FIELD_CONFIG,
@@ -70,10 +69,8 @@ export const CardForm: FC<ICardFormProps> = ({
 
   const handleDeleteClick = useCallback(() => {
     open(
-      <ConfirmModal
+      <MasterPasswordConfirmModal
         message={DELETE_MODAL_MESSAGE}
-        confirmText={DELETE_CONFIRM_TEXT}
-        cancelText={DELETE_CANCEL_TEXT}
         onConfirm={handleConfirmDelete}
       />,
       DELETE_MODAL_TITLE,

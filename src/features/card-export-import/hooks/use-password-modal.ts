@@ -3,7 +3,7 @@ import {
   useMemo,
   useState,
   type ChangeEvent,
-  type FormEvent,
+  type SubmitEvent,
 } from 'react';
 import { useAnimatedModalClose, useModalClose } from '@shared/lib';
 import type { Procedure } from '@shared/types';
@@ -43,7 +43,7 @@ interface IUsePasswordModalResult {
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => void;
   handlePasswordVisibilityChange: (isVisible: boolean) => void;
-  handleSubmit: (event: FormEvent<HTMLFormElement>) => Promise<void>;
+  handleSubmit: (event: SubmitEvent<HTMLFormElement>) => Promise<void>;
   handleCancel: Procedure;
 }
 
@@ -121,7 +121,7 @@ export const usePasswordModal = (
   }, [isExportMode, password, confirmPassword]);
 
   const handleSubmit = useCallback(
-    async (event: FormEvent<HTMLFormElement>) => {
+    async (event: SubmitEvent<HTMLFormElement>) => {
       event.preventDefault();
       setPasswordError(undefined);
       setConfirmError(undefined);

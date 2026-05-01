@@ -65,11 +65,25 @@ export default defineConfig({
   server: {
     headers: {
       'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'Permissions-Policy':
+        'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'X-XSS-Protection': '0',
+      'Cross-Origin-Opener-Policy': 'same-origin',
     },
   },
   preview: {
     headers: {
+      'Content-Security-Policy':
+        "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'self'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';",
       'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'DENY',
+      'Permissions-Policy':
+        'camera=(), microphone=(), geolocation=(), payment=(), usb=()',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+      'X-XSS-Protection': '0',
+      'Cross-Origin-Opener-Policy': 'same-origin',
       'Cache-Control': 'public, max-age=31536000, immutable',
     },
   },
