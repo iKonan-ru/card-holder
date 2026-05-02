@@ -39,7 +39,7 @@ beforeEach(() => {
   vi.mocked(sharedLib.useModalClose).mockReturnValue(mockCloseModal);
 });
 
-describe('MasterPasswordConfirmModal — отображение', () => {
+describe('MasterPasswordConfirmModal - отображение', () => {
   it('должен показывать переданный message', () => {
     renderModal('Очистить все данные?');
 
@@ -85,7 +85,7 @@ describe('MasterPasswordConfirmModal — отображение', () => {
   });
 });
 
-describe('MasterPasswordConfirmModal — успешное подтверждение', () => {
+describe('MasterPasswordConfirmModal - успешное подтверждение', () => {
   it('должен вызвать onConfirm при верном пароле', async () => {
     const user = userEvent.setup();
     vi.mocked(sharedLib.verifyMasterPassword).mockResolvedValue(true);
@@ -129,7 +129,7 @@ describe('MasterPasswordConfirmModal — успешное подтвержден
   });
 });
 
-describe('MasterPasswordConfirmModal — неверный пароль', () => {
+describe('MasterPasswordConfirmModal - неверный пароль', () => {
   it('должен показать ошибку при неверном пароле', async () => {
     const user = userEvent.setup();
     vi.mocked(sharedLib.verifyMasterPassword).mockResolvedValue(false);
@@ -221,7 +221,7 @@ describe('MasterPasswordConfirmModal — неверный пароль', () => {
   });
 });
 
-describe('MasterPasswordConfirmModal — кнопка отмены', () => {
+describe('MasterPasswordConfirmModal - кнопка отмены', () => {
   it('должен вызвать closeModal при клике на отмену', async () => {
     const user = userEvent.setup();
     renderModal();

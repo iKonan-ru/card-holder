@@ -39,7 +39,7 @@ beforeEach(() => {
   mockUnlock.mockReset();
 });
 
-describe('LockScreen — режим разблокировки', () => {
+describe('LockScreen - режим разблокировки', () => {
   it('должен отображать заголовок разблокировки', () => {
     renderUnlock();
 
@@ -157,7 +157,7 @@ describe('LockScreen — режим разблокировки', () => {
   });
 });
 
-describe('LockScreen — режим первой установки', () => {
+describe('LockScreen - режим первой установки', () => {
   it('должен отображать заголовок создания пароля', () => {
     renderSetup();
 

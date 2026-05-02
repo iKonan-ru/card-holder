@@ -34,7 +34,7 @@ afterEach(() => {
   resetStore();
 });
 
-describe('useCryptoStore — начальное состояние', () => {
+describe('useCryptoStore - начальное состояние', () => {
   it('должен быть заблокирован', () => {
     expect(useCryptoStore.getState().isUnlocked).toBe(false);
   });
@@ -44,7 +44,7 @@ describe('useCryptoStore — начальное состояние', () => {
   });
 });
 
-describe('useCryptoStore — unlock (первая установка)', () => {
+describe('useCryptoStore - unlock (первая установка)', () => {
   beforeEach(() => {
     vi.mocked(sharedLib.loadOrCreateSalt).mockReturnValue({
       salt: new Uint8Array(16),
@@ -93,7 +93,7 @@ describe('useCryptoStore — unlock (первая установка)', () => {
   });
 });
 
-describe('useCryptoStore — unlock (повторный вход)', () => {
+describe('useCryptoStore - unlock (повторный вход)', () => {
   beforeEach(() => {
     useCryptoStore.setState({ isFirstSetup: false });
     vi.mocked(sharedLib.loadOrCreateSalt).mockReturnValue({
@@ -131,7 +131,7 @@ describe('useCryptoStore — unlock (повторный вход)', () => {
   });
 });
 
-describe('useCryptoStore — lock', () => {
+describe('useCryptoStore - lock', () => {
   it('должен сбросить isUnlocked в false', () => {
     useCryptoStore.setState({ cryptoKey: mockKey, isUnlocked: true });
 
