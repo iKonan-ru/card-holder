@@ -1,10 +1,12 @@
 import { create } from 'zustand';
 import {
   deriveKeyFromPassword,
+  ERROR_WRONG_MASTER_PASSWORD,
   loadOrCreateSalt,
   MASTER_KEY_SALT_STORAGE_KEY,
   saveVerificationToken,
   verifyMasterPassword,
+  withRateLimit,
 } from '@shared/lib';
 
 interface ICryptoStore {
@@ -28,11 +30,13 @@ export const useCryptoStore = create<ICryptoStore>((set) => ({
       await saveVerificationToken(key);
       set({ cryptoKey: key, isUnlocked: true, isFirstSetup: false });
     } else {
-      const isValid = await verifyMasterPassword(password);
+      await withRateLimit(async () => {
+        const isValid = await verifyMasterPassword(password);
 
-      if (!isValid) {
-        throw new Error('Wrong password');
-      }
+        if (!isValid) {
+          throw new Error(ERROR_WRONG_MASTER_PASSWORD);
+        }
+      });
 
       set({ cryptoKey: key, isUnlocked: true });
     }

@@ -20,6 +20,10 @@ export const MONTH_EXPIRES_SLICE_END = 2;
 export const YEAR_EXPIRES_SLICE_START = 2;
 export const YEAR_EXPIRES_SLICE_END = 4;
 
+export const LUHN_BASE = 10;
+export const LUHN_MULTIPLIER = 2;
+export const LUHN_THRESHOLD = 9;
+
 export const MONTH_VALIDATION_PATTERN = /^(0[1-9]|1[0-2])$/;
 export const NON_DIGIT_REMOVAL_PATTERN = /\D/g;
 export const DIGITS_ONLY_PATTERN = /^\d+$/;

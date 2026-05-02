@@ -1,6 +1,9 @@
 export const MIN_PASSWORD_LENGTH = 8;
 export const MAX_PASSWORD_LENGTH = 128;
 
+export const PLACEHOLDER_IMPORTED = '{imported}';
+export const PLACEHOLDER_REPLACED = '{replaced}';
+
 export const IMPORT_SUCCESS_MESSAGE_TEMPLATE =
   'Импортировано: {imported} новых, {replaced} заменено';
 export const SUCCESS_MODAL_TITLE_IMPORT = 'Импорт завершен';

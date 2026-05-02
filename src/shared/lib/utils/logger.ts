@@ -1,3 +1,5 @@
+import { LOG_PREFIX } from '../constants';
+
 type TLogLevel = 'error' | 'warn' | 'info';
 
 interface ILoggerParams {
@@ -7,8 +9,6 @@ interface ILoggerParams {
   context?: string;
   silent?: boolean;
 }
-
-const LOG_PREFIX = '[Card Holder]';
 
 let errorModalHandler:
   | ((params: { message: string; error?: unknown; context?: string }) => void)

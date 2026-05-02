@@ -14,6 +14,16 @@ export const FILE_FORMAT_VERSION = 1;
 
 export const ERROR_ENCRYPTION_FAILED = 'Не удалось зашифровать данные';
 export const ERROR_DECRYPTION_FAILED = 'Ошибка при расшифровке данных';
+export const ERROR_WRONG_MASTER_PASSWORD = 'Неверный пароль';
 
 export const ERROR_RATE_LIMIT_LOCKOUT = (minutes: number): string =>
   `Слишком много неудачных попыток. Попробуйте через ${minutes} мин.`;
+
+export const DELAY_BASE_MS = 1000;
+export const DELAY_MULTIPLIER = 2;
+export const MAX_ATTEMPTS_BEFORE_DELAY = 3;
+export const MAX_ATTEMPTS_BEFORE_LOCKOUT = 10;
+export const LOCKOUT_DURATION_MS = 15 * 60 * 1000;
+
+export const STORAGE_KEY_ATTEMPTS = 'rateLimit_failedAttempts';
+export const STORAGE_KEY_LOCKOUT = 'rateLimit_lockoutUntil';

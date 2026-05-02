@@ -4,3 +4,5 @@ export const DATABASE_VERSION = 4;
 export const CARDS_STORE_NAME = 'cards';
 export const CARDS_KEY_PATH = 'pan';
 export const CARDS_ORDER_INDEX = 'order';
+
+export const INDEX_UNIQUE_FALSE = false;

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState, type RefObject } from 'react';
 import type { Procedure } from '@shared/types';
+import { FADE_OUT_MODAL_ANIMATION_NAME } from '../constants';
 
 interface IUseModalClosingStateParams {
   onClose: Procedure;
@@ -10,8 +11,6 @@ interface IUseModalClosingStateResult {
   isClosing: boolean;
   handleClose: Procedure;
 }
-
-const FADE_OUT_MODAL_ANIMATION_NAME = 'fadeOutModal';
 
 export const useModalClosingState = ({
   onClose,

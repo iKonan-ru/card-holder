@@ -1,8 +1,9 @@
-import { IMPORT_SUCCESS_MESSAGE_TEMPLATE } from '../constants';
+import {
+  IMPORT_SUCCESS_MESSAGE_TEMPLATE,
+  PLACEHOLDER_IMPORTED,
+  PLACEHOLDER_REPLACED,
+} from '../constants';
 import type { IImportResult } from '../types';
-
-const PLACEHOLDER_IMPORTED = '{imported}';
-const PLACEHOLDER_REPLACED = '{replaced}';
 
 export const createImportSuccessMessage = (stats: IImportResult): string => {
   return IMPORT_SUCCESS_MESSAGE_TEMPLATE.replace(

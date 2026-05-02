@@ -37,7 +37,7 @@ export const FormField: FC<IFormFieldProps> = ({
   const hasLeftContent = Boolean(leftContent);
   const hasRightContent = Boolean(rightContent);
 
-  const modifiers = useMemo(
+  const modifiers = useMemo<string[]>(
     () =>
       [
         hasValue && 'has-value',

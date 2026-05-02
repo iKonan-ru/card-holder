@@ -1,10 +1,8 @@
 import { useCallback, useState } from 'react';
 import type { IBankCard, IBankCardAddress } from '@entities/bank-card';
 import type { Procedure } from '@shared/types';
-import { EMPTY_CARD_FORM } from '../constants';
+import { ADDRESS_PATH_PREFIX, EMPTY_CARD_FORM } from '../constants';
 import { getInitialFormData } from '../utils';
-
-const ADDRESS_PATH_PREFIX = 'address.';
 
 interface IUseCardFormStateParams {
   initialCard?: Partial<IBankCard>;

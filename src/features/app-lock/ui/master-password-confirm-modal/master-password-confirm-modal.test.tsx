@@ -17,6 +17,7 @@ vi.mock('@shared/lib', async () => {
     ...actual,
     verifyMasterPassword: vi.fn(),
     useModalClose: vi.fn(),
+    withRateLimit: vi.fn(async (op: () => Promise<unknown>) => op()),
   };
 });
 

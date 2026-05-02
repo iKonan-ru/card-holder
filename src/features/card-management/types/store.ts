@@ -21,14 +21,13 @@ import {
   DEFAULT_CARD_ORDER,
   ERROR_FAILED_TO_LOAD_CARDS,
   ERROR_FAILED_TO_REORDER_CARDS,
+  INITIAL_CARDS,
+  INITIAL_FLIPPED_PAN,
+  INITIAL_IS_LOADING,
+  INITIAL_IS_REORDER_MODE,
 } from '../constants';
 import { executeCardOperation } from '../utils';
 import type { ICardManagementActions, ICardManagementState } from './types';
-
-const INITIAL_CARDS: IBankCard[] = [];
-const INITIAL_FLIPPED_PAN = null;
-const INITIAL_IS_LOADING = false;
-const INITIAL_IS_REORDER_MODE = false;
 
 const getCryptoKey = (): CryptoKey => {
   const key = useCryptoStore.getState().cryptoKey;

@@ -103,8 +103,12 @@ export const LockScreen: FC = () => {
 
       try {
         await unlock(password);
-      } catch {
-        setPasswordError(LOCK_SCREEN_ERROR_WRONG_PASSWORD);
+      } catch (error) {
+        setPasswordError(
+          error instanceof Error
+            ? error.message
+            : LOCK_SCREEN_ERROR_WRONG_PASSWORD,
+        );
       } finally {
         setIsSubmitting(false);
       }

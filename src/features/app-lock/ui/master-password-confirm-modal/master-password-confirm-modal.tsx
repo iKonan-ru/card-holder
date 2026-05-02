@@ -8,10 +8,12 @@ import {
 import { MIN_PASSWORD_LENGTH } from '@features/card-export-import';
 import {
   bem,
+  ERROR_WRONG_MASTER_PASSWORD,
   ParentClassProvider,
   useClassName,
   useModalClose,
   verifyMasterPassword,
+  withRateLimit,
 } from '@shared/lib';
 import { Button, PasswordField } from '@shared/ui';
 import {
@@ -47,18 +49,22 @@ export const MasterPasswordConfirmModal: FC<
       setIsSubmitting(true);
 
       try {
-        const isCorrect = await verifyMasterPassword(password);
+        await withRateLimit(async () => {
+          const isCorrect = await verifyMasterPassword(password);
 
-        if (!isCorrect) {
-          setError(MASTER_PASSWORD_CONFIRM_MODAL_ERROR_WRONG_PASSWORD);
-
-          return;
-        }
+          if (!isCorrect) {
+            throw new Error(ERROR_WRONG_MASTER_PASSWORD);
+          }
+        });
 
         await onConfirm();
         closeModal();
-      } catch {
-        setError(MASTER_PASSWORD_CONFIRM_MODAL_ERROR_WRONG_PASSWORD);
+      } catch (error) {
+        setError(
+          error instanceof Error
+            ? error.message
+            : MASTER_PASSWORD_CONFIRM_MODAL_ERROR_WRONG_PASSWORD,
+        );
       } finally {
         setIsSubmitting(false);
       }

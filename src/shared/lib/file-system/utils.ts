@@ -14,9 +14,8 @@ import {
   FILE_MIME_TYPE,
   FILE_NAME_PREFIX,
   MAX_FILE_SIZE,
+  TWO_DIGIT_PADDING,
 } from './constants';
-
-const TWO_DIGIT_PADDING = 2;
 
 export const generateExportFileName = (): string => {
   const now = new Date();

@@ -1,6 +1,4 @@
-import { HEX_RADIX } from '../constants';
-
-const RANDOM_ID_LENGTH = 8;
+import { HEX_RADIX, RANDOM_ID_LENGTH } from '../constants';
 
 export const generateRandomId = (): string => {
   const buffer = new Uint8Array(RANDOM_ID_LENGTH);

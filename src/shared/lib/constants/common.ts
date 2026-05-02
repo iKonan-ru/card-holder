@@ -31,3 +31,7 @@ export const BUTTON_TYPE_BUTTON = 'button';
 
 export const BEM_MODIFIER_SEPARATOR = '_';
 export const BEM_ELEMENT_SEPARATOR = '__';
+
+export const LOG_PREFIX = '[Card Holder]';
+
+export const RANDOM_ID_LENGTH = 8;

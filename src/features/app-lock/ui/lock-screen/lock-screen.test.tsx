@@ -109,7 +109,7 @@ describe('LockScreen — режим разблокировки', () => {
 
   it('должен показать ошибку при неверном пароле', async () => {
     const user = userEvent.setup();
-    mockUnlock.mockRejectedValue(new Error('Wrong password'));
+    mockUnlock.mockRejectedValue(new Error(LOCK_SCREEN_ERROR_WRONG_PASSWORD));
     renderUnlock();
 
     await user.type(
@@ -129,7 +129,7 @@ describe('LockScreen — режим разблокировки', () => {
 
   it('должен снова активировать кнопку после ошибки', async () => {
     const user = userEvent.setup();
-    mockUnlock.mockRejectedValue(new Error('Wrong password'));
+    mockUnlock.mockRejectedValue(new Error(LOCK_SCREEN_ERROR_WRONG_PASSWORD));
     renderUnlock();
 
     await user.type(

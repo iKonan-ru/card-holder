@@ -1,13 +1,13 @@
-import { ERROR_RATE_LIMIT_LOCKOUT } from './constants';
-
-const DELAY_BASE_MS = 1000;
-const DELAY_MULTIPLIER = 2;
-const MAX_ATTEMPTS_BEFORE_DELAY = 3;
-const MAX_ATTEMPTS_BEFORE_LOCKOUT = 10;
-const LOCKOUT_DURATION_MS = 15 * 60 * 1000;
-
-const STORAGE_KEY_ATTEMPTS = 'rateLimit_failedAttempts';
-const STORAGE_KEY_LOCKOUT = 'rateLimit_lockoutUntil';
+import {
+  DELAY_BASE_MS,
+  DELAY_MULTIPLIER,
+  ERROR_RATE_LIMIT_LOCKOUT,
+  LOCKOUT_DURATION_MS,
+  MAX_ATTEMPTS_BEFORE_DELAY,
+  MAX_ATTEMPTS_BEFORE_LOCKOUT,
+  STORAGE_KEY_ATTEMPTS,
+  STORAGE_KEY_LOCKOUT,
+} from './constants';
 
 const getStoredAttempts = (): number => {
   const stored = sessionStorage.getItem(STORAGE_KEY_ATTEMPTS);

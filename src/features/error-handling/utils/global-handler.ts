@@ -1,6 +1,5 @@
+import { GLOBAL_ERROR_CONTEXT } from '../constants';
 import { showError } from './show-error';
-
-const GLOBAL_ERROR_CONTEXT = 'GlobalErrorHandler';
 
 export const initGlobalErrorHandler = (): void => {
   const handleError = (event: ErrorEvent | PromiseRejectionEvent): void => {

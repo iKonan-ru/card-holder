@@ -6,11 +6,10 @@ import {
   CARDS_STORE_NAME,
   DATABASE_NAME,
   DATABASE_VERSION,
+  INDEX_UNIQUE_FALSE,
 } from './constants';
 
 let databaseInstance: IDBDatabase | null = null;
-
-const INDEX_UNIQUE_FALSE = false;
 
 const checkIsIDBOpenDBRequest = (
   target: EventTarget | null,

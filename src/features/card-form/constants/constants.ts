@@ -1,5 +1,7 @@
 import type { IBankCard } from '@entities/bank-card';
 
+export const ADDRESS_PATH_PREFIX = 'address.';
+
 export const CARD_FORM_BLOCK = 'card-form';
 export const CARD_FORM_GROUP_BLOCK = 'card-form-group';
 
