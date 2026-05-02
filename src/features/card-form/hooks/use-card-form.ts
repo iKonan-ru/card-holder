@@ -2,6 +2,12 @@ import type { SubmitEvent } from 'react';
 import type { IBankCard } from '@entities/bank-card';
 import type { Procedure } from '@shared/types';
 import {
+  CVV_MAX_LENGTH,
+  EXPIRES_FORMATTED_LENGTH,
+  MIN_NAME_LENGTH,
+  PAN_FORMATTED_LENGTH,
+} from '../constants';
+import {
   useCardFormState,
   useCardFormSubmit,
   useCardFormValidation,
@@ -17,6 +23,7 @@ interface IUseCardFormResult {
   formData: Partial<IBankCard>;
   errors: Record<string, string | undefined>;
   isSubmitting: boolean;
+  isSubmitEnabled: boolean;
   isEditMode: boolean;
   handleFieldChange: (fieldName: string, value: string) => void;
   handleFieldValidation: (
@@ -55,10 +62,21 @@ export const useCardForm = ({
     onSuccess,
   });
 
+  const isSubmitEnabled =
+    !errors.pan &&
+    (formData.pan?.length ?? 0) === PAN_FORMATTED_LENGTH &&
+    !errors.expires &&
+    (formData.expires?.length ?? 0) === EXPIRES_FORMATTED_LENGTH &&
+    !errors.cvv &&
+    (formData.cvv?.length ?? 0) === CVV_MAX_LENGTH &&
+    !errors.name &&
+    (formData.name?.trim().length ?? 0) >= MIN_NAME_LENGTH;
+
   return {
     formData,
     errors,
     isSubmitting,
+    isSubmitEnabled,
     isEditMode,
     handleFieldChange,
     handleFieldValidation,

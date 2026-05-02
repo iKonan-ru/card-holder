@@ -3,8 +3,6 @@ import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as sharedLib from '@shared/lib';
 import {
-  ERROR_PASSWORD_MISMATCH,
-  ERROR_PASSWORD_TOO_SHORT,
   PASSWORD_MODAL_BUTTON_CANCEL,
   PASSWORD_MODAL_BUTTON_EXPORT,
   PASSWORD_MODAL_BUTTON_IMPORT,
@@ -77,7 +75,7 @@ describe('PasswordModal', () => {
       ).toBeInTheDocument();
     });
 
-    it('должен показывать ошибку при коротком пароле', async () => {
+    it('кнопка недоступна при пароле короче 8 символов', async () => {
       const user = userEvent.setup();
       render(
         <PasswordModal
@@ -92,14 +90,14 @@ describe('PasswordModal', () => {
         name: new RegExp(PASSWORD_MODAL_BUTTON_EXPORT, 'i'),
       });
 
-      await user.type(passwordInput, '1234567');
-      await user.click(submitButton);
+      expect(submitButton).toBeDisabled();
 
-      expect(screen.getByText(ERROR_PASSWORD_TOO_SHORT)).toBeInTheDocument();
-      expect(mockOnConfirm).not.toHaveBeenCalled();
+      await user.type(passwordInput, '1234567');
+
+      expect(submitButton).toBeDisabled();
     });
 
-    it('должен показывать ошибку при несовпадении паролей', async () => {
+    it('кнопка недоступна при несовпадении паролей', async () => {
       const user = userEvent.setup();
       render(
         <PasswordModal
@@ -117,9 +115,8 @@ describe('PasswordModal', () => {
 
       await user.type(passwordInput, '12345678');
       await user.type(confirmInput, '87654321');
-      await user.click(submitButton);
 
-      expect(screen.getByText(ERROR_PASSWORD_MISMATCH)).toBeInTheDocument();
+      expect(submitButton).toBeDisabled();
       expect(mockOnConfirm).not.toHaveBeenCalled();
     });
 
@@ -201,7 +198,7 @@ describe('PasswordModal', () => {
       expect(confirmInput).toHaveAttribute('type', 'text');
     });
 
-    it('должен очищать ошибки при вводе в поле пароля', async () => {
+    it('кнопка активируется при вводе 8 и более символов в оба поля', async () => {
       const user = userEvent.setup();
       render(
         <PasswordModal
@@ -212,23 +209,21 @@ describe('PasswordModal', () => {
       );
 
       const passwordInput = getPasswordInput();
+      const confirmInput = getConfirmInput();
       const submitButton = screen.getByRole('button', {
         name: new RegExp(PASSWORD_MODAL_BUTTON_EXPORT, 'i'),
       });
 
-      await user.type(passwordInput, '1234567');
-      await user.click(submitButton);
+      expect(submitButton).toBeDisabled();
 
-      expect(screen.getByText(ERROR_PASSWORD_TOO_SHORT)).toBeInTheDocument();
+      await user.type(passwordInput, '12345678');
+      expect(submitButton).toBeDisabled();
 
-      await user.type(passwordInput, '8');
-
-      expect(
-        screen.queryByText(ERROR_PASSWORD_TOO_SHORT),
-      ).not.toBeInTheDocument();
+      await user.type(confirmInput, '12345678');
+      expect(submitButton).not.toBeDisabled();
     });
 
-    it('должен очищать ошибку несовпадения при вводе в поле подтверждения', async () => {
+    it('кнопка активируется при совпадении паролей', async () => {
       const user = userEvent.setup();
       render(
         <PasswordModal
@@ -246,16 +241,11 @@ describe('PasswordModal', () => {
 
       await user.type(passwordInput, '12345678');
       await user.type(confirmInput, '87654321');
-      await user.click(submitButton);
-
-      expect(screen.getByText(ERROR_PASSWORD_MISMATCH)).toBeInTheDocument();
+      expect(submitButton).toBeDisabled();
 
       await user.clear(confirmInput);
-      await user.type(confirmInput, '1');
-
-      expect(
-        screen.queryByText(ERROR_PASSWORD_MISMATCH),
-      ).not.toBeInTheDocument();
+      await user.type(confirmInput, '12345678');
+      expect(submitButton).not.toBeDisabled();
     });
   });
 
@@ -291,8 +281,7 @@ describe('PasswordModal', () => {
       ).toBeInTheDocument();
     });
 
-    it('должен разрешать пустой пароль', async () => {
-      const user = userEvent.setup();
+    it('кнопка недоступна при пустом пароле', async () => {
       render(
         <PasswordModal
           mode="import"
@@ -305,16 +294,11 @@ describe('PasswordModal', () => {
         name: new RegExp(PASSWORD_MODAL_BUTTON_IMPORT, 'i'),
       });
 
-      await user.click(submitButton);
-
-      expect(mockOnConfirm).toHaveBeenCalledWith(
-        '',
-        expect.any(Function),
-        expect.any(Function),
-      );
+      expect(submitButton).toBeDisabled();
+      expect(mockOnConfirm).not.toHaveBeenCalled();
     });
 
-    it('должен разрешать короткий пароль', async () => {
+    it('кнопка доступна при любом непустом пароле', async () => {
       const user = userEvent.setup();
       render(
         <PasswordModal
@@ -438,7 +422,7 @@ describe('PasswordModal', () => {
       );
     });
 
-    it('должен очищать обе ошибки при изменении пароля в экспорте', async () => {
+    it('кнопка активируется когда пароли совпадают после изменения', async () => {
       const user = userEvent.setup();
       render(
         <PasswordModal
@@ -456,15 +440,11 @@ describe('PasswordModal', () => {
 
       await user.type(passwordInput, '12345678');
       await user.type(confirmInput, '87654321');
-      await user.click(submitButton);
+      expect(submitButton).toBeDisabled();
 
-      expect(screen.getByText(ERROR_PASSWORD_MISMATCH)).toBeInTheDocument();
-
-      await user.type(passwordInput, '9');
-
-      expect(
-        screen.queryByText(ERROR_PASSWORD_MISMATCH),
-      ).not.toBeInTheDocument();
+      await user.clear(passwordInput);
+      await user.type(passwordInput, '87654321');
+      expect(submitButton).not.toBeDisabled();
     });
   });
 });

@@ -39,6 +39,7 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
     passwordError,
     confirmError,
     isSubmitting,
+    isSubmitEnabled,
     isExportMode,
     isPasswordVisible,
     title,
@@ -105,6 +106,7 @@ export const PasswordModal: FC<IPasswordModalProps> = (props) => {
             aria-label={`${buttonText}: ${title}`}
             variant="primary"
             isLoading={isSubmitting}
+            disabled={isSubmitting || !isSubmitEnabled}
           >
             {buttonText}
           </Button>

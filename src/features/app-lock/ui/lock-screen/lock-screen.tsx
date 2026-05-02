@@ -60,6 +60,13 @@ export const LockScreen: FC = () => {
     setIsPasswordVisible(isVisible);
   }, []);
 
+  const isSubmitEnabled =
+    password.length >= MIN_PASSWORD_LENGTH &&
+    password.length <= MAX_PASSWORD_LENGTH &&
+    (!isFirstSetup ||
+      (confirmPassword.length >= MIN_PASSWORD_LENGTH &&
+        password === confirmPassword));
+
   const validate = (): boolean => {
     if (password.length < MIN_PASSWORD_LENGTH) {
       setPasswordError(LOCK_SCREEN_ERROR_TOO_SHORT);
@@ -171,7 +178,7 @@ export const LockScreen: FC = () => {
             variant="primary"
             fullWidth={true}
             isLoading={isSubmitting}
-            disabled={isSubmitting}
+            disabled={isSubmitting || !isSubmitEnabled}
           >
             {isFirstSetup
               ? LOCK_SCREEN_BUTTON_CREATE

@@ -48,6 +48,7 @@ export const CardForm: FC<ICardFormProps> = ({
     formData,
     errors,
     isSubmitting,
+    isSubmitEnabled,
     isEditMode,
     handleFieldChange,
     handleFieldValidation,
@@ -167,7 +168,7 @@ export const CardForm: FC<ICardFormProps> = ({
           <div className={bem(CARD_FORM_BLOCK, 'actions')}>
             <Button
               type={BUTTON_TYPE_SUBMIT}
-              disabled={isSubmitting}
+              disabled={isSubmitting || !isSubmitEnabled}
               variant="primary"
             >
               {submitButtonText}

@@ -4,6 +4,7 @@ import {
   loadOrCreateSalt,
   MASTER_KEY_SALT_STORAGE_KEY,
   saveVerificationToken,
+  verifyMasterPassword,
 } from '@shared/lib';
 
 interface ICryptoStore {
@@ -20,11 +21,21 @@ export const useCryptoStore = create<ICryptoStore>((set) => ({
   isFirstSetup: !localStorage.getItem(MASTER_KEY_SALT_STORAGE_KEY),
 
   unlock: async (password: string) => {
-    const { salt } = loadOrCreateSalt();
+    const { salt, isNew } = loadOrCreateSalt();
     const key = await deriveKeyFromPassword(password, salt);
-    await saveVerificationToken(key);
 
-    set({ cryptoKey: key, isUnlocked: true });
+    if (isNew) {
+      await saveVerificationToken(key);
+      set({ cryptoKey: key, isUnlocked: true, isFirstSetup: false });
+    } else {
+      const isValid = await verifyMasterPassword(password);
+
+      if (!isValid) {
+        throw new Error('Wrong password');
+      }
+
+      set({ cryptoKey: key, isUnlocked: true });
+    }
   },
 
   lock: () => {

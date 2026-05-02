@@ -5,6 +5,7 @@ import {
   type FC,
   type SubmitEvent,
 } from 'react';
+import { MIN_PASSWORD_LENGTH } from '@features/card-export-import';
 import {
   bem,
   ParentClassProvider,
@@ -36,6 +37,8 @@ export const MasterPasswordConfirmModal: FC<
   const [error, setError] = useState<string | undefined>();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const isSubmitEnabled = password.length >= MIN_PASSWORD_LENGTH;
 
   const handleSubmit = useCallback(
     async (event: SubmitEvent<HTMLFormElement>) => {
@@ -105,7 +108,7 @@ export const MasterPasswordConfirmModal: FC<
             type="submit"
             variant="danger"
             isLoading={isSubmitting}
-            disabled={isSubmitting}
+            disabled={isSubmitting || !isSubmitEnabled}
           >
             {MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM}
           </Button>

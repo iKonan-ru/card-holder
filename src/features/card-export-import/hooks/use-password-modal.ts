@@ -8,6 +8,7 @@ import {
 import { useAnimatedModalClose, useModalClose } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import {
+  MIN_PASSWORD_LENGTH,
   PASSWORD_MODAL_BUTTON_EXPORT,
   PASSWORD_MODAL_BUTTON_IMPORT,
   PASSWORD_MODAL_TITLE_EXPORT,
@@ -32,6 +33,7 @@ interface IUsePasswordModalResult {
   passwordError: string | undefined;
   confirmError: string | undefined;
   isSubmitting: boolean;
+  isSubmitEnabled: boolean;
   isExportMode: boolean;
   isPasswordVisible: boolean;
   title: string;
@@ -99,6 +101,12 @@ export const usePasswordModal = (
     setIsPasswordVisible(isVisible);
   }, []);
 
+  const isSubmitEnabled = isExportMode
+    ? password.length >= MIN_PASSWORD_LENGTH &&
+      confirmPassword.length >= MIN_PASSWORD_LENGTH &&
+      password === confirmPassword
+    : password.length > 0;
+
   const validatePasswords = useCallback((): boolean => {
     if (!isExportMode) {
       return true;
@@ -154,6 +162,7 @@ export const usePasswordModal = (
     passwordError,
     confirmError,
     isSubmitting,
+    isSubmitEnabled,
     isExportMode,
     isPasswordVisible,
     title,
