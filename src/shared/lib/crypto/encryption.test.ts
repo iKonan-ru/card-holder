@@ -9,7 +9,7 @@ import {
   FILE_FORMAT_VERSION,
 } from './constants';
 import { decryptData, encryptData } from './encryption';
-import type { IEncryptedPayload } from './types';
+import type { IValidatedEncryptedPayload } from './types';
 
 describe('encryptData', () => {
   const testPassword = 'test-password-12345';
@@ -122,7 +122,7 @@ describe('decryptData', () => {
 
   it('должен бросать ошибку при поврежденной соли', async () => {
     const encrypted = await encryptData(testData, testPassword);
-    const corrupted: IEncryptedPayload = {
+    const corrupted: IValidatedEncryptedPayload = {
       ...encrypted,
       salt: 'corrupted-base64',
     };
@@ -134,7 +134,7 @@ describe('decryptData', () => {
 
   it('должен бросать ошибку при поврежденном iv', async () => {
     const encrypted = await encryptData(testData, testPassword);
-    const corrupted: IEncryptedPayload = {
+    const corrupted: IValidatedEncryptedPayload = {
       ...encrypted,
       iv: 'corrupted-base64',
     };
@@ -146,7 +146,7 @@ describe('decryptData', () => {
 
   it('должен бросать ошибку при поврежденных зашифрованных данных', async () => {
     const encrypted = await encryptData(testData, testPassword);
-    const corrupted: IEncryptedPayload = {
+    const corrupted: IValidatedEncryptedPayload = {
       ...encrypted,
       encrypted: 'corrupted-encrypted-data',
     };

@@ -54,8 +54,8 @@ export const useImportCards = (
       const file = await uploadFile(FILE_EXTENSION);
       const content = await readFileAsText(file);
 
-      const payload = parseImportedFile(content);
-      validateImportedPayload(payload);
+      const rawPayload = parseImportedFile(content);
+      const payload = validateImportedPayload(rawPayload);
 
       const handleImportWithPassword = async (
         password: string,

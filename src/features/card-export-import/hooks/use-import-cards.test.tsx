@@ -103,7 +103,7 @@ describe('useImportCards', () => {
     vi.mocked(sharedLib.uploadFile).mockResolvedValue(mockFile);
     vi.mocked(sharedLib.readFileAsText).mockResolvedValue(MOCK_FILE_CONTENT);
     vi.mocked(utils.parseImportedFile).mockReturnValue(mockPayload);
-    vi.mocked(utils.validateImportedPayload).mockReturnValue(undefined);
+    vi.mocked(utils.validateImportedPayload).mockReturnValue(mockPayload);
     vi.mocked(sharedLib.decryptData).mockResolvedValue('[]');
     vi.mocked(utils.parseDecryptedCards).mockReturnValue(mockImportedCards);
     vi.mocked(utils.mergeCards).mockReturnValue({

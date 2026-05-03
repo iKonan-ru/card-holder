@@ -1,4 +1,4 @@
-import { type FC } from 'react';
+import { useCallback, type FC } from 'react';
 import { AddCardButton } from '@features/add-card-button';
 import type { IBankCard } from '@entities/bank-card';
 import { ParentClassProvider, useClassName } from '@shared/lib';
@@ -24,25 +24,29 @@ export const CardListGrid: FC<ICardListGridProps> = ({
     blockName: CARD_LIST_GRID_BLOCK,
   });
 
+  const getCard = useCallback(
+    (card: IBankCard) => {
+      const isFlipped = flippedPan === card.pan;
+
+      return (
+        <CardItemWrapper
+          key={card.pan}
+          card={card}
+          isFlipped={isFlipped}
+          isReorderMode={isReorderMode}
+        />
+      );
+    },
+    [flippedPan, isReorderMode],
+  );
+
   return (
     <div
       className={className}
       role="list"
     >
       <ParentClassProvider parentClass={CARD_LIST_GRID_BLOCK}>
-        {cards.map((card) => {
-          const isFlipped = flippedPan === card.pan;
-
-          return (
-            <CardItemWrapper
-              key={card.pan}
-              card={card}
-              isFlipped={isFlipped}
-              isReorderMode={isReorderMode}
-            />
-          );
-        })}
-
+        {cards.map(getCard)}
         <div role="listitem">
           <AddCardButton onClick={onShowForm} />
         </div>

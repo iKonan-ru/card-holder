@@ -76,7 +76,7 @@ describe('useLockScreenForm - handlePasswordChange', () => {
     expect(result.current.password).toBe('12345678');
   });
 
-  it('должен сбрасывать passwordError при изменении пароля', () => {
+  it('должен сбрасывать passwordError при изменении пароля', async () => {
     setupUnlockMode();
     mockUnlock.mockRejectedValueOnce(
       new Error(LOCK_SCREEN_ERROR_WRONG_PASSWORD),
@@ -88,8 +88,8 @@ describe('useLockScreenForm - handlePasswordChange', () => {
       result.current.handlePasswordChange(makeChangeEvent('12345678'));
     });
 
-    act(() => {
-      result.current.handleSubmit(makeSubmitEvent());
+    await act(async () => {
+      await result.current.handleSubmit(makeSubmitEvent());
     });
 
     act(() => {

@@ -1,4 +1,4 @@
-import { useRef, type FC } from 'react';
+import { useCallback, useRef, type FC } from 'react';
 import {
   useModalContext,
   useModalHistory,
@@ -39,34 +39,37 @@ export const ModalContainer: FC = () => {
     userActionRef,
   });
 
+  const topModalId = modals[modals.length - 1]?.id;
+
+  const renderModal = useCallback(
+    ({ id, preventClose, title, content }: IModalItem) => {
+      const isTopModal = id === topModalId;
+      const handleClose = () => {
+        userActionRef.current = true;
+        closeModal(id);
+      };
+      const handleRegisterClose = (closeWithAnimation: Procedure) =>
+        modalRequestCloseRef.current.set(id, closeWithAnimation);
+
+      return (
+        <Modal
+          key={id}
+          onClose={handleClose}
+          onRegisterClose={handleRegisterClose}
+          isTopModal={isTopModal}
+          preventClose={preventClose}
+          title={title}
+        >
+          {content}
+        </Modal>
+      );
+    },
+    [topModalId, closeModal, userActionRef, modalRequestCloseRef],
+  );
+
   if (!modals.length) {
     return null;
   }
-
-  const topModalId = modals[modals.length - 1]?.id;
-
-  const renderModal = ({ id, preventClose, title, content }: IModalItem) => {
-    const isTopModal = id === topModalId;
-    const handleClose = () => {
-      userActionRef.current = true;
-      closeModal(id);
-    };
-    const handleRegisterClose = (closeWithAnimation: Procedure) =>
-      modalRequestCloseRef.current.set(id, closeWithAnimation);
-
-    return (
-      <Modal
-        key={id}
-        onClose={handleClose}
-        onRegisterClose={handleRegisterClose}
-        isTopModal={isTopModal}
-        preventClose={preventClose}
-        title={title}
-      >
-        {content}
-      </Modal>
-    );
-  };
 
   return <Portal>{modals.map(renderModal)}</Portal>;
 };

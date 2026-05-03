@@ -1,5 +1,9 @@
 import type { IBankCard } from '@entities/bank-card';
-import { FILE_FORMAT_VERSION, type IEncryptedPayload } from '@shared/lib';
+import {
+  FILE_FORMAT_VERSION,
+  type IEncryptedPayload,
+  type IValidatedEncryptedPayload,
+} from '@shared/lib';
 import { ERROR_CORRUPTED_FILE, ERROR_UNSUPPORTED_VERSION } from '../constants';
 import type { IImportResult } from '../types';
 
@@ -15,7 +19,9 @@ export const parseImportedFile = (fileContent: string): IEncryptedPayload => {
   }
 };
 
-export const validateImportedPayload = (payload: IEncryptedPayload): void => {
+export const validateImportedPayload = (
+  payload: IEncryptedPayload,
+): IValidatedEncryptedPayload => {
   const hasVersion = typeof payload.version === 'number';
   const hasTimestamp =
     typeof payload.timestamp === 'number' && isFinite(payload.timestamp);
@@ -36,6 +42,8 @@ export const validateImportedPayload = (payload: IEncryptedPayload): void => {
   if (!isVersionSupported) {
     throw new Error(ERROR_UNSUPPORTED_VERSION);
   }
+
+  return payload as IValidatedEncryptedPayload;
 };
 
 const isValidBankCard = (card: unknown): card is IBankCard =>

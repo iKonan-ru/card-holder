@@ -79,7 +79,7 @@ export const FormField: FC<IFormFieldProps> = ({
                 maxLength={maxLength}
                 placeholder={label}
                 disabled={disabled}
-                className={`${bem(FORM_FIELD_BLOCK, 'input')} ${bem(FORM_FIELD_BLOCK, 'input')}_textarea`}
+                className={bem(bem(FORM_FIELD_BLOCK, 'input'), ['textarea'])}
                 autoComplete={autoComplete}
                 autoFocus={autoFocus}
                 aria-invalid={hasError}
@@ -109,6 +109,7 @@ export const FormField: FC<IFormFieldProps> = ({
               htmlFor={id}
               className={bem(FORM_FIELD_BLOCK, 'label')}
               id={hasError ? errorId : undefined}
+              aria-live={hasError ? 'polite' : undefined}
             >
               {error || label}
               {required && !error && ' *'}

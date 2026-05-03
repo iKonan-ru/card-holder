@@ -1,4 +1,3 @@
-import { EMPTY_STRING } from '../constants';
 import {
   ENCRYPTION_ALGORITHM,
   ERROR_DECRYPTION_FAILED,
@@ -6,37 +5,14 @@ import {
   FILE_FORMAT_VERSION,
   IV_LENGTH,
 } from './constants';
+import { arrayBufferToBase64, base64ToArrayBuffer } from './encoding';
 import { deriveKeyFromPassword, generateSalt } from './key-derivation';
-import type { IEncryptedPayload } from './types';
-
-const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
-  const bytes = new Uint8Array(buffer);
-  let binary = EMPTY_STRING;
-  const length = bytes.length;
-
-  for (let index = 0; index < length; index++) {
-    binary += String.fromCharCode(bytes[index]);
-  }
-
-  return btoa(binary);
-};
-
-const base64ToArrayBuffer = (base64: string): ArrayBuffer => {
-  const binary = atob(base64);
-  const length = binary.length;
-  const bytes = new Uint8Array(length);
-
-  for (let index = 0; index < length; index++) {
-    bytes[index] = binary.charCodeAt(index);
-  }
-
-  return bytes.buffer;
-};
+import type { IValidatedEncryptedPayload } from './types';
 
 export const encryptData = async (
   data: string,
   password: string,
-): Promise<IEncryptedPayload> => {
+): Promise<IValidatedEncryptedPayload> => {
   try {
     const encoder = new TextEncoder();
     const dataBuffer = encoder.encode(data);
@@ -68,13 +44,13 @@ export const encryptData = async (
 };
 
 export const decryptData = async (
-  payload: IEncryptedPayload,
+  payload: IValidatedEncryptedPayload,
   password: string,
 ): Promise<string> => {
   try {
-    const salt = new Uint8Array(base64ToArrayBuffer(payload.salt!));
-    const iv = new Uint8Array(base64ToArrayBuffer(payload.iv!));
-    const encryptedData = base64ToArrayBuffer(payload.encrypted!);
+    const salt = new Uint8Array(base64ToArrayBuffer(payload.salt));
+    const iv = new Uint8Array(base64ToArrayBuffer(payload.iv));
+    const encryptedData = base64ToArrayBuffer(payload.encrypted);
 
     const key = await deriveKeyFromPassword(password, salt);
 

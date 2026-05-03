@@ -12,7 +12,12 @@ import {
   useOverlayClick,
 } from '@shared/lib';
 import type { Procedure } from '@shared/types';
-import { MODAL_BLOCK, MODAL_MODIFIERS_CLOSING } from './constants';
+import { Icon } from '../icon';
+import {
+  MODAL_BLOCK,
+  MODAL_CLOSE_ARIA_LABEL,
+  MODAL_MODIFIERS_CLOSING,
+} from './constants';
 import './modal.less';
 
 interface IModalProps extends PropsWithChildren {
@@ -64,11 +69,6 @@ export const Modal: FC<IModalProps> = ({
     modifiers,
   });
 
-  const contentClassName = bem(bem(MODAL_BLOCK, 'content'), modifiers);
-  const headerClassName = bem(MODAL_BLOCK, 'header');
-  const titleClassName = bem(MODAL_BLOCK, 'title');
-  const closeClassName = bem(MODAL_BLOCK, 'close');
-
   return (
     <div
       ref={overlayRef}
@@ -80,22 +80,25 @@ export const Modal: FC<IModalProps> = ({
         ref={contentRef}
         role={ARIA_ROLE_DIALOG}
         aria-modal={ARIA_MODAL_TRUE}
-        className={contentClassName}
+        className={bem(MODAL_BLOCK, 'content')}
         onClick={handleContentClick}
         onMouseDown={handleContentMouseDown}
       >
         <ModalCloseContext.Provider value={handleClose}>
           <ParentClassProvider parentClass={MODAL_BLOCK}>
-            <div className={headerClassName}>
-              {title && <h3 className={titleClassName}>{title}</h3>}
+            <div className={bem(MODAL_BLOCK, 'header')}>
+              {title && <h3 className={bem(MODAL_BLOCK, 'title')}>{title}</h3>}
               <button
-                className={closeClassName}
+                className={bem(MODAL_BLOCK, 'close')}
                 type="button"
                 onClick={handleClose}
                 disabled={preventClose}
-                aria-label="Закрыть"
+                aria-label={MODAL_CLOSE_ARIA_LABEL}
               >
-                <FiX />
+                <Icon
+                  component={FiX}
+                  aria-hidden
+                />
               </button>
             </div>
             {children}

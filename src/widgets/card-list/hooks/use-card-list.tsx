@@ -40,10 +40,6 @@ export const useCardList = (): IUseCardListResult => {
     [setCards, reorderCards],
   );
 
-  const handleToggleReorderMode = useCallback(() => {
-    toggleReorderMode();
-  }, [toggleReorderMode]);
-
   return {
     cards,
     flippedPan,
@@ -51,6 +47,6 @@ export const useCardList = (): IUseCardListResult => {
     isReorderMode,
     handleShowForm: openAddCardForm,
     handleDragEnd,
-    handleToggleReorderMode,
+    handleToggleReorderMode: toggleReorderMode,
   };
 };

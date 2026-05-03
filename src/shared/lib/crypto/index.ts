@@ -2,6 +2,8 @@ export * from './types';
 
 export * from './constants';
 
+export * from './encoding';
+
 export * from './encryption';
 
 export * from './key-derivation';

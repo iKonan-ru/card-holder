@@ -63,6 +63,10 @@
     pointer-events: none;
   }
 
+  &_closing &__content {
+    animation: fadeOutModal @duration-medium @easing-ease forwards;
+  }
+
   &__content {
     max-height: 100%;
     animation: fadeInModal @duration-medium @easing-ease-out;
@@ -73,10 +77,6 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-
-    &_closing {
-      animation: fadeOutModal @duration-medium @easing-ease forwards;
-    }
 
     @media (max-width: @tablet) {
       width: 100%;

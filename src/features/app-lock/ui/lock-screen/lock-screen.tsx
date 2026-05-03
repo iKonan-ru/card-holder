@@ -1,5 +1,6 @@
 import { useRef, type FC } from 'react';
 import { MAX_PASSWORD_LENGTH } from '@features/card-export-import';
+import { bem, useClassName, useFocusTrap } from '@shared/lib';
 import { Button, PasswordField } from '@shared/ui';
 import {
   LOCK_SCREEN_BLOCK,
@@ -30,11 +31,14 @@ export const LockScreen: FC = () => {
     handleSubmit,
   } = useLockScreenForm();
 
+  const className = useClassName({ blockName: LOCK_SCREEN_BLOCK });
   const contentRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap({ contentRef, isTopModal: true });
 
   return (
     <div
-      className={LOCK_SCREEN_BLOCK}
+      className={className}
       role="dialog"
       aria-modal="true"
       aria-label={
@@ -43,20 +47,20 @@ export const LockScreen: FC = () => {
     >
       <div
         ref={contentRef}
-        className={`${LOCK_SCREEN_BLOCK}__content`}
+        className={bem(LOCK_SCREEN_BLOCK, 'content')}
       >
-        <h1 className={`${LOCK_SCREEN_BLOCK}__title`}>
+        <h1 className={bem(LOCK_SCREEN_BLOCK, 'title')}>
           {isFirstSetup ? LOCK_SCREEN_TITLE_CREATE : LOCK_SCREEN_TITLE_UNLOCK}
         </h1>
 
         {isFirstSetup && (
-          <p className={`${LOCK_SCREEN_BLOCK}__subtitle`}>
+          <p className={bem(LOCK_SCREEN_BLOCK, 'subtitle')}>
             {LOCK_SCREEN_SUBTITLE_CREATE}
           </p>
         )}
 
         <form
-          className={`${LOCK_SCREEN_BLOCK}__form`}
+          className={bem(LOCK_SCREEN_BLOCK, 'form')}
           onSubmit={handleSubmit}
         >
           <PasswordField

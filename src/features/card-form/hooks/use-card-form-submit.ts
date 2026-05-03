@@ -103,10 +103,6 @@ export const useCardFormSubmit = ({
 
               return;
             }
-
-            if (originalPan) {
-              await deleteCard(originalPan);
-            }
           }
 
           const cardWithOrder: Partial<IBankCard> & { order: number } = {
@@ -121,6 +117,10 @@ export const useCardFormSubmit = ({
           }
 
           await updateCard(cardWithOrder);
+
+          if (isPanChanged && originalPan) {
+            await deleteCard(originalPan);
+          }
         }
 
         resetForm();
