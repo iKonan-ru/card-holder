@@ -171,4 +171,26 @@ describe('useModalKeyboard', () => {
 
     expect(mockCloseTop).toHaveBeenCalledTimes(1);
   });
+
+  it('должен удалять обработчик keydown при анмаунте', () => {
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+    const modals = [createMockModal('modal-1')];
+
+    const { unmount } = renderHook(() =>
+      useModalKeyboard({
+        modals,
+        closeTop: mockCloseTop,
+        modalRequestCloseRef: mockModalRequestCloseRef,
+        userActionRef: mockUserActionRef,
+      }),
+    );
+
+    unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'keydown',
+      expect.any(Function),
+    );
+    removeEventListenerSpy.mockRestore();
+  });
 });

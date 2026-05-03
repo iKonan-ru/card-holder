@@ -175,6 +175,24 @@ describe('useCardFormState', () => {
     expect(result.current.formData.expires).toBe('12/25');
   });
 
+  it('должен обновлять isSubmitting через setIsSubmitting', () => {
+    const { result } = renderHook(() => useCardFormState({}));
+
+    expect(result.current.isSubmitting).toBe(false);
+
+    act(() => {
+      result.current.setIsSubmitting(true);
+    });
+
+    expect(result.current.isSubmitting).toBe(true);
+
+    act(() => {
+      result.current.setIsSubmitting(false);
+    });
+
+    expect(result.current.isSubmitting).toBe(false);
+  });
+
   it('не должен изменять formData при отсутствии initialCard', () => {
     const { result, rerender } = renderHook(() => useCardFormState({}));
 

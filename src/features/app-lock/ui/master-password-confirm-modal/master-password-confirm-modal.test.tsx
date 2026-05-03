@@ -1,42 +1,48 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import * as sharedLib from '@shared/lib';
 import {
   MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CANCEL,
   MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM,
-  MASTER_PASSWORD_CONFIRM_MODAL_ERROR_WRONG_PASSWORD,
   MASTER_PASSWORD_CONFIRM_MODAL_LABEL_PASSWORD,
 } from '../../constants';
+import { useMasterPasswordConfirmForm } from '../../hooks';
 import { MasterPasswordConfirmModal } from './master-password-confirm-modal';
 
-vi.mock('@shared/lib', async () => {
-  const actual = await vi.importActual('@shared/lib');
-
-  return {
-    ...actual,
-    verifyMasterPassword: vi.fn(),
-    useModalClose: vi.fn(),
-    withRateLimit: vi.fn(async (op: () => Promise<unknown>) => op()),
-  };
-});
+vi.mock('../../hooks', () => ({
+  useMasterPasswordConfirmForm: vi.fn(),
+}));
 
 const mockCloseModal = vi.fn();
+const mockHandleSubmit = vi.fn();
+const mockHandlePasswordChange = vi.fn();
+const mockSetIsPasswordVisible = vi.fn();
 const mockOnConfirm = vi.fn();
 
-const renderModal = (message = 'Подтвердите действие') => {
+const createHookValue = (overrides = {}) => ({
+  password: '',
+  error: undefined,
+  isSubmitting: false,
+  isPasswordVisible: false,
+  isSubmitEnabled: false,
+  closeModal: mockCloseModal,
+  handleSubmit: mockHandleSubmit,
+  handlePasswordChange: mockHandlePasswordChange,
+  setIsPasswordVisible: mockSetIsPasswordVisible,
+  ...overrides,
+});
+
+const renderModal = (message = 'Подтвердите действие') =>
   render(
     <MasterPasswordConfirmModal
       message={message}
       onConfirm={mockOnConfirm}
     />,
   );
-};
 
 beforeEach(() => {
-  mockCloseModal.mockReset();
-  mockOnConfirm.mockReset();
-  vi.mocked(sharedLib.useModalClose).mockReturnValue(mockCloseModal);
+  vi.clearAllMocks();
+  vi.mocked(useMasterPasswordConfirmForm).mockReturnValue(createHookValue());
 });
 
 describe('MasterPasswordConfirmModal - отображение', () => {
@@ -74,7 +80,27 @@ describe('MasterPasswordConfirmModal - отображение', () => {
     ).toBeInTheDocument();
   });
 
-  it('кнопка подтверждения недоступна при пустом пароле', () => {
+  it('должен отображать error из хука', () => {
+    vi.mocked(useMasterPasswordConfirmForm).mockReturnValue(
+      createHookValue({ error: 'Неверный пароль' }),
+    );
+
+    renderModal();
+
+    expect(screen.getByText('Неверный пароль')).toBeInTheDocument();
+  });
+
+  it('должен передавать onConfirm в хук', () => {
+    renderModal();
+
+    expect(useMasterPasswordConfirmForm).toHaveBeenCalledWith({
+      onConfirm: mockOnConfirm,
+    });
+  });
+});
+
+describe('MasterPasswordConfirmModal - состояния кнопок', () => {
+  it('кнопка подтверждения недоступна когда isSubmitEnabled = false', () => {
     renderModal();
 
     expect(
@@ -83,147 +109,75 @@ describe('MasterPasswordConfirmModal - отображение', () => {
       }),
     ).toBeDisabled();
   });
-});
 
-describe('MasterPasswordConfirmModal - успешное подтверждение', () => {
-  it('должен вызвать onConfirm при верном пароле', async () => {
-    const user = userEvent.setup();
-    vi.mocked(sharedLib.verifyMasterPassword).mockResolvedValue(true);
-    mockOnConfirm.mockResolvedValue(undefined);
+  it('кнопка подтверждения доступна когда isSubmitEnabled = true', () => {
+    vi.mocked(useMasterPasswordConfirmForm).mockReturnValue(
+      createHookValue({ isSubmitEnabled: true }),
+    );
+
     renderModal();
-
-    await user.type(
-      screen.getByPlaceholderText(MASTER_PASSWORD_CONFIRM_MODAL_LABEL_PASSWORD),
-      '12345678',
-    );
-    await user.click(
-      screen.getByRole('button', {
-        name: MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM,
-      }),
-    );
-
-    await waitFor(() => {
-      expect(mockOnConfirm).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  it('должен закрыть модалку после успешного подтверждения', async () => {
-    const user = userEvent.setup();
-    vi.mocked(sharedLib.verifyMasterPassword).mockResolvedValue(true);
-    mockOnConfirm.mockResolvedValue(undefined);
-    renderModal();
-
-    await user.type(
-      screen.getByPlaceholderText(MASTER_PASSWORD_CONFIRM_MODAL_LABEL_PASSWORD),
-      '12345678',
-    );
-    await user.click(
-      screen.getByRole('button', {
-        name: MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM,
-      }),
-    );
-
-    await waitFor(() => {
-      expect(mockCloseModal).toHaveBeenCalledTimes(1);
-    });
-  });
-});
-
-describe('MasterPasswordConfirmModal - неверный пароль', () => {
-  it('должен показать ошибку при неверном пароле', async () => {
-    const user = userEvent.setup();
-    vi.mocked(sharedLib.verifyMasterPassword).mockResolvedValue(false);
-    renderModal();
-
-    await user.type(
-      screen.getByPlaceholderText(MASTER_PASSWORD_CONFIRM_MODAL_LABEL_PASSWORD),
-      '12345678',
-    );
-    await user.click(
-      screen.getByRole('button', {
-        name: MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM,
-      }),
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(MASTER_PASSWORD_CONFIRM_MODAL_ERROR_WRONG_PASSWORD),
-      ).toBeInTheDocument();
-    });
-  });
-
-  it('не должен вызывать onConfirm при неверном пароле', async () => {
-    const user = userEvent.setup();
-    vi.mocked(sharedLib.verifyMasterPassword).mockResolvedValue(false);
-    renderModal();
-
-    await user.type(
-      screen.getByPlaceholderText(MASTER_PASSWORD_CONFIRM_MODAL_LABEL_PASSWORD),
-      '12345678',
-    );
-    await user.click(
-      screen.getByRole('button', {
-        name: MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM,
-      }),
-    );
-
-    await waitFor(() => {
-      expect(mockOnConfirm).not.toHaveBeenCalled();
-    });
-  });
-
-  it('не должен закрывать модалку при неверном пароле', async () => {
-    const user = userEvent.setup();
-    vi.mocked(sharedLib.verifyMasterPassword).mockResolvedValue(false);
-    renderModal();
-
-    await user.type(
-      screen.getByPlaceholderText(MASTER_PASSWORD_CONFIRM_MODAL_LABEL_PASSWORD),
-      '12345678',
-    );
-    await user.click(
-      screen.getByRole('button', {
-        name: MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM,
-      }),
-    );
-
-    await waitFor(() => {
-      expect(mockCloseModal).not.toHaveBeenCalled();
-    });
-  });
-
-  it('должен очистить ошибку при изменении пароля', async () => {
-    const user = userEvent.setup();
-    vi.mocked(sharedLib.verifyMasterPassword).mockResolvedValue(false);
-    renderModal();
-
-    const input = screen.getByPlaceholderText(
-      MASTER_PASSWORD_CONFIRM_MODAL_LABEL_PASSWORD,
-    );
-    await user.type(input, '12345678');
-    await user.click(
-      screen.getByRole('button', {
-        name: MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM,
-      }),
-    );
-
-    await waitFor(() => {
-      expect(
-        screen.getByText(MASTER_PASSWORD_CONFIRM_MODAL_ERROR_WRONG_PASSWORD),
-      ).toBeInTheDocument();
-    });
-
-    await user.type(input, 'x');
 
     expect(
-      screen.queryByText(MASTER_PASSWORD_CONFIRM_MODAL_ERROR_WRONG_PASSWORD),
-    ).not.toBeInTheDocument();
+      screen.getByRole('button', {
+        name: MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM,
+      }),
+    ).not.toBeDisabled();
+  });
+
+  it('кнопки и поле недоступны при isSubmitting = true', () => {
+    vi.mocked(useMasterPasswordConfirmForm).mockReturnValue(
+      createHookValue({ isSubmitting: true }),
+    );
+
+    const { container } = renderModal();
+
+    expect(
+      screen.getByPlaceholderText(MASTER_PASSWORD_CONFIRM_MODAL_LABEL_PASSWORD),
+    ).toBeDisabled();
+    expect(container.querySelector('[type="submit"]')).toBeDisabled();
+    expect(
+      screen.getByRole('button', {
+        name: MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CANCEL,
+      }),
+    ).toBeDisabled();
   });
 });
 
-describe('MasterPasswordConfirmModal - кнопка отмены', () => {
-  it('должен вызвать closeModal при клике на отмену', async () => {
+describe('MasterPasswordConfirmModal - обработчики', () => {
+  it('должен передавать handlePasswordChange в поле пароля', async () => {
     const user = userEvent.setup();
+
+    renderModal();
+
+    await user.type(
+      screen.getByPlaceholderText(MASTER_PASSWORD_CONFIRM_MODAL_LABEL_PASSWORD),
+      'a',
+    );
+
+    expect(mockHandlePasswordChange).toHaveBeenCalled();
+  });
+
+  it('должен передавать handleSubmit в форму', async () => {
+    const user = userEvent.setup();
+
+    vi.mocked(useMasterPasswordConfirmForm).mockReturnValue(
+      createHookValue({ isSubmitEnabled: true }),
+    );
+
+    renderModal();
+
+    await user.click(
+      screen.getByRole('button', {
+        name: MASTER_PASSWORD_CONFIRM_MODAL_BUTTON_CONFIRM,
+      }),
+    );
+
+    expect(mockHandleSubmit).toHaveBeenCalled();
+  });
+
+  it('должен вызвать closeModal при клике на кнопку отмены', async () => {
+    const user = userEvent.setup();
+
     renderModal();
 
     await user.click(

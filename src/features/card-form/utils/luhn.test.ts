@@ -26,7 +26,7 @@ describe('validateLuhn', () => {
     expect(validateLuhn('378282246310005')).toBe(true);
   });
 
-  it('должна отклонять пустую строку', () => {
+  it('должна возвращать true для пустой строки (нет цифр — сумма нулевая)', () => {
     expect(validateLuhn('')).toBe(true);
   });
 });

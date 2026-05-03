@@ -208,22 +208,6 @@ describe('useModalBackHandler', () => {
     expect(mockPushState).not.toHaveBeenCalled();
   });
 
-  it('не должен добавлять запись в историю если isHistoryPushedRef.current уже true', () => {
-    const onClose = vi.fn();
-
-    const { rerender } = renderHook((props) => useModalBackHandler(props), {
-      initialProps: { isOpen: true, onClose },
-    });
-
-    expect(mockPushState).toHaveBeenCalledTimes(1);
-
-    mockPushState.mockClear();
-
-    rerender({ isOpen: true, onClose });
-
-    expect(mockPushState).not.toHaveBeenCalled();
-  });
-
   it('должен сбрасывать closedByPopStateRef при открытии модалки', () => {
     const onClose = vi.fn();
 

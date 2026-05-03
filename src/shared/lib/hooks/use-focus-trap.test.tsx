@@ -126,4 +126,30 @@ describe('useFocusTrap', () => {
 
     expect(div).not.toHaveFocus();
   });
+
+  it('должен удалять обработчик keydown при анмаунте', () => {
+    const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+
+    const { unmount } = render(<TestComponent isTopModal={true} />);
+    unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'keydown',
+      expect.any(Function),
+    );
+    removeEventListenerSpy.mockRestore();
+  });
+
+  it('должен удалять обработчик при смене isTopModal с true на false', () => {
+    const removeEventListenerSpy = vi.spyOn(document, 'removeEventListener');
+
+    const { rerender } = render(<TestComponent isTopModal={true} />);
+    rerender(<TestComponent isTopModal={false} />);
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'keydown',
+      expect.any(Function),
+    );
+    removeEventListenerSpy.mockRestore();
+  });
 });

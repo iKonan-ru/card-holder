@@ -47,19 +47,6 @@ describe('BankCardHeader', () => {
     vi.clearAllMocks();
   });
 
-  it('должен рендериться', () => {
-    render(
-      <BankCardHeader
-        bank={MOCK_BANK_WITH_NAME}
-        paymentSystem={MOCK_PAYMENT_SYSTEM}
-      />,
-    );
-
-    if (MOCK_BANK_WITH_NAME.name) {
-      expect(screen.getByText(MOCK_BANK_WITH_NAME.name)).toBeInTheDocument();
-    }
-  });
-
   it('должен отображать название банка', () => {
     render(
       <BankCardHeader

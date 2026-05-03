@@ -2,6 +2,7 @@ import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useCardFormModal } from '@features/card-form';
 import type { IBankCard } from '@entities/bank-card';
+import { CARD_FORM_EDIT_TITLE, CARD_FORM_TITLE } from '../constants';
 
 const { mockUseCardManagementStore, mockUseModal } = vi.hoisted(() => ({
   mockUseCardManagementStore: vi.fn(),
@@ -106,5 +107,37 @@ describe('useCardFormModal', () => {
     const openCallArgs = mockOpen.mock.calls[0];
     expect(openCallArgs).toBeDefined();
     expect(openCallArgs[0]).toBeDefined();
+  });
+
+  it('должен передавать CARD_FORM_TITLE в modal.open при добавлении карты', () => {
+    const { result } = renderHook(() => useCardFormModal());
+
+    act(() => {
+      result.current.openAddCardForm();
+    });
+
+    expect(mockOpen).toHaveBeenCalledWith(expect.anything(), CARD_FORM_TITLE);
+  });
+
+  it('должен передавать CARD_FORM_EDIT_TITLE в modal.open при редактировании карты', () => {
+    const { result } = renderHook(() => useCardFormModal());
+
+    const mockCard: IBankCard = {
+      pan: '5555555555554444',
+      expires: '1225',
+      name: 'JOHN DOE',
+      cvv: '123',
+      pin: '1234',
+      order: 0,
+    };
+
+    act(() => {
+      result.current.openEditCardForm(mockCard);
+    });
+
+    expect(mockOpen).toHaveBeenCalledWith(
+      expect.anything(),
+      CARD_FORM_EDIT_TITLE,
+    );
   });
 });

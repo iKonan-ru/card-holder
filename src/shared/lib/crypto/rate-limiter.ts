@@ -115,14 +115,13 @@ export const applyRateLimit = async (): Promise<void> => {
 export const withRateLimit = async <T>(
   operation: () => Promise<T>,
 ): Promise<T> => {
-  await applyRateLimit();
-
   try {
     const result = await operation();
     resetFailedAttempts();
 
     return result;
   } catch (error) {
+    await applyRateLimit();
     incrementFailedAttempts();
 
     throw error;

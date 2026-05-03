@@ -1,47 +1,51 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   LOCK_SCREEN_BUTTON_CREATE,
   LOCK_SCREEN_BUTTON_UNLOCK,
-  LOCK_SCREEN_ERROR_WRONG_PASSWORD,
   LOCK_SCREEN_LABEL_CONFIRM,
   LOCK_SCREEN_LABEL_PASSWORD,
+  LOCK_SCREEN_SUBTITLE_CREATE,
   LOCK_SCREEN_TITLE_CREATE,
   LOCK_SCREEN_TITLE_UNLOCK,
 } from '../../constants';
-import { useCryptoStore } from '../../store';
+import { useLockScreenForm } from '../../hooks';
 import { LockScreen } from './lock-screen';
 
-vi.mock('../../store', () => ({
-  useCryptoStore: vi.fn(),
+vi.mock('../../hooks', () => ({
+  useLockScreenForm: vi.fn(),
 }));
 
-const mockUnlock = vi.fn();
+const mockHandlePasswordChange = vi.fn();
+const mockHandleConfirmChange = vi.fn();
+const mockHandleVisibilityChange = vi.fn();
+const mockHandleSubmit = vi.fn();
 
-const renderUnlock = () => {
-  vi.mocked(useCryptoStore).mockReturnValue({
-    isFirstSetup: false,
-    unlock: mockUnlock,
-  } as ReturnType<typeof useCryptoStore>);
-  render(<LockScreen />);
-};
-
-const renderSetup = () => {
-  vi.mocked(useCryptoStore).mockReturnValue({
-    isFirstSetup: true,
-    unlock: mockUnlock,
-  } as ReturnType<typeof useCryptoStore>);
-  render(<LockScreen />);
-};
+const createHookValue = (overrides = {}) => ({
+  password: '',
+  confirmPassword: '',
+  passwordError: undefined,
+  confirmError: undefined,
+  isSubmitting: false,
+  isPasswordVisible: false,
+  isSubmitEnabled: false,
+  isFirstSetup: false,
+  handlePasswordChange: mockHandlePasswordChange,
+  handleConfirmChange: mockHandleConfirmChange,
+  handleVisibilityChange: mockHandleVisibilityChange,
+  handleSubmit: mockHandleSubmit,
+  ...overrides,
+});
 
 beforeEach(() => {
-  mockUnlock.mockReset();
+  vi.clearAllMocks();
+  vi.mocked(useLockScreenForm).mockReturnValue(createHookValue());
 });
 
 describe('LockScreen - режим разблокировки', () => {
   it('должен отображать заголовок разблокировки', () => {
-    renderUnlock();
+    render(<LockScreen />);
 
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       LOCK_SCREEN_TITLE_UNLOCK,
@@ -49,7 +53,7 @@ describe('LockScreen - режим разблокировки', () => {
   });
 
   it('должен показывать только поле пароля (без поля подтверждения)', () => {
-    renderUnlock();
+    render(<LockScreen />);
 
     expect(
       screen.getByPlaceholderText(LOCK_SCREEN_LABEL_PASSWORD),
@@ -59,96 +63,96 @@ describe('LockScreen - режим разблокировки', () => {
     ).not.toBeInTheDocument();
   });
 
+  it('не должен показывать подзаголовок', () => {
+    render(<LockScreen />);
+
+    expect(
+      screen.queryByText(LOCK_SCREEN_SUBTITLE_CREATE),
+    ).not.toBeInTheDocument();
+  });
+
   it('должен отображать кнопку «Войти»', () => {
-    renderUnlock();
+    render(<LockScreen />);
 
     expect(
       screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_UNLOCK }),
     ).toBeInTheDocument();
   });
 
-  it('кнопка должна быть недоступна при пустом пароле', () => {
-    renderUnlock();
+  it('кнопка недоступна когда isSubmitEnabled = false', () => {
+    render(<LockScreen />);
 
     expect(
       screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_UNLOCK }),
     ).toBeDisabled();
   });
 
-  it('кнопка становится доступной после ввода пароля достаточной длины', async () => {
-    const user = userEvent.setup();
-    renderUnlock();
-
-    await user.type(
-      screen.getByPlaceholderText(LOCK_SCREEN_LABEL_PASSWORD),
-      '12345678',
+  it('кнопка доступна когда isSubmitEnabled = true', () => {
+    vi.mocked(useLockScreenForm).mockReturnValue(
+      createHookValue({ isSubmitEnabled: true }),
     );
+
+    render(<LockScreen />);
 
     expect(
       screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_UNLOCK }),
     ).not.toBeDisabled();
   });
 
-  it('должен вызвать unlock с введённым паролем', async () => {
-    const user = userEvent.setup();
-    mockUnlock.mockResolvedValue(undefined);
-    renderUnlock();
+  it('поле пароля и кнопка недоступны при isSubmitting = true', () => {
+    vi.mocked(useLockScreenForm).mockReturnValue(
+      createHookValue({ isSubmitting: true }),
+    );
 
-    await user.type(
+    const { container } = render(<LockScreen />);
+
+    expect(
       screen.getByPlaceholderText(LOCK_SCREEN_LABEL_PASSWORD),
-      '12345678',
-    );
-    await user.click(
-      screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_UNLOCK }),
-    );
-
-    await waitFor(() => {
-      expect(mockUnlock).toHaveBeenCalledWith('12345678');
-    });
+    ).toBeDisabled();
+    expect(container.querySelector('[type="submit"]')).toBeDisabled();
   });
 
-  it('должен показать ошибку при неверном пароле', async () => {
-    const user = userEvent.setup();
-    mockUnlock.mockRejectedValue(new Error(LOCK_SCREEN_ERROR_WRONG_PASSWORD));
-    renderUnlock();
-
-    await user.type(
-      screen.getByPlaceholderText(LOCK_SCREEN_LABEL_PASSWORD),
-      '12345678',
-    );
-    await user.click(
-      screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_UNLOCK }),
+  it('должен отображать passwordError', () => {
+    vi.mocked(useLockScreenForm).mockReturnValue(
+      createHookValue({ passwordError: 'Неверный пароль' }),
     );
 
-    await waitFor(() => {
-      expect(
-        screen.getByText(LOCK_SCREEN_ERROR_WRONG_PASSWORD),
-      ).toBeInTheDocument();
-    });
+    render(<LockScreen />);
+
+    expect(screen.getByText('Неверный пароль')).toBeInTheDocument();
   });
 
-  it('должен снова активировать кнопку после ошибки', async () => {
+  it('должен передавать handlePasswordChange в поле пароля', async () => {
     const user = userEvent.setup();
-    mockUnlock.mockRejectedValue(new Error(LOCK_SCREEN_ERROR_WRONG_PASSWORD));
-    renderUnlock();
+
+    render(<LockScreen />);
 
     await user.type(
       screen.getByPlaceholderText(LOCK_SCREEN_LABEL_PASSWORD),
-      '12345678',
+      'a',
     );
+
+    expect(mockHandlePasswordChange).toHaveBeenCalled();
+  });
+
+  it('должен передавать handleSubmit в форму', async () => {
+    const user = userEvent.setup();
+
+    vi.mocked(useLockScreenForm).mockReturnValue(
+      createHookValue({ isSubmitEnabled: true }),
+    );
+
+    render(<LockScreen />);
+
     await user.click(
       screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_UNLOCK }),
     );
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_UNLOCK }),
-      ).not.toBeDisabled();
-    });
+    expect(mockHandleSubmit).toHaveBeenCalled();
   });
 
   it('должен принимать dialog role с правильным aria-label', () => {
-    renderUnlock();
+    render(<LockScreen />);
 
     expect(screen.getByRole('dialog')).toHaveAttribute(
       'aria-label',
@@ -158,16 +162,32 @@ describe('LockScreen - режим разблокировки', () => {
 });
 
 describe('LockScreen - режим первой установки', () => {
+  beforeEach(() => {
+    vi.mocked(useLockScreenForm).mockReturnValue(
+      createHookValue({ isFirstSetup: true }),
+    );
+  });
+
   it('должен отображать заголовок создания пароля', () => {
-    renderSetup();
+    render(<LockScreen />);
 
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
       LOCK_SCREEN_TITLE_CREATE,
     );
   });
 
+  it('должен показывать подзаголовок', () => {
+    render(<LockScreen />);
+
+    expect(
+      screen.getByText(LOCK_SCREEN_SUBTITLE_CREATE.split('\n')[0], {
+        exact: false,
+      }),
+    ).toBeInTheDocument();
+  });
+
   it('должен показывать оба поля: пароль и подтверждение', () => {
-    renderSetup();
+    render(<LockScreen />);
 
     expect(
       screen.getByPlaceholderText(LOCK_SCREEN_LABEL_PASSWORD),
@@ -178,73 +198,41 @@ describe('LockScreen - режим первой установки', () => {
   });
 
   it('должен отображать кнопку «Создать пароль»', () => {
-    renderSetup();
+    render(<LockScreen />);
 
     expect(
       screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_CREATE }),
     ).toBeInTheDocument();
   });
 
-  it('кнопка недоступна когда пароли не совпадают', async () => {
+  it('должен передавать handleConfirmChange в поле подтверждения', async () => {
     const user = userEvent.setup();
-    renderSetup();
 
-    await user.type(
-      screen.getByPlaceholderText(LOCK_SCREEN_LABEL_PASSWORD),
-      '12345678',
-    );
+    render(<LockScreen />);
+
     await user.type(
       screen.getByPlaceholderText(LOCK_SCREEN_LABEL_CONFIRM),
-      '87654321',
+      'a',
     );
 
-    expect(
-      screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_CREATE }),
-    ).toBeDisabled();
+    expect(mockHandleConfirmChange).toHaveBeenCalled();
   });
 
-  it('кнопка активна когда пароли совпадают и достаточно длинные', async () => {
-    const user = userEvent.setup();
-    renderSetup();
-
-    await user.type(
-      screen.getByPlaceholderText(LOCK_SCREEN_LABEL_PASSWORD),
-      '12345678',
-    );
-    await user.type(
-      screen.getByPlaceholderText(LOCK_SCREEN_LABEL_CONFIRM),
-      '12345678',
+  it('должен отображать confirmError в поле подтверждения', () => {
+    vi.mocked(useLockScreenForm).mockReturnValue(
+      createHookValue({
+        isFirstSetup: true,
+        confirmError: 'Пароли не совпадают',
+      }),
     );
 
-    expect(
-      screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_CREATE }),
-    ).not.toBeDisabled();
-  });
+    render(<LockScreen />);
 
-  it('должен вызвать unlock с паролем при совпадающих полях', async () => {
-    const user = userEvent.setup();
-    mockUnlock.mockResolvedValue(undefined);
-    renderSetup();
-
-    await user.type(
-      screen.getByPlaceholderText(LOCK_SCREEN_LABEL_PASSWORD),
-      '12345678',
-    );
-    await user.type(
-      screen.getByPlaceholderText(LOCK_SCREEN_LABEL_CONFIRM),
-      '12345678',
-    );
-    await user.click(
-      screen.getByRole('button', { name: LOCK_SCREEN_BUTTON_CREATE }),
-    );
-
-    await waitFor(() => {
-      expect(mockUnlock).toHaveBeenCalledWith('12345678');
-    });
+    expect(screen.getByText('Пароли не совпадают')).toBeInTheDocument();
   });
 
   it('должен принимать dialog role с aria-label установки', () => {
-    renderSetup();
+    render(<LockScreen />);
 
     expect(screen.getByRole('dialog')).toHaveAttribute(
       'aria-label',

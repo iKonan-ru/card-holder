@@ -112,4 +112,26 @@ describe('useModalPopstate', () => {
     expect(mockCloseTop).toHaveBeenCalledTimes(1);
     expect(mockIsClosingFromHistoryRef.current).toBe(true);
   });
+
+  it('должен удалять обработчик popstate при анмаунте', () => {
+    const removeEventListenerSpy = vi.spyOn(window, 'removeEventListener');
+    const modals = [createMockModal('modal-1')];
+
+    const { unmount } = renderHook(() =>
+      useModalPopstate({
+        modals,
+        closeTop: mockCloseTop,
+        modalRequestCloseRef: mockModalRequestCloseRef,
+        isClosingFromHistoryRef: mockIsClosingFromHistoryRef,
+      }),
+    );
+
+    unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'popstate',
+      expect.any(Function),
+    );
+    removeEventListenerSpy.mockRestore();
+  });
 });

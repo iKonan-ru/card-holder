@@ -139,6 +139,21 @@ describe('maskPan', () => {
 
     expect(result).toBe(expectedFullPan);
   });
+
+  it('должна возвращать неизмененную строку для PAN короче 16 цифр', () => {
+    const shortPan = '12345';
+    const result = maskPan(shortPan);
+
+    expect(result).toBe(shortPan);
+  });
+
+  it('должна применять маску к первым 16 цифрам PAN длиннее 16', () => {
+    const longPan = '1234567890123456789';
+    const result = maskPan(longPan);
+
+    expect(result).not.toBe(longPan);
+    expect(result).toContain('789');
+  });
 });
 
 describe('maskValue', () => {

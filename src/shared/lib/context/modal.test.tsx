@@ -1,35 +1,9 @@
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ModalProvider, useModalContext } from '@shared/lib';
 
-const { mockUseCardManagementStore } = vi.hoisted(() => ({
-  mockUseCardManagementStore: vi.fn(),
-}));
-
-vi.mock('@features/card-management', () => ({
-  useCardManagementStore: mockUseCardManagementStore,
-}));
-
 const MODAL_CONTENT_TEXT = 'Test Modal Content';
-
-const createMockStore = (overrides = {}) => ({
-  cards: [],
-  isLoading: false,
-  flippedPan: null,
-  isReorderMode: false,
-  loadCards: vi.fn(),
-  addCard: vi.fn(),
-  updateCard: vi.fn(),
-  deleteCard: vi.fn(),
-  flipCard: vi.fn(),
-  unflipCards: vi.fn(),
-  setCards: vi.fn(),
-  reorderCards: vi.fn(),
-  setReorderMode: vi.fn(),
-  toggleReorderMode: vi.fn(),
-  ...overrides,
-});
 
 const TestComponent = () => {
   const {
@@ -105,18 +79,6 @@ const TestComponent = () => {
 };
 
 describe('ModalProvider', () => {
-  beforeEach(() => {
-    const mockStoreValue = createMockStore();
-
-    mockUseCardManagementStore.mockImplementation((selector) => {
-      if (selector) {
-        return selector(mockStoreValue);
-      }
-
-      return mockStoreValue;
-    });
-  });
-
   afterEach(() => {
     cleanup();
   });

@@ -1,5 +1,9 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { checkForServiceWorkerUpdate } from './pwa';
+import {
+  checkForServiceWorkerUpdate,
+  checkHasNavigatorStandalone,
+  checkIsBeforeInstallPromptEvent,
+} from './pwa';
 
 describe('checkForServiceWorkerUpdate', () => {
   beforeEach(() => {
@@ -106,5 +110,58 @@ describe('checkForServiceWorkerUpdate', () => {
     if (originalOnLine) {
       Object.defineProperty(navigator, 'onLine', originalOnLine);
     }
+  });
+});
+
+describe('checkIsBeforeInstallPromptEvent', () => {
+  it('должна возвращать true если событие содержит prompt и userChoice', () => {
+    const event = Object.assign(new Event('beforeinstallprompt'), {
+      prompt: vi.fn(),
+      userChoice: Promise.resolve({ outcome: 'accepted' }),
+    });
+
+    expect(checkIsBeforeInstallPromptEvent(event)).toBe(true);
+  });
+
+  it('должна возвращать false если событие не содержит prompt', () => {
+    const event = Object.assign(new Event('test'), {
+      userChoice: Promise.resolve({ outcome: 'accepted' }),
+    });
+
+    expect(checkIsBeforeInstallPromptEvent(event)).toBe(false);
+  });
+
+  it('должна возвращать false если событие не содержит userChoice', () => {
+    const event = Object.assign(new Event('test'), {
+      prompt: vi.fn(),
+    });
+
+    expect(checkIsBeforeInstallPromptEvent(event)).toBe(false);
+  });
+
+  it('должна возвращать false для обычного события без дополнительных свойств', () => {
+    const event = new Event('click');
+
+    expect(checkIsBeforeInstallPromptEvent(event)).toBe(false);
+  });
+});
+
+describe('checkHasNavigatorStandalone', () => {
+  it('должна возвращать true если navigator содержит свойство standalone = true', () => {
+    const nav = { standalone: true } as unknown as Navigator;
+
+    expect(checkHasNavigatorStandalone(nav)).toBe(true);
+  });
+
+  it('должна возвращать true если navigator содержит свойство standalone = false', () => {
+    const nav = { standalone: false } as unknown as Navigator;
+
+    expect(checkHasNavigatorStandalone(nav)).toBe(true);
+  });
+
+  it('должна возвращать false если navigator не содержит свойство standalone', () => {
+    const nav = {} as Navigator;
+
+    expect(checkHasNavigatorStandalone(nav)).toBe(false);
   });
 });

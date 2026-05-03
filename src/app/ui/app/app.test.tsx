@@ -2,6 +2,13 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { App } from './app';
 
+vi.mock('virtual:pwa-register/react', () => ({
+  useRegisterSW: vi.fn().mockReturnValue({
+    needRefresh: [false, vi.fn()],
+    updateServiceWorker: vi.fn(),
+  }),
+}));
+
 const mockHandleModalOpen = vi.fn();
 
 vi.mock('@pages/main-page', () => ({

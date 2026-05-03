@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
-import { checkHasErrors, validateCardForm } from './validation';
+import {
+  checkHasErrors,
+  checkIsValidBankCard,
+  validateCardForm,
+} from './validation';
 
 describe('validateCardForm', () => {
   const VALID_CARD: IBankCard = {
@@ -169,6 +173,65 @@ describe('checkHasErrors', () => {
     const errors = {};
 
     expect(checkHasErrors(errors)).toBe(false);
+  });
+});
+
+describe('checkIsValidBankCard', () => {
+  const VALID_CARD: IBankCard = {
+    pan: '5555555555554444',
+    expires: '1225',
+    name: 'TEST USER',
+    cvv: '123',
+    pin: '1234',
+    order: 0,
+  };
+
+  it('должна возвращать true для карты со всеми обязательными полями', () => {
+    expect(checkIsValidBankCard(VALID_CARD)).toBe(true);
+  });
+
+  it('должна возвращать true если необязательные поля отсутствуют', () => {
+    const card: Partial<IBankCard> = { ...VALID_CARD, pin: undefined };
+
+    expect(checkIsValidBankCard(card)).toBe(true);
+  });
+
+  it('должна возвращать false если отсутствует pan', () => {
+    const card: Partial<IBankCard> = { ...VALID_CARD, pan: undefined };
+
+    expect(checkIsValidBankCard(card)).toBe(false);
+  });
+
+  it('должна возвращать false если pan пустая строка', () => {
+    expect(checkIsValidBankCard({ ...VALID_CARD, pan: '' })).toBe(false);
+  });
+
+  it('должна возвращать false если отсутствует expires', () => {
+    const card: Partial<IBankCard> = { ...VALID_CARD, expires: undefined };
+
+    expect(checkIsValidBankCard(card)).toBe(false);
+  });
+
+  it('должна возвращать false если отсутствует name', () => {
+    const card: Partial<IBankCard> = { ...VALID_CARD, name: undefined };
+
+    expect(checkIsValidBankCard(card)).toBe(false);
+  });
+
+  it('должна возвращать false если отсутствует cvv', () => {
+    const card: Partial<IBankCard> = { ...VALID_CARD, cvv: undefined };
+
+    expect(checkIsValidBankCard(card)).toBe(false);
+  });
+
+  it('должна возвращать false если отсутствует order', () => {
+    const card: Partial<IBankCard> = { ...VALID_CARD, order: undefined };
+
+    expect(checkIsValidBankCard(card)).toBe(false);
+  });
+
+  it('должна возвращать false для пустого объекта', () => {
+    expect(checkIsValidBankCard({})).toBe(false);
   });
 });
 

@@ -5,6 +5,13 @@ import { useCardManagementStore } from '@features/card-management';
 import { initGlobalErrorHandler } from '@features/error-handling';
 import { setErrorModalHandler } from '@shared/lib';
 
+vi.mock('virtual:pwa-register/react', () => ({
+  useRegisterSW: vi.fn().mockReturnValue({
+    needRefresh: [false, vi.fn()],
+    updateServiceWorker: vi.fn(),
+  }),
+}));
+
 vi.mock('@features/card-management', () => ({
   useCardManagementStore: vi.fn(),
 }));

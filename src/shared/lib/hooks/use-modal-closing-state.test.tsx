@@ -190,4 +190,30 @@ describe('useModalClosingState', () => {
     expect(firstIsClosing).toBe(true);
     expect(secondIsClosing).toBe(true);
   });
+
+  it('должен удалять обработчик animationend при анмаунте', () => {
+    const mockOnClose = vi.fn();
+    const overlayElement = document.createElement('div');
+    const overlayRef = { current: overlayElement };
+    const removeEventListenerSpy = vi.spyOn(
+      overlayElement,
+      'removeEventListener',
+    );
+
+    const { result, unmount } = renderHook(() =>
+      useModalClosingState({ onClose: mockOnClose, overlayRef }),
+    );
+
+    act(() => {
+      result.current.handleClose();
+    });
+
+    unmount();
+
+    expect(removeEventListenerSpy).toHaveBeenCalledWith(
+      'animationend',
+      expect.any(Function),
+    );
+    removeEventListenerSpy.mockRestore();
+  });
 });

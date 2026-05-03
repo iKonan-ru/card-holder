@@ -1,5 +1,4 @@
-import { useCallback, useMemo, type FC } from 'react';
-import { MasterPasswordConfirmModal } from '@features/app-lock';
+import { useMemo, type FC } from 'react';
 import { CardPreview } from '@features/card-preview';
 import type { IBankCard } from '@entities/bank-card';
 import {
@@ -9,7 +8,6 @@ import {
   FormProvider,
   ParentClassProvider,
   useClassName,
-  useModal,
 } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { Button, ValidatedField } from '@shared/ui';
@@ -18,8 +16,6 @@ import {
   CARD_FORM_BLOCK,
   CVV_FIELD_CONFIG,
   DELETE_BUTTON_TEXT,
-  DELETE_MODAL_MESSAGE,
-  DELETE_MODAL_TITLE,
   EXPIRES_FIELD_CONFIG,
   NAME_FIELD_CONFIG,
   PAN_FIELD_CONFIG,
@@ -29,7 +25,7 @@ import {
   SUBMIT_BUTTON_TEXT,
   TYPE_FIELD_CONFIG,
 } from '../../constants';
-import { useCardForm } from '../../hooks';
+import { useCardForm, useCardFormDelete } from '../../hooks';
 import { CardFormGroup } from '../card-form-group';
 import './card-form.less';
 
@@ -56,27 +52,7 @@ export const CardForm: FC<ICardFormProps> = ({
     handleDelete,
   } = useCardForm({ initialCard, onSuccess });
 
-  const { open } = useModal();
-
-  const handleCancelClick = useCallback(() => {
-    if (onCancel) {
-      onCancel();
-    }
-  }, [onCancel]);
-
-  const handleConfirmDelete = useCallback(async () => {
-    await handleDelete();
-  }, [handleDelete]);
-
-  const handleDeleteClick = useCallback(() => {
-    open(
-      <MasterPasswordConfirmModal
-        message={DELETE_MODAL_MESSAGE}
-        onConfirm={handleConfirmDelete}
-      />,
-      DELETE_MODAL_TITLE,
-    );
-  }, [open, handleConfirmDelete]);
+  const { handleDeleteClick } = useCardFormDelete({ onDelete: handleDelete });
 
   const panFieldRightContent = useMemo(
     () => <CardPreview pan={formData.pan || ''} />,
@@ -175,7 +151,7 @@ export const CardForm: FC<ICardFormProps> = ({
             </Button>
             <Button
               type={BUTTON_TYPE_BUTTON}
-              onClick={handleCancelClick}
+              onClick={onCancel}
               disabled={isSubmitting}
               variant="secondary"
             >

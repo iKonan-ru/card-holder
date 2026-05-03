@@ -8,6 +8,7 @@ import {
   clearAllCards,
   deleteCard,
   getAllCards,
+  getAllRawCards,
   getCardByPan,
   updateCard,
   updateCardsOrder,
@@ -132,6 +133,37 @@ const toStored = (card: IBankCard): IStoredEncryptedCard => ({
 describe('IndexedDB cards', () => {
   const MOCK_CARD = createMockCard();
   const MOCK_STORED_CARD = toStored(MOCK_CARD);
+
+  it('getAllRawCards должна возвращать необработанный список карт из хранилища', async () => {
+    const request = (mockStore.getAll as () => IMockRequest)() as IMockRequest;
+    const rawCards = MOCK_CARDS as unknown as IBankCard[];
+    request.result = rawCards;
+
+    setTimeout(() => {
+      if (request.onsuccess) {
+        request.onsuccess(new Event('success'));
+      }
+    }, 0);
+
+    const result = await getAllRawCards();
+
+    expect(result).toEqual(rawCards);
+  });
+
+  it('getAllRawCards должна возвращать пустой массив если карт нет', async () => {
+    const request = (mockStore.getAll as () => IMockRequest)() as IMockRequest;
+    request.result = [];
+
+    setTimeout(() => {
+      if (request.onsuccess) {
+        request.onsuccess(new Event('success'));
+      }
+    }, 0);
+
+    const result = await getAllRawCards();
+
+    expect(result).toEqual([]);
+  });
 
   it('getAllCards должна возвращать отсортированный список карт', async () => {
     const request = (mockStore.getAll as () => IMockRequest)() as IMockRequest;

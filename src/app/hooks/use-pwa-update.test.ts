@@ -251,94 +251,6 @@ describe('usePWAUpdate', () => {
     }
   });
 
-  it('не должен проверять обновления если registration.installing = true', async () => {
-    const mockUpdate = vi.fn().mockResolvedValue(undefined);
-    const mockRegistration = {
-      installing: true,
-      update: mockUpdate,
-    } as unknown as ServiceWorkerRegistration;
-
-    const originalOnLine = Object.getOwnPropertyDescriptor(navigator, 'onLine');
-
-    Object.defineProperty(navigator, 'onLine', {
-      writable: true,
-      value: true,
-    });
-
-    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
-
-    mockUseRegisterSW.mockImplementation(
-      (config?: IRegisterSWConfig): IRegisterSWReturn => {
-        if (config?.onRegisteredSW) {
-          capturedOnRegisteredSW = config.onRegisteredSW;
-        }
-
-        return {
-          needRefresh: [false, vi.fn()],
-          updateServiceWorker: mockUpdateServiceWorker,
-        };
-      },
-    );
-
-    renderHook(() => usePWAUpdate());
-
-    if (capturedOnRegisteredSW) {
-      capturedOnRegisteredSW('/sw.js', mockRegistration);
-    }
-
-    await vi.advanceTimersByTimeAsync(5 * 60 * 1000);
-
-    expect(mockUpdate).not.toHaveBeenCalled();
-
-    if (originalOnLine) {
-      Object.defineProperty(navigator, 'onLine', originalOnLine);
-    }
-  });
-
-  it('не должен проверять обновления если navigator.onLine = false', async () => {
-    const mockUpdate = vi.fn().mockResolvedValue(undefined);
-    const mockRegistration = {
-      installing: false,
-      update: mockUpdate,
-    } as unknown as ServiceWorkerRegistration;
-
-    const originalOnLine = Object.getOwnPropertyDescriptor(navigator, 'onLine');
-
-    Object.defineProperty(navigator, 'onLine', {
-      writable: true,
-      value: false,
-    });
-
-    let capturedOnRegisteredSW: IRegisterSWConfig['onRegisteredSW'] | undefined;
-
-    mockUseRegisterSW.mockImplementation(
-      (config?: IRegisterSWConfig): IRegisterSWReturn => {
-        if (config?.onRegisteredSW) {
-          capturedOnRegisteredSW = config.onRegisteredSW;
-        }
-
-        return {
-          needRefresh: [false, vi.fn()],
-          updateServiceWorker: mockUpdateServiceWorker,
-        };
-      },
-    );
-
-    renderHook(() => usePWAUpdate());
-
-    if (capturedOnRegisteredSW) {
-      capturedOnRegisteredSW('/sw.js', mockRegistration);
-    }
-
-    await vi.advanceTimersByTimeAsync(5 * 60 * 1000);
-
-    expect(mockUpdate).not.toHaveBeenCalled();
-
-    if (originalOnLine) {
-      Object.defineProperty(navigator, 'onLine', originalOnLine);
-    }
-  });
-
   it('должен обрабатывать ошибки при проверке обновлений', async () => {
     const mockConsoleError = vi
       .spyOn(console, 'error')
@@ -508,6 +420,32 @@ describe('usePWAUpdate', () => {
         originalVisibilityState,
       );
     }
+  });
+
+  it('должен удалять обработчики focus и visibilitychange при анмаунте', () => {
+    const removeWindowListenerSpy = vi.spyOn(window, 'removeEventListener');
+    const removeDocumentListenerSpy = vi.spyOn(document, 'removeEventListener');
+
+    mockUseRegisterSW.mockReturnValue({
+      needRefresh: [false, vi.fn()],
+      updateServiceWorker: mockUpdateServiceWorker,
+    });
+
+    const { unmount } = renderHook(() => usePWAUpdate());
+
+    unmount();
+
+    expect(removeWindowListenerSpy).toHaveBeenCalledWith(
+      'focus',
+      expect.any(Function),
+    );
+    expect(removeDocumentListenerSpy).toHaveBeenCalledWith(
+      'visibilitychange',
+      expect.any(Function),
+    );
+
+    removeWindowListenerSpy.mockRestore();
+    removeDocumentListenerSpy.mockRestore();
   });
 
   it('не должен проверять обновления при изменении видимости если страница скрыта', async () => {

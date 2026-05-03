@@ -1,85 +1,61 @@
-import type { FC, PropsWithChildren } from 'react';
-import { cleanup, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { checkCardExists, ModalProvider } from '@shared/lib';
-import { ModalContainer } from '@shared/ui';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { CardForm } from './card-form';
 
-const { mockUseCardManagementStore } = vi.hoisted(() => ({
-  mockUseCardManagementStore: vi.fn(),
+const { mockUseCardForm, mockUseCardFormDelete } = vi.hoisted(() => ({
+  mockUseCardForm: vi.fn(),
+  mockUseCardFormDelete: vi.fn(),
 }));
 
-vi.mock('@features/card-management', () => ({
-  useCardManagementStore: mockUseCardManagementStore,
+vi.mock('../../hooks', () => ({
+  useCardForm: mockUseCardForm,
+  useCardFormDelete: mockUseCardFormDelete,
 }));
-
-vi.mock('@shared/lib', async () => {
-  const actual = await vi.importActual('@shared/lib');
-
-  return {
-    ...actual,
-    checkCardExists: vi.fn(),
-    verifyMasterPassword: vi.fn().mockResolvedValue(true),
-  };
-});
 
 vi.mock('@features/card-preview', () => ({
   CardPreview: () => null,
 }));
 
-const TestWrapper: FC<PropsWithChildren> = ({ children }) => {
-  return (
-    <ModalProvider>
-      {children}
-      <ModalContainer />
-    </ModalProvider>
-  );
-};
+const mockHandleFieldChange = vi.fn();
+const mockHandleFieldValidation = vi.fn();
+const mockHandleSubmit = vi.fn();
+const mockHandleDelete = vi.fn();
+const mockHandleDeleteClick = vi.fn();
 
-const createMockStore = (overrides = {}) => ({
-  cards: [],
-  isLoading: false,
-  flippedPan: null,
-  isReorderMode: false,
-  loadCards: vi.fn(),
-  addCard: vi.fn(),
-  updateCard: vi.fn(),
-  deleteCard: vi.fn(),
-  flipCard: vi.fn(),
-  unflipCards: vi.fn(),
-  setCards: vi.fn(),
-  reorderCards: vi.fn(),
-  setReorderMode: vi.fn(),
-  toggleReorderMode: vi.fn(),
+const createCardFormValue = (overrides = {}) => ({
+  formData: {
+    pan: '',
+    expires: '',
+    name: '',
+    cvv: '',
+    pin: '',
+    type: '',
+    phrase: '',
+    address: { line1: '', line2: '', city: '', state: '', county: '', zip: '' },
+  },
+  errors: {},
+  isSubmitting: false,
+  isSubmitEnabled: false,
+  isEditMode: false,
+  handleFieldChange: mockHandleFieldChange,
+  handleFieldValidation: mockHandleFieldValidation,
+  handleSubmit: mockHandleSubmit,
+  handleDelete: mockHandleDelete,
   ...overrides,
 });
 
-describe('CardForm', () => {
-  const mockAddCard = vi.fn();
-
-  beforeEach(() => {
-    vi.clearAllMocks();
-
-    const mockStoreValue = createMockStore({ addCard: mockAddCard });
-
-    mockUseCardManagementStore.mockImplementation((selector) => {
-      if (selector) {
-        return selector(mockStoreValue);
-      }
-
-      return mockStoreValue;
-    });
-
-    vi.mocked(checkCardExists).mockResolvedValue(false);
+beforeEach(() => {
+  vi.clearAllMocks();
+  mockUseCardForm.mockReturnValue(createCardFormValue());
+  mockUseCardFormDelete.mockReturnValue({
+    handleDeleteClick: mockHandleDeleteClick,
   });
+});
 
-  afterEach(() => {
-    cleanup();
-  });
-
+describe('CardForm - поля формы', () => {
   it('должен отображать все поля формы', () => {
-    render(<CardForm />, { wrapper: TestWrapper });
+    render(<CardForm />);
 
     expect(screen.getByLabelText(/Номер карты/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Имя владельца/i)).toBeInTheDocument();
@@ -90,165 +66,140 @@ describe('CardForm', () => {
     expect(screen.getByLabelText(/Кодовая фраза/i)).toBeInTheDocument();
   });
 
-  it('должен отображать кнопки действий', () => {
-    render(<CardForm />, { wrapper: TestWrapper });
+  it('должен помечать форму как занятую при isSubmitting = true', () => {
+    mockUseCardForm.mockReturnValue(
+      createCardFormValue({ isSubmitting: true }),
+    );
+
+    const { container } = render(<CardForm />);
+
+    expect(container.querySelector('form')).toHaveAttribute(
+      'aria-busy',
+      'true',
+    );
+  });
+});
+
+describe('CardForm - режим добавления', () => {
+  it('должен отображать кнопку «Добавить карту»', () => {
+    render(<CardForm />);
 
     expect(
       screen.getByRole('button', { name: 'Добавить карту' }),
     ).toBeInTheDocument();
+  });
+
+  it('должен отображать кнопку «Отмена»', () => {
+    render(<CardForm />);
+
     expect(screen.getByRole('button', { name: 'Отмена' })).toBeInTheDocument();
   });
 
-  it('должен вызывать onCancel при клике на кнопку отмены', async () => {
-    const handleCancel = vi.fn();
-    const user = userEvent.setup();
-
-    render(<CardForm onCancel={handleCancel} />, { wrapper: TestWrapper });
-
-    const cancelButton = screen.getByRole('button', { name: 'Отмена' });
-    await user.click(cancelButton);
-
-    await vi.waitFor(() => {
-      expect(handleCancel).toHaveBeenCalledTimes(1);
-    });
-  });
-
-  it('должен применять маску к номеру карты', async () => {
-    const user = userEvent.setup();
-
-    render(<CardForm />, { wrapper: TestWrapper });
-
-    const panInput = screen.getByLabelText(/Номер карты/i);
-    await user.type(panInput, '5536914125525541');
-
-    expect(panInput).toHaveValue('5536 9141 2552 5541');
-  });
-
-  it('должен применять маску к сроку действия', async () => {
-    const user = userEvent.setup();
-
-    render(<CardForm />, { wrapper: TestWrapper });
-
-    const expiresInput = screen.getByLabelText(/Срок действия/i);
-    await user.type(expiresInput, '1225');
-
-    expect(expiresInput).toHaveValue('12/25');
-  });
-
-  it('должен конвертировать имя в верхний регистр', async () => {
-    const user = userEvent.setup();
-
-    render(<CardForm />, { wrapper: TestWrapper });
-
-    const nameInput = screen.getByLabelText(/Имя владельца/i);
-    await user.type(nameInput, 'john doe');
-
-    expect(nameInput).toHaveValue('JOHN DOE');
-  });
-
-  it('должен отображать все обязательные поля', () => {
-    render(<CardForm />, { wrapper: TestWrapper });
-
-    const panField = screen
-      .getByLabelText(/Номер карты/i)
-      .closest('.form-field');
-    const nameField = screen
-      .getByLabelText(/Имя владельца/i)
-      .closest('.form-field');
-
-    expect(panField?.querySelector('label')).toHaveTextContent('*');
-    expect(nameField?.querySelector('label')).toHaveTextContent('*');
-  });
-
-  it('должен отображать кнопку удаления в режиме редактирования', () => {
-    const mockCard = {
-      pan: '4111111111111111',
-      name: 'TEST USER',
-      expires: '12/25',
-      cvv: '123',
-      pin: '1234',
-    };
-
-    render(<CardForm initialCard={mockCard} />, { wrapper: TestWrapper });
+  it('не должен отображать кнопку удаления', () => {
+    render(<CardForm />);
 
     expect(
-      screen.getByRole('button', { name: 'Удалить карту' }),
-    ).toBeInTheDocument();
+      screen.queryByRole('button', { name: 'Удалить карту' }),
+    ).not.toBeInTheDocument();
+  });
+
+  it('кнопка отправки недоступна когда isSubmitEnabled = false', () => {
+    render(<CardForm />);
+
+    expect(
+      screen.getByRole('button', { name: 'Добавить карту' }),
+    ).toBeDisabled();
+  });
+
+  it('кнопка отправки доступна когда isSubmitEnabled = true', () => {
+    mockUseCardForm.mockReturnValue(
+      createCardFormValue({ isSubmitEnabled: true }),
+    );
+
+    render(<CardForm />);
+
+    expect(
+      screen.getByRole('button', { name: 'Добавить карту' }),
+    ).not.toBeDisabled();
+  });
+});
+
+describe('CardForm - режим редактирования', () => {
+  beforeEach(() => {
+    mockUseCardForm.mockReturnValue(createCardFormValue({ isEditMode: true }));
+  });
+
+  it('должен отображать кнопку «Сохранить изменения»', () => {
+    render(<CardForm />);
+
     expect(
       screen.getByRole('button', { name: 'Сохранить изменения' }),
     ).toBeInTheDocument();
   });
 
-  it('должен открывать модальное окно подтверждения при клике на кнопку удаления', async () => {
-    const user = userEvent.setup();
-    const mockCard = {
-      pan: '4111111111111111',
-      name: 'TEST USER',
-      expires: '12/25',
-      cvv: '123',
-      pin: '1234',
-    };
-
-    render(<CardForm initialCard={mockCard} />, { wrapper: TestWrapper });
-
-    const deleteButton = screen.getByRole('button', { name: 'Удалить карту' });
-    await user.click(deleteButton);
+  it('должен отображать кнопку удаления', () => {
+    render(<CardForm />);
 
     expect(
-      screen.getByText('Вы уверены, что хотите удалить эту карту?'),
+      screen.getByRole('button', { name: 'Удалить карту' }),
     ).toBeInTheDocument();
   });
 
-  it('должен удалять карту при подтверждении', async () => {
+  it('должен вызывать handleDeleteClick при клике на кнопку удаления', async () => {
     const user = userEvent.setup();
-    const mockDeleteCard = vi.fn().mockResolvedValue(undefined);
-    const mockCard = {
-      pan: '4111111111111111',
-      name: 'TEST USER',
-      expires: '12/25',
-      cvv: '123',
-      pin: '1234',
-    };
 
-    const mockStoreValue = createMockStore({
-      addCard: mockAddCard,
-      deleteCard: mockDeleteCard,
-    });
+    render(<CardForm />);
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
-      if (selector) {
-        return selector(mockStoreValue);
-      }
+    await user.click(screen.getByRole('button', { name: 'Удалить карту' }));
 
-      return mockStoreValue;
-    });
-
-    render(<CardForm initialCard={mockCard} />, { wrapper: TestWrapper });
-
-    const deleteButton = screen.getByRole('button', { name: 'Удалить карту' });
-    await user.click(deleteButton);
-
-    const passwordField = await screen.findByLabelText(/Мастер-пароль/);
-    await user.type(passwordField, 'password123');
-
-    const confirmButton = screen.getByRole('button', { name: 'Подтвердить' });
-    await user.click(confirmButton);
-
-    await vi.waitFor(() => {
-      expect(mockDeleteCard).toHaveBeenCalledWith('4111111111111111');
-    });
+    expect(mockHandleDeleteClick).toHaveBeenCalledTimes(1);
   });
 
-  it('не должен вызывать onCancel если он не передан', async () => {
+  it('должен передавать handleDelete из useCardForm в useCardFormDelete', () => {
+    render(<CardForm />);
+
+    expect(mockUseCardFormDelete).toHaveBeenCalledWith({
+      onDelete: mockHandleDelete,
+    });
+  });
+});
+
+describe('CardForm - обработчики', () => {
+  it('должен вызывать onCancel при клике на кнопку отмены', async () => {
+    const mockOnCancel = vi.fn();
     const user = userEvent.setup();
 
-    render(<CardForm />, { wrapper: TestWrapper });
+    render(<CardForm onCancel={mockOnCancel} />);
 
-    const cancelButton = screen.getByRole('button', { name: 'Отмена' });
-    await user.click(cancelButton);
+    await user.click(screen.getByRole('button', { name: 'Отмена' }));
 
-    await vi.waitFor(() => {
-      expect(cancelButton).toBeInTheDocument();
+    expect(mockOnCancel).toHaveBeenCalledTimes(1);
+  });
+
+  it('не должен падать при клике на отмену без переданного onCancel', async () => {
+    const user = userEvent.setup();
+
+    render(<CardForm />);
+
+    await expect(
+      user.click(screen.getByRole('button', { name: 'Отмена' })),
+    ).resolves.not.toThrow();
+  });
+
+  it('должен передавать initialCard и onSuccess в useCardForm', () => {
+    const mockInitialCard = { pan: '5555555555554444' };
+    const mockOnSuccess = vi.fn();
+
+    render(
+      <CardForm
+        initialCard={mockInitialCard}
+        onSuccess={mockOnSuccess}
+      />,
+    );
+
+    expect(mockUseCardForm).toHaveBeenCalledWith({
+      initialCard: mockInitialCard,
+      onSuccess: mockOnSuccess,
     });
   });
 });

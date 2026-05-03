@@ -91,4 +91,19 @@ describe('ConfirmModal', () => {
       expect(handleCancel).toHaveBeenCalledTimes(1);
     });
   });
+
+  it('не должен выбрасывать ошибку если onCancel не передан', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <ConfirmModal
+        message="Сообщение"
+        onConfirm={vi.fn()}
+      />,
+    );
+
+    const cancelButton = screen.getByRole('button', { name: 'Отмена' });
+
+    await expect(user.click(cancelButton)).resolves.not.toThrow();
+  });
 });

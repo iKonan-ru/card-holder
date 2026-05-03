@@ -1,121 +1,36 @@
-import {
-  useCallback,
-  useRef,
-  useState,
-  type ChangeEvent,
-  type FC,
-  type SubmitEvent,
-} from 'react';
-import {
-  MAX_PASSWORD_LENGTH,
-  MIN_PASSWORD_LENGTH,
-} from '@features/card-export-import';
+import { useRef, type FC } from 'react';
+import { MAX_PASSWORD_LENGTH } from '@features/card-export-import';
 import { Button, PasswordField } from '@shared/ui';
 import {
   LOCK_SCREEN_BLOCK,
   LOCK_SCREEN_BUTTON_CREATE,
   LOCK_SCREEN_BUTTON_UNLOCK,
-  LOCK_SCREEN_ERROR_MISMATCH,
-  LOCK_SCREEN_ERROR_TOO_LONG,
-  LOCK_SCREEN_ERROR_TOO_SHORT,
-  LOCK_SCREEN_ERROR_WRONG_PASSWORD,
   LOCK_SCREEN_LABEL_CONFIRM,
   LOCK_SCREEN_LABEL_PASSWORD,
   LOCK_SCREEN_SUBTITLE_CREATE,
   LOCK_SCREEN_TITLE_CREATE,
   LOCK_SCREEN_TITLE_UNLOCK,
 } from '../../constants';
-import { useCryptoStore } from '../../store';
+import { useLockScreenForm } from '../../hooks';
 import './lock-screen.less';
 
 export const LockScreen: FC = () => {
-  const { isFirstSetup, unlock } = useCryptoStore();
+  const {
+    password,
+    confirmPassword,
+    passwordError,
+    confirmError,
+    isSubmitting,
+    isPasswordVisible,
+    isSubmitEnabled,
+    isFirstSetup,
+    handlePasswordChange,
+    handleConfirmChange,
+    handleVisibilityChange,
+    handleSubmit,
+  } = useLockScreenForm();
 
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [passwordError, setPasswordError] = useState<string | undefined>();
-  const [confirmError, setConfirmError] = useState<string | undefined>();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  const handlePasswordChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setPassword(event.target.value);
-      setPasswordError(undefined);
-      setConfirmError(undefined);
-    },
-    [],
-  );
-
-  const handleConfirmChange = useCallback(
-    (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      setConfirmPassword(event.target.value);
-      setConfirmError(undefined);
-    },
-    [],
-  );
-
-  const handleVisibilityChange = useCallback((isVisible: boolean) => {
-    setIsPasswordVisible(isVisible);
-  }, []);
-
-  const isSubmitEnabled =
-    password.length >= MIN_PASSWORD_LENGTH &&
-    password.length <= MAX_PASSWORD_LENGTH &&
-    (!isFirstSetup ||
-      (confirmPassword.length >= MIN_PASSWORD_LENGTH &&
-        password === confirmPassword));
-
-  const validate = (): boolean => {
-    if (password.length < MIN_PASSWORD_LENGTH) {
-      setPasswordError(LOCK_SCREEN_ERROR_TOO_SHORT);
-
-      return false;
-    }
-
-    if (password.length > MAX_PASSWORD_LENGTH) {
-      setPasswordError(LOCK_SCREEN_ERROR_TOO_LONG);
-
-      return false;
-    }
-
-    if (isFirstSetup && password !== confirmPassword) {
-      setConfirmError(LOCK_SCREEN_ERROR_MISMATCH);
-
-      return false;
-    }
-
-    return true;
-  };
-
-  const handleSubmit = useCallback(
-    async (event: SubmitEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      setPasswordError(undefined);
-      setConfirmError(undefined);
-
-      if (!validate()) {
-        return;
-      }
-
-      setIsSubmitting(true);
-
-      try {
-        await unlock(password);
-      } catch (error) {
-        setPasswordError(
-          error instanceof Error
-            ? error.message
-            : LOCK_SCREEN_ERROR_WRONG_PASSWORD,
-        );
-      } finally {
-        setIsSubmitting(false);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [password, confirmPassword, isFirstSetup, unlock],
-  );
 
   return (
     <div

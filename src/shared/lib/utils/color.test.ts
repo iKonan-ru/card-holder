@@ -41,6 +41,12 @@ describe('hexToRgb', () => {
     expect(result).toBeNull();
   });
 
+  it('должна вернуть null для 3-символьного формата #fff', () => {
+    const result = hexToRgb('#fff');
+
+    expect(result).toBeNull();
+  });
+
   it('должна корректно обработать белый цвет', () => {
     const result = hexToRgb('#ffffff');
 
@@ -122,6 +128,18 @@ describe('darkenColor', () => {
     const result = darkenColor(invalidHex, PERCENT_FIFTY);
 
     expect(result).toBe(invalidHex);
+  });
+
+  it('должна возвращать #000000 при проценте > 100', () => {
+    const result = darkenColor('#ffffff', 110);
+
+    expect(result).toBe('#000000');
+  });
+
+  it('должна осветлять цвет при отрицательном проценте', () => {
+    const result = darkenColor('#808080', -100);
+
+    expect(result).toBe('#ffffff');
   });
 
   it('должна корректно затемнить цвет на 30%', () => {

@@ -82,6 +82,52 @@ describe('useCardForm', () => {
     expect(result.current.isSubmitting).toBe(false);
   });
 
+  it('isSubmitEnabled должен быть false при пустых полях', () => {
+    const { result } = renderHook(() => useCardForm());
+
+    expect(result.current.isSubmitEnabled).toBe(false);
+  });
+
+  it('isSubmitEnabled должен быть true когда все обязательные поля заполнены', () => {
+    const { result } = renderHook(() => useCardForm());
+
+    act(() => {
+      result.current.handleFieldChange('pan', '5555 5555 5555 4444');
+      result.current.handleFieldChange('expires', '12/25');
+      result.current.handleFieldChange('cvv', '123');
+      result.current.handleFieldChange('name', 'JOHN DOE');
+    });
+
+    expect(result.current.isSubmitEnabled).toBe(true);
+  });
+
+  it('isSubmitEnabled должен быть false если есть ошибки валидации', () => {
+    const { result } = renderHook(() => useCardForm());
+
+    act(() => {
+      result.current.handleFieldChange('pan', '5555 5555 5555 4444');
+      result.current.handleFieldChange('expires', '12/25');
+      result.current.handleFieldChange('cvv', '123');
+      result.current.handleFieldChange('name', 'JOHN DOE');
+      result.current.handleFieldValidation('pan', 'Неверный номер');
+    });
+
+    expect(result.current.isSubmitEnabled).toBe(false);
+  });
+
+  it('isSubmitEnabled должен быть false если поле не заполнено до нужной длины', () => {
+    const { result } = renderHook(() => useCardForm());
+
+    act(() => {
+      result.current.handleFieldChange('pan', '5555 5555');
+      result.current.handleFieldChange('expires', '12/25');
+      result.current.handleFieldChange('cvv', '123');
+      result.current.handleFieldChange('name', 'JOHN DOE');
+    });
+
+    expect(result.current.isSubmitEnabled).toBe(false);
+  });
+
   it('должен обновлять данные поля через handleFieldChange', () => {
     const { result } = renderHook(() => useCardForm());
 
