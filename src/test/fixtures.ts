@@ -1,6 +1,7 @@
 import type { IBankCard } from '@entities/bank-card';
 
 export const MOCK_CARD: IBankCard = {
+  id: 'mock-id-1',
   pan: '5559494202595236',
   expires: '0726',
   name: 'USER ONE',
@@ -10,6 +11,7 @@ export const MOCK_CARD: IBankCard = {
 };
 
 export const MOCK_CARD_SECOND: IBankCard = {
+  id: 'mock-id-2',
   pan: '4377723769243191',
   expires: '0726',
   name: 'USER TWO',
@@ -19,6 +21,7 @@ export const MOCK_CARD_SECOND: IBankCard = {
 };
 
 export const MOCK_CARD_THIRD: IBankCard = {
+  id: 'mock-id-3',
   pan: '9999888877776666',
   expires: '0725',
   name: 'USER THREE',

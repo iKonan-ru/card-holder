@@ -125,6 +125,7 @@ describe('validateImportedPayload', () => {
 
 describe('parseDecryptedCards', () => {
   const mockCard: IBankCard = {
+    id: 'import-parse-id-1',
     pan: '1234567890123456',
     expires: '12/25',
     name: 'Test Card',
@@ -180,6 +181,7 @@ describe('parseDecryptedCards', () => {
 
 describe('mergeCards', () => {
   const card1: IBankCard = {
+    id: 'import-merge-id-1',
     pan: '1111',
     expires: '12/25',
     name: 'Card 1',
@@ -189,6 +191,7 @@ describe('mergeCards', () => {
   };
 
   const card2: IBankCard = {
+    id: 'import-merge-id-2',
     pan: '2222',
     expires: '11/26',
     name: 'Card 2',

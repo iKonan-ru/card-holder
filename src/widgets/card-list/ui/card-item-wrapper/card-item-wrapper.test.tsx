@@ -168,6 +168,7 @@ describe('CardItemWrapper', () => {
 
   it('должна корректно рендериться с другой картой', () => {
     const anotherCard: IBankCard = {
+      id: 'item-wrapper-another-id',
       pan: '4377723769243191',
       expires: '0726',
       name: 'ANOTHER USER',

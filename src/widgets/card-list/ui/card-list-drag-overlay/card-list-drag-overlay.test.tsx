@@ -11,6 +11,7 @@ vi.mock('@entities/bank-card', () => ({
 }));
 
 const MOCK_CARD: IBankCard = {
+  id: 'mock-drag-overlay-id',
   pan: '5559494202595236',
   expires: '0726',
   name: 'TEST USER',

@@ -14,6 +14,7 @@ beforeAll(async () => {
 });
 
 const makeCard = (overrides?: Partial<IBankCard>): IBankCard => ({
+  id: 'test-id-1',
   pan: '4111111111111111',
   expires: '12/26',
   name: 'John Doe',
@@ -23,12 +24,19 @@ const makeCard = (overrides?: Partial<IBankCard>): IBankCard => ({
 });
 
 describe('encryptCardFields', () => {
-  it('должен сохранять pan и order в открытом виде', async () => {
+  it('должен сохранять id и order в открытом виде', async () => {
     const card = makeCard();
     const result = await encryptCardFields(card, sharedKey);
 
-    expect(result.pan).toBe(card.pan);
+    expect(result.id).toBe(card.id);
     expect(result.order).toBe(card.order);
+  });
+
+  it('не должен содержать pan в открытом виде', async () => {
+    const card = makeCard();
+    const result = await encryptCardFields(card, sharedKey);
+
+    expect((result as unknown as Record<string, unknown>).pan).toBeUndefined();
   });
 
   it('должен создавать непустой encryptedPayload', async () => {
@@ -113,5 +121,13 @@ describe('encryptCardFields + decryptCardFields round-trip', () => {
     const decrypted = await decryptCardFields(encrypted, sharedKey);
 
     expect(decrypted.name).toBe(card.name);
+  });
+
+  it('должен корректно шифровать и восстанавливать pan', async () => {
+    const card = makeCard({ pan: '5555555555554444' });
+    const encrypted = await encryptCardFields(card, sharedKey);
+    const decrypted = await decryptCardFields(encrypted, sharedKey);
+
+    expect(decrypted.pan).toBe('5555555555554444');
   });
 });

@@ -11,6 +11,7 @@ export interface IBankCardAddress {
 }
 
 export interface IBankCard {
+  id: string;
   pan: string;
   expires: string;
   name: string;

@@ -4,6 +4,7 @@ import type { IBankCard } from '../../types';
 import { BankCard } from './bank-card';
 
 const MOCK_CARD: IBankCard = {
+  id: 'test-id-1',
   pan: '5559494202595236',
   expires: '0726',
   name: 'TEST USER',
@@ -15,6 +16,7 @@ const MOCK_CARD: IBankCard = {
 };
 
 const MOCK_CARD_WITHOUT_OPTIONAL: IBankCard = {
+  id: 'test-id-2',
   pan: '4377723769243191',
   expires: '0726',
   name: 'TEST USER',

@@ -43,6 +43,7 @@ const MOCK_FILE_CONTENT = JSON.stringify({
 
 const mockCards: IBankCard[] = [
   {
+    id: 'mock-import-id-1',
     pan: '1234567890123456',
     name: 'TEST HOLDER',
     expires: '12/25',
@@ -53,6 +54,7 @@ const mockCards: IBankCard[] = [
 
 const mockImportedCards: IBankCard[] = [
   {
+    id: 'mock-import-id-2',
     pan: '9876543210987654',
     name: 'IMPORTED HOLDER',
     expires: '01/26',

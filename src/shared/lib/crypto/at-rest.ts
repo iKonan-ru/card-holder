@@ -3,7 +3,7 @@ import { ENCRYPTION_ALGORITHM, IV_LENGTH } from './constants';
 import { arrayBufferToBase64, base64ToUint8Array } from './encoding';
 
 export interface IStoredEncryptedCard {
-  pan: string;
+  id: string;
   order: number;
   encryptedPayload: string;
 }
@@ -12,7 +12,7 @@ export const encryptCardFields = async (
   card: IBankCard,
   key: CryptoKey,
 ): Promise<IStoredEncryptedCard> => {
-  const { pan, order, ...rest } = card;
+  const { id, order, ...rest } = card;
   const encoder = new TextEncoder();
   const data = encoder.encode(JSON.stringify(rest));
   const iv = crypto.getRandomValues(new Uint8Array(IV_LENGTH));
@@ -28,7 +28,7 @@ export const encryptCardFields = async (
   combined.set(new Uint8Array(ciphertext), IV_LENGTH);
 
   return {
-    pan,
+    id,
     order,
     encryptedPayload: arrayBufferToBase64(combined.buffer as ArrayBuffer),
   };
@@ -49,13 +49,12 @@ export const decryptCardFields = async (
   );
 
   const decoder = new TextDecoder();
-  const rest = JSON.parse(decoder.decode(decrypted)) as Omit<
-    IBankCard,
-    'pan' | 'order'
-  >;
+  const rest: Omit<IBankCard, 'id' | 'order'> = JSON.parse(
+    decoder.decode(decrypted),
+  );
 
   return {
-    pan: record.pan,
+    id: record.id,
     order: record.order,
     ...rest,
   };

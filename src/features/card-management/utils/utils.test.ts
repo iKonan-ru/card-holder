@@ -18,6 +18,7 @@ const MOCK_CRYPTO_KEY = {} as CryptoKey;
 describe('executeCardOperation', () => {
   const mockCards = [
     {
+      id: 'utils-mock-id-1',
       pan: '5536914125525541',
       expires: '1225',
       name: 'TEST USER',
@@ -79,6 +80,7 @@ describe('executeCardOperation', () => {
     const updatedCards = [
       ...mockCards,
       {
+        id: 'utils-mock-id-2',
         pan: '4276300015876543',
         expires: '0626',
         name: 'ANOTHER USER',

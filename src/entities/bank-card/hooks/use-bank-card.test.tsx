@@ -5,6 +5,7 @@ import type { IBankCard } from '../types';
 import { useBankCard } from './use-bank-card';
 
 const MOCK_MASTERCARD: IBankCard = {
+  id: 'test-mastercard',
   pan: '5559494202595236',
   expires: '0726',
   name: 'TEST USER',
@@ -14,6 +15,7 @@ const MOCK_MASTERCARD: IBankCard = {
 };
 
 const MOCK_VISA: IBankCard = {
+  id: 'test-visa',
   pan: '4377723769243191',
   expires: '0726',
   name: 'TEST USER',
@@ -23,6 +25,7 @@ const MOCK_VISA: IBankCard = {
 };
 
 const MOCK_MIR: IBankCard = {
+  id: 'test-mir',
   pan: '2200123456789012',
   expires: '0726',
   name: 'TEST USER',
@@ -344,6 +347,7 @@ describe('useBankCard', () => {
 
   it('должен использовать дефолтный банк для неизвестной карты', () => {
     const unknownCard: IBankCard = {
+      id: 'test-unknown',
       pan: '0000000000000000',
       expires: '0726',
       name: 'TEST USER',
@@ -366,6 +370,7 @@ describe('useBankCard', () => {
 
   it('должен добавлять модификатор dark-text когда isDarkText true', () => {
     const raiffeisenCard: IBankCard = {
+      id: 'test-raiffeisen',
       pan: '2200123456789012',
       expires: '0726',
       name: 'TEST USER',

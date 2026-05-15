@@ -60,6 +60,7 @@ describe('useCardFormModal', () => {
     const { result } = renderHook(() => useCardFormModal());
 
     const mockCard: IBankCard = {
+      id: 'modal-card-id-1',
       pan: '5555555555554444',
       expires: '1225',
       name: 'JOHN DOE',
@@ -80,6 +81,7 @@ describe('useCardFormModal', () => {
     const { result } = renderHook(() => useCardFormModal());
 
     const mockCard: IBankCard = {
+      id: 'modal-card-id-2',
       pan: '5555555555554444',
       expires: '1225',
       name: 'JOHN DOE',
@@ -123,6 +125,7 @@ describe('useCardFormModal', () => {
     const { result } = renderHook(() => useCardFormModal());
 
     const mockCard: IBankCard = {
+      id: 'modal-card-id-3',
       pan: '5555555555554444',
       expires: '1225',
       name: 'JOHN DOE',

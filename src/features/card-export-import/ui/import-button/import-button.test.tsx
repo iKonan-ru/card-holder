@@ -24,6 +24,7 @@ const TestWrapper = ({ children }: PropsWithChildren) => (
 describe('ImportButton', () => {
   const mockCards: IBankCard[] = [
     {
+      id: 'mock-import-btn-id-1',
       pan: '1111',
       expires: '12/25',
       name: 'Test Card',

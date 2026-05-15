@@ -14,7 +14,7 @@ export interface ICardManagementActions {
   loadCards: () => Promise<void>;
   addCard: (card: IBankCard) => Promise<void>;
   updateCard: (card: IBankCard) => Promise<void>;
-  deleteCard: (pan: IBankCard['pan']) => Promise<void>;
+  deleteCard: (id: IBankCard['id']) => Promise<void>;
   clearAllCards: () => Promise<void>;
   reorderCards: (cards: IBankCard[]) => Promise<void>;
   setCards: (cards: IBankCard[]) => void;

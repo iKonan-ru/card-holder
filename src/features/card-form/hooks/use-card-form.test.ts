@@ -1,7 +1,7 @@
 import { type SubmitEvent } from 'react';
 import { act, renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import * as sharedLib from '@shared/lib';
+import type { IBankCard } from '@entities/bank-card';
 import { useCardForm } from './use-card-form';
 
 const { mockUseCardManagementStore } = vi.hoisted(() => ({
@@ -17,12 +17,18 @@ vi.mock('@shared/lib', async () => {
 
   return {
     ...actual,
-    checkCardExists: vi.fn(),
   };
 });
 
-const createMockStore = (overrides = {}) => ({
-  cards: [],
+const createMockStore = (
+  overrides: Partial<{
+    cards: IBankCard[];
+    addCard: ReturnType<typeof vi.fn>;
+    updateCard: ReturnType<typeof vi.fn>;
+    deleteCard: ReturnType<typeof vi.fn>;
+  }> = {},
+) => ({
+  cards: [] as IBankCard[],
   isLoading: false,
   flippedPan: null,
   isReorderMode: false,
@@ -54,8 +60,6 @@ describe('useCardForm', () => {
 
       return mockStoreValue;
     });
-
-    vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
   });
 
   it('должен инициализироваться с пустыми данными', () => {
@@ -256,7 +260,28 @@ describe('useCardForm', () => {
   });
 
   it('должен показывать ошибку при попытке добавить существующую карту', async () => {
-    vi.mocked(sharedLib.checkCardExists).mockResolvedValueOnce(true);
+    const existingPan = '5555555555554444';
+    const mockStoreValue = createMockStore({
+      addCard: mockAddCard,
+      cards: [
+        {
+          id: 'existing-id',
+          pan: existingPan,
+          expires: '1225',
+          name: 'EXISTING',
+          cvv: '123',
+          order: 0,
+        },
+      ],
+    });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
+    });
 
     const { result } = renderHook(() => useCardForm());
 
@@ -338,11 +363,13 @@ describe('useCardForm', () => {
 
   it('должен инициализироваться с данными карты в режиме редактирования', () => {
     const initialCard = {
+      id: 'edit-id',
       pan: '5555555555554444',
       expires: '1225',
       name: 'JOHN DOE',
       cvv: '123',
       pin: '1234',
+      order: 0,
     };
 
     const { result } = renderHook(() => useCardForm({ initialCard }));
@@ -369,11 +396,13 @@ describe('useCardForm', () => {
     });
 
     const initialCard = {
+      id: 'edit-id',
       pan: '5555555555554444',
       expires: '1225',
       name: 'JOHN DOE',
       cvv: '123',
       pin: '1234',
+      order: 0,
     };
 
     const { result } = renderHook(() => useCardForm({ initialCard }));
@@ -401,7 +430,7 @@ describe('useCardForm', () => {
     );
   });
 
-  it('должен обновлять карту с изменением PAN', async () => {
+  it('должен обновлять карту с изменением PAN без вызова deleteCard', async () => {
     const mockUpdateCard = vi.fn();
     const mockDeleteCard = vi.fn();
     const mockStoreValue = createMockStore({
@@ -419,11 +448,13 @@ describe('useCardForm', () => {
     });
 
     const initialCard = {
+      id: 'edit-id',
       pan: '5555555555554444',
       expires: '1225',
       name: 'JOHN DOE',
       cvv: '123',
       pin: '1234',
+      order: 0,
     };
 
     const { result } = renderHook(() => useCardForm({ initialCard }));
@@ -440,7 +471,7 @@ describe('useCardForm', () => {
       await result.current.handleSubmit(mockEvent);
     });
 
-    expect(mockDeleteCard).toHaveBeenCalledWith('5555555555554444');
+    expect(mockDeleteCard).not.toHaveBeenCalled();
     expect(mockUpdateCard).toHaveBeenCalledWith(
       expect.objectContaining({
         pan: '4377723769243191',
@@ -453,14 +484,37 @@ describe('useCardForm', () => {
   });
 
   it('должен показывать ошибку при попытке изменить PAN на существующий', async () => {
-    vi.mocked(sharedLib.checkCardExists).mockResolvedValueOnce(true);
+    const existingPan = '4377723769243191';
+    const mockStoreValue = createMockStore({
+      addCard: mockAddCard,
+      cards: [
+        {
+          id: 'other-card-id',
+          pan: existingPan,
+          expires: '1225',
+          name: 'OTHER CARD',
+          cvv: '456',
+          order: 1,
+        },
+      ],
+    });
+
+    mockUseCardManagementStore.mockImplementation((selector) => {
+      if (selector) {
+        return selector(mockStoreValue);
+      }
+
+      return mockStoreValue;
+    });
 
     const initialCard = {
+      id: 'edit-id',
       pan: '5555555555554444',
       expires: '1225',
       name: 'JOHN DOE',
       cvv: '123',
       pin: '1234',
+      order: 0,
     };
 
     const { result } = renderHook(() => useCardForm({ initialCard }));
@@ -499,11 +553,13 @@ describe('useCardForm', () => {
     });
 
     const initialCard = {
+      id: 'delete-card-id',
       pan: '5555555555554444',
       expires: '1225',
       name: 'JOHN DOE',
       cvv: '123',
       pin: '1234',
+      order: 0,
     };
 
     const { result } = renderHook(() =>
@@ -514,7 +570,7 @@ describe('useCardForm', () => {
       await result.current.handleDelete();
     });
 
-    expect(mockDeleteCard).toHaveBeenCalledWith('5555555555554444');
+    expect(mockDeleteCard).toHaveBeenCalledWith('delete-card-id');
     expect(mockOnSuccess).toHaveBeenCalled();
     expect(result.current.formData).toEqual({
       pan: '',
@@ -535,7 +591,7 @@ describe('useCardForm', () => {
     });
   });
 
-  it('handleDelete не должна удалять если нет originalPan', async () => {
+  it('handleDelete не должна удалять если нет formData.id', async () => {
     const mockDeleteCard = vi.fn();
 
     const mockStoreValue = createMockStore({
@@ -581,11 +637,13 @@ describe('useCardForm', () => {
     });
 
     const initialCard = {
+      id: 'delete-card-id',
       pan: '5555555555554444',
       expires: '1225',
       name: 'JOHN DOE',
       cvv: '123',
       pin: '1234',
+      order: 0,
     };
 
     const { result } = renderHook(() => useCardForm({ initialCard }));

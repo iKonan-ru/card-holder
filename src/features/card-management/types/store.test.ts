@@ -27,23 +27,24 @@ vi.mock('@shared/lib', async () => {
     initDatabase: vi.fn().mockResolvedValue(undefined),
     getAllCards: vi.fn().mockResolvedValue([
       {
+        id: 'mock-id-1',
         pan: '5559494202595236',
         expires: '0726',
         name: 'TEST USER',
         cvv: '123',
         pin: '1234',
+        order: 0,
       },
       {
+        id: 'mock-id-2',
         pan: '4377723769243191',
         expires: '0726',
         name: 'TEST USER 2',
         cvv: '456',
         pin: '5678',
+        order: 1,
       },
     ]),
-    getCardByPan: vi.fn().mockResolvedValue(undefined),
-    getAllRawCards: vi.fn().mockResolvedValue([]),
-    checkCardExists: vi.fn().mockResolvedValue(false),
     addCard: vi.fn().mockResolvedValue(undefined),
     updateCard: vi.fn().mockResolvedValue(undefined),
     deleteCard: vi.fn().mockResolvedValue(undefined),
@@ -119,6 +120,7 @@ describe('useCardManagementStore', () => {
     const { cards } = useCardManagementStore.getState();
     const firstCard = cards[0];
 
+    expect(firstCard).toHaveProperty('id');
     expect(firstCard).toHaveProperty('pan');
     expect(firstCard).toHaveProperty('expires');
     expect(firstCard).toHaveProperty('name');
@@ -178,11 +180,13 @@ describe('useCardManagementStore', () => {
 
   it('должна добавлять карту и обновлять state через onSuccess', async () => {
     const mockNewCard = {
+      id: 'new-card-id',
       pan: '5536914125525541',
       expires: '1230',
       name: 'NEW CARD',
       cvv: '999',
       pin: '9999',
+      order: 0,
     } as IBankCard;
 
     const expectedCardsAfterAdd = [
@@ -212,6 +216,7 @@ describe('useCardManagementStore', () => {
 
     const { addCard } = useCardManagementStore.getState();
     const mockCard = {
+      id: 'test-id',
       pan: '5559494202595236',
       expires: '0726',
       name: 'TEST USER',
@@ -231,6 +236,7 @@ describe('useCardManagementStore', () => {
 
   it('должна обновлять карту с order и обновлять state через onSuccess', async () => {
     const mockUpdatedCard = {
+      id: 'mock-id-1',
       pan: '5559494202595236',
       expires: '0726',
       name: 'UPDATED USER',
@@ -266,6 +272,7 @@ describe('useCardManagementStore', () => {
 
     const { updateCard } = useCardManagementStore.getState();
     const mockCard = {
+      id: 'mock-id-1',
       pan: '5559494202595236',
       expires: '0726',
       name: 'UPDATED USER',
@@ -283,8 +290,8 @@ describe('useCardManagementStore', () => {
     consoleErrorSpy.mockRestore();
   });
 
-  it('должна удалять карту и обновлять state через onSuccess', async () => {
-    const panToDelete = '5559494202595236';
+  it('должна удалять карту по id и обновлять state через onSuccess', async () => {
+    const idToDelete = 'mock-id-1';
     const expectedCardsAfterDelete: IBankCard[] = [];
 
     vi.mocked(sharedLib.deleteCard).mockResolvedValueOnce(undefined);
@@ -293,9 +300,9 @@ describe('useCardManagementStore', () => {
     );
 
     const { deleteCard } = useCardManagementStore.getState();
-    await deleteCard(panToDelete);
+    await deleteCard(idToDelete);
 
-    expect(sharedLib.deleteCard).toHaveBeenCalledWith(panToDelete);
+    expect(sharedLib.deleteCard).toHaveBeenCalledWith(idToDelete);
     expect(sharedLib.getAllCards).toHaveBeenCalled();
   });
 
@@ -309,7 +316,7 @@ describe('useCardManagementStore', () => {
 
     const { deleteCard } = useCardManagementStore.getState();
 
-    await expect(deleteCard('5559494202595236')).rejects.toThrow(mockError);
+    await expect(deleteCard('mock-id-1')).rejects.toThrow(mockError);
     expect(consoleErrorSpy).toHaveBeenCalledWith(
       '[Card Holder] [CardManagementStore.deleteCard] Не удалось удалить карту',
       mockError,
@@ -358,6 +365,7 @@ describe('useCardManagementStore', () => {
   it('должна устанавливать карты при вызове setCards', () => {
     const mockCards = [
       {
+        id: 'set-cards-id',
         pan: '1111222233334444',
         expires: '1230',
         name: 'NEW USER',
@@ -379,6 +387,7 @@ describe('useCardManagementStore', () => {
 
     const mockCards = [
       {
+        id: 'reorder-id-1',
         pan: '1111222233334444',
         expires: '1230',
         name: 'CARD 1',
@@ -387,6 +396,7 @@ describe('useCardManagementStore', () => {
         order: 0,
       },
       {
+        id: 'reorder-id-2',
         pan: '5555666677778888',
         expires: '1231',
         name: 'CARD 2',
@@ -415,6 +425,7 @@ describe('useCardManagementStore', () => {
 
     const mockCards = [
       {
+        id: 'reorder-err-id',
         pan: '1111222233334444',
         expires: '1230',
         name: 'CARD 1',
@@ -435,20 +446,13 @@ describe('useCardManagementStore', () => {
     consoleErrorSpy.mockRestore();
   });
 
-  it('должна обновлять карту без order, получая order из существующей карты', async () => {
-    const mockExistingCard = {
-      pan: '5559494202595236',
-      expires: '0726',
-      name: 'OLD NAME',
-      cvv: '123',
-      pin: '1234',
-      order: 5,
-    };
-
-    vi.mocked(sharedLib.getCardByPan).mockResolvedValueOnce(mockExistingCard);
+  it('должна обновлять карту без order, используя in-memory lookup', async () => {
+    const existingCardId = 'mock-id-1';
     vi.mocked(sharedLib.updateCard).mockResolvedValueOnce(undefined);
+    vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce([]);
 
     const mockCard = {
+      id: existingCardId,
       pan: '5559494202595236',
       expires: '0726',
       name: 'NEW NAME',
@@ -459,25 +463,21 @@ describe('useCardManagementStore', () => {
     const { updateCard } = useCardManagementStore.getState();
     await updateCard(mockCard);
 
-    expect(sharedLib.getCardByPan).toHaveBeenCalledWith(
-      mockCard.pan,
-      MOCK_CRYPTO_KEY,
-    );
     expect(sharedLib.updateCard).toHaveBeenCalledWith(
-      {
-        ...mockCard,
-        order: 5,
-      },
+      expect.objectContaining({
+        id: existingCardId,
+        order: 0,
+      }),
       MOCK_CRYPTO_KEY,
     );
   });
 
   it('должна обновлять карту без order, используя DEFAULT_CARD_ORDER если карта не найдена', async () => {
-    vi.mocked(sharedLib.getCardByPan).mockResolvedValueOnce(undefined);
     vi.mocked(sharedLib.updateCard).mockResolvedValueOnce(undefined);
     vi.mocked(sharedLib.getAllCards).mockResolvedValueOnce([]);
 
     const mockCard = {
+      id: 'unknown-id',
       pan: '9999999999999999',
       expires: '0726',
       name: 'NEW CARD',
@@ -488,10 +488,6 @@ describe('useCardManagementStore', () => {
     const { updateCard } = useCardManagementStore.getState();
     await updateCard(mockCard);
 
-    expect(sharedLib.getCardByPan).toHaveBeenCalledWith(
-      mockCard.pan,
-      MOCK_CRYPTO_KEY,
-    );
     expect(sharedLib.updateCard).toHaveBeenCalledWith(
       {
         ...mockCard,

@@ -8,6 +8,7 @@ import {
 
 describe('validateCardForm', () => {
   const VALID_CARD: IBankCard = {
+    id: 'validation-id-1',
     pan: '5555555555554444',
     expires: '1225',
     name: 'TEST USER',
@@ -178,6 +179,7 @@ describe('checkHasErrors', () => {
 
 describe('checkIsValidBankCard', () => {
   const VALID_CARD: IBankCard = {
+    id: 'validation-id-2',
     pan: '5555555555554444',
     expires: '1225',
     name: 'TEST USER',

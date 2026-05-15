@@ -27,6 +27,7 @@ vi.mock('@features/card-form', () => ({
 }));
 
 const MOCK_CARD: IBankCard = {
+  id: 'test-id-1',
   pan: '5559494202595236',
   expires: '0726',
   name: 'TEST USER',

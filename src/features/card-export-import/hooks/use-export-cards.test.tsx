@@ -38,6 +38,7 @@ const MOCK_BLOB = new Blob(['test'], { type: 'application/json' });
 
 const mockCards: IBankCard[] = [
   {
+    id: 'mock-export-id-1',
     pan: '1234567890123456',
     name: 'TEST HOLDER',
     expires: '12/25',

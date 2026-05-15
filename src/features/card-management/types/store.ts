@@ -10,7 +10,6 @@ import {
   ERROR_FAILED_TO_DELETE_CARD,
   ERROR_FAILED_TO_UPDATE_CARD,
   getAllCards,
-  getCardByPan,
   initDatabase,
   logError,
   TYPE_NUMBER,
@@ -111,6 +110,7 @@ export const useCardManagementStore: UseBoundStore<
     const maxOrder = allCards.length;
     const cardWithOrder: IBankCard = {
       ...card,
+      id: crypto.randomUUID(),
       order: maxOrder,
     };
 
@@ -141,7 +141,9 @@ export const useCardManagementStore: UseBoundStore<
       });
     }
 
-    const existingCard = await getCardByPan(card.pan, cryptoKey);
+    const existingCard = get().cards.find(
+      (currentCard) => currentCard.id === card.id,
+    );
     const cardOrder = existingCard?.order ?? DEFAULT_CARD_ORDER;
     const cardWithOrder: IBankCard = {
       ...card,
@@ -159,11 +161,11 @@ export const useCardManagementStore: UseBoundStore<
     });
   },
 
-  deleteCard: async (pan: IBankCard['pan']) => {
+  deleteCard: async (id: IBankCard['id']) => {
     const cryptoKey = getCryptoKey();
 
     return executeCardOperation({
-      operation: () => deleteCardFromDb(pan),
+      operation: () => deleteCardFromDb(id),
       errorMessage: ERROR_FAILED_TO_DELETE_CARD,
       context: 'CardManagementStore.deleteCard',
       cryptoKey,

@@ -10,9 +10,15 @@ const mockAddCard = vi.fn();
 const mockUpdateCard = vi.fn();
 const mockDeleteCard = vi.fn();
 
+const mockStoreState = {
+  cards: [] as IBankCard[],
+};
+
 vi.mock('@features/card-management', () => ({
   useCardManagementStore: () => ({
-    cards: [],
+    get cards() {
+      return mockStoreState.cards;
+    },
     isLoading: false,
     flippedPan: null,
     isReorderMode: false,
@@ -35,7 +41,6 @@ vi.mock('@shared/lib', async () => {
 
   return {
     ...actual,
-    checkCardExists: vi.fn(),
     logError: vi.fn(),
   };
 });
@@ -52,6 +57,7 @@ describe('useCardFormSubmit', () => {
     mockAddCard.mockReset();
     mockUpdateCard.mockReset();
     mockDeleteCard.mockReset();
+    mockStoreState.cards = [];
   });
 
   describe('handleSubmit - валидация', () => {
@@ -118,8 +124,10 @@ describe('useCardFormSubmit', () => {
   });
 
   describe('handleDelete', () => {
-    it('должен удалять карту при наличии originalPan', async () => {
-      const formData: Partial<IBankCard> = {};
+    it('должен удалять карту при наличии formData.id', async () => {
+      const formData: Partial<IBankCard> = {
+        id: 'card-to-delete-id',
+      };
 
       mockDeleteCard.mockResolvedValue(undefined);
 
@@ -127,7 +135,6 @@ describe('useCardFormSubmit', () => {
         useCardFormSubmit({
           formData,
           isEditMode: true,
-          originalPan: '5536914125525541',
           setErrors: mockSetErrors,
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
@@ -141,14 +148,14 @@ describe('useCardFormSubmit', () => {
       });
 
       expect(mockSetIsSubmitting).toHaveBeenCalledWith(true);
-      expect(mockDeleteCard).toHaveBeenCalledWith('5536914125525541');
+      expect(mockDeleteCard).toHaveBeenCalledWith('card-to-delete-id');
       expect(mockResetForm).toHaveBeenCalled();
       expect(mockResetErrors).toHaveBeenCalled();
       expect(mockOnSuccess).toHaveBeenCalled();
       expect(mockSetIsSubmitting).toHaveBeenCalledWith(false);
     });
 
-    it('не должен удалять карту при отсутствии originalPan', async () => {
+    it('не должен удалять карту при отсутствии formData.id', async () => {
       const formData: Partial<IBankCard> = {};
 
       const { result } = renderHook(() =>
@@ -171,7 +178,9 @@ describe('useCardFormSubmit', () => {
     });
 
     it('должен обрабатывать ошибки при удалении', async () => {
-      const formData: Partial<IBankCard> = {};
+      const formData: Partial<IBankCard> = {
+        id: 'card-to-delete-id',
+      };
       const testError = new Error('Delete error');
 
       mockDeleteCard.mockRejectedValue(testError);
@@ -180,7 +189,6 @@ describe('useCardFormSubmit', () => {
         useCardFormSubmit({
           formData,
           isEditMode: true,
-          originalPan: '5536914125525541',
           setErrors: mockSetErrors,
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
@@ -201,7 +209,9 @@ describe('useCardFormSubmit', () => {
     });
 
     it('не должен вызывать onSuccess если его нет', async () => {
-      const formData: Partial<IBankCard> = {};
+      const formData: Partial<IBankCard> = {
+        id: 'card-to-delete-id',
+      };
 
       mockDeleteCard.mockResolvedValue(undefined);
 
@@ -209,7 +219,6 @@ describe('useCardFormSubmit', () => {
         useCardFormSubmit({
           formData,
           isEditMode: true,
-          originalPan: '5536914125525541',
           setErrors: mockSetErrors,
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
@@ -227,7 +236,9 @@ describe('useCardFormSubmit', () => {
     });
 
     it('должен устанавливать isSubmitting в false даже при ошибке', async () => {
-      const formData: Partial<IBankCard> = {};
+      const formData: Partial<IBankCard> = {
+        id: 'card-to-delete-id',
+      };
       const testError = new Error('Delete error');
 
       mockDeleteCard.mockRejectedValue(testError);
@@ -236,7 +247,6 @@ describe('useCardFormSubmit', () => {
         useCardFormSubmit({
           formData,
           isEditMode: true,
-          originalPan: '5536914125525541',
           setErrors: mockSetErrors,
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: mockResetForm,
@@ -263,7 +273,6 @@ describe('useCardFormSubmit', () => {
         pin: '1234',
       };
 
-      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
       mockAddCard.mockResolvedValue(undefined);
 
       const { result } = renderHook(() =>
@@ -292,16 +301,27 @@ describe('useCardFormSubmit', () => {
       expect(mockOnSuccess).toHaveBeenCalled();
     });
 
-    it('должен показать ошибку если карта уже существует', async () => {
+    it('должен показать ошибку если карта уже существует (in-memory)', async () => {
+      const existingPan = '5559494202595236';
+
+      mockStoreState.cards = [
+        {
+          id: 'existing-id',
+          pan: existingPan,
+          expires: '1230',
+          name: 'EXISTING',
+          cvv: '123',
+          order: 0,
+        },
+      ];
+
       const formData: Partial<IBankCard> = {
-        pan: '5559494202595236',
+        pan: existingPan,
         expires: '1230',
         name: 'TEST USER',
         cvv: '123',
         pin: '1234',
       };
-
-      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(true);
 
       const { result } = renderHook(() =>
         useCardFormSubmit({
@@ -332,6 +352,7 @@ describe('useCardFormSubmit', () => {
   describe('handleSubmit - редактирование карты', () => {
     it('должен обновлять карту при валидных данных', async () => {
       const formData: Partial<IBankCard> = {
+        id: 'edit-card-id',
         pan: '5559494202595236',
         expires: '1230',
         name: 'UPDATED USER',
@@ -364,13 +385,15 @@ describe('useCardFormSubmit', () => {
       });
 
       expect(mockUpdateCard).toHaveBeenCalled();
+      expect(mockDeleteCard).not.toHaveBeenCalled();
       expect(mockResetForm).toHaveBeenCalled();
       expect(mockResetErrors).toHaveBeenCalled();
       expect(mockOnSuccess).toHaveBeenCalled();
     });
 
-    it('должен удалять старую карту при изменении PAN', async () => {
+    it('должен обновлять карту при изменении PAN без вызова deleteCard', async () => {
       const formData: Partial<IBankCard> = {
+        id: 'edit-card-id',
         pan: '4377723769243191',
         expires: '1230',
         name: 'UPDATED USER',
@@ -379,8 +402,6 @@ describe('useCardFormSubmit', () => {
         order: 0,
       };
 
-      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
-      mockDeleteCard.mockResolvedValue(undefined);
       mockUpdateCard.mockResolvedValue(undefined);
 
       const { result } = renderHook(() =>
@@ -404,21 +425,33 @@ describe('useCardFormSubmit', () => {
         await result.current.handleSubmit(mockEvent);
       });
 
-      expect(mockDeleteCard).toHaveBeenCalledWith('5559494202595236');
       expect(mockUpdateCard).toHaveBeenCalled();
+      expect(mockDeleteCard).not.toHaveBeenCalled();
     });
 
-    it('должен показать ошибку если новый PAN уже существует', async () => {
+    it('должен показать ошибку если новый PAN уже существует у другой карты', async () => {
+      const newPan = '4377723769243191';
+
+      mockStoreState.cards = [
+        {
+          id: 'other-card-id',
+          pan: newPan,
+          expires: '1230',
+          name: 'OTHER CARD',
+          cvv: '456',
+          order: 1,
+        },
+      ];
+
       const formData: Partial<IBankCard> = {
-        pan: '4377723769243191',
+        id: 'edit-card-id',
+        pan: newPan,
         expires: '1230',
         name: 'UPDATED USER',
         cvv: '123',
         pin: '1234',
         order: 0,
       };
-
-      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(true);
 
       const { result } = renderHook(() =>
         useCardFormSubmit({
@@ -445,11 +478,66 @@ describe('useCardFormSubmit', () => {
       });
       expect(mockUpdateCard).not.toHaveBeenCalled();
     });
+
+    it('не должен показывать ошибку при редактировании без изменения PAN (исключает себя)', async () => {
+      const currentPan = '5559494202595236';
+      const currentId = 'edit-card-id';
+
+      mockStoreState.cards = [
+        {
+          id: currentId,
+          pan: currentPan,
+          expires: '1230',
+          name: 'CURRENT',
+          cvv: '123',
+          order: 0,
+        },
+      ];
+
+      const formData: Partial<IBankCard> = {
+        id: currentId,
+        pan: currentPan,
+        expires: '1230',
+        name: 'UPDATED USER',
+        cvv: '123',
+        pin: '1234',
+        order: 0,
+      };
+
+      mockUpdateCard.mockResolvedValue(undefined);
+
+      const { result } = renderHook(() =>
+        useCardFormSubmit({
+          formData,
+          isEditMode: true,
+          originalPan: currentPan,
+          setErrors: mockSetErrors,
+          setIsSubmitting: mockSetIsSubmitting,
+          resetForm: mockResetForm,
+          resetErrors: mockResetErrors,
+        }),
+      );
+
+      const mockEvent = {
+        preventDefault: vi.fn(),
+      } as unknown as SubmitEvent<HTMLFormElement>;
+
+      await act(async () => {
+        await result.current.handleSubmit(mockEvent);
+      });
+
+      expect(mockUpdateCard).toHaveBeenCalled();
+      expect(mockSetErrors).not.toHaveBeenCalledWith({
+        pan: 'Такая карта уже существует',
+      });
+    });
   });
 
   describe('интеграция с параметрами', () => {
     it('должен корректно работать с переданными функциями-коллбеками', async () => {
-      const formData: Partial<IBankCard> = {};
+      const formData: Partial<IBankCard> = {
+        id: 'card-to-delete-id',
+      };
 
       mockDeleteCard.mockResolvedValue(undefined);
 
@@ -460,7 +548,6 @@ describe('useCardFormSubmit', () => {
         useCardFormSubmit({
           formData,
           isEditMode: true,
-          originalPan: '5536914125525541',
           setErrors: mockSetErrors,
           setIsSubmitting: mockSetIsSubmitting,
           resetForm: customResetForm,
@@ -510,7 +597,6 @@ describe('useCardFormSubmit', () => {
       const checkIsValidBankCardSpy = vi
         .spyOn(validationModule, 'checkIsValidBankCard')
         .mockReturnValue(false);
-      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
       mockAddCard.mockResolvedValue(undefined);
 
       const { result } = renderHook(() =>
@@ -542,6 +628,7 @@ describe('useCardFormSubmit', () => {
 
     it('не должен обновлять карту если checkIsValidBankCard возвращает false', async () => {
       const formData: Partial<IBankCard> = {
+        id: 'edit-card-id',
         pan: '5559494202595236',
         expires: '1230',
         name: 'UPDATED USER',
@@ -616,8 +703,9 @@ describe('useCardFormSubmit', () => {
       expect(mockSetErrors).toHaveBeenCalled();
     });
 
-    it('должен обрабатывать случай когда originalPan не передан при изменении PAN', async () => {
+    it('должен обновлять карту без вызова deleteCard при изменении PAN', async () => {
       const formData: Partial<IBankCard> = {
+        id: 'edit-card-id',
         pan: '4377723769243191',
         expires: '1230',
         name: 'UPDATED USER',
@@ -626,7 +714,6 @@ describe('useCardFormSubmit', () => {
         order: 0,
       };
 
-      vi.mocked(sharedLib.checkCardExists).mockResolvedValue(false);
       mockUpdateCard.mockResolvedValue(undefined);
 
       const { result } = renderHook(() =>

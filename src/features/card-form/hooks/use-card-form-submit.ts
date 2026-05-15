@@ -2,7 +2,6 @@ import { useCallback, type SubmitEvent } from 'react';
 import { useCardManagementStore } from '@features/card-management';
 import type { IBankCard } from '@entities/bank-card';
 import {
-  checkCardExists,
   ERROR_FAILED_TO_ADD_CARD,
   ERROR_FAILED_TO_DELETE_CARD,
   logError,
@@ -36,14 +35,13 @@ interface IUseCardFormSubmitResult {
 export const useCardFormSubmit = ({
   formData,
   isEditMode,
-  originalPan,
   setErrors,
   setIsSubmitting,
   resetForm,
   resetErrors,
   onSuccess,
 }: IUseCardFormSubmitParams): IUseCardFormSubmitResult => {
-  const { addCard, updateCard, deleteCard } = useCardManagementStore();
+  const { addCard, updateCard, deleteCard, cards } = useCardManagementStore();
 
   const handleSubmit = useCallback(
     async (event: SubmitEvent<HTMLFormElement>) => {
@@ -68,17 +66,18 @@ export const useCardFormSubmit = ({
 
       try {
         const cardPan = cardDataToValidate.pan || '';
+        const cardExists = cards.some(
+          (card) => card.pan === cardPan && card.id !== formData.id,
+        );
+
+        if (cardExists) {
+          setErrors({ pan: ERROR_CARD_ALREADY_EXISTS });
+          setIsSubmitting(false);
+
+          return;
+        }
 
         if (!isEditMode) {
-          const cardExists = await checkCardExists(cardPan);
-
-          if (cardExists) {
-            setErrors({ pan: ERROR_CARD_ALREADY_EXISTS });
-            setIsSubmitting(false);
-
-            return;
-          }
-
           const cardWithOrder = {
             ...cardDataToValidate,
             order: 0,
@@ -92,19 +91,6 @@ export const useCardFormSubmit = ({
 
           await addCard(cardWithOrder);
         } else {
-          const isPanChanged = cardPan !== originalPan;
-
-          if (isPanChanged) {
-            const cardExists = await checkCardExists(cardPan);
-
-            if (cardExists) {
-              setErrors({ pan: ERROR_CARD_ALREADY_EXISTS });
-              setIsSubmitting(false);
-
-              return;
-            }
-          }
-
           const cardWithOrder: Partial<IBankCard> & { order: number } = {
             ...cardDataToValidate,
             order: cardDataToValidate.order ?? 0,
@@ -117,10 +103,6 @@ export const useCardFormSubmit = ({
           }
 
           await updateCard(cardWithOrder);
-
-          if (isPanChanged && originalPan) {
-            await deleteCard(originalPan);
-          }
         }
 
         resetForm();
@@ -142,10 +124,9 @@ export const useCardFormSubmit = ({
     [
       formData,
       isEditMode,
-      originalPan,
+      cards,
       addCard,
       updateCard,
-      deleteCard,
       setErrors,
       setIsSubmitting,
       resetForm,
@@ -155,14 +136,14 @@ export const useCardFormSubmit = ({
   );
 
   const handleDelete = useCallback(async () => {
-    if (!originalPan) {
+    if (!formData.id) {
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      await deleteCard(originalPan);
+      await deleteCard(formData.id);
       resetForm();
       resetErrors();
 
@@ -179,7 +160,7 @@ export const useCardFormSubmit = ({
       setIsSubmitting(false);
     }
   }, [
-    originalPan,
+    formData,
     deleteCard,
     setIsSubmitting,
     resetForm,

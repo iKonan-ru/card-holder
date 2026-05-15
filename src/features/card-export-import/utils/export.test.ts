@@ -15,6 +15,7 @@ describe('validateCardsForExport', () => {
   it('не должен выбрасывать ошибку при непустом массиве карт', () => {
     const cards: IBankCard[] = [
       {
+        id: 'export-validate-id-1',
         pan: '1234567890123456',
         expires: '12/25',
         name: 'Test Card',
@@ -30,6 +31,7 @@ describe('validateCardsForExport', () => {
   it('не должен выбрасывать ошибку при массиве с несколькими картами', () => {
     const cards: IBankCard[] = [
       {
+        id: 'export-validate-id-2',
         pan: '1111',
         expires: '12/25',
         name: 'Card 1',
@@ -38,6 +40,7 @@ describe('validateCardsForExport', () => {
         order: 0,
       },
       {
+        id: 'export-validate-id-3',
         pan: '2222',
         expires: '11/26',
         name: 'Card 2',
@@ -55,6 +58,7 @@ describe('prepareCardsForExport', () => {
   it('должен преобразовывать массив карт в JSON строку', () => {
     const cards: IBankCard[] = [
       {
+        id: 'export-prepare-id-1',
         pan: '1234567890123456',
         expires: '12/25',
         name: 'Test Card',
@@ -81,6 +85,7 @@ describe('prepareCardsForExport', () => {
   it('должен обрабатывать несколько карт', () => {
     const cards: IBankCard[] = [
       {
+        id: 'export-prepare-id-2',
         pan: '1111',
         expires: '12/25',
         name: 'Card 1',
@@ -89,6 +94,7 @@ describe('prepareCardsForExport', () => {
         order: 0,
       },
       {
+        id: 'export-prepare-id-3',
         pan: '2222',
         expires: '11/26',
         name: 'Card 2',
@@ -108,6 +114,7 @@ describe('prepareCardsForExport', () => {
   it('должен сохранять все поля карты', () => {
     const cards: IBankCard[] = [
       {
+        id: 'export-prepare-id-4',
         pan: '1234567890123456',
         expires: '12/25',
         name: 'Test Card',

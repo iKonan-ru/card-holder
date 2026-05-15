@@ -3,7 +3,6 @@ import {
   ERROR_FAILED_TO_ADD_CARD,
   ERROR_FAILED_TO_CLEAR_CARDS,
   ERROR_FAILED_TO_DELETE_CARD,
-  ERROR_FAILED_TO_GET_CARD,
   ERROR_FAILED_TO_GET_CARDS,
   ERROR_FAILED_TO_UPDATE_CARD,
   ERROR_FAILED_TO_UPDATE_CARDS_ORDER,
@@ -40,50 +39,6 @@ export const getAllCards = async (
   return sortCardsByOrder(cards);
 };
 
-export const getAllRawCards = async (): Promise<IBankCard[]> => {
-  return executeIndexedDBOperation<IBankCard[]>({
-    storeName: CARDS_STORE_NAME,
-    mode: INDEXEDDB_MODE_READONLY,
-    operation: (store) => store.getAll(),
-    errorMessage: ERROR_FAILED_TO_GET_CARDS,
-  });
-};
-
-export const getCardByPan = async (
-  pan: IBankCard['pan'],
-  cryptoKey: CryptoKey,
-): Promise<IBankCard | undefined> => {
-  const record = await executeIndexedDBOperation<
-    IStoredEncryptedCard | undefined
-  >({
-    storeName: CARDS_STORE_NAME,
-    mode: INDEXEDDB_MODE_READONLY,
-    operation: (store) => store.get(pan),
-    errorMessage: ERROR_FAILED_TO_GET_CARD,
-  });
-
-  if (!record) {
-    return undefined;
-  }
-
-  return decryptCardFields(record, cryptoKey);
-};
-
-export const checkCardExists = async (
-  pan: IBankCard['pan'],
-): Promise<boolean> => {
-  const record = await executeIndexedDBOperation<
-    IStoredEncryptedCard | undefined
-  >({
-    storeName: CARDS_STORE_NAME,
-    mode: INDEXEDDB_MODE_READONLY,
-    operation: (store) => store.get(pan),
-    errorMessage: ERROR_FAILED_TO_GET_CARD,
-  });
-
-  return Boolean(record);
-};
-
 export const addCard = async (
   card: IBankCard,
   cryptoKey: CryptoKey,
@@ -112,11 +67,11 @@ export const updateCard = async (
   });
 };
 
-export const deleteCard = async (pan: IBankCard['pan']): Promise<void> => {
+export const deleteCard = async (id: IBankCard['id']): Promise<void> => {
   return executeIndexedDBOperation({
     storeName: CARDS_STORE_NAME,
     mode: INDEXEDDB_MODE_READWRITE,
-    operation: (store) => store.delete(pan),
+    operation: (store) => store.delete(id),
     errorMessage: ERROR_FAILED_TO_DELETE_CARD,
   });
 };
