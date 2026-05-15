@@ -160,8 +160,8 @@ src/
 ### Валидация (Zod)
 
 - **Форма карты** - `src/features/card-form/utils/schemas.ts`: PAN (алгоритм Луна), срок, имя, CVV, опциональный PIN; сборка `cardFormSchema`
-- **Экспорт/импорт** - `src/features/card-export-import/utils/schemas.ts`: пароль и подтверждение (`exportPasswordSchema`); длина 8–128 символов
-- **Мастер-пароль** - ограничения длины из `card-export-import` (8–128 символов), проверка совпадения при создании
+- **Экспорт/импорт** - `src/features/card-export-import/utils/schemas.ts`: пароль и подтверждение (`exportPasswordSchema`); длина 8–128 символов, обязательна минимум одна цифра
+- **Мастер-пароль** - ограничения из `card-export-import` (8–128 символов, минимум одна цифра), проверка совпадения при создании
 - Сообщения об ошибках задаются в константах features и маппятся на поля через `use-card-form` и `field-validators`
 
 ---

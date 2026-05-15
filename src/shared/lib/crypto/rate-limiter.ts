@@ -10,30 +10,30 @@ import {
 } from './constants';
 
 const getStoredAttempts = (): number => {
-  const stored = sessionStorage.getItem(STORAGE_KEY_ATTEMPTS);
+  const stored = localStorage.getItem(STORAGE_KEY_ATTEMPTS);
 
   return stored ? parseInt(stored, 10) : 0;
 };
 
 const getStoredLockout = (): number | null => {
-  const stored = sessionStorage.getItem(STORAGE_KEY_LOCKOUT);
+  const stored = localStorage.getItem(STORAGE_KEY_LOCKOUT);
 
   return stored ? parseInt(stored, 10) : null;
 };
 
 export const resetFailedAttempts = (): void => {
-  sessionStorage.removeItem(STORAGE_KEY_ATTEMPTS);
-  sessionStorage.removeItem(STORAGE_KEY_LOCKOUT);
+  localStorage.removeItem(STORAGE_KEY_ATTEMPTS);
+  localStorage.removeItem(STORAGE_KEY_LOCKOUT);
 };
 
 export const incrementFailedAttempts = (): void => {
   const attempts = getStoredAttempts() + 1;
-  sessionStorage.setItem(STORAGE_KEY_ATTEMPTS, String(attempts));
+  localStorage.setItem(STORAGE_KEY_ATTEMPTS, String(attempts));
 
   const shouldLockout = attempts >= MAX_ATTEMPTS_BEFORE_LOCKOUT;
 
   if (shouldLockout) {
-    sessionStorage.setItem(
+    localStorage.setItem(
       STORAGE_KEY_LOCKOUT,
       String(Date.now() + LOCKOUT_DURATION_MS),
     );

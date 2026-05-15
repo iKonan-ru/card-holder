@@ -1,4 +1,5 @@
 import type { IBeforeInstallPromptEvent } from '../../types';
+import { logError } from './logger';
 
 export const checkForServiceWorkerUpdate = async (
   registration: ServiceWorkerRegistration,
@@ -10,7 +11,7 @@ export const checkForServiceWorkerUpdate = async (
   try {
     await registration.update();
   } catch (error: unknown) {
-    console.error('SW update check error', error);
+    logError({ message: 'SW update check error', error });
   }
 };
 

@@ -1,4 +1,4 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { checkSecureProtocol, logError } from '@shared/lib';
 
 vi.mock('../utils/logger', () => ({
@@ -7,15 +7,8 @@ vi.mock('../utils/logger', () => ({
 
 describe('checkSecureProtocol', () => {
   const originalLocation = window.location;
-  let consoleWarnSpy: ReturnType<typeof vi.fn>;
-
   beforeEach(() => {
     vi.clearAllMocks();
-    consoleWarnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
-  });
-
-  afterEach(() => {
-    consoleWarnSpy.mockRestore();
   });
 
   it('не должен выводить предупреждение для HTTPS', () => {
@@ -31,7 +24,6 @@ describe('checkSecureProtocol', () => {
     checkSecureProtocol();
 
     expect(logError).not.toHaveBeenCalled();
-    expect(consoleWarnSpy).not.toHaveBeenCalled();
 
     Object.defineProperty(window, 'location', {
       value: originalLocation,
@@ -53,7 +45,6 @@ describe('checkSecureProtocol', () => {
     checkSecureProtocol();
 
     expect(logError).not.toHaveBeenCalled();
-    expect(consoleWarnSpy).not.toHaveBeenCalled();
 
     Object.defineProperty(window, 'location', {
       value: originalLocation,
@@ -75,7 +66,6 @@ describe('checkSecureProtocol', () => {
     checkSecureProtocol();
 
     expect(logError).not.toHaveBeenCalled();
-    expect(consoleWarnSpy).not.toHaveBeenCalled();
 
     Object.defineProperty(window, 'location', {
       value: originalLocation,
@@ -101,12 +91,8 @@ describe('checkSecureProtocol', () => {
       message:
         'ВНИМАНИЕ: Приложение работает по незащищенному соединению! Для безопасности используйте HTTPS.',
       context: 'SecurityCheck',
+      level: 'warn',
     });
-
-    expect(consoleWarnSpy).toHaveBeenCalledOnce();
-    expect(consoleWarnSpy).toHaveBeenCalledWith(
-      'ВНИМАНИЕ: Приложение работает по незащищенному соединению! Для безопасности используйте HTTPS.',
-    );
 
     Object.defineProperty(window, 'location', {
       value: originalLocation,
@@ -128,7 +114,6 @@ describe('checkSecureProtocol', () => {
     checkSecureProtocol();
 
     expect(logError).toHaveBeenCalledOnce();
-    expect(consoleWarnSpy).toHaveBeenCalledOnce();
 
     Object.defineProperty(window, 'location', {
       value: originalLocation,
@@ -150,7 +135,6 @@ describe('checkSecureProtocol', () => {
     checkSecureProtocol();
 
     expect(logError).toHaveBeenCalledOnce();
-    expect(consoleWarnSpy).toHaveBeenCalledOnce();
 
     Object.defineProperty(window, 'location', {
       value: originalLocation,
@@ -172,7 +156,6 @@ describe('checkSecureProtocol', () => {
     checkSecureProtocol();
 
     expect(logError).not.toHaveBeenCalled();
-    expect(consoleWarnSpy).not.toHaveBeenCalled();
 
     Object.defineProperty(window, 'location', {
       value: originalLocation,
@@ -194,7 +177,6 @@ describe('checkSecureProtocol', () => {
     checkSecureProtocol();
 
     expect(logError).not.toHaveBeenCalled();
-    expect(consoleWarnSpy).not.toHaveBeenCalled();
 
     Object.defineProperty(window, 'location', {
       value: originalLocation,

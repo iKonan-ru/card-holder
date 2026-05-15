@@ -4,6 +4,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   LOCK_SCREEN_ERROR_MISMATCH,
   LOCK_SCREEN_ERROR_TOO_SHORT,
+  LOCK_SCREEN_ERROR_TOO_SIMPLE,
   LOCK_SCREEN_ERROR_WRONG_PASSWORD,
 } from '../constants';
 import { useCryptoStore } from '../store';
@@ -241,6 +242,24 @@ describe('useLockScreenForm - handleSubmit', () => {
     });
 
     expect(result.current.passwordError).toBe(LOCK_SCREEN_ERROR_TOO_SHORT);
+    expect(mockUnlock).not.toHaveBeenCalled();
+  });
+
+  it('должен установить passwordError если пароль без цифр', async () => {
+    setupUnlockMode();
+
+    const { result } = renderHook(() => useLockScreenForm());
+    const event = makeSubmitEvent();
+
+    act(() => {
+      result.current.handlePasswordChange(makeChangeEvent('abcdefgh'));
+    });
+
+    await act(async () => {
+      await result.current.handleSubmit(event);
+    });
+
+    expect(result.current.passwordError).toBe(LOCK_SCREEN_ERROR_TOO_SIMPLE);
     expect(mockUnlock).not.toHaveBeenCalled();
   });
 

@@ -4,6 +4,7 @@ import { useRegisterSW } from 'virtual:pwa-register/react';
 import {
   checkForServiceWorkerUpdate,
   INITIAL_UPDATE_DELAY,
+  logError,
   UPDATE_CHECK_INTERVAL,
 } from '@shared/lib';
 
@@ -43,7 +44,7 @@ export const usePWAUpdate = (): IUsePWAUpdateResult => {
       }, UPDATE_CHECK_INTERVAL);
     },
     onRegisterError(error: Error) {
-      console.error('SW registration error', error);
+      logError({ message: 'SW registration error', error });
     },
   });
 

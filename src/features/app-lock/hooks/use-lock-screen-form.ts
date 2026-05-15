@@ -12,7 +12,9 @@ import {
   LOCK_SCREEN_ERROR_MISMATCH,
   LOCK_SCREEN_ERROR_TOO_LONG,
   LOCK_SCREEN_ERROR_TOO_SHORT,
+  LOCK_SCREEN_ERROR_TOO_SIMPLE,
   LOCK_SCREEN_ERROR_WRONG_PASSWORD,
+  PASSWORD_DIGIT_PATTERN,
 } from '../constants';
 import { useCryptoStore } from '../store';
 
@@ -87,6 +89,12 @@ export const useLockScreenForm = (): IUseLockScreenFormResult => {
 
       if (password.length > MAX_PASSWORD_LENGTH) {
         setPasswordError(LOCK_SCREEN_ERROR_TOO_LONG);
+
+        return;
+      }
+
+      if (!PASSWORD_DIGIT_PATTERN.test(password)) {
+        setPasswordError(LOCK_SCREEN_ERROR_TOO_SIMPLE);
 
         return;
       }

@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { generateRandomId, type IModalContext } from '@shared/lib';
+import { generateRandomId, logError, type IModalContext } from '@shared/lib';
 import { ERROR_CONTENT_ID_PREFIX, ERROR_CONTENT_TITLE } from '../constants';
 import { ErrorContent } from '../ui';
 import { translateError } from './utils';
@@ -16,7 +16,7 @@ export const showError = (params: {
   context?: string;
 }): void => {
   if (!modalContextRef) {
-    console.error('[Error Handler] Modal context not initialized');
+    logError({ message: '[Error Handler] Modal context not initialized' });
 
     return;
   }

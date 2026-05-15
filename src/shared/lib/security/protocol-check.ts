@@ -18,9 +18,8 @@ export const checkSecureProtocol = (): boolean => {
     logError({
       message: HTTP_WARNING_MESSAGE,
       context: SECURITY_WARNING_CONTEXT,
+      level: 'warn',
     });
-
-    console.warn(HTTP_WARNING_MESSAGE);
   }
 
   return isSecure;

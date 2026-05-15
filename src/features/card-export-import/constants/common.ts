@@ -14,6 +14,11 @@ export const FALLBACK_ERROR_IMPORT = 'Не удалось импортирова
 export const ERROR_PASSWORD_TOO_SHORT = `Введите минимум ${MIN_PASSWORD_LENGTH} символов`;
 export const ERROR_PASSWORD_TOO_LONG = `Максимальная длина пароля - ${MAX_PASSWORD_LENGTH} символов`;
 export const ERROR_PASSWORD_MISMATCH = 'Пароли не совпадают';
+export const ERROR_PASSWORD_TOO_SIMPLE =
+  'Пароль должен содержать хотя бы одну цифру';
+
+/** Проверяет наличие хотя бы одной цифры в пароле */
+export const PASSWORD_DIGIT_PATTERN = /\d/;
 
 export const ERROR_CORRUPTED_FILE = 'Файл поврежден';
 export const ERROR_UNSUPPORTED_VERSION = 'Неподдерживаемая версия формата';

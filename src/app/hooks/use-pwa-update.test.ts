@@ -148,7 +148,7 @@ describe('usePWAUpdate', () => {
     }
 
     expect(mockConsoleError).toHaveBeenCalledWith(
-      'SW registration error',
+      '[Card Holder] SW registration error',
       testError,
     );
     mockConsoleError.mockRestore();
@@ -294,7 +294,7 @@ describe('usePWAUpdate', () => {
 
     expect(mockUpdate).toHaveBeenCalled();
     expect(mockConsoleError).toHaveBeenCalledWith(
-      'SW update check error',
+      '[Card Holder] SW update check error',
       testError,
     );
 

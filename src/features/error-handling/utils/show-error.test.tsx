@@ -88,7 +88,7 @@ describe('showError', () => {
     });
 
     expect(consoleErrorSpy).toHaveBeenCalledWith(
-      '[Error Handler] Modal context not initialized',
+      '[Card Holder] [Error Handler] Modal context not initialized',
     );
     expect(mockOpenModal).not.toHaveBeenCalled();
   });
