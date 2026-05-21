@@ -6,6 +6,7 @@ import Domrf from './domrf.svg?react';
 import Gazprombank from './gazprombank.svg?react';
 import Ibt from './ibt.svg?react';
 import Mkb from './mkb.svg?react';
+import Mts from './mts.svg?react';
 import Open from './open.svg?react';
 import Ozon from './ozon.svg?react';
 import Psbbank from './psbbank.svg?react';
@@ -37,4 +38,5 @@ export const bankLogos: Partial<Record<TBankKeys, FC<{ className?: string }>>> =
     vtb24: Vtb24,
     ozon: Ozon,
     wb: Wb,
+    mts: Mts,
   };

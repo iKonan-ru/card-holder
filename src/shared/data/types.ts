@@ -16,6 +16,7 @@ export type TBankKeys =
   | 'domrf'
   | 'ozon'
   | 'wb'
+  | 'mts'
   | 'default';
 
 export type TBanksRecord = Record<Exclude<TBankKeys, 'default'>, string[]>;
