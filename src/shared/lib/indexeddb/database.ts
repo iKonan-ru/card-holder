@@ -1,11 +1,15 @@
 import { ERROR_FAILED_TO_OPEN_DATABASE } from '../constants';
 import {
+  CARD_TYPES_KEY_PATH,
+  CARD_TYPES_STORE_NAME,
   CARDS_KEY_PATH,
   CARDS_ORDER_INDEX,
   CARDS_STORE_NAME,
   DATABASE_NAME,
   DATABASE_VERSION,
   INDEX_UNIQUE_FALSE,
+  OWNERS_KEY_PATH,
+  OWNERS_STORE_NAME,
 } from './constants';
 
 let databaseInstance: IDBDatabase | null = null;
@@ -51,6 +55,22 @@ export const initDatabase = (): Promise<IDBDatabase> => {
       });
       cardsStore.createIndex(CARDS_ORDER_INDEX, CARDS_ORDER_INDEX, {
         unique: INDEX_UNIQUE_FALSE,
+      });
+
+      if (database.objectStoreNames.contains(CARD_TYPES_STORE_NAME)) {
+        database.deleteObjectStore(CARD_TYPES_STORE_NAME);
+      }
+
+      database.createObjectStore(CARD_TYPES_STORE_NAME, {
+        keyPath: CARD_TYPES_KEY_PATH,
+      });
+
+      if (database.objectStoreNames.contains(OWNERS_STORE_NAME)) {
+        database.deleteObjectStore(OWNERS_STORE_NAME);
+      }
+
+      database.createObjectStore(OWNERS_STORE_NAME, {
+        keyPath: OWNERS_KEY_PATH,
       });
     };
   });

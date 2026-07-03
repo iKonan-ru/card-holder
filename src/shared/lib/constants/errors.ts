@@ -12,3 +12,13 @@ export const ERROR_FAILED_TO_CLEAR_CARDS = 'Не удалось очистить
 export const ERROR_FAILED_TO_UPDATE_CARDS_ORDER =
   'Не удалось обновить порядок карт';
 export const ERROR_FAILED_TO_COPY = 'Не удалось скопировать';
+
+export const ERROR_FAILED_TO_GET_CARD_TYPES = 'Не удалось получить типы карт';
+export const ERROR_FAILED_TO_ADD_CARD_TYPE = 'Не удалось добавить тип карты';
+export const ERROR_FAILED_TO_UPDATE_CARD_TYPE = 'Не удалось обновить тип карты';
+export const ERROR_FAILED_TO_DELETE_CARD_TYPE = 'Не удалось удалить тип карты';
+
+export const ERROR_FAILED_TO_GET_OWNERS = 'Не удалось получить владельцев';
+export const ERROR_FAILED_TO_ADD_OWNER = 'Не удалось добавить владельца';
+export const ERROR_FAILED_TO_UPDATE_OWNER = 'Не удалось обновить владельца';
+export const ERROR_FAILED_TO_DELETE_OWNER = 'Не удалось удалить владельца';
