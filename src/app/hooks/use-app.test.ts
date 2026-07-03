@@ -1,7 +1,11 @@
 import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useApp } from '@app/hooks';
-import { useCardManagementStore } from '@features/card-management';
+import {
+  useCardManagementStore,
+  type ICardManagementActions,
+  type ICardManagementState,
+} from '@features/card-management';
 import { initGlobalErrorHandler } from '@features/error-handling';
 import { setErrorModalHandler } from '@shared/lib';
 
@@ -36,11 +40,16 @@ describe('useApp', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.mocked(useCardManagementStore).mockImplementation((selector) => {
-      const state = {
+      const state: ICardManagementState & ICardManagementActions = {
         cards: [],
         flippedPan: null,
         isLoading: false,
         isReorderMode: false,
+        sortKey: 'order',
+        sortDirection: 'asc',
+        groupBy: 'none',
+        filters: { bankIds: [], paymentSystems: [], typeIds: [], ownerIds: [] },
+        collapsedGroups: [],
         setReorderMode: mockSetReorderMode,
         flipCard: vi.fn(),
         unflipCards: vi.fn(),
@@ -52,6 +61,13 @@ describe('useApp', () => {
         reorderCards: vi.fn(),
         setCards: vi.fn(),
         toggleReorderMode: vi.fn(),
+        setSortKey: vi.fn(),
+        setSortDirection: vi.fn(),
+        setGroupBy: vi.fn(),
+        toggleGroupCollapsed: vi.fn(),
+        setFilters: vi.fn(),
+        clearFilters: vi.fn(),
+        resetView: vi.fn(),
       };
 
       return selector(state);
