@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import { ActionButtons } from '@widgets/action-buttons';
 import { CardList } from '@widgets/card-list';
+import { CardToolbar } from '@widgets/card-toolbar';
 import { bem, ParentClassProvider } from '@shared/lib';
 import { MAIN_PAGE_BLOCK } from '../constants';
 import './main-page.less';
@@ -10,6 +11,7 @@ export const MainPage: FC = () => {
     <main className={MAIN_PAGE_BLOCK}>
       <ParentClassProvider parentClass={MAIN_PAGE_BLOCK}>
         <div className={bem(MAIN_PAGE_BLOCK, 'content')}>
+          <CardToolbar />
           <CardList />
           <ActionButtons />
         </div>

@@ -23,6 +23,7 @@ import { Portal } from '../portal';
 import {
   SELECT_BLOCK,
   SELECT_NO_ACTIVE_INDEX,
+  SELECT_SCROLL_BLOCK_START,
   SELECT_TRIGGER_ARIA_LABEL,
 } from './constants';
 import './select.less';
@@ -126,7 +127,14 @@ export const Select: FC<ISelectProps> = ({
       }
     };
 
-    const handleScroll = () => {
+    const handleScroll = (event: Event) => {
+      const target = event.target as Node;
+      const isInsideList = listRef.current?.contains(target) ?? false;
+
+      if (isInsideList) {
+        return;
+      }
+
       closeDropdown();
     };
 
@@ -141,13 +149,32 @@ export const Select: FC<ISelectProps> = ({
     };
   }, [isOpen, closeDropdown]);
 
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
+  const handleListRef = useCallback(
+    (node: HTMLUListElement | null) => {
+      listRef.current = node;
 
-    listRef.current?.focus();
-  }, [isOpen]);
+      if (!node) {
+        return;
+      }
+
+      node.focus();
+
+      const selectedIndex = options.findIndex(
+        (option) => option.value === value,
+      );
+
+      if (selectedIndex < 0) {
+        return;
+      }
+
+      const selectedElement = node.children[selectedIndex] as
+        | HTMLElement
+        | undefined;
+
+      selectedElement?.scrollIntoView({ block: SELECT_SCROLL_BLOCK_START });
+    },
+    [options, value],
+  );
 
   const handleTriggerKeyDown = useCallback(
     (event: KeyboardEvent<HTMLButtonElement>) => {
@@ -264,7 +291,7 @@ export const Select: FC<ISelectProps> = ({
       {isOpen && position && (
         <Portal>
           <ul
-            ref={listRef}
+            ref={handleListRef}
             role="listbox"
             tabIndex={-1}
             className={bem(SELECT_BLOCK, 'dropdown')}
