@@ -1,0 +1,20 @@
+@import '@shared/assets/styles/variables.less';
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: @spacing-sm;
+
+  &__title {
+    font-size: @font-size-sm;
+    font-weight: @font-weight-medium;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: @spacing-sm;
+  }
+}

@@ -27,3 +27,15 @@ export * from './drag-handle';
 export * from './icon';
 
 export * from './http-warning-banner';
+
+export * from './select';
+
+export * from './checkbox';
+
+export * from './checkbox-group';
+
+export * from './chip';
+
+export * from './bottom-sheet';
+
+export * from './icon-button';

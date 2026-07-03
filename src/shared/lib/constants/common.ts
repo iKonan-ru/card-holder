@@ -20,6 +20,8 @@ export const INDEXEDDB_MODE_READWRITE = 'readwrite';
 export const KEY_ENTER = 'Enter';
 export const KEY_ESC = 'Escape';
 export const KEY_SPACE = ' ';
+export const KEY_ARROW_UP = 'ArrowUp';
+export const KEY_ARROW_DOWN = 'ArrowDown';
 
 export const ARIA_ROLE_BUTTON = 'button';
 export const ARIA_ROLE_DIALOG = 'dialog';
