@@ -3,6 +3,12 @@ export const CARD_LIST_ARIA_LABEL = 'Список банковских карт'
 
 export const CARD_LIST_DRAG_OVERLAY_BLOCK = 'card-list-drag-overlay';
 export const CARD_LIST_GRID_BLOCK = 'card-list-grid';
+export const CARD_LIST_GROUPS_BLOCK = 'card-list-groups';
+export const CARD_LIST_GROUP_BLOCK = 'card-list-group';
+
+export const CARD_LIST_GROUP_COLLAPSE_ARIA_LABEL_EXPANDED = 'Свернуть группу';
+export const CARD_LIST_GROUP_COLLAPSE_ARIA_LABEL_COLLAPSED =
+  'Развернуть группу';
 
 export const DROP_ANIMATION_DURATION = 200;
 export const DROP_ANIMATION_EASING = 'ease';

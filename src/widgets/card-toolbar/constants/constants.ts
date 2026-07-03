@@ -1,6 +1,8 @@
 import {
+  GroupBy,
   SortDirection,
   SortKey,
+  type TGroupBy,
   type TSortDirection,
   type TSortKey,
 } from '@features/card-management';
@@ -37,3 +39,14 @@ export const FILTER_SECTION_TITLE_TYPE = 'Тип карты';
 export const FILTER_SECTION_TITLE_OWNER = 'Владелец';
 
 export const RESET_ALL_LABEL = 'Сбросить всё';
+
+export const GROUP_BY_OPTIONS: { value: TGroupBy; label: string }[] = [
+  { value: GroupBy.None, label: 'Без группировки' },
+  { value: GroupBy.Bank, label: 'По банку' },
+  { value: GroupBy.PaymentSystem, label: 'По платёжной системе' },
+  { value: GroupBy.Type, label: 'По типу' },
+  { value: GroupBy.Owner, label: 'По владельцу' },
+];
+
+export const GROUP_BY_PLACEHOLDER = 'Группировка';
+export const GROUP_CHIP_REMOVE_ARIA_LABEL = 'Сбросить группировку';

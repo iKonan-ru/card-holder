@@ -1,0 +1,36 @@
+@import '@shared/assets/styles/variables.less';
+
+.card-list-group {
+  display: flex;
+  flex-direction: column;
+  gap: @spacing-md;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: @spacing-sm;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: var(--text-primary);
+    font-size: @font-size-lg;
+    font-weight: @font-weight-semibold;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    color: var(--text-muted);
+  }
+
+  &__label {
+    flex: 1;
+  }
+
+  &__count {
+    color: var(--text-muted);
+    font-size: @font-size-sm;
+    font-weight: @font-weight-medium;
+  }
+}

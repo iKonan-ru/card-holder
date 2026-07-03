@@ -1,14 +1,18 @@
 import type { IBankCard } from '@entities/bank-card';
 import type { IOwner } from '@entities/card-owner';
 import type { ICardType } from '@entities/card-type';
-import { BANKS_LIST } from '@shared/data';
-import { getBankByCardNumber, getPaymentSystem } from '@shared/lib';
+import { getPaymentSystem } from '@shared/lib';
 import {
   SortDirection,
   SortKey,
   type TSortDirection,
   type TSortKey,
 } from '../types/view';
+import {
+  getBankName,
+  getCardTypeName,
+  getOwnerName,
+} from './resolve-card-facet';
 
 const EXPIRES_MONTH_LENGTH = 2;
 
@@ -18,35 +22,6 @@ const DERIVED_SORT_KEYS: TSortKey[] = [
   SortKey.Type,
   SortKey.Owner,
 ];
-
-const getBankName = (pan: string): string | null => {
-  const bankId = getBankByCardNumber(pan);
-  const bank = BANKS_LIST.find((item) => item.id === bankId);
-
-  return bank?.name ?? null;
-};
-
-const getCardTypeName = (
-  typeId: string | undefined,
-  cardTypes: ICardType[],
-): string | null => {
-  if (!typeId) {
-    return null;
-  }
-
-  return cardTypes.find((item) => item.id === typeId)?.name ?? null;
-};
-
-const getOwnerName = (
-  ownerId: string | undefined,
-  owners: IOwner[],
-): string | null => {
-  if (!ownerId) {
-    return null;
-  }
-
-  return owners.find((item) => item.id === ownerId)?.realName ?? null;
-};
 
 const normalizeExpires = (expires: string): string => {
   const month = expires.slice(0, EXPIRES_MONTH_LENGTH);

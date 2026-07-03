@@ -1,11 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   canReorder,
+  DEFAULT_GROUP_BY,
   DEFAULT_SORT_DIRECTION,
   DEFAULT_SORT_KEY,
   SortDirection,
   useCardManagementStore,
   type ICardFilters,
+  type TGroupBy,
   type TSortDirection,
   type TSortKey,
 } from '@features/card-management';
@@ -45,6 +47,10 @@ interface IUseCardToolbarResult {
   handleSortKeyChange: (value: string) => void;
   handleToggleDirection: () => void;
   handleResetSort: () => void;
+  groupBy: TGroupBy;
+  isGroupActive: boolean;
+  handleGroupByChange: (value: string) => void;
+  handleResetGroup: () => void;
   filterSections: IFilterSection[];
   activeFilterCount: number;
   activeFilterChips: IActiveFilterChip[];
@@ -67,6 +73,7 @@ export const useCardToolbar = (): IUseCardToolbarResult => {
   const setSortDirection = useCardManagementStore(
     (state) => state.setSortDirection,
   );
+  const setGroupBy = useCardManagementStore((state) => state.setGroupBy);
   const setFilters = useCardManagementStore((state) => state.setFilters);
   const resetView = useCardManagementStore((state) => state.resetView);
 
@@ -101,6 +108,16 @@ export const useCardToolbar = (): IUseCardToolbarResult => {
   const handleResetSort = () => {
     setSortKey(DEFAULT_SORT_KEY);
     setSortDirection(DEFAULT_SORT_DIRECTION);
+  };
+
+  const isGroupActive = groupBy !== DEFAULT_GROUP_BY;
+
+  const handleGroupByChange = (value: string) => {
+    setGroupBy(value as TGroupBy);
+  };
+
+  const handleResetGroup = () => {
+    setGroupBy(DEFAULT_GROUP_BY);
   };
 
   const bankOptions = useMemo<IFilterOption[]>(() => {
@@ -243,6 +260,10 @@ export const useCardToolbar = (): IUseCardToolbarResult => {
     handleSortKeyChange,
     handleToggleDirection,
     handleResetSort,
+    groupBy,
+    isGroupActive,
+    handleGroupByChange,
+    handleResetGroup,
     filterSections,
     activeFilterCount,
     activeFilterChips,

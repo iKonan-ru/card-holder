@@ -13,6 +13,9 @@ import {
   CARD_TOOLBAR_BLOCK,
   FILTER_BUTTON_LABEL,
   FILTER_SHEET_TITLE,
+  GROUP_BY_OPTIONS,
+  GROUP_BY_PLACEHOLDER,
+  GROUP_CHIP_REMOVE_ARIA_LABEL,
   RESET_ALL_LABEL,
   SORT_CHIP_REMOVE_ARIA_LABEL,
   SORT_DIRECTION_ARROW,
@@ -36,6 +39,10 @@ export const CardToolbar: FC = () => {
     handleSortKeyChange,
     handleToggleDirection,
     handleResetSort,
+    groupBy,
+    isGroupActive,
+    handleGroupByChange,
+    handleResetGroup,
     filterSections,
     activeFilterCount,
     activeFilterChips,
@@ -66,6 +73,12 @@ export const CardToolbar: FC = () => {
 
     return `${option?.label} ${SORT_DIRECTION_ARROW[sortDirection]}`;
   }, [sortKey, sortDirection]);
+
+  const activeGroupLabel = useMemo(() => {
+    const option = GROUP_BY_OPTIONS.find((item) => item.value === groupBy);
+
+    return option?.label ?? groupBy;
+  }, [groupBy]);
 
   const renderFilterChip = useCallback(
     (chip: IActiveFilterChip): ReactElement => {
@@ -104,7 +117,8 @@ export const CardToolbar: FC = () => {
   );
 
   const className = useClassName({ blockName: CARD_TOOLBAR_BLOCK });
-  const hasChipsRow = isSortActive || activeFilterChips.length > 0;
+  const hasChipsRow =
+    isSortActive || isGroupActive || activeFilterChips.length > 0;
 
   return (
     <div className={className}>
@@ -121,6 +135,12 @@ export const CardToolbar: FC = () => {
             title={directionLabel}
             onClick={handleToggleDirection}
           />
+          <Select
+            value={groupBy}
+            options={GROUP_BY_OPTIONS}
+            onChange={handleGroupByChange}
+            placeholder={GROUP_BY_PLACEHOLDER}
+          />
           <IconButton
             icon={FiFilter}
             label={FILTER_BUTTON_LABEL}
@@ -136,6 +156,13 @@ export const CardToolbar: FC = () => {
                 label={activeSortLabel}
                 onRemove={handleResetSort}
                 ariaLabel={SORT_CHIP_REMOVE_ARIA_LABEL}
+              />
+            )}
+            {isGroupActive && (
+              <Chip
+                label={activeGroupLabel}
+                onRemove={handleResetGroup}
+                ariaLabel={GROUP_CHIP_REMOVE_ARIA_LABEL}
               />
             )}
             {activeFilterChips.map(renderFilterChip)}

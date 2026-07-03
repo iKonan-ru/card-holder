@@ -1,8 +1,11 @@
 import { useCallback, useEffect, useMemo } from 'react';
 import { useCardFormModal } from '@features/card-form';
 import {
+  GroupBy,
+  groupCards,
   selectVisibleCards,
   useCardManagementStore,
+  type ICardGroup,
 } from '@features/card-management';
 import { useCardTypesManagementStore } from '@features/card-types-management';
 import { useOwnersManagementStore } from '@features/owners-management';
@@ -12,12 +15,16 @@ import type { Procedure } from '@shared/types';
 interface IUseCardListResult {
   cards: IBankCard[];
   hasAnyCards: boolean;
+  isGrouped: boolean;
+  groups: ICardGroup[];
+  collapsedGroups: string[];
   flippedPan: string | null;
   isLoading: boolean;
   isReorderMode: boolean;
   handleShowForm: Procedure;
   handleDragEnd: (reorderedCards: IBankCard[]) => void;
   handleToggleReorderMode: Procedure;
+  handleToggleGroupCollapsed: (groupId: string) => void;
 }
 
 export const useCardList = (): IUseCardListResult => {
@@ -27,12 +34,19 @@ export const useCardList = (): IUseCardListResult => {
   const isReorderMode = useCardManagementStore((state) => state.isReorderMode);
   const sortKey = useCardManagementStore((state) => state.sortKey);
   const sortDirection = useCardManagementStore((state) => state.sortDirection);
+  const groupBy = useCardManagementStore((state) => state.groupBy);
   const filters = useCardManagementStore((state) => state.filters);
+  const collapsedGroups = useCardManagementStore(
+    (state) => state.collapsedGroups,
+  );
   const loadCards = useCardManagementStore((state) => state.loadCards);
   const reorderCards = useCardManagementStore((state) => state.reorderCards);
   const setCards = useCardManagementStore((state) => state.setCards);
   const toggleReorderMode = useCardManagementStore(
     (state) => state.toggleReorderMode,
+  );
+  const toggleGroupCollapsed = useCardManagementStore(
+    (state) => state.toggleGroupCollapsed,
   );
 
   const cardTypes = useCardTypesManagementStore((state) => state.cardTypes);
@@ -62,6 +76,13 @@ export const useCardList = (): IUseCardListResult => {
     [cards, sortKey, sortDirection, filters, cardTypes, owners],
   );
 
+  const groups = useMemo(
+    () => groupCards(visibleCards, { groupBy, cardTypes, owners }),
+    [visibleCards, groupBy, cardTypes, owners],
+  );
+
+  const isGrouped = groupBy !== GroupBy.None;
+
   const handleDragEnd = useCallback(
     (reorderedCards: IBankCard[]) => {
       setCards(reorderedCards);
@@ -73,11 +94,15 @@ export const useCardList = (): IUseCardListResult => {
   return {
     cards: visibleCards,
     hasAnyCards: cards.length > 0,
+    isGrouped,
+    groups,
+    collapsedGroups,
     flippedPan,
     isLoading,
     isReorderMode,
     handleShowForm: openAddCardForm,
     handleDragEnd,
     handleToggleReorderMode: toggleReorderMode,
+    handleToggleGroupCollapsed: toggleGroupCollapsed,
   };
 };

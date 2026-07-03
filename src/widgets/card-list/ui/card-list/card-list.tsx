@@ -1,6 +1,7 @@
 import { useMemo, type FC } from 'react';
 import { closestCenter, DndContext, DragOverlay } from '@dnd-kit/core';
 import { rectSortingStrategy, SortableContext } from '@dnd-kit/sortable';
+import type { IBankCard } from '@entities/bank-card';
 import { ParentClassProvider, useClassName } from '@shared/lib';
 import { DROP_ANIMATION } from '../../configs';
 import {
@@ -10,7 +11,7 @@ import {
   CARD_LIST_MODIFIERS_EMPTY,
 } from '../../constants';
 import { useCardList, useCardListDrag, useDndSensors } from '../../hooks';
-import { CardListDragOverlay } from '../../ui';
+import { CardListDragOverlay, CardListGroups } from '../../ui';
 import { CardListGrid } from '../card-list-grid';
 import './card-list.less';
 
@@ -18,10 +19,14 @@ export const CardList: FC = () => {
   const {
     cards: storeCards,
     hasAnyCards,
+    isGrouped,
+    groups,
+    collapsedGroups,
     flippedPan,
     isReorderMode,
     handleShowForm,
     handleDragEnd: handleDragEndStore,
+    handleToggleGroupCollapsed,
   } = useCardList();
 
   const sensors = useDndSensors();
@@ -32,7 +37,13 @@ export const CardList: FC = () => {
       onDragEnd: handleDragEndStore,
     });
 
-  const cardIds = useMemo(() => cards.map(({ pan }) => pan), [cards]);
+  const sortableCards: IBankCard[] = isGrouped
+    ? groups.flatMap((group) => group.cards)
+    : cards;
+  const cardIds = useMemo(
+    () => sortableCards.map(({ pan }) => pan),
+    [sortableCards],
+  );
   const isDragging = activeCard !== null;
 
   const modifiers = useMemo(
@@ -63,13 +74,24 @@ export const CardList: FC = () => {
             items={cardIds}
             strategy={rectSortingStrategy}
           >
-            <CardListGrid
-              cards={cards}
-              hasAnyCards={hasAnyCards}
-              flippedPan={flippedPan}
-              isReorderMode={isReorderMode}
-              onShowForm={handleShowForm}
-            />
+            {isGrouped ? (
+              <CardListGroups
+                groups={groups}
+                collapsedGroups={collapsedGroups}
+                hasAnyCards={hasAnyCards}
+                flippedPan={flippedPan}
+                onToggleCollapse={handleToggleGroupCollapsed}
+                onShowForm={handleShowForm}
+              />
+            ) : (
+              <CardListGrid
+                cards={cards}
+                hasAnyCards={hasAnyCards}
+                flippedPan={flippedPan}
+                isReorderMode={isReorderMode}
+                onShowForm={handleShowForm}
+              />
+            )}
           </SortableContext>
 
           <DragOverlay dropAnimation={DROP_ANIMATION}>

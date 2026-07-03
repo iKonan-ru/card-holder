@@ -13,14 +13,16 @@ import './card-list-grid.less';
 interface ICardListGridProps {
   cards: IBankCard[];
   hasAnyCards?: boolean;
+  hideAddButton?: boolean;
   flippedPan: string | null;
   isReorderMode: boolean;
-  onShowForm: Procedure;
+  onShowForm?: Procedure;
 }
 
 export const CardListGrid: FC<ICardListGridProps> = ({
   cards,
   hasAnyCards = true,
+  hideAddButton = false,
   flippedPan,
   isReorderMode,
   onShowForm,
@@ -59,9 +61,11 @@ export const CardListGrid: FC<ICardListGridProps> = ({
           </div>
         )}
         {cards.map(getCard)}
-        <div role="listitem">
-          <AddCardButton onClick={onShowForm} />
-        </div>
+        {!hideAddButton && onShowForm && (
+          <div role="listitem">
+            <AddCardButton onClick={onShowForm} />
+          </div>
+        )}
       </ParentClassProvider>
     </div>
   );
