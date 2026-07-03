@@ -65,7 +65,6 @@ describe('getInitialFormData', () => {
       name: 'ANOTHER USER',
       cvv: '456',
       pin: '5678',
-      type: 'Дебетовая',
       phrase: 'Кодовое слово',
     };
 
@@ -77,7 +76,6 @@ describe('getInitialFormData', () => {
       name: 'ANOTHER USER',
       cvv: '456',
       pin: '5678',
-      type: 'Дебетовая',
       phrase: 'Кодовое слово',
       address: EMPTY_ADDRESS,
     });

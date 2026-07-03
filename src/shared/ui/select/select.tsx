@@ -130,11 +130,13 @@ export const Select: FC<ISelectProps> = ({
       closeDropdown();
     };
 
-    document.addEventListener('mousedown', handlePointerDown);
+    // Capture phase: Modal stops mousedown propagation on bubble, which
+    // would otherwise prevent this listener from ever seeing clicks inside it.
+    document.addEventListener('mousedown', handlePointerDown, true);
     window.addEventListener('scroll', handleScroll, true);
 
     return () => {
-      document.removeEventListener('mousedown', handlePointerDown);
+      document.removeEventListener('mousedown', handlePointerDown, true);
       window.removeEventListener('scroll', handleScroll, true);
     };
   }, [isOpen, closeDropdown]);
@@ -166,6 +168,7 @@ export const Select: FC<ISelectProps> = ({
     (event: KeyboardEvent<HTMLUListElement>) => {
       if (event.key === KEY_ESC) {
         event.preventDefault();
+        event.stopPropagation();
         closeDropdown();
         triggerRef.current?.focus();
 

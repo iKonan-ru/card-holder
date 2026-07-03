@@ -18,7 +18,8 @@ export interface IBankCard {
   cvv: string;
   pin?: string;
   order: number;
-  type?: string;
+  typeId?: string;
+  ownerId?: string;
   phrase?: string;
   address?: IBankCardAddress;
 }

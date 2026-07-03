@@ -63,7 +63,7 @@ export const useOwnersManagementStore: UseBoundStore<
     const cryptoKey = getCryptoKey();
     const owner: IOwner = { id: crypto.randomUUID(), realName, aliases };
 
-    return executeOwnerOperation({
+    await executeOwnerOperation({
       operation: () => addOwnerToDb(owner, cryptoKey),
       errorMessage: ERROR_FAILED_TO_ADD_OWNER,
       context: 'OwnersManagementStore.addOwner',
@@ -72,6 +72,8 @@ export const useOwnersManagementStore: UseBoundStore<
         set({ owners });
       },
     });
+
+    return owner;
   },
 
   updateOwner: async (owner: IOwner) => {

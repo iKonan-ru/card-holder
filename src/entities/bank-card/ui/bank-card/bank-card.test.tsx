@@ -11,7 +11,6 @@ const MOCK_CARD: IBankCard = {
   cvv: '123',
   pin: '1234',
   order: 0,
-  type: 'Тестовая',
   phrase: 'test phrase',
 };
 
@@ -35,18 +34,6 @@ describe('BankCard', () => {
     render(<BankCard card={MOCK_CARD} />);
 
     expect(screen.getByText(MOCK_CARD.name)).toBeInTheDocument();
-  });
-
-  it('должна отображать тип карты если он указан', () => {
-    render(<BankCard card={MOCK_CARD} />);
-
-    expect(screen.getByText('Тестовая')).toBeInTheDocument();
-  });
-
-  it('должна не отображать тип карты если он не указан', () => {
-    render(<BankCard card={MOCK_CARD_WITHOUT_OPTIONAL} />);
-
-    expect(screen.queryByText('Тестовая')).not.toBeInTheDocument();
   });
 
   it('должна добавлять класс flipped когда карта перевернута', () => {

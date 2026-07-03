@@ -11,9 +11,6 @@ interface IBankCardContentProps {
 export const BankCardContent: FC<IBankCardContentProps> = ({ card }) => {
   return (
     <div className={bem(BANK_CARD_BLOCK, 'content')}>
-      {card.type && (
-        <div className={bem(BANK_CARD_BLOCK, 'type')}>{card.type}</div>
-      )}
       <CopyableField
         value={card.pan}
         maskFn={maskPan}

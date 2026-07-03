@@ -97,14 +97,11 @@ export const NAME_FIELD_CONFIG: IFieldConfig = {
   validator: validateName,
 };
 
-export const FIELD_NAME_TYPE = 'type';
-export const TYPE_LABEL = 'Тип карты';
-export const TYPE_FIELD_CONFIG: IFieldConfig = {
-  name: FIELD_NAME_TYPE,
-  label: TYPE_LABEL,
-  required: false,
-  inputMode: 'text',
-};
+export const FIELD_NAME_TYPE_ID = 'typeId';
+export const TYPE_ID_LABEL = 'Тип карты';
+
+export const FIELD_NAME_OWNER_ID = 'ownerId';
+export const OWNER_ID_LABEL = 'Владелец';
 
 export const ADDRESS_GROUP_LEGEND = 'Платёжный адрес';
 

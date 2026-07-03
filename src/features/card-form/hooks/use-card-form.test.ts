@@ -71,7 +71,8 @@ describe('useCardForm', () => {
       name: '',
       cvv: '',
       pin: '',
-      type: '',
+      typeId: '',
+      ownerId: '',
       phrase: '',
       address: {
         line1: '',
@@ -220,7 +221,8 @@ describe('useCardForm', () => {
       name: '',
       cvv: '',
       pin: '',
-      type: '',
+      typeId: '',
+      ownerId: '',
       phrase: '',
       address: {
         line1: '',
@@ -578,7 +580,8 @@ describe('useCardForm', () => {
       name: '',
       cvv: '',
       pin: '',
-      type: '',
+      typeId: '',
+      ownerId: '',
       phrase: '',
       address: {
         line1: '',

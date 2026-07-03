@@ -66,7 +66,7 @@ export const useCardTypesManagementStore: UseBoundStore<
     const cryptoKey = getCryptoKey();
     const cardType: ICardType = { id: crypto.randomUUID(), name };
 
-    return executeCardTypeOperation({
+    await executeCardTypeOperation({
       operation: () => addCardTypeToDb(cardType, cryptoKey),
       errorMessage: ERROR_FAILED_TO_ADD_CARD_TYPE,
       context: 'CardTypesManagementStore.addCardType',
@@ -75,6 +75,8 @@ export const useCardTypesManagementStore: UseBoundStore<
         set({ cardTypes });
       },
     });
+
+    return cardType;
   },
 
   updateCardType: async (cardType: ICardType) => {

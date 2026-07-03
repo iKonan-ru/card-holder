@@ -23,10 +23,11 @@ import {
   PIN_FIELD_CONFIG,
   SUBMIT_BUTTON_EDIT_TEXT,
   SUBMIT_BUTTON_TEXT,
-  TYPE_FIELD_CONFIG,
 } from '../../constants';
 import { useCardForm, useCardFormDelete } from '../../hooks';
 import { CardFormGroup } from '../card-form-group';
+import { CardTypeSelectField } from '../card-type-select-field';
+import { OwnerSelectField } from '../owner-select-field';
 import './card-form.less';
 
 interface ICardFormProps {
@@ -121,11 +122,14 @@ export const CardForm: FC<ICardFormProps> = ({
             parentClass={CARD_FORM_BLOCK}
           />
 
-          <ValidatedField
-            {...TYPE_FIELD_CONFIG}
-            value={formData.type || ''}
+          <CardTypeSelectField
+            value={formData.typeId || ''}
             disabled={isSubmitting}
-            parentClass={CARD_FORM_BLOCK}
+          />
+
+          <OwnerSelectField
+            value={formData.ownerId || ''}
+            disabled={isSubmitting}
           />
 
           <ValidatedField

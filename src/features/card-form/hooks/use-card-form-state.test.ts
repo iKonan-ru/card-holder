@@ -13,7 +13,8 @@ describe('useCardFormState', () => {
       name: '',
       cvv: '',
       pin: '',
-      type: '',
+      typeId: '',
+      ownerId: '',
       phrase: '',
       address: {
         line1: '',
@@ -84,7 +85,8 @@ describe('useCardFormState', () => {
       name: '',
       cvv: '123',
       pin: '',
-      type: '',
+      typeId: '',
+      ownerId: '',
       phrase: '',
       address: {
         line1: '',
@@ -130,7 +132,8 @@ describe('useCardFormState', () => {
       name: '',
       cvv: '',
       pin: '',
-      type: '',
+      typeId: '',
+      ownerId: '',
       phrase: '',
       address: {
         line1: '',

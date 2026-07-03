@@ -24,7 +24,8 @@ export const EMPTY_CARD_FORM: Partial<IBankCard> = {
   name: '',
   cvv: '',
   pin: '',
-  type: '',
+  typeId: '',
+  ownerId: '',
   phrase: '',
   address: {
     line1: '',

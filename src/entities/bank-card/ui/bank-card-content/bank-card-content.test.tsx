@@ -35,30 +35,6 @@ describe('BankCardContent', () => {
     expect(screen.getByTestId('copyable-field-pan')).toBeInTheDocument();
   });
 
-  it('должен отображать тип карты если он указан', () => {
-    const { container } = render(<BankCardContent card={MOCK_CARD} />);
-
-    if (MOCK_CARD.type) {
-      const typeElement = container.querySelector('.bank-card__type');
-
-      expect(typeElement).toBeInTheDocument();
-      expect(typeElement).toHaveTextContent(MOCK_CARD.type);
-    }
-  });
-
-  it('не должен отображать тип карты если он не указан', () => {
-    const cardWithoutType = {
-      ...MOCK_CARD,
-      type: undefined,
-    };
-
-    const { container } = render(<BankCardContent card={cardWithoutType} />);
-
-    const typeElement = container.querySelector('.bank-card__type');
-
-    expect(typeElement).not.toBeInTheDocument();
-  });
-
   it('должен отображать имя держателя карты', () => {
     render(<BankCardContent card={MOCK_CARD} />);
 
