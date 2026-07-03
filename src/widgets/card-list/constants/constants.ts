@@ -14,3 +14,5 @@ export const TOUCH_SENSOR_ACTIVATION_TOLERANCE = 5;
 export const CARD_LIST_MODIFIER_DRAGGING = 'dragging';
 export const CARD_LIST_MODIFIERS_DRAGGING = [CARD_LIST_MODIFIER_DRAGGING];
 export const CARD_LIST_MODIFIERS_EMPTY: string[] = [];
+
+export const CARD_LIST_FILTER_EMPTY_MESSAGE = 'Нет карт по заданным фильтрам';

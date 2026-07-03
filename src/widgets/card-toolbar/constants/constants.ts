@@ -28,3 +28,12 @@ export const SORT_DIRECTION_ARROW: Record<TSortDirection, string> = {
 };
 
 export const SORT_CHIP_REMOVE_ARIA_LABEL = 'Сбросить сортировку';
+
+export const FILTER_BUTTON_LABEL = 'Фильтры';
+export const FILTER_SHEET_TITLE = 'Фильтры';
+export const FILTER_SECTION_TITLE_BANK = 'Банк';
+export const FILTER_SECTION_TITLE_PAYMENT_SYSTEM = 'Платёжная система';
+export const FILTER_SECTION_TITLE_TYPE = 'Тип карты';
+export const FILTER_SECTION_TITLE_OWNER = 'Владелец';
+
+export const RESET_ALL_LABEL = 'Сбросить всё';

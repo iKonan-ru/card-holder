@@ -1,10 +1,19 @@
-import { useMemo, type FC } from 'react';
-import { FiArrowDown, FiArrowUp } from 'react-icons/fi';
+import { useCallback, useMemo, type FC, type ReactElement } from 'react';
+import { FiArrowDown, FiArrowUp, FiFilter } from 'react-icons/fi';
 import { SortDirection } from '@features/card-management';
-import { ParentClassProvider, useClassName } from '@shared/lib';
-import { Chip, IconButton, Select } from '@shared/ui';
+import { bem, ParentClassProvider, useClassName } from '@shared/lib';
+import {
+  BottomSheet,
+  CheckboxGroup,
+  Chip,
+  IconButton,
+  Select,
+} from '@shared/ui';
 import {
   CARD_TOOLBAR_BLOCK,
+  FILTER_BUTTON_LABEL,
+  FILTER_SHEET_TITLE,
+  RESET_ALL_LABEL,
   SORT_CHIP_REMOVE_ARIA_LABEL,
   SORT_DIRECTION_ARROW,
   SORT_DIRECTION_LABEL_ASC,
@@ -12,7 +21,11 @@ import {
   SORT_KEY_OPTIONS,
   SORT_KEY_PLACEHOLDER,
 } from '../constants';
-import { useCardToolbar } from '../hooks';
+import {
+  useCardToolbar,
+  type IActiveFilterChip,
+  type IFilterSection,
+} from '../hooks';
 import './card-toolbar.less';
 
 export const CardToolbar: FC = () => {
@@ -23,6 +36,16 @@ export const CardToolbar: FC = () => {
     handleSortKeyChange,
     handleToggleDirection,
     handleResetSort,
+    filterSections,
+    activeFilterCount,
+    activeFilterChips,
+    isFilterSheetOpen,
+    handleOpenFilterSheet,
+    handleCloseFilterSheet,
+    handleFilterChange,
+    handleRemoveFilterValue,
+    hasActiveModifiers,
+    handleResetAll,
   } = useCardToolbar();
 
   const directionIcon = useMemo(
@@ -44,29 +67,97 @@ export const CardToolbar: FC = () => {
     return `${option?.label} ${SORT_DIRECTION_ARROW[sortDirection]}`;
   }, [sortKey, sortDirection]);
 
+  const renderFilterChip = useCallback(
+    (chip: IActiveFilterChip): ReactElement => {
+      const handleRemove = () => {
+        handleRemoveFilterValue(chip.facet, chip.value);
+      };
+
+      return (
+        <Chip
+          key={`${chip.facet}:${chip.value}`}
+          label={chip.label}
+          onRemove={handleRemove}
+        />
+      );
+    },
+    [handleRemoveFilterValue],
+  );
+
+  const renderFilterSection = useCallback(
+    (section: IFilterSection): ReactElement => {
+      const handleChange = (next: string[]) => {
+        handleFilterChange(section.key, next);
+      };
+
+      return (
+        <CheckboxGroup
+          key={section.key}
+          title={section.title}
+          options={section.options}
+          value={section.selectedValues}
+          onChange={handleChange}
+        />
+      );
+    },
+    [handleFilterChange],
+  );
+
   const className = useClassName({ blockName: CARD_TOOLBAR_BLOCK });
+  const hasChipsRow = isSortActive || activeFilterChips.length > 0;
 
   return (
     <div className={className}>
       <ParentClassProvider parentClass={CARD_TOOLBAR_BLOCK}>
-        <Select
-          value={sortKey}
-          options={SORT_KEY_OPTIONS}
-          onChange={handleSortKeyChange}
-          placeholder={SORT_KEY_PLACEHOLDER}
-        />
-        <IconButton
-          icon={directionIcon}
-          title={directionLabel}
-          onClick={handleToggleDirection}
-        />
-        {isSortActive && (
-          <Chip
-            label={activeSortLabel}
-            onRemove={handleResetSort}
-            ariaLabel={SORT_CHIP_REMOVE_ARIA_LABEL}
+        <div className={bem(CARD_TOOLBAR_BLOCK, 'controls')}>
+          <Select
+            value={sortKey}
+            options={SORT_KEY_OPTIONS}
+            onChange={handleSortKeyChange}
+            placeholder={SORT_KEY_PLACEHOLDER}
           />
+          <IconButton
+            icon={directionIcon}
+            title={directionLabel}
+            onClick={handleToggleDirection}
+          />
+          <IconButton
+            icon={FiFilter}
+            label={FILTER_BUTTON_LABEL}
+            badge={activeFilterCount}
+            onClick={handleOpenFilterSheet}
+          />
+        </div>
+
+        {hasChipsRow && (
+          <div className={bem(CARD_TOOLBAR_BLOCK, 'chips')}>
+            {isSortActive && (
+              <Chip
+                label={activeSortLabel}
+                onRemove={handleResetSort}
+                ariaLabel={SORT_CHIP_REMOVE_ARIA_LABEL}
+              />
+            )}
+            {activeFilterChips.map(renderFilterChip)}
+            {hasActiveModifiers && (
+              <button
+                type="button"
+                className={bem(CARD_TOOLBAR_BLOCK, 'reset-all')}
+                onClick={handleResetAll}
+              >
+                {RESET_ALL_LABEL}
+              </button>
+            )}
+          </div>
         )}
+
+        <BottomSheet
+          isOpen={isFilterSheetOpen}
+          onClose={handleCloseFilterSheet}
+          title={FILTER_SHEET_TITLE}
+        >
+          {filterSections.map(renderFilterSection)}
+        </BottomSheet>
       </ParentClassProvider>
     </div>
   );

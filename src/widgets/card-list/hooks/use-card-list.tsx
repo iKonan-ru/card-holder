@@ -11,6 +11,7 @@ import type { Procedure } from '@shared/types';
 
 interface IUseCardListResult {
   cards: IBankCard[];
+  hasAnyCards: boolean;
   flippedPan: string | null;
   isLoading: boolean;
   isReorderMode: boolean;
@@ -71,6 +72,7 @@ export const useCardList = (): IUseCardListResult => {
 
   return {
     cards: visibleCards,
+    hasAnyCards: cards.length > 0,
     flippedPan,
     isLoading,
     isReorderMode,

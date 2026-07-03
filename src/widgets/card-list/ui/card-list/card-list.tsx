@@ -17,6 +17,7 @@ import './card-list.less';
 export const CardList: FC = () => {
   const {
     cards: storeCards,
+    hasAnyCards,
     flippedPan,
     isReorderMode,
     handleShowForm,
@@ -64,6 +65,7 @@ export const CardList: FC = () => {
           >
             <CardListGrid
               cards={cards}
+              hasAnyCards={hasAnyCards}
               flippedPan={flippedPan}
               isReorderMode={isReorderMode}
               onShowForm={handleShowForm}
