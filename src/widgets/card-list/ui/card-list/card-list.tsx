@@ -20,6 +20,7 @@ export const CardList: FC = () => {
     cards: storeCards,
     hasAnyCards,
     isGrouped,
+    groupBy,
     groups,
     collapsedGroups,
     isReorderMode,
@@ -77,6 +78,7 @@ export const CardList: FC = () => {
             {isGrouped ? (
               <CardListGroups
                 groups={groups}
+                groupBy={groupBy}
                 collapsedGroups={collapsedGroups}
                 hasAnyCards={hasAnyCards}
                 onToggleCollapse={handleToggleGroupCollapsed}

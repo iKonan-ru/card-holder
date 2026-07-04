@@ -8,23 +8,29 @@ import { FilterFacetGroup } from './filter-facet-group';
 interface IFiltersSectionProps {
   sections: IFilterSection[];
   activeFilterCount: number;
+  collapsedFacets: (keyof ICardFilters)[];
   onFilterChange: (facet: keyof ICardFilters, next: string[]) => void;
+  onToggleFacetCollapse: (facet: keyof ICardFilters) => void;
 }
 
 export const FiltersSection: FC<IFiltersSectionProps> = ({
   sections,
   activeFilterCount,
+  collapsedFacets,
   onFilterChange,
+  onToggleFacetCollapse,
 }) => {
   const renderSection = useCallback(
     (section: IFilterSection): ReactElement => (
       <FilterFacetGroup
         key={section.key}
         section={section}
+        isCollapsed={collapsedFacets.includes(section.key)}
         onChange={onFilterChange}
+        onToggleCollapse={onToggleFacetCollapse}
       />
     ),
-    [onFilterChange],
+    [collapsedFacets, onFilterChange, onToggleFacetCollapse],
   );
 
   return (

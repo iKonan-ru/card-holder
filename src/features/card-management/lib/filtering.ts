@@ -1,6 +1,6 @@
 import type { IBankCard } from '@entities/bank-card';
 import type { ICardFilters } from '../types/view';
-import { FACET_LIST } from './facets';
+import { FACET_LIST, UNASSIGNED_FACET_ID } from './facets';
 
 const matchesFacet = (facetValues: string[], value: string | null): boolean => {
   if (facetValues.length === 0) {
@@ -8,7 +8,7 @@ const matchesFacet = (facetValues: string[], value: string | null): boolean => {
   }
 
   if (value === null) {
-    return false;
+    return facetValues.includes(UNASSIGNED_FACET_ID);
   }
 
   return facetValues.includes(value);

@@ -1,6 +1,6 @@
 @import '@shared/assets/styles/variables.less';
 
-.card-list-group {
+.filter-facet-group {
   display: flex;
   flex-direction: column;
 
@@ -12,8 +12,8 @@
     background: transparent;
     border: none;
     color: var(--text-primary);
-    font-size: @font-size-lg;
-    font-weight: @font-weight-semibold;
+    font-size: @font-size-base;
+    font-weight: @font-weight-medium;
     cursor: pointer;
     text-align: left;
   }
@@ -22,29 +22,23 @@
     flex-shrink: 0;
     color: var(--text-muted);
     transition: transform @duration-fast @easing-ease-out;
+    width: @size-sm;
+    height: @size-sm;
 
     &_collapsed {
       transform: rotate(-90deg);
     }
   }
 
-  &__label {
-    &_payment-system {
-      text-transform: uppercase;
-    }
+  &__title {
+    flex: 1;
   }
 
-  &__count {
-    color: var(--text-muted);
-    font-size: @font-size-sm;
-    font-weight: @font-weight-medium;
-  }
-
-  // Контент группы больше не монтируется/размонтируется - плавная высота
-  // достигается анимацией grid-template-rows (0fr свёрнуто, 1fr развёрнуто).
-  // Отступ от заголовка перенесён внутрь content-inner (padding), а не в
-  // gap/margin снаружи - иначе он не участвовал бы в анимации схлопывания
-  // и оставался бы виден даже при свёрнутой группе.
+  // Та же техника, что и у сворачивания сгруппированных карт
+  // (card-list-group-section.less): контент не монтируется/размонтируется,
+  // высота анимируется через grid-template-rows (0fr свёрнуто, 1fr
+  // развёрнуто), отступ от заголовка - внутри content-inner, а не снаружи
+  // gap/margin, иначе он не участвовал бы в анимации схлопывания.
   &__content {
     display: grid;
     grid-template-rows: 0fr;
@@ -66,6 +60,5 @@
   &__content-inner {
     overflow: hidden;
     min-height: 0;
-    padding-top: @spacing-md;
   }
 }

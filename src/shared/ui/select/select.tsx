@@ -95,12 +95,9 @@ export const Select: FC<ISelectProps> = ({
     onSelect: handleSelect,
   });
 
-  const className = useClassName({ blockName: SELECT_BLOCK });
-
-  const chevronClassName = bem(
-    bem(SELECT_BLOCK, 'chevron'),
-    isOpen ? [SELECT_CHEVRON_MODIFIER_OPEN] : undefined,
-  );
+  const modifiers = isOpen ? [SELECT_CHEVRON_MODIFIER_OPEN] : undefined;
+  const className = useClassName({ blockName: SELECT_BLOCK, modifiers });
+  const chevronClassName = bem(bem(SELECT_BLOCK, 'chevron'), modifiers);
 
   const renderOption = useCallback(
     (option: ISelectOption, index: number): ReactElement => (
@@ -129,7 +126,12 @@ export const Select: FC<ISelectProps> = ({
         aria-expanded={isOpen}
         aria-label={ariaLabel}
       >
-        <span className={bem(SELECT_BLOCK, 'value')}>
+        <span
+          className={bem(
+            bem(SELECT_BLOCK, 'value'),
+            selectedOption ? ['selected'] : ['empty'],
+          )}
+        >
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <FiChevronDown

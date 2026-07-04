@@ -55,7 +55,7 @@ export const useSelectDropdown = ({
 
     const rect = triggerElement.getBoundingClientRect();
 
-    setPosition({ top: rect.bottom, left: rect.left });
+    setPosition({ top: rect.bottom, left: rect.left, width: rect.width });
     setIsOpen(true);
   }, [disabled, triggerRef]);
 
@@ -106,7 +106,7 @@ export const useSelectDropdown = ({
 
       const rect = triggerElement.getBoundingClientRect();
 
-      setPosition({ top: rect.bottom, left: rect.left });
+      setPosition({ top: rect.bottom, left: rect.left, width: rect.width });
     };
 
     // Фаза перехвата: Modal останавливает всплытие mousedown на bubble-фазе,
@@ -127,7 +127,11 @@ export const useSelectDropdown = ({
       return undefined;
     }
 
-    return { top: position.top, left: position.left };
+    return {
+      top: position.top,
+      left: position.left,
+      width: position.width,
+    };
   }, [position]);
 
   return {

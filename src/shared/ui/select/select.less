@@ -1,5 +1,16 @@
 @import '@shared/assets/styles/variables.less';
 
+@keyframes slideInSelectDropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-@spacing-sm);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .select {
   position: relative;
   display: inline-flex;
@@ -9,18 +20,24 @@
     align-items: center;
     justify-content: space-between;
     gap: @spacing-sm;
-    padding: @spacing-sm @spacing-md;
-    border-radius: @border-radius-md;
+    padding: @border-radius-card;
+    border-radius: @spacing-sm;
     border: 1px solid var(--border-color);
-    background: var(--bg-tertiary-50);
+    background: var(--bg-secondary);
     color: var(--text-primary);
-    font-size: @font-size-base;
     cursor: pointer;
     transition: @transition-fast;
     min-width: 8rem;
+    flex: 1 1 auto;
 
     &:hover:not(:disabled) {
       background: var(--bg-tertiary);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 0.2rem var(--accent-10);
     }
 
     &:disabled {
@@ -29,10 +46,25 @@
     }
   }
 
+  &_open &__trigger {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 0.2rem var(--accent-10);
+  }
+
   &__value {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    line-height: 1.3rem;
+
+    &_selected {
+      font-family: @font-family-mono;
+      font-size: @font-size-lg;
+    }
+
+    &_empty {
+      color: var(--text-secondary);
+    }
   }
 
   &__chevron {
@@ -57,6 +89,7 @@
     box-shadow: @shadow-lg;
     max-height: 16rem;
     overflow-y: auto;
+    animation: slideInSelectDropdown @duration-medium @easing-ease-out;
 
     &:focus {
       outline: none;
@@ -72,6 +105,7 @@
     border-radius: @border-radius-sm;
     color: var(--text-primary);
     cursor: pointer;
+    transition: @transition-fast;
 
     &:hover {
       background: var(--bg-tertiary);
@@ -87,6 +121,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: @font-family-mono;
   }
 
   &__option-edit {
@@ -107,7 +142,7 @@
     }
   }
 
-  &__footer {
+  &__footer:not(:first-child) {
     margin-top: @spacing-xs;
     padding-top: @spacing-xs;
     border-top: 1px solid var(--border-color);

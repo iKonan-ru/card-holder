@@ -1,6 +1,5 @@
 export const SortKey = {
   Order: 'order',
-  Name: 'name',
   Bank: 'bank',
   PaymentSystem: 'paymentSystem',
   Type: 'type',

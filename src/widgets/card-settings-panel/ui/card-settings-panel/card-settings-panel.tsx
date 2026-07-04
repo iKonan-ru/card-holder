@@ -11,13 +11,14 @@ import {
   useFocusTrap,
   useOverlayClick,
 } from '@shared/lib';
-import { Portal } from '@shared/ui';
+import { Button, Portal } from '@shared/ui';
 import {
   CARD_SETTINGS_PANEL_BLOCK,
   CARD_SETTINGS_PANEL_CLOSE_ARIA_LABEL,
   CARD_SETTINGS_PANEL_OVERFLOW_HIDDEN,
   CARD_SETTINGS_PANEL_TITLE,
   RESET_ALL_LABEL,
+  TABLET_BREAKPOINT_PX,
 } from '../../constants';
 import { useCardSettingsPanel } from '../../hooks';
 import { FiltersSection } from '../filters-section';
@@ -39,7 +40,9 @@ export const CardSettingsPanel: FC = () => {
     handleGroupByChange,
     filterSections,
     activeFilterCount,
+    collapsedFacets,
     handleFilterChange,
+    handleToggleFacetCollapse,
     hasActiveModifiers,
     handleResetAll,
   } = useCardSettingsPanel();
@@ -66,12 +69,27 @@ export const CardSettingsPanel: FC = () => {
       }
     };
 
+    // На широких экранах панель встроена сбоку и не перекрывает контент -
+    // скролл страницы должен работать как обычно. Блокировать его нужно
+    // только когда панель ведёт себя как оверлей (узкий экран).
+    const narrowScreenQuery = window.matchMedia(
+      `(max-width: ${TABLET_BREAKPOINT_PX - 1}px)`,
+    );
     const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = CARD_SETTINGS_PANEL_OVERFLOW_HIDDEN;
+
+    const applyBodyScrollLock = () => {
+      document.body.style.overflow = narrowScreenQuery.matches
+        ? CARD_SETTINGS_PANEL_OVERFLOW_HIDDEN
+        : previousOverflow;
+    };
+
+    applyBodyScrollLock();
+    narrowScreenQuery.addEventListener('change', applyBodyScrollLock);
     document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.body.style.overflow = previousOverflow;
+      narrowScreenQuery.removeEventListener('change', applyBodyScrollLock);
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [isOpen, close]);
@@ -81,13 +99,14 @@ export const CardSettingsPanel: FC = () => {
 
   return (
     <Portal>
-      {isOpen && (
-        <div
-          className={bem(CARD_SETTINGS_PANEL_BLOCK, 'backdrop')}
-          onMouseDown={handleOverlayMouseDown}
-          onMouseUp={handleOverlayMouseUp}
-        />
-      )}
+      <div
+        className={bem(
+          bem(CARD_SETTINGS_PANEL_BLOCK, 'backdrop'),
+          panelModifiers,
+        )}
+        onMouseDown={handleOverlayMouseDown}
+        onMouseUp={handleOverlayMouseUp}
+      />
       <div
         ref={contentRef}
         role={ARIA_ROLE_DIALOG}
@@ -125,21 +144,22 @@ export const CardSettingsPanel: FC = () => {
             <FiltersSection
               sections={filterSections}
               activeFilterCount={activeFilterCount}
+              collapsedFacets={collapsedFacets}
               onFilterChange={handleFilterChange}
+              onToggleFacetCollapse={handleToggleFacetCollapse}
             />
           </div>
 
-          {hasActiveModifiers && (
-            <div className={bem(CARD_SETTINGS_PANEL_BLOCK, 'footer')}>
-              <button
-                type="button"
-                className={bem(CARD_SETTINGS_PANEL_BLOCK, 'reset-all')}
-                onClick={handleResetAll}
-              >
-                {RESET_ALL_LABEL}
-              </button>
-            </div>
-          )}
+          <div className={bem(CARD_SETTINGS_PANEL_BLOCK, 'footer')}>
+            <Button
+              type="button"
+              disabled={!hasActiveModifiers}
+              onClick={handleResetAll}
+              variant="secondary"
+            >
+              {RESET_ALL_LABEL}
+            </Button>
+          </div>
         </ParentClassProvider>
       </div>
     </Portal>

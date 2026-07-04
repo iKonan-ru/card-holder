@@ -51,15 +51,6 @@ export const compareCards = (
     return a.order - b.order;
   }
 
-  if (sortKey === SortKey.Name) {
-    return finalizeComparison(
-      a.name.localeCompare(b.name),
-      directionMultiplier,
-      a,
-      b,
-    );
-  }
-
   if (sortKey === SortKey.Expires) {
     return finalizeComparison(
       normalizeExpires(a.expires).localeCompare(normalizeExpires(b.expires)),

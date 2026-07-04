@@ -24,12 +24,12 @@
     transition: @transition-fast;
 
     &:hover:not(:disabled) {
+      background: var(--bg-tertiary);
       color: var(--text-primary);
     }
 
     &_selected {
       background: var(--accent);
-      color: var(--text-on-accent, var(--bg-primary));
     }
 
     &:disabled {

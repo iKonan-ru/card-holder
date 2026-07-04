@@ -57,7 +57,10 @@ export const useDirectorySelectField = <T extends { id: string }>({
   }, [loadItems]);
 
   const options = useMemo<ISelectOption[]>(
-    () => items.map((item) => ({ value: item.id, label: getLabel(item) })),
+    () =>
+      items
+        .map((item) => ({ value: item.id, label: getLabel(item) }))
+        .sort((a, b) => a.label.localeCompare(b.label)),
     [items, getLabel],
   );
 
@@ -70,11 +73,25 @@ export const useDirectorySelectField = <T extends { id: string }>({
 
   const handleCreate = useCallback(
     async (name: string) => {
+      // Не создаём дубль по имени (без учёта регистра) - вместо ошибки
+      // молча выбираем уже существующий вариант, как будто пользователь
+      // выбрал его из списка сам.
+      const existingItem = items.find(
+        (item) => getLabel(item).trim().toLowerCase() === name.toLowerCase(),
+      );
+
+      if (existingItem) {
+        handleChange(existingItem.id);
+        close();
+
+        return;
+      }
+
       const item = await addItem(name);
       handleChange(item.id);
       close();
     },
-    [addItem, handleChange, close],
+    [items, getLabel, addItem, handleChange, close],
   );
 
   const handleOpenCreate = useCallback(() => {

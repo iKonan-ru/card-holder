@@ -31,7 +31,8 @@ export const ActionButtons: FC = () => {
   return (
     <div className={className}>
       <ParentClassProvider parentClass={ACTION_BUTTONS_BLOCK}>
-        <CardSettingsToggleButton />
+        {hasCards && <CardSettingsToggleButton />}
+
         <ImportButton />
 
         {hasCards && (

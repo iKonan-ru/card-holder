@@ -88,7 +88,7 @@ export const CardForm: FC<ICardFormProps> = ({
             parentClass={CARD_FORM_BLOCK}
           />
 
-          <div className={bem(CARD_FORM_BLOCK, 'row')}>
+          <div className={bem(bem(CARD_FORM_BLOCK, 'row'), ['3'])}>
             <ValidatedField
               {...EXPIRES_FIELD_CONFIG}
               value={formData.expires || ''}
@@ -122,16 +122,6 @@ export const CardForm: FC<ICardFormProps> = ({
             parentClass={CARD_FORM_BLOCK}
           />
 
-          <CardTypeSelectField
-            value={formData.typeId || ''}
-            disabled={isSubmitting}
-          />
-
-          <OwnerSelectField
-            value={formData.ownerId || ''}
-            disabled={isSubmitting}
-          />
-
           <ValidatedField
             {...PHRASE_FIELD_CONFIG}
             value={formData.phrase || ''}
@@ -139,6 +129,18 @@ export const CardForm: FC<ICardFormProps> = ({
             disabled={isSubmitting}
             parentClass={CARD_FORM_BLOCK}
           />
+
+          <div className={bem(bem(CARD_FORM_BLOCK, 'row'), ['2'])}>
+            <CardTypeSelectField
+              value={formData.typeId || ''}
+              disabled={isSubmitting}
+            />
+
+            <OwnerSelectField
+              value={formData.ownerId || ''}
+              disabled={isSubmitting}
+            />
+          </div>
 
           <CardFormGroup
             address={formData.address!}

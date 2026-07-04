@@ -8,8 +8,15 @@
 
   &__row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: @spacing-md;
+
+    &_2 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    &_3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
   &__actions {

@@ -13,6 +13,8 @@
     margin-left: auto;
     margin-right: auto;
     padding: @spacing-lg;
+    transition: @transition;
+    will-change: padding-left;
   }
 
   &__action-buttons {
@@ -32,13 +34,17 @@
 
   &_panel-open &__content {
     @media (min-width: @tablet) {
-      padding-right: calc(@spacing-lg + @settings-panel-width);
+      // Чтобы сетка карт потеряла ровно одну колонку без изменения ширины
+      // остальных, нужно убрать место под колонку И под зазор между
+      // колонками (gap сетки = @spacing-lg на этих же ширинах экрана) -
+      // иначе оставшиеся колонки чуть растягиваются лишним пространством.
+      padding-left: calc(@spacing-lg + var(--card-column-width));
     }
   }
 
   &_panel-open &__action-buttons {
     @media (min-width: @tablet) {
-      right: calc(@spacing-xl + @settings-panel-width);
+      //left: calc(@spacing-xl + var(--card-column-width));
     }
   }
 }

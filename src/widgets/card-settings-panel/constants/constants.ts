@@ -15,6 +15,12 @@ export const CARD_SETTINGS_PANEL_CLOSE_ARIA_LABEL = 'Закрыть';
 
 export const CARD_SETTINGS_PANEL_OVERFLOW_HIDDEN = 'hidden';
 
+/**
+ * Ширина, ниже которой панель ведёт себя как оверлей поверх контента, а не
+ * поджимает его сбоку - должно совпадать с @tablet в variables.less
+ */
+export const TABLET_BREAKPOINT_PX = 768;
+
 export const RESET_ALL_LABEL = 'Сбросить всё';
 
 const FACET_SORT_OPTIONS: { value: TSortKey; label: string }[] = FACET_LIST.map(
@@ -24,11 +30,16 @@ const FACET_SORT_OPTIONS: { value: TSortKey; label: string }[] = FACET_LIST.map(
 export const SORT_SECTION_TITLE = 'Сортировка';
 export const SORT_KEY_PLACEHOLDER = 'Поле сортировки';
 
-export const SORT_KEY_OPTIONS: { value: TSortKey; label: string }[] = [
-  { value: SortKey.Order, label: 'По порядку' },
-  { value: SortKey.Name, label: 'По имени' },
+// "По порядку" - это сброс к дефолту, а не значение данных, поэтому
+// закреплён первым; остальные пункты выводятся по алфавиту.
+const SORT_KEY_REST_OPTIONS: { value: TSortKey; label: string }[] = [
   ...FACET_SORT_OPTIONS,
   { value: SortKey.Expires, label: 'По сроку действия' },
+].sort((a, b) => a.label.localeCompare(b.label));
+
+export const SORT_KEY_OPTIONS: { value: TSortKey; label: string }[] = [
+  { value: SortKey.Order, label: 'По порядку' },
+  ...SORT_KEY_REST_OPTIONS,
 ];
 
 export const SORT_DIRECTION_OPTIONS: {
@@ -45,9 +56,15 @@ const FACET_GROUP_OPTIONS: { value: TGroupBy; label: string }[] =
 export const GROUP_SECTION_TITLE = 'Группировка';
 export const GROUP_BY_PLACEHOLDER = 'Тип группировки';
 
+// "Без группировки" - это сброс к дефолту, а не значение данных, поэтому
+// закреплён первым; остальные пункты выводятся по алфавиту.
+const GROUP_BY_REST_OPTIONS: { value: TGroupBy; label: string }[] = [
+  ...FACET_GROUP_OPTIONS,
+].sort((a, b) => a.label.localeCompare(b.label));
+
 export const GROUP_BY_OPTIONS: { value: TGroupBy; label: string }[] = [
   { value: GroupBy.None, label: 'Без группировки' },
-  ...FACET_GROUP_OPTIONS,
+  ...GROUP_BY_REST_OPTIONS,
 ];
 
 export const FILTERS_SECTION_TITLE = 'Фильтры';

@@ -22,6 +22,13 @@ export const FACET_IDS = [
 
 export type TFacetId = (typeof FACET_IDS)[number];
 
+/**
+ * Сентинел-идентификатор карт без значения фасета - используется и в
+ * группировке (бакет "без банка/типа/..."), и в фильтрации (чекбокс
+ * "без типа/владельца")
+ */
+export const UNASSIGNED_FACET_ID = '__unassigned__';
+
 export interface IFacetContext {
   cardTypes: ICardType[];
   owners: IOwner[];
@@ -64,7 +71,7 @@ export const FACETS: Record<TFacetId, IFacetDescriptor> = {
     optionLabel: 'По платёжной системе',
     unassignedLabel: 'Без платёжной системы',
     filterKey: 'paymentSystems',
-    resolveValue: (card) => getPaymentSystem(card.pan),
+    resolveValue: (card) => resolvePaymentSystemLabel(card.pan),
     resolveFilterId: (card) => getPaymentSystem(card.pan),
     resolveFilterLabel: (card) => resolvePaymentSystemLabel(card.pan),
   },
@@ -75,7 +82,9 @@ export const FACETS: Record<TFacetId, IFacetDescriptor> = {
     unassignedLabel: 'Без типа',
     filterKey: 'typeIds',
     resolveValue: (card, ctx) => getCardTypeName(card.typeId, ctx.cardTypes),
-    resolveFilterId: (card) => card.typeId ?? null,
+    // typeId сохраняется формой как '' при отсутствии выбора (не undefined) -
+    // трактуем пустую строку так же, как и отсутствие значения
+    resolveFilterId: (card) => card.typeId || null,
     resolveFilterLabel: (card, ctx) =>
       getCardTypeName(card.typeId, ctx.cardTypes),
   },
@@ -86,7 +95,9 @@ export const FACETS: Record<TFacetId, IFacetDescriptor> = {
     unassignedLabel: 'Без владельца',
     filterKey: 'ownerIds',
     resolveValue: (card, ctx) => getOwnerName(card.ownerId, ctx.owners),
-    resolveFilterId: (card) => card.ownerId ?? null,
+    // ownerId сохраняется формой как '' при отсутствии выбора (не undefined) -
+    // трактуем пустую строку так же, как и отсутствие значения
+    resolveFilterId: (card) => card.ownerId || null,
     resolveFilterLabel: (card, ctx) => getOwnerName(card.ownerId, ctx.owners),
   },
 };

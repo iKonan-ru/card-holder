@@ -7,6 +7,7 @@ import {
   useCardsStore,
   useCardViewStore,
   type ICardGroup,
+  type TGroupBy,
 } from '@features/card-management';
 import { useCardTypesManagementStore } from '@features/card-types-management';
 import { useOwnersManagementStore } from '@features/owners-management';
@@ -17,6 +18,7 @@ interface IUseCardListResult {
   cards: IBankCard[];
   hasAnyCards: boolean;
   isGrouped: boolean;
+  groupBy: TGroupBy;
   groups: ICardGroup[];
   collapsedGroups: string[];
   isLoading: boolean;
@@ -81,8 +83,17 @@ export const useCardList = (): IUseCardListResult => {
 
   const handleDragEnd = useCallback(
     (reorderedCards: IBankCard[]) => {
-      setCards(reorderedCards);
-      reorderCards(reorderedCards);
+      // Присваиваем свежий order сразу, синхронно с тем, что всё равно
+      // вычислит updateCardsOrder - иначе selectVisibleCards пересортирует
+      // список по устаревшему order и визуально откатит его до завершения
+      // асинхронной записи, ломая анимацию отпускания карты в DragOverlay.
+      const cardsWithFreshOrder = reorderedCards.map((card, index) => ({
+        ...card,
+        order: index,
+      }));
+
+      setCards(cardsWithFreshOrder);
+      reorderCards(cardsWithFreshOrder);
     },
     [setCards, reorderCards],
   );
@@ -91,6 +102,7 @@ export const useCardList = (): IUseCardListResult => {
     cards: visibleCards,
     hasAnyCards: cards.length > 0,
     isGrouped,
+    groupBy,
     groups,
     collapsedGroups,
     isLoading,

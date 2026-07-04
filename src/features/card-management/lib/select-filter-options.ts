@@ -2,6 +2,7 @@ import type { IBankCard } from '@entities/bank-card';
 import type { ICardFilters } from '../types/view';
 import {
   FACET_LIST,
+  UNASSIGNED_FACET_ID,
   type IFacetContext,
   type IFacetDescriptor,
 } from './facets';
@@ -23,18 +24,40 @@ const selectFacetOptions = (
   ctx: IFacetContext,
 ): IFacetOption[] => {
   const labelById = new Map<string, string>();
+  let hasUnassignedCard = false;
 
   cards.forEach((card) => {
     const id = facet.resolveFilterId(card);
 
-    if (id === null || labelById.has(id)) {
+    if (id === null) {
+      hasUnassignedCard = true;
+
+      return;
+    }
+
+    if (labelById.has(id)) {
       return;
     }
 
     labelById.set(id, facet.resolveFilterLabel(card, ctx) ?? id);
   });
 
-  return Array.from(labelById, ([value, label]) => ({ value, label }));
+  const options = Array.from(labelById, ([value, label]) => ({
+    value,
+    label,
+  }));
+
+  // Список должен быть стабилен и не зависеть от порядка карт (order) -
+  // сортируем по алфавиту, а не по порядку первого появления значения.
+  options.sort((a, b) => a.label.localeCompare(b.label));
+
+  // Бакет "без значения" добавляем последним (как и в группировке), чтобы
+  // он не затесался в алфавитную сортировку реальных значений
+  if (hasUnassignedCard) {
+    options.push({ value: UNASSIGNED_FACET_ID, label: facet.unassignedLabel });
+  }
+
+  return options;
 };
 
 export const selectFilterFacetOptions = (

@@ -1,6 +1,6 @@
 import { useCallback, type FC, type ReactElement } from 'react';
 import { AddCardButton } from '@features/add-card-button';
-import type { ICardGroup } from '@features/card-management';
+import type { ICardGroup, TGroupBy } from '@features/card-management';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { CARD_LIST_GROUPS_BLOCK } from '../../constants';
@@ -10,6 +10,7 @@ import './card-list-groups.less';
 
 interface ICardListGroupsProps {
   groups: ICardGroup[];
+  groupBy: TGroupBy;
   collapsedGroups: string[];
   hasAnyCards: boolean;
   onToggleCollapse: (groupId: string) => void;
@@ -18,6 +19,7 @@ interface ICardListGroupsProps {
 
 export const CardListGroups: FC<ICardListGroupsProps> = ({
   groups,
+  groupBy,
   collapsedGroups,
   hasAnyCards,
   onToggleCollapse,
@@ -38,12 +40,13 @@ export const CardListGroups: FC<ICardListGroupsProps> = ({
         <CardListGroupSection
           key={group.id}
           group={group}
+          groupBy={groupBy}
           isCollapsed={isCollapsed}
           onToggle={handleToggle}
         />
       );
     },
-    [collapsedGroups, onToggleCollapse],
+    [groupBy, collapsedGroups, onToggleCollapse],
   );
 
   return (

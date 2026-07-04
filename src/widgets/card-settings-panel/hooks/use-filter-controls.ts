@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   selectFilterFacetOptions,
   useCardsStore,
@@ -7,6 +7,8 @@ import {
 } from '@features/card-management';
 import { useCardTypesManagementStore } from '@features/card-types-management';
 import { useOwnersManagementStore } from '@features/owners-management';
+
+const INITIAL_COLLAPSED_FACETS: (keyof ICardFilters)[] = [];
 
 export interface IFilterOption {
   value: string;
@@ -23,7 +25,9 @@ export interface IFilterSection {
 export interface IUseFilterControlsResult {
   filterSections: IFilterSection[];
   activeFilterCount: number;
+  collapsedFacets: (keyof ICardFilters)[];
   handleFilterChange: (facet: keyof ICardFilters, next: string[]) => void;
+  handleToggleFacetCollapse: (facet: keyof ICardFilters) => void;
 }
 
 export const useFilterControls = (): IUseFilterControlsResult => {
@@ -72,5 +76,27 @@ export const useFilterControls = (): IUseFilterControlsResult => {
     setFilters({ [facet]: next });
   };
 
-  return { filterSections, activeFilterCount, handleFilterChange };
+  const [collapsedFacets, setCollapsedFacets] = useState<
+    (keyof ICardFilters)[]
+  >(INITIAL_COLLAPSED_FACETS);
+
+  const handleToggleFacetCollapse = (facet: keyof ICardFilters) => {
+    setCollapsedFacets((prev) => {
+      const isCollapsed = prev.includes(facet);
+
+      if (isCollapsed) {
+        return prev.filter((item) => item !== facet);
+      }
+
+      return [...prev, facet];
+    });
+  };
+
+  return {
+    filterSections,
+    activeFilterCount,
+    collapsedFacets,
+    handleFilterChange,
+    handleToggleFacetCollapse,
+  };
 };

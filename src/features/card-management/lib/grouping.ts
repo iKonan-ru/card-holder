@@ -1,6 +1,6 @@
 import type { IBankCard } from '@entities/bank-card';
 import { GroupBy, type TGroupBy } from '../model/view';
-import { FACETS, type IFacetContext } from './facets';
+import { FACETS, UNASSIGNED_FACET_ID, type IFacetContext } from './facets';
 
 export interface ICardGroup {
   id: string;
@@ -11,8 +11,6 @@ export interface ICardGroup {
 interface IGroupCardsParams extends IFacetContext {
   groupBy: TGroupBy;
 }
-
-const UNASSIGNED_GROUP_ID = '__unassigned__';
 
 export const groupCards = (
   visibleCards: IBankCard[],
@@ -27,7 +25,7 @@ export const groupCards = (
 
   visibleCards.forEach((card) => {
     const value = facet.resolveValue(card, params);
-    const groupId = value ?? UNASSIGNED_GROUP_ID;
+    const groupId = value ?? UNASSIGNED_FACET_ID;
     const groupLabel = value ?? facet.unassignedLabel;
 
     const existingGroup = groupsByValue.get(groupId);
@@ -47,10 +45,10 @@ export const groupCards = (
 
   const groups = Array.from(groupsByValue.values());
   const unassignedGroups = groups.filter(
-    (group) => group.id === UNASSIGNED_GROUP_ID,
+    (group) => group.id === UNASSIGNED_FACET_ID,
   );
   const assignedGroups = groups
-    .filter((group) => group.id !== UNASSIGNED_GROUP_ID)
+    .filter((group) => group.id !== UNASSIGNED_FACET_ID)
     .sort((a, b) => a.label.localeCompare(b.label));
 
   return [...assignedGroups, ...unassignedGroups];

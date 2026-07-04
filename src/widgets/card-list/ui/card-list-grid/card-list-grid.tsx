@@ -4,6 +4,7 @@ import type { IBankCard } from '@entities/bank-card';
 import { ParentClassProvider, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { CARD_LIST_GRID_BLOCK } from '../../constants';
+import { useCardGridColumnWidth } from '../../hooks';
 import { CardItemWrapper } from '../card-item-wrapper';
 import { CardListEmptyState } from '../card-list-empty-state';
 import './card-list-grid.less';
@@ -27,6 +28,8 @@ export const CardListGrid: FC<ICardListGridProps> = ({
     blockName: CARD_LIST_GRID_BLOCK,
   });
 
+  const gridRef = useCardGridColumnWidth();
+
   const showFilterEmptyState = hasAnyCards && cards.length === 0;
 
   const getCard = useCallback(
@@ -42,6 +45,7 @@ export const CardListGrid: FC<ICardListGridProps> = ({
 
   return (
     <div
+      ref={gridRef}
       className={className}
       role="list"
     >
