@@ -1,6 +1,7 @@
 import { useEffect, useRef, type FC, type PropsWithChildren } from 'react';
 import { FiX } from 'react-icons/fi';
 import {
+  ARIA_HIDDEN_TRUE,
   ARIA_MODAL_TRUE,
   ARIA_ROLE_DIALOG,
   bem,
@@ -97,7 +98,7 @@ export const BottomSheet: FC<IBottomSheetProps> = ({
                 onClick={onClose}
                 aria-label={BOTTOM_SHEET_CLOSE_ARIA_LABEL}
               >
-                <FiX aria-hidden="true" />
+                <FiX aria-hidden={ARIA_HIDDEN_TRUE} />
               </button>
             </div>
             <div className={bem(BOTTOM_SHEET_BLOCK, 'body')}>{children}</div>

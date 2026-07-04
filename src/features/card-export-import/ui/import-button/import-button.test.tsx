@@ -6,12 +6,12 @@ import { ModalProvider, ParentClassProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import { ImportButton } from './import-button';
 
-const { mockUseCardManagementStore } = vi.hoisted(() => ({
-  mockUseCardManagementStore: vi.fn(),
+const { mockUseCardsStore } = vi.hoisted(() => ({
+  mockUseCardsStore: vi.fn(),
 }));
 
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: mockUseCardManagementStore,
+  useCardsStore: mockUseCardsStore,
 }));
 
 const TestWrapper = ({ children }: PropsWithChildren) => (
@@ -39,7 +39,7 @@ describe('ImportButton', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       const state = {
         cards: mockCards,
         reorderCards: mockReorderCards,
@@ -107,7 +107,7 @@ describe('ImportButton', () => {
       </TestWrapper>,
     );
 
-    expect(mockUseCardManagementStore).toHaveBeenCalled();
+    expect(mockUseCardsStore).toHaveBeenCalled();
   });
 
   it('должен получать reorderCards из store', () => {
@@ -117,9 +117,7 @@ describe('ImportButton', () => {
       </TestWrapper>,
     );
 
-    expect(mockUseCardManagementStore).toHaveBeenCalledWith(
-      expect.any(Function),
-    );
+    expect(mockUseCardsStore).toHaveBeenCalledWith(expect.any(Function));
   });
 
   it('должен получать unflipCards из store', () => {
@@ -129,13 +127,11 @@ describe('ImportButton', () => {
       </TestWrapper>,
     );
 
-    expect(mockUseCardManagementStore).toHaveBeenCalledWith(
-      expect.any(Function),
-    );
+    expect(mockUseCardsStore).toHaveBeenCalledWith(expect.any(Function));
   });
 
   it('должен работать с пустым списком карт', () => {
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       const state = {
         cards: [],
         reorderCards: mockReorderCards,

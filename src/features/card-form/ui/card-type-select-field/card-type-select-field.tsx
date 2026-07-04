@@ -1,18 +1,22 @@
-import { useCallback, useEffect, useMemo, type FC } from 'react';
+import { useCallback, type FC } from 'react';
 import { useCardTypesManagementStore } from '@features/card-types-management';
 import type { ICardType } from '@entities/card-type';
-import { bem, useClassName, useFormContext, useModal } from '@shared/lib';
-import { Select, type ISelectOption } from '@shared/ui';
 import { FIELD_NAME_TYPE_ID, TYPE_ID_LABEL } from '../../constants';
+import { useDirectorySelectField } from '../../hooks';
 import { CardTypeFormModal } from '../card-type-form-modal';
+import { DirectorySelectField } from '../directory-select-field';
 import {
   CARD_TYPE_ADD_BUTTON_LABEL,
   CARD_TYPE_EDIT_MODAL_TITLE,
-  CARD_TYPE_FIELD_BLOCK,
   CARD_TYPE_MODAL_TITLE,
   CARD_TYPE_PLACEHOLDER,
 } from './constants';
-import './card-type-select-field.less';
+
+const getCardTypeLabel = (cardType: ICardType): string => cardType.name;
+const withCardTypeLabel = (cardType: ICardType, name: string): ICardType => ({
+  ...cardType,
+  name,
+});
 
 interface ICardTypeSelectFieldProps {
   value: string;
@@ -34,116 +38,57 @@ export const CardTypeSelectField: FC<ICardTypeSelectFieldProps> = ({
   const deleteCardType = useCardTypesManagementStore(
     (state) => state.deleteCardType,
   );
-  const { onChange } = useFormContext();
-  const { open, close } = useModal();
 
-  useEffect(() => {
-    loadCardTypes();
-  }, [loadCardTypes]);
-
-  const options = useMemo<ISelectOption[]>(
-    () =>
-      cardTypes.map((cardType) => ({
-        value: cardType.id,
-        label: cardType.name,
-      })),
-    [cardTypes],
-  );
-
-  const handleChange = useCallback(
-    (nextValue: string) => {
-      onChange?.(FIELD_NAME_TYPE_ID, nextValue);
-    },
-    [onChange],
-  );
-
-  const handleCreate = useCallback(
-    async (name: string) => {
-      const cardType = await addCardType(name);
-      handleChange(cardType.id);
-      close();
-    },
-    [addCardType, handleChange, close],
-  );
-
-  const handleOpenCreate = useCallback(() => {
-    open(<CardTypeFormModal onSubmit={handleCreate} />, CARD_TYPE_MODAL_TITLE);
-  }, [open, handleCreate]);
-
-  const handleUpdate = useCallback(
-    async (cardType: ICardType, name: string) => {
-      await updateCardType({ ...cardType, name });
-      close();
-    },
-    [updateCardType, close],
-  );
-
-  const handleDelete = useCallback(
-    async (cardType: ICardType) => {
-      await deleteCardType(cardType.id);
-
-      if (value === cardType.id) {
-        handleChange('');
-      }
-
-      close();
-    },
-    [deleteCardType, value, handleChange, close],
-  );
-
-  const handleEditOption = useCallback(
-    (optionValue: string) => {
-      const cardType = cardTypes.find((item) => item.id === optionValue);
-
-      if (!cardType) {
-        return;
-      }
-
-      const handleSubmit = (name: string) => handleUpdate(cardType, name);
-      const handleModalDelete = () => handleDelete(cardType);
-
-      open(
-        <CardTypeFormModal
-          cardType={cardType}
-          onSubmit={handleSubmit}
-          onDelete={handleModalDelete}
-        />,
-        CARD_TYPE_EDIT_MODAL_TITLE,
-      );
-    },
-    [cardTypes, open, handleUpdate, handleDelete],
-  );
-
-  const footer = useMemo(
-    () => (
-      <button
-        type="button"
-        className={bem(CARD_TYPE_FIELD_BLOCK, 'add-button')}
-        onClick={handleOpenCreate}
-      >
-        {CARD_TYPE_ADD_BUTTON_LABEL}
-      </button>
+  const renderCreateModal = useCallback(
+    (onSubmit: (name: string) => Promise<void>) => (
+      <CardTypeFormModal onSubmit={onSubmit} />
     ),
-    [handleOpenCreate],
+    [],
   );
 
-  const className = useClassName({ blockName: CARD_TYPE_FIELD_BLOCK });
+  const renderEditModal = useCallback(
+    (
+      cardType: ICardType,
+      onSubmit: (name: string) => Promise<void>,
+      onDelete: () => Promise<void>,
+    ) => (
+      <CardTypeFormModal
+        cardType={cardType}
+        onSubmit={onSubmit}
+        onDelete={onDelete}
+      />
+    ),
+    [],
+  );
+
+  const { options, handleChange, handleEditOption, handleOpenCreate } =
+    useDirectorySelectField({
+      value,
+      fieldName: FIELD_NAME_TYPE_ID,
+      items: cardTypes,
+      loadItems: loadCardTypes,
+      addItem: addCardType,
+      updateItem: updateCardType,
+      deleteItem: deleteCardType,
+      getLabel: getCardTypeLabel,
+      withLabel: withCardTypeLabel,
+      createModalTitle: CARD_TYPE_MODAL_TITLE,
+      editModalTitle: CARD_TYPE_EDIT_MODAL_TITLE,
+      renderCreateModal,
+      renderEditModal,
+    });
 
   return (
-    <div className={className}>
-      <span className={bem(CARD_TYPE_FIELD_BLOCK, 'label')}>
-        {TYPE_ID_LABEL}
-      </span>
-      <Select
-        value={value || null}
-        options={options}
-        onChange={handleChange}
-        onEditOption={handleEditOption}
-        placeholder={CARD_TYPE_PLACEHOLDER}
-        ariaLabel={TYPE_ID_LABEL}
-        disabled={disabled}
-        footer={footer}
-      />
-    </div>
+    <DirectorySelectField
+      label={TYPE_ID_LABEL}
+      placeholder={CARD_TYPE_PLACEHOLDER}
+      addButtonLabel={CARD_TYPE_ADD_BUTTON_LABEL}
+      value={value}
+      options={options}
+      onChange={handleChange}
+      onEditOption={handleEditOption}
+      onAddClick={handleOpenCreate}
+      disabled={disabled}
+    />
   );
 };

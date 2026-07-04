@@ -30,10 +30,7 @@ describe('CardListDragOverlay', () => {
   it('должна возвращать null когда activeCard=null', () => {
     const { container } = render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
-        <CardListDragOverlay
-          activeCard={null}
-          cardTypes={[]}
-        />
+        <CardListDragOverlay activeCard={null} />
       </ParentClassProvider>,
     );
 
@@ -43,10 +40,7 @@ describe('CardListDragOverlay', () => {
   it('должна рендериться когда есть activeCard', () => {
     const { container } = render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
-        <CardListDragOverlay
-          activeCard={MOCK_CARD}
-          cardTypes={[]}
-        />
+        <CardListDragOverlay activeCard={MOCK_CARD} />
       </ParentClassProvider>,
     );
 
@@ -57,10 +51,7 @@ describe('CardListDragOverlay', () => {
   it('должна рендерить BankCard с activeCard', () => {
     const { getByTestId } = render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
-        <CardListDragOverlay
-          activeCard={MOCK_CARD}
-          cardTypes={[]}
-        />
+        <CardListDragOverlay activeCard={MOCK_CARD} />
       </ParentClassProvider>,
     );
 
@@ -70,10 +61,7 @@ describe('CardListDragOverlay', () => {
   it('должна передавать isReorderMode=true в BankCard', () => {
     render(
       <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
-        <CardListDragOverlay
-          activeCard={MOCK_CARD}
-          cardTypes={[]}
-        />
+        <CardListDragOverlay activeCard={MOCK_CARD} />
       </ParentClassProvider>,
     );
 

@@ -4,12 +4,12 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import type { IBankCard } from '@entities/bank-card';
 import { useCardForm } from './use-card-form';
 
-const { mockUseCardManagementStore } = vi.hoisted(() => ({
-  mockUseCardManagementStore: vi.fn(),
+const { mockUseCardsStore } = vi.hoisted(() => ({
+  mockUseCardsStore: vi.fn(),
 }));
 
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: mockUseCardManagementStore,
+  useCardsStore: mockUseCardsStore,
 }));
 
 vi.mock('@shared/lib', async () => {
@@ -53,7 +53,7 @@ describe('useCardForm', () => {
 
     const mockStoreValue = createMockStore({ addCard: mockAddCard });
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       if (selector) {
         return selector(mockStoreValue);
       }
@@ -277,7 +277,7 @@ describe('useCardForm', () => {
       ],
     });
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       if (selector) {
         return selector(mockStoreValue);
       }
@@ -389,7 +389,7 @@ describe('useCardForm', () => {
       updateCard: mockUpdateCard,
     });
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       if (selector) {
         return selector(mockStoreValue);
       }
@@ -441,7 +441,7 @@ describe('useCardForm', () => {
       deleteCard: mockDeleteCard,
     });
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       if (selector) {
         return selector(mockStoreValue);
       }
@@ -501,7 +501,7 @@ describe('useCardForm', () => {
       ],
     });
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       if (selector) {
         return selector(mockStoreValue);
       }
@@ -546,7 +546,7 @@ describe('useCardForm', () => {
       deleteCard: mockDeleteCard,
     });
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       if (selector) {
         return selector(mockStoreValue);
       }
@@ -602,7 +602,7 @@ describe('useCardForm', () => {
       deleteCard: mockDeleteCard,
     });
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       if (selector) {
         return selector(mockStoreValue);
       }
@@ -631,7 +631,7 @@ describe('useCardForm', () => {
       deleteCard: mockDeleteCard,
     });
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       if (selector) {
         return selector(mockStoreValue);
       }

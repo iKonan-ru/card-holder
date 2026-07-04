@@ -8,16 +8,25 @@ import type { IBankCard } from '@entities/bank-card';
 import { ModalProvider } from '@shared/lib';
 import { CardItemWrapper } from './card-item-wrapper';
 
-const { mockUseCardManagementStore, mockOpenEditCardForm, mockFlipCard } =
-  vi.hoisted(() => ({
-    mockUseCardManagementStore: vi.fn(),
-    mockOpenEditCardForm: vi.fn(),
-    mockFlipCard: vi.fn(),
-  }));
+const {
+  mockUseCardsStore,
+  mockUseCardTypesManagementStore,
+  mockOpenEditCardForm,
+  mockFlipCard,
+} = vi.hoisted(() => ({
+  mockUseCardsStore: vi.fn(),
+  mockUseCardTypesManagementStore: vi.fn(),
+  mockOpenEditCardForm: vi.fn(),
+  mockFlipCard: vi.fn(),
+}));
 
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: mockUseCardManagementStore,
+  useCardsStore: mockUseCardsStore,
   getCardTypeName: () => null,
+}));
+
+vi.mock('@features/card-types-management', () => ({
+  useCardTypesManagementStore: mockUseCardTypesManagementStore,
 }));
 
 vi.mock('@features/card-form', () => ({
@@ -62,13 +71,27 @@ const DndWrapper: FC<PropsWithChildren> = ({ children }) => {
   );
 };
 
+const mockCardsStore = (flippedPan: string | null) => {
+  mockUseCardsStore.mockImplementation((selector) => {
+    const mockStore = {
+      flipCard: mockFlipCard,
+      flippedPan,
+    };
+
+    if (selector) {
+      return selector(mockStore);
+    }
+
+    return mockStore;
+  });
+};
+
 describe('CardItemWrapper', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockUseCardManagementStore.mockImplementation((selector) => {
-      const mockStore = {
-        flipCard: mockFlipCard,
-      };
+    mockCardsStore(null);
+    mockUseCardTypesManagementStore.mockImplementation((selector) => {
+      const mockStore = { cardTypes: [] };
 
       if (selector) {
         return selector(mockStore);
@@ -87,9 +110,7 @@ describe('CardItemWrapper', () => {
       <DndWrapper>
         <CardItemWrapper
           card={MOCK_CARD}
-          isFlipped={false}
           isReorderMode={false}
-          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -106,14 +127,14 @@ describe('CardItemWrapper', () => {
     expect(bankCard).toHaveTextContent(MOCK_CARD.name);
   });
 
-  it('должна передавать isFlipped=true в BankCard', () => {
+  it('должна передавать isFlipped=true в BankCard, если pan совпадает с flippedPan из стора', () => {
+    mockCardsStore(MOCK_CARD.pan);
+
     const { container } = render(
       <DndWrapper>
         <CardItemWrapper
           card={MOCK_CARD}
-          isFlipped={true}
           isReorderMode={false}
-          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -129,9 +150,7 @@ describe('CardItemWrapper', () => {
       <DndWrapper>
         <CardItemWrapper
           card={MOCK_CARD}
-          isFlipped={false}
           isReorderMode={true}
-          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -147,14 +166,12 @@ describe('CardItemWrapper', () => {
       <DndWrapper>
         <CardItemWrapper
           card={MOCK_CARD}
-          isFlipped={false}
           isReorderMode={false}
-          cardTypes={[]}
         />
       </DndWrapper>,
     );
 
-    expect(mockUseCardManagementStore).toHaveBeenCalled();
+    expect(mockUseCardsStore).toHaveBeenCalled();
   });
 
   it('должна использовать openEditCardForm из useCardFormModal', () => {
@@ -162,9 +179,7 @@ describe('CardItemWrapper', () => {
       <DndWrapper>
         <CardItemWrapper
           card={MOCK_CARD}
-          isFlipped={false}
           isReorderMode={false}
-          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -183,13 +198,13 @@ describe('CardItemWrapper', () => {
       order: 1,
     };
 
+    mockCardsStore(anotherCard.pan);
+
     const { container } = render(
       <DndWrapper>
         <CardItemWrapper
           card={anotherCard}
-          isFlipped={true}
           isReorderMode={true}
-          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -208,9 +223,7 @@ describe('CardItemWrapper', () => {
       <DndWrapper>
         <CardItemWrapper
           card={MOCK_CARD}
-          isFlipped={false}
           isReorderMode={false}
-          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -221,9 +234,7 @@ describe('CardItemWrapper', () => {
       <DndWrapper>
         <CardItemWrapper
           card={MOCK_CARD}
-          isFlipped={false}
           isReorderMode={false}
-          cardTypes={[]}
         />
       </DndWrapper>,
     );

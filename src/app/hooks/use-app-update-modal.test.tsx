@@ -23,7 +23,7 @@ vi.mock('@features/app-lock', () => ({
 }));
 
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: () => ({ setReorderMode: vi.fn() }),
+  useCardsStore: () => ({ setReorderMode: vi.fn() }),
 }));
 
 vi.mock('@features/pwa-update', () => ({

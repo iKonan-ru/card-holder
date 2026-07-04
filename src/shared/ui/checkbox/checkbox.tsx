@@ -1,5 +1,5 @@
 import { type ChangeEvent, type FC } from 'react';
-import { bem, useClassName } from '@shared/lib';
+import { ARIA_HIDDEN_TRUE, bem, useClassName } from '@shared/lib';
 import { CHECKBOX_BLOCK } from './constants';
 import './checkbox.less';
 
@@ -33,7 +33,7 @@ export const Checkbox: FC<ICheckboxProps> = ({
       />
       <span
         className={bem(CHECKBOX_BLOCK, 'box')}
-        aria-hidden="true"
+        aria-hidden={ARIA_HIDDEN_TRUE}
       />
       <span className={bem(CHECKBOX_BLOCK, 'label')}>{label}</span>
     </label>

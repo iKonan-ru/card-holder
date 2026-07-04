@@ -1,10 +1,5 @@
-import {
-  GroupBy,
-  SortKey,
-  type ICardFilters,
-  type TGroupBy,
-  type TSortKey,
-} from '../types/view';
+import { GroupBy, SortKey, type TGroupBy, type TSortKey } from '../model/view';
+import type { ICardFilters } from '../types/view';
 import { isFiltersEmpty } from './filters';
 
 interface ICanReorderParams {

@@ -25,6 +25,9 @@ export const KEY_ARROW_DOWN = 'ArrowDown';
 
 export const ARIA_ROLE_BUTTON = 'button';
 export const ARIA_ROLE_DIALOG = 'dialog';
+export const ARIA_ROLE_LISTBOX = 'listbox';
+export const ARIA_ROLE_OPTION = 'option';
+export const ARIA_HASPOPUP_LISTBOX = 'listbox';
 export const ARIA_MODAL_TRUE = 'true';
 export const ARIA_HIDDEN_TRUE = 'true';
 

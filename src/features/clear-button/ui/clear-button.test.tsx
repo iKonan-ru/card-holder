@@ -2,10 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as cardManagementModule from '@features/card-management';
-import type {
-  ICardManagementActions,
-  ICardManagementState,
-} from '@features/card-management';
+import type { ICardsActions, ICardsState } from '@features/card-management';
 import * as hooks from '../hooks';
 import { ClearButton } from './clear-button';
 
@@ -19,23 +16,13 @@ describe('ClearButton', () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    vi.mocked(cardManagementModule.useCardManagementStore).mockImplementation(
+    vi.mocked(cardManagementModule.useCardsStore).mockImplementation(
       (selector) => {
-        const state: ICardManagementState & ICardManagementActions = {
+        const state: ICardsState & ICardsActions = {
           cards: [],
           flippedPan: null,
           isLoading: false,
           isReorderMode: false,
-          sortKey: 'order',
-          sortDirection: 'asc',
-          groupBy: 'none',
-          filters: {
-            bankIds: [],
-            paymentSystems: [],
-            typeIds: [],
-            ownerIds: [],
-          },
-          collapsedGroups: [],
           flipCard: vi.fn(),
           unflipCards: vi.fn(),
           loadCards: vi.fn(),
@@ -47,13 +34,6 @@ describe('ClearButton', () => {
           setCards: vi.fn(),
           setReorderMode: vi.fn(),
           toggleReorderMode: vi.fn(),
-          setSortKey: vi.fn(),
-          setSortDirection: vi.fn(),
-          setGroupBy: vi.fn(),
-          toggleGroupCollapsed: vi.fn(),
-          setFilters: vi.fn(),
-          clearFilters: vi.fn(),
-          resetView: vi.fn(),
         };
 
         return selector(state);

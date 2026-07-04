@@ -22,9 +22,7 @@ export const CardList: FC = () => {
     isGrouped,
     groups,
     collapsedGroups,
-    flippedPan,
     isReorderMode,
-    cardTypes,
     handleShowForm,
     handleDragEnd: handleDragEndStore,
     handleToggleGroupCollapsed,
@@ -38,9 +36,10 @@ export const CardList: FC = () => {
       onDragEnd: handleDragEndStore,
     });
 
-  const sortableCards: IBankCard[] = isGrouped
-    ? groups.flatMap((group) => group.cards)
-    : cards;
+  const sortableCards = useMemo<IBankCard[]>(
+    () => (isGrouped ? groups.flatMap((group) => group.cards) : cards),
+    [isGrouped, groups, cards],
+  );
   const cardIds = useMemo(
     () => sortableCards.map(({ pan }) => pan),
     [sortableCards],
@@ -80,8 +79,6 @@ export const CardList: FC = () => {
                 groups={groups}
                 collapsedGroups={collapsedGroups}
                 hasAnyCards={hasAnyCards}
-                flippedPan={flippedPan}
-                cardTypes={cardTypes}
                 onToggleCollapse={handleToggleGroupCollapsed}
                 onShowForm={handleShowForm}
               />
@@ -89,19 +86,14 @@ export const CardList: FC = () => {
               <CardListGrid
                 cards={cards}
                 hasAnyCards={hasAnyCards}
-                flippedPan={flippedPan}
                 isReorderMode={isReorderMode}
-                cardTypes={cardTypes}
                 onShowForm={handleShowForm}
               />
             )}
           </SortableContext>
 
           <DragOverlay dropAnimation={DROP_ANIMATION}>
-            <CardListDragOverlay
-              activeCard={activeCard}
-              cardTypes={cardTypes}
-            />
+            <CardListDragOverlay activeCard={activeCard} />
           </DragOverlay>
         </DndContext>
       </ParentClassProvider>

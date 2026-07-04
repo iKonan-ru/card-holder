@@ -4,13 +4,13 @@ import { useCardFormModal } from '@features/card-form';
 import type { IBankCard } from '@entities/bank-card';
 import { CARD_FORM_EDIT_TITLE, CARD_FORM_TITLE } from '../constants';
 
-const { mockUseCardManagementStore, mockUseModal } = vi.hoisted(() => ({
-  mockUseCardManagementStore: vi.fn(),
+const { mockUseCardsStore, mockUseModal } = vi.hoisted(() => ({
+  mockUseCardsStore: vi.fn(),
   mockUseModal: vi.fn(),
 }));
 
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: mockUseCardManagementStore,
+  useCardsStore: mockUseCardsStore,
 }));
 
 vi.mock('@shared/lib', async (importOriginal) => {
@@ -36,7 +36,7 @@ describe('useCardFormModal', () => {
       modalId: 'test-modal-id',
     });
 
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       if (selector) {
         return selector({ unflipCards: mockUnflipCards });
       }

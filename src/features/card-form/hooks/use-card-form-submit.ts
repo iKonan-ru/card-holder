@@ -1,5 +1,5 @@
 import { useCallback, type SubmitEvent } from 'react';
-import { useCardManagementStore } from '@features/card-management';
+import { useCardsStore } from '@features/card-management';
 import type { IBankCard } from '@entities/bank-card';
 import {
   ERROR_FAILED_TO_ADD_CARD,
@@ -41,7 +41,7 @@ export const useCardFormSubmit = ({
   resetErrors,
   onSuccess,
 }: IUseCardFormSubmitParams): IUseCardFormSubmitResult => {
-  const { addCard, updateCard, deleteCard, cards } = useCardManagementStore();
+  const { addCard, updateCard, deleteCard, cards } = useCardsStore();
 
   const handleSubmit = useCallback(
     async (event: SubmitEvent<HTMLFormElement>) => {

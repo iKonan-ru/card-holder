@@ -6,12 +6,12 @@ import { ModalProvider, ParentClassProvider } from '@shared/lib';
 import { ModalContainer } from '@shared/ui';
 import { ExportButton } from './export-button';
 
-const { mockUseCardManagementStore } = vi.hoisted(() => ({
-  mockUseCardManagementStore: vi.fn(),
+const { mockUseCardsStore } = vi.hoisted(() => ({
+  mockUseCardsStore: vi.fn(),
 }));
 
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: mockUseCardManagementStore,
+  useCardsStore: mockUseCardsStore,
 }));
 
 const TestWrapper = ({ children }: PropsWithChildren) => (
@@ -35,7 +35,7 @@ describe('ExportButton', () => {
   ];
 
   beforeEach(() => {
-    mockUseCardManagementStore.mockReturnValue(mockCards);
+    mockUseCardsStore.mockReturnValue(mockCards);
   });
 
   it('должен рендериться', () => {
@@ -73,7 +73,7 @@ describe('ExportButton', () => {
       </TestWrapper>,
     );
 
-    expect(mockUseCardManagementStore).toHaveBeenCalled();
+    expect(mockUseCardsStore).toHaveBeenCalled();
   });
 
   it('кнопка не должна быть отключена по умолчанию', () => {
@@ -120,7 +120,7 @@ describe('ExportButton', () => {
 
   it('должен использовать хук с картами из store', () => {
     const customCards: IBankCard[] = [{ ...mockCards[0], pan: '2222' }];
-    mockUseCardManagementStore.mockReturnValue(customCards);
+    mockUseCardsStore.mockReturnValue(customCards);
 
     render(
       <TestWrapper>
@@ -128,11 +128,11 @@ describe('ExportButton', () => {
       </TestWrapper>,
     );
 
-    expect(mockUseCardManagementStore).toHaveBeenCalled();
+    expect(mockUseCardsStore).toHaveBeenCalled();
   });
 
   it('должен работать с пустым списком карт', () => {
-    mockUseCardManagementStore.mockReturnValue([]);
+    mockUseCardsStore.mockReturnValue([]);
 
     render(
       <TestWrapper>

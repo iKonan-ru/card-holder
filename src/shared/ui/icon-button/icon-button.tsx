@@ -1,6 +1,6 @@
 import { useMemo, type FC } from 'react';
 import type { IconType } from 'react-icons';
-import { bem, useClassName } from '@shared/lib';
+import { ARIA_HIDDEN_TRUE, bem, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { ICON_BUTTON_BLOCK } from './constants';
 import './icon-button.less';
@@ -54,7 +54,7 @@ export const IconButton: FC<IIconButtonProps> = ({
     >
       <IconComponent
         className={bem(ICON_BUTTON_BLOCK, 'icon')}
-        aria-hidden="true"
+        aria-hidden={ARIA_HIDDEN_TRUE}
       />
       {label && (
         <span className={bem(ICON_BUTTON_BLOCK, 'label')}>{label}</span>

@@ -1,4 +1,5 @@
 import {
+  FACET_LIST,
   GroupBy,
   SortDirection,
   SortKey,
@@ -9,13 +10,14 @@ import {
 
 export const CARD_TOOLBAR_BLOCK = 'card-toolbar';
 
+const FACET_SORT_OPTIONS: { value: TSortKey; label: string }[] = FACET_LIST.map(
+  (facet) => ({ value: facet.id, label: facet.optionLabel }),
+);
+
 export const SORT_KEY_OPTIONS: { value: TSortKey; label: string }[] = [
   { value: SortKey.Order, label: 'По порядку' },
   { value: SortKey.Name, label: 'По имени' },
-  { value: SortKey.Bank, label: 'По банку' },
-  { value: SortKey.PaymentSystem, label: 'По платёжной системе' },
-  { value: SortKey.Type, label: 'По типу' },
-  { value: SortKey.Owner, label: 'По владельцу' },
+  ...FACET_SORT_OPTIONS,
   { value: SortKey.Expires, label: 'По сроку действия' },
 ];
 
@@ -33,19 +35,15 @@ export const SORT_CHIP_REMOVE_ARIA_LABEL = 'Сбросить сортировк�
 
 export const FILTER_BUTTON_LABEL = 'Фильтры';
 export const FILTER_SHEET_TITLE = 'Фильтры';
-export const FILTER_SECTION_TITLE_BANK = 'Банк';
-export const FILTER_SECTION_TITLE_PAYMENT_SYSTEM = 'Платёжная система';
-export const FILTER_SECTION_TITLE_TYPE = 'Тип карты';
-export const FILTER_SECTION_TITLE_OWNER = 'Владелец';
 
 export const RESET_ALL_LABEL = 'Сбросить всё';
 
+const FACET_GROUP_OPTIONS: { value: TGroupBy; label: string }[] =
+  FACET_LIST.map((facet) => ({ value: facet.id, label: facet.optionLabel }));
+
 export const GROUP_BY_OPTIONS: { value: TGroupBy; label: string }[] = [
   { value: GroupBy.None, label: 'Без группировки' },
-  { value: GroupBy.Bank, label: 'По банку' },
-  { value: GroupBy.PaymentSystem, label: 'По платёжной системе' },
-  { value: GroupBy.Type, label: 'По типу' },
-  { value: GroupBy.Owner, label: 'По владельцу' },
+  ...FACET_GROUP_OPTIONS,
 ];
 
 export const GROUP_BY_PLACEHOLDER = 'Группировка';

@@ -1,14 +1,7 @@
-import { useCallback, useMemo, type FC, type ReactElement } from 'react';
-import { FiArrowDown, FiArrowUp, FiFilter } from 'react-icons/fi';
-import { SortDirection } from '@features/card-management';
+import { useCallback, type FC, type ReactElement } from 'react';
+import { FiFilter } from 'react-icons/fi';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
-import {
-  BottomSheet,
-  CheckboxGroup,
-  Chip,
-  IconButton,
-  Select,
-} from '@shared/ui';
+import { BottomSheet, Chip, IconButton, Select } from '@shared/ui';
 import {
   CARD_TOOLBAR_BLOCK,
   FILTER_BUTTON_LABEL,
@@ -18,9 +11,6 @@ import {
   GROUP_CHIP_REMOVE_ARIA_LABEL,
   RESET_ALL_LABEL,
   SORT_CHIP_REMOVE_ARIA_LABEL,
-  SORT_DIRECTION_ARROW,
-  SORT_DIRECTION_LABEL_ASC,
-  SORT_DIRECTION_LABEL_DESC,
   SORT_KEY_OPTIONS,
   SORT_KEY_PLACEHOLDER,
 } from '../constants';
@@ -29,18 +19,23 @@ import {
   type IActiveFilterChip,
   type IFilterSection,
 } from '../hooks';
+import { FilterChip } from './filter-chip';
+import { FilterSection } from './filter-section';
 import './card-toolbar.less';
 
 export const CardToolbar: FC = () => {
   const {
     sortKey,
-    sortDirection,
     isSortActive,
+    directionIcon,
+    directionLabel,
+    activeSortLabel,
     handleSortKeyChange,
     handleToggleDirection,
     handleResetSort,
     groupBy,
     isGroupActive,
+    activeGroupLabel,
     handleGroupByChange,
     handleResetGroup,
     filterSections,
@@ -51,74 +46,34 @@ export const CardToolbar: FC = () => {
     handleCloseFilterSheet,
     handleFilterChange,
     handleRemoveFilterValue,
+    hasChipsRow,
     hasActiveModifiers,
     handleResetAll,
   } = useCardToolbar();
 
-  const directionIcon = useMemo(
-    () => (sortDirection === SortDirection.Asc ? FiArrowUp : FiArrowDown),
-    [sortDirection],
-  );
-
-  const directionLabel = useMemo(
-    () =>
-      sortDirection === SortDirection.Asc
-        ? SORT_DIRECTION_LABEL_ASC
-        : SORT_DIRECTION_LABEL_DESC,
-    [sortDirection],
-  );
-
-  const activeSortLabel = useMemo(() => {
-    const option = SORT_KEY_OPTIONS.find((item) => item.value === sortKey);
-
-    return `${option?.label} ${SORT_DIRECTION_ARROW[sortDirection]}`;
-  }, [sortKey, sortDirection]);
-
-  const activeGroupLabel = useMemo(() => {
-    const option = GROUP_BY_OPTIONS.find((item) => item.value === groupBy);
-
-    return option?.label ?? groupBy;
-  }, [groupBy]);
-
   const renderFilterChip = useCallback(
-    (chip: IActiveFilterChip): ReactElement => {
-      const handleRemove = () => {
-        handleRemoveFilterValue(chip.facet, chip.value);
-      };
-
-      return (
-        <Chip
-          key={`${chip.facet}:${chip.value}`}
-          label={chip.label}
-          onRemove={handleRemove}
-        />
-      );
-    },
+    (chip: IActiveFilterChip): ReactElement => (
+      <FilterChip
+        key={`${chip.facet}:${chip.value}`}
+        chip={chip}
+        onRemove={handleRemoveFilterValue}
+      />
+    ),
     [handleRemoveFilterValue],
   );
 
   const renderFilterSection = useCallback(
-    (section: IFilterSection): ReactElement => {
-      const handleChange = (next: string[]) => {
-        handleFilterChange(section.key, next);
-      };
-
-      return (
-        <CheckboxGroup
-          key={section.key}
-          title={section.title}
-          options={section.options}
-          value={section.selectedValues}
-          onChange={handleChange}
-        />
-      );
-    },
+    (section: IFilterSection): ReactElement => (
+      <FilterSection
+        key={section.key}
+        section={section}
+        onChange={handleFilterChange}
+      />
+    ),
     [handleFilterChange],
   );
 
   const className = useClassName({ blockName: CARD_TOOLBAR_BLOCK });
-  const hasChipsRow =
-    isSortActive || isGroupActive || activeFilterChips.length > 0;
 
   return (
     <div className={className}>

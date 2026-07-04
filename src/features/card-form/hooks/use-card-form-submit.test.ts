@@ -15,7 +15,7 @@ const mockStoreState = {
 };
 
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: () => ({
+  useCardsStore: () => ({
     get cards() {
       return mockStoreState.cards;
     },

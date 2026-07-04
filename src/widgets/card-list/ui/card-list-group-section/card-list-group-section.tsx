@@ -1,7 +1,6 @@
 import { type FC } from 'react';
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import type { ICardGroup } from '@features/card-management';
-import type { ICardType } from '@entities/card-type';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { CARD_LIST_GROUP_BLOCK } from '../../constants';
@@ -11,16 +10,12 @@ import './card-list-group-section.less';
 interface ICardListGroupSectionProps {
   group: ICardGroup;
   isCollapsed: boolean;
-  flippedPan: string | null;
-  cardTypes: ICardType[];
   onToggle: Procedure;
 }
 
 export const CardListGroupSection: FC<ICardListGroupSectionProps> = ({
   group,
   isCollapsed,
-  flippedPan,
-  cardTypes,
   onToggle,
 }) => {
   const className = useClassName({ blockName: CARD_LIST_GROUP_BLOCK });
@@ -50,9 +45,7 @@ export const CardListGroupSection: FC<ICardListGroupSectionProps> = ({
         {!isCollapsed && (
           <CardListGrid
             cards={group.cards}
-            flippedPan={flippedPan}
             isReorderMode={false}
-            cardTypes={cardTypes}
             hideAddButton
           />
         )}

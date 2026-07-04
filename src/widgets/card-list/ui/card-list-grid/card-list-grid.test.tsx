@@ -8,13 +8,13 @@ import type { IBankCard } from '@entities/bank-card';
 import { ModalProvider, ParentClassProvider } from '@shared/lib';
 import { CardListGrid } from './card-list-grid';
 
-const { mockUseCardManagementStore, mockOpenEditCardForm } = vi.hoisted(() => ({
-  mockUseCardManagementStore: vi.fn(),
+const { mockUseCardsStore, mockOpenEditCardForm } = vi.hoisted(() => ({
+  mockUseCardsStore: vi.fn(),
   mockOpenEditCardForm: vi.fn(),
 }));
 
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: mockUseCardManagementStore,
+  useCardsStore: mockUseCardsStore,
   getCardTypeName: () => null,
 }));
 
@@ -49,7 +49,7 @@ const DndWrapper: FC<PropsWithChildren> = ({ children }) => {
 describe('CardListGrid', () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockUseCardManagementStore.mockImplementation((selector) => {
+    mockUseCardsStore.mockImplementation((selector) => {
       const mockStore = {
         flipCard: vi.fn(),
       };
@@ -72,9 +72,7 @@ describe('CardListGrid', () => {
         <DndWrapper>
           <CardListGrid
             cards={MOCK_CARDS}
-            flippedPan={null}
             isReorderMode={false}
-            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -92,9 +90,7 @@ describe('CardListGrid', () => {
         <DndWrapper>
           <CardListGrid
             cards={MOCK_CARDS}
-            flippedPan={null}
             isReorderMode={false}
-            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -111,9 +107,7 @@ describe('CardListGrid', () => {
         <DndWrapper>
           <CardListGrid
             cards={MOCK_CARDS}
-            flippedPan={null}
             isReorderMode={false}
-            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -130,9 +124,7 @@ describe('CardListGrid', () => {
         <DndWrapper>
           <CardListGrid
             cards={[]}
-            flippedPan={null}
             isReorderMode={false}
-            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -152,9 +144,7 @@ describe('CardListGrid', () => {
         <DndWrapper>
           <CardListGrid
             cards={MOCK_CARDS}
-            flippedPan={null}
             isReorderMode={false}
-            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>

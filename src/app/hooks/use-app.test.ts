@@ -2,9 +2,9 @@ import { renderHook } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { useApp } from '@app/hooks';
 import {
-  useCardManagementStore,
-  type ICardManagementActions,
-  type ICardManagementState,
+  useCardsStore,
+  type ICardsActions,
+  type ICardsState,
 } from '@features/card-management';
 import { initGlobalErrorHandler } from '@features/error-handling';
 import { setErrorModalHandler } from '@shared/lib';
@@ -17,7 +17,7 @@ vi.mock('virtual:pwa-register/react', () => ({
 }));
 
 vi.mock('@features/card-management', () => ({
-  useCardManagementStore: vi.fn(),
+  useCardsStore: vi.fn(),
 }));
 
 vi.mock('@features/error-handling', () => ({
@@ -39,17 +39,12 @@ describe('useApp', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    vi.mocked(useCardManagementStore).mockImplementation((selector) => {
-      const state: ICardManagementState & ICardManagementActions = {
+    vi.mocked(useCardsStore).mockImplementation((selector) => {
+      const state: ICardsState & ICardsActions = {
         cards: [],
         flippedPan: null,
         isLoading: false,
         isReorderMode: false,
-        sortKey: 'order',
-        sortDirection: 'asc',
-        groupBy: 'none',
-        filters: { bankIds: [], paymentSystems: [], typeIds: [], ownerIds: [] },
-        collapsedGroups: [],
         setReorderMode: mockSetReorderMode,
         flipCard: vi.fn(),
         unflipCards: vi.fn(),
@@ -61,13 +56,6 @@ describe('useApp', () => {
         reorderCards: vi.fn(),
         setCards: vi.fn(),
         toggleReorderMode: vi.fn(),
-        setSortKey: vi.fn(),
-        setSortDirection: vi.fn(),
-        setGroupBy: vi.fn(),
-        toggleGroupCollapsed: vi.fn(),
-        setFilters: vi.fn(),
-        clearFilters: vi.fn(),
-        resetView: vi.fn(),
       };
 
       return selector(state);

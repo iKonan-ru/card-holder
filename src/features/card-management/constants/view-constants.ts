@@ -1,23 +1,12 @@
-import type { IBankCard } from '@entities/bank-card';
 import {
   GroupBy,
   SortDirection,
   SortKey,
-  type ICardFilters,
   type TGroupBy,
   type TSortDirection,
   type TSortKey,
-} from '../types/view';
-
-export const ERROR_FAILED_TO_LOAD_CARDS = 'Не удалось загрузить карты';
-export const ERROR_FAILED_TO_REORDER_CARDS = 'Не удалось изменить порядок карт';
-
-export const DEFAULT_CARD_ORDER = 0;
-
-export const INITIAL_CARDS: IBankCard[] = [];
-export const INITIAL_FLIPPED_PAN = null;
-export const INITIAL_IS_LOADING = false;
-export const INITIAL_IS_REORDER_MODE = false;
+} from '../model/view';
+import type { ICardFilters } from '../types/view';
 
 export const DEFAULT_SORT_KEY: TSortKey = SortKey.Order;
 export const DEFAULT_SORT_DIRECTION: TSortDirection = SortDirection.Asc;

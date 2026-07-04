@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react';
-import { useCardManagementStore } from '@features/card-management';
+import { useCardsStore } from '@features/card-management';
 import { initGlobalErrorHandler, showError } from '@features/error-handling';
 import { setErrorModalHandler } from '@shared/lib';
 import type { Procedure } from '@shared/types';
@@ -9,9 +9,7 @@ interface IUseAppResult {
 }
 
 export const useApp = (): IUseAppResult => {
-  const setReorderMode = useCardManagementStore(
-    (state) => state.setReorderMode,
-  );
+  const setReorderMode = useCardsStore((state) => state.setReorderMode);
 
   useEffect(() => {
     initGlobalErrorHandler();

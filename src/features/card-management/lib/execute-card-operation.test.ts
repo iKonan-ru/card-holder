@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import * as sharedLib from '@shared/lib';
-import { executeCardOperation } from './utils';
+import { executeCardOperation } from './execute-card-operation';
 
 vi.mock('@shared/lib', async () => {
   const actual =

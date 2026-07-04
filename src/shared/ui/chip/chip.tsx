@@ -1,6 +1,6 @@
 import type { FC } from 'react';
 import { FiX } from 'react-icons/fi';
-import { bem, useClassName } from '@shared/lib';
+import { ARIA_HIDDEN_TRUE, bem, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { CHIP_BLOCK, CHIP_REMOVE_ARIA_LABEL_PREFIX } from './constants';
 import './chip.less';
@@ -26,7 +26,7 @@ export const Chip: FC<IChipProps> = ({ label, onRemove, ariaLabel }) => {
           onClick={onRemove}
           aria-label={removeAriaLabel}
         >
-          <FiX aria-hidden="true" />
+          <FiX aria-hidden={ARIA_HIDDEN_TRUE} />
         </button>
       )}
     </span>

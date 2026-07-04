@@ -1,27 +1,13 @@
 import type { IBankCard } from '@entities/bank-card';
-import type { IOwner } from '@entities/card-owner';
-import type { ICardType } from '@entities/card-type';
-import { getPaymentSystem } from '@shared/lib';
 import {
   SortDirection,
   SortKey,
   type TSortDirection,
   type TSortKey,
-} from '../types/view';
-import {
-  getBankName,
-  getCardTypeName,
-  getOwnerName,
-} from './resolve-card-facet';
+} from '../model/view';
+import { FACET_IDS, FACETS, type IFacetContext } from './facets';
 
 const EXPIRES_MONTH_LENGTH = 2;
-
-const DERIVED_SORT_KEYS: TSortKey[] = [
-  SortKey.Bank,
-  SortKey.PaymentSystem,
-  SortKey.Type,
-  SortKey.Owner,
-];
 
 const normalizeExpires = (expires: string): string => {
   const month = expires.slice(0, EXPIRES_MONTH_LENGTH);
@@ -30,32 +16,10 @@ const normalizeExpires = (expires: string): string => {
   return `${year}${month}`;
 };
 
-export interface ICompareCardsParams {
+export interface ICompareCardsParams extends IFacetContext {
   sortKey: TSortKey;
   sortDirection: TSortDirection;
-  cardTypes: ICardType[];
-  owners: IOwner[];
 }
-
-const resolveDerivedValue = (
-  card: IBankCard,
-  sortKey: TSortKey,
-  { cardTypes, owners }: ICompareCardsParams,
-): string | null => {
-  if (sortKey === SortKey.Bank) {
-    return getBankName(card.pan);
-  }
-
-  if (sortKey === SortKey.PaymentSystem) {
-    return getPaymentSystem(card.pan);
-  }
-
-  if (sortKey === SortKey.Type) {
-    return getCardTypeName(card.typeId, cardTypes);
-  }
-
-  return getOwnerName(card.ownerId, owners);
-};
 
 const finalizeComparison = (
   comparison: number,
@@ -69,6 +33,11 @@ const finalizeComparison = (
 
   return a.order - b.order;
 };
+
+const isFacetSortKey = (
+  sortKey: TSortKey,
+): sortKey is (typeof FACET_IDS)[number] =>
+  (FACET_IDS as readonly TSortKey[]).includes(sortKey);
 
 export const compareCards = (
   a: IBankCard,
@@ -100,9 +69,10 @@ export const compareCards = (
     );
   }
 
-  if (DERIVED_SORT_KEYS.includes(sortKey)) {
-    const aValue = resolveDerivedValue(a, sortKey, params);
-    const bValue = resolveDerivedValue(b, sortKey, params);
+  if (isFacetSortKey(sortKey)) {
+    const facet = FACETS[sortKey];
+    const aValue = facet.resolveValue(a, params);
+    const bValue = facet.resolveValue(b, params);
 
     if (aValue === null || bValue === null) {
       const isAEmpty = aValue === null;

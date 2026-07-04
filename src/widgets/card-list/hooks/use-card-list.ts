@@ -4,13 +4,13 @@ import {
   GroupBy,
   groupCards,
   selectVisibleCards,
-  useCardManagementStore,
+  useCardsStore,
+  useCardViewStore,
   type ICardGroup,
 } from '@features/card-management';
 import { useCardTypesManagementStore } from '@features/card-types-management';
 import { useOwnersManagementStore } from '@features/owners-management';
 import type { IBankCard } from '@entities/bank-card';
-import type { ICardType } from '@entities/card-type';
 import type { Procedure } from '@shared/types';
 
 interface IUseCardListResult {
@@ -19,10 +19,8 @@ interface IUseCardListResult {
   isGrouped: boolean;
   groups: ICardGroup[];
   collapsedGroups: string[];
-  flippedPan: string | null;
   isLoading: boolean;
   isReorderMode: boolean;
-  cardTypes: ICardType[];
   handleShowForm: Procedure;
   handleDragEnd: (reorderedCards: IBankCard[]) => void;
   handleToggleReorderMode: Procedure;
@@ -30,24 +28,20 @@ interface IUseCardListResult {
 }
 
 export const useCardList = (): IUseCardListResult => {
-  const cards = useCardManagementStore((state) => state.cards);
-  const flippedPan = useCardManagementStore((state) => state.flippedPan);
-  const isLoading = useCardManagementStore((state) => state.isLoading);
-  const isReorderMode = useCardManagementStore((state) => state.isReorderMode);
-  const sortKey = useCardManagementStore((state) => state.sortKey);
-  const sortDirection = useCardManagementStore((state) => state.sortDirection);
-  const groupBy = useCardManagementStore((state) => state.groupBy);
-  const filters = useCardManagementStore((state) => state.filters);
-  const collapsedGroups = useCardManagementStore(
-    (state) => state.collapsedGroups,
-  );
-  const loadCards = useCardManagementStore((state) => state.loadCards);
-  const reorderCards = useCardManagementStore((state) => state.reorderCards);
-  const setCards = useCardManagementStore((state) => state.setCards);
-  const toggleReorderMode = useCardManagementStore(
-    (state) => state.toggleReorderMode,
-  );
-  const toggleGroupCollapsed = useCardManagementStore(
+  const cards = useCardsStore((state) => state.cards);
+  const isLoading = useCardsStore((state) => state.isLoading);
+  const isReorderMode = useCardsStore((state) => state.isReorderMode);
+  const loadCards = useCardsStore((state) => state.loadCards);
+  const reorderCards = useCardsStore((state) => state.reorderCards);
+  const setCards = useCardsStore((state) => state.setCards);
+  const toggleReorderMode = useCardsStore((state) => state.toggleReorderMode);
+
+  const sortKey = useCardViewStore((state) => state.sortKey);
+  const sortDirection = useCardViewStore((state) => state.sortDirection);
+  const groupBy = useCardViewStore((state) => state.groupBy);
+  const filters = useCardViewStore((state) => state.filters);
+  const collapsedGroups = useCardViewStore((state) => state.collapsedGroups);
+  const toggleGroupCollapsed = useCardViewStore(
     (state) => state.toggleGroupCollapsed,
   );
 
@@ -99,10 +93,8 @@ export const useCardList = (): IUseCardListResult => {
     isGrouped,
     groups,
     collapsedGroups,
-    flippedPan,
     isLoading,
     isReorderMode,
-    cardTypes,
     handleShowForm: openAddCardForm,
     handleDragEnd,
     handleToggleReorderMode: toggleReorderMode,

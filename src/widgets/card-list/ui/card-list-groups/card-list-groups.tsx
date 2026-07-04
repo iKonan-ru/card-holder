@@ -1,13 +1,10 @@
 import { useCallback, type FC, type ReactElement } from 'react';
 import { AddCardButton } from '@features/add-card-button';
 import type { ICardGroup } from '@features/card-management';
-import type { ICardType } from '@entities/card-type';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
-import {
-  CARD_LIST_FILTER_EMPTY_MESSAGE,
-  CARD_LIST_GROUPS_BLOCK,
-} from '../../constants';
+import { CARD_LIST_GROUPS_BLOCK } from '../../constants';
+import { CardListEmptyState } from '../card-list-empty-state';
 import { CardListGroupSection } from '../card-list-group-section';
 import './card-list-groups.less';
 
@@ -15,8 +12,6 @@ interface ICardListGroupsProps {
   groups: ICardGroup[];
   collapsedGroups: string[];
   hasAnyCards: boolean;
-  flippedPan: string | null;
-  cardTypes: ICardType[];
   onToggleCollapse: (groupId: string) => void;
   onShowForm: Procedure;
 }
@@ -25,8 +20,6 @@ export const CardListGroups: FC<ICardListGroupsProps> = ({
   groups,
   collapsedGroups,
   hasAnyCards,
-  flippedPan,
-  cardTypes,
   onToggleCollapse,
   onShowForm,
 }) => {
@@ -46,23 +39,17 @@ export const CardListGroups: FC<ICardListGroupsProps> = ({
           key={group.id}
           group={group}
           isCollapsed={isCollapsed}
-          flippedPan={flippedPan}
-          cardTypes={cardTypes}
           onToggle={handleToggle}
         />
       );
     },
-    [collapsedGroups, flippedPan, cardTypes, onToggleCollapse],
+    [collapsedGroups, onToggleCollapse],
   );
 
   return (
     <div className={className}>
       <ParentClassProvider parentClass={CARD_LIST_GROUPS_BLOCK}>
-        {showFilterEmptyState && (
-          <div className={bem(CARD_LIST_GROUPS_BLOCK, 'empty-state')}>
-            {CARD_LIST_FILTER_EMPTY_MESSAGE}
-          </div>
-        )}
+        {showFilterEmptyState && <CardListEmptyState />}
         {groups.map(renderGroup)}
         <div className={bem(CARD_LIST_GROUPS_BLOCK, 'add-button')}>
           <AddCardButton onClick={onShowForm} />
