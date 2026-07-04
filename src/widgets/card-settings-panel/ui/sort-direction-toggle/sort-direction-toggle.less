@@ -1,0 +1,39 @@
+@import '@shared/assets/styles/variables.less';
+
+.sort-direction-toggle {
+  display: flex;
+  gap: @spacing-xs;
+  padding: @spacing-xs;
+  border-radius: @border-radius;
+  background: var(--bg-tertiary-50);
+
+  &_disabled {
+    opacity: @opacity-high;
+    pointer-events: none;
+  }
+
+  &__option {
+    flex: 1;
+    padding: @spacing-sm @spacing-md;
+    border: 0 none transparent;
+    border-radius: @border-radius-sm;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: @font-size-sm;
+    cursor: pointer;
+    transition: @transition-fast;
+
+    &:hover:not(:disabled) {
+      color: var(--text-primary);
+    }
+
+    &_selected {
+      background: var(--accent);
+      color: var(--text-on-accent, var(--bg-primary));
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+}

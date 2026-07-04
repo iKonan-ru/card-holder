@@ -1,0 +1,49 @@
+@import '@shared/assets/styles/variables.less';
+
+.panel-section {
+  display: flex;
+  flex-direction: column;
+  gap: @spacing-sm;
+  padding-bottom: @spacing-lg;
+  border-bottom: 1px solid var(--border-color);
+
+  &:last-child {
+    padding-bottom: 0;
+    border-bottom: 0 none transparent;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: @spacing-sm;
+  }
+
+  &__title {
+    margin: 0;
+    font-size: @font-size-base;
+    font-weight: @font-weight-semibold;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: @size-sm;
+    height: @size-sm;
+    padding: 0 @spacing-xs;
+    border-radius: @border-radius-full;
+    background: var(--accent);
+    color: var(--text-on-accent, var(--bg-primary));
+    font-size: @font-size-xs;
+    font-weight: @font-weight-semibold;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: @spacing-sm;
+  }
+}

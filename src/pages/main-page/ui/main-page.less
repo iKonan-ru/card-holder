@@ -20,12 +20,25 @@
     bottom: @spacing-xl;
     right: @spacing-xl;
     z-index: @z-index-actions;
+    transition: @transition;
 
     @media (max-width: @mobile) {
       position: sticky;
       bottom: @spacing-lg;
       margin-top: @spacing-lg;
       align-self: center;
+    }
+  }
+
+  &_panel-open &__content {
+    @media (min-width: @tablet) {
+      padding-right: calc(@spacing-lg + @settings-panel-width);
+    }
+  }
+
+  &_panel-open &__action-buttons {
+    @media (min-width: @tablet) {
+      right: calc(@spacing-xl + @settings-panel-width);
     }
   }
 }
