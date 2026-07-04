@@ -12,6 +12,7 @@ interface IFabButtonProps {
   disabled?: boolean;
   isActive?: boolean;
   ariaPressed?: boolean;
+  hasIndicator?: boolean;
 }
 
 export const FabButton: FC<IFabButtonProps> = ({
@@ -21,6 +22,7 @@ export const FabButton: FC<IFabButtonProps> = ({
   disabled,
   isActive,
   ariaPressed,
+  hasIndicator,
 }) => {
   const modifiers = useMemo(
     () =>
@@ -49,6 +51,12 @@ export const FabButton: FC<IFabButtonProps> = ({
         className={bem(FAB_BUTTON_BLOCK, 'icon')}
         aria-hidden="true"
       />
+      {hasIndicator && (
+        <span
+          className={bem(FAB_BUTTON_BLOCK, 'indicator')}
+          aria-hidden="true"
+        />
+      )}
     </button>
   );
 };

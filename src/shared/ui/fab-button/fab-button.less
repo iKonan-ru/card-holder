@@ -1,6 +1,7 @@
 @import '@shared/assets/styles/variables.less';
 
 .fab-button {
+  position: relative;
   padding: @spacing-md;
   border-radius: 50%;
   border: 0 none transparent;
@@ -41,5 +42,16 @@
 
   &__icon {
     font-size: @font-size-xl;
+  }
+
+  &__indicator {
+    position: absolute;
+    top: @spacing-xs;
+    right: @spacing-xs;
+    width: @spacing-sm;
+    height: @spacing-sm;
+    border-radius: @border-radius-full;
+    background: var(--accent);
+    border: 0.125rem solid var(--bg-secondary);
   }
 }

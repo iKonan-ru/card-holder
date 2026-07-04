@@ -6,6 +6,7 @@ import {
   useCardsStore,
   useCardViewStore,
 } from '@features/card-management';
+import { CardSettingsToggleButton } from '@features/card-settings';
 import { ClearButton } from '@features/clear-button';
 import { ReorderToggleButton } from '@features/reorder-toggle-button';
 import { ParentClassProvider, useClassName } from '@shared/lib';
@@ -30,6 +31,7 @@ export const ActionButtons: FC = () => {
   return (
     <div className={className}>
       <ParentClassProvider parentClass={ACTION_BUTTONS_BLOCK}>
+        <CardSettingsToggleButton />
         <ImportButton />
 
         {hasCards && (
