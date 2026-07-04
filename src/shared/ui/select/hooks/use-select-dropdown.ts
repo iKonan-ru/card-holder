@@ -11,7 +11,7 @@ import type { Procedure } from '@shared/types';
 interface ISelectPosition {
   top: number;
   left: number;
-  width: number;
+  width?: number;
 }
 
 interface IUseSelectDropdownParams {
@@ -55,7 +55,7 @@ export const useSelectDropdown = ({
 
     const rect = triggerElement.getBoundingClientRect();
 
-    setPosition({ top: rect.bottom, left: rect.left, width: rect.width });
+    setPosition({ top: rect.bottom, left: rect.left });
     setIsOpen(true);
   }, [disabled, triggerRef]);
 
@@ -95,14 +95,30 @@ export const useSelectDropdown = ({
       closeDropdown();
     };
 
+    // При изменении размера окна триггер может сместиться (например, из-за
+    // смены раскладки страницы) - пересчитываем позицию, а не закрываем список.
+    const handleResize = () => {
+      const triggerElement = triggerRef.current;
+
+      if (!triggerElement) {
+        return;
+      }
+
+      const rect = triggerElement.getBoundingClientRect();
+
+      setPosition({ top: rect.bottom, left: rect.left });
+    };
+
     // Фаза перехвата: Modal останавливает всплытие mousedown на bubble-фазе,
     // из-за чего этот обработчик иначе не увидел бы клики внутри него.
     document.addEventListener('mousedown', handlePointerDown, true);
     window.addEventListener('scroll', handleScroll, true);
+    window.addEventListener('resize', handleResize);
 
     return () => {
       document.removeEventListener('mousedown', handlePointerDown, true);
       window.removeEventListener('scroll', handleScroll, true);
+      window.removeEventListener('resize', handleResize);
     };
   }, [isOpen, closeDropdown, triggerRef, listRef]);
 
@@ -111,7 +127,7 @@ export const useSelectDropdown = ({
       return undefined;
     }
 
-    return { top: position.top, left: position.left, width: position.width };
+    return { top: position.top, left: position.left };
   }, [position]);
 
   return {
