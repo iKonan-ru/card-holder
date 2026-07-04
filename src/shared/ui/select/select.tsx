@@ -8,11 +8,14 @@ import {
   type FC,
   type KeyboardEvent,
   type ReactElement,
+  type MouseEvent as ReactMouseEvent,
   type ReactNode,
 } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
+import { FiChevronDown, FiEdit } from 'react-icons/fi';
 import {
+  ARIA_HIDDEN_TRUE,
   bem,
+  BUTTON_TYPE_BUTTON,
   KEY_ARROW_DOWN,
   KEY_ARROW_UP,
   KEY_ENTER,
@@ -22,6 +25,7 @@ import {
 import { Portal } from '../portal';
 import {
   SELECT_BLOCK,
+  SELECT_EDIT_OPTION_ARIA_LABEL,
   SELECT_NO_ACTIVE_INDEX,
   SELECT_SCROLL_BLOCK_START,
   SELECT_TRIGGER_ARIA_LABEL,
@@ -40,6 +44,8 @@ interface ISelectProps {
   placeholder?: string;
   footer?: ReactNode;
   disabled?: boolean;
+  ariaLabel?: string;
+  onEditOption?: (value: string) => void;
 }
 
 interface ISelectPosition {
@@ -55,6 +61,8 @@ export const Select: FC<ISelectProps> = ({
   placeholder,
   footer,
   disabled,
+  ariaLabel = SELECT_TRIGGER_ARIA_LABEL,
+  onEditOption,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(SELECT_NO_ACTIVE_INDEX);
@@ -251,6 +259,11 @@ export const Select: FC<ISelectProps> = ({
         handleSelect(option.value);
       };
 
+      const handleEditClick = (event: ReactMouseEvent) => {
+        event.stopPropagation();
+        onEditOption?.(option.value);
+      };
+
       return (
         <li
           key={option.value}
@@ -259,11 +272,23 @@ export const Select: FC<ISelectProps> = ({
           className={optionClassName}
           onClick={handleClick}
         >
-          {option.label}
+          <span className={bem(SELECT_BLOCK, 'option-label')}>
+            {option.label}
+          </span>
+          {onEditOption && (
+            <button
+              type={BUTTON_TYPE_BUTTON}
+              className={bem(SELECT_BLOCK, 'option-edit')}
+              onClick={handleEditClick}
+              aria-label={`${SELECT_EDIT_OPTION_ARIA_LABEL} ${option.label}`}
+            >
+              <FiEdit aria-hidden={ARIA_HIDDEN_TRUE} />
+            </button>
+          )}
         </li>
       );
     },
-    [value, activeIndex, handleSelect],
+    [value, activeIndex, handleSelect, onEditOption],
   );
 
   return (
@@ -277,13 +302,16 @@ export const Select: FC<ISelectProps> = ({
         disabled={disabled}
         aria-haspopup="listbox"
         aria-expanded={isOpen}
-        aria-label={SELECT_TRIGGER_ARIA_LABEL}
+        aria-label={ariaLabel}
       >
         <span className={bem(SELECT_BLOCK, 'value')}>
           {selectedOption ? selectedOption.label : placeholder}
         </span>
         <FiChevronDown
-          className={bem(SELECT_BLOCK, 'chevron')}
+          className={bem(
+            bem(SELECT_BLOCK, 'chevron'),
+            isOpen ? ['open'] : undefined,
+          )}
           aria-hidden="true"
         />
       </button>

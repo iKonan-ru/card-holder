@@ -59,9 +59,9 @@ export const useOwnersManagementStore: UseBoundStore<
     }
   },
 
-  addOwner: async (realName: string, aliases: string[]) => {
+  addOwner: async (realName: string) => {
     const cryptoKey = getCryptoKey();
-    const owner: IOwner = { id: crypto.randomUUID(), realName, aliases };
+    const owner: IOwner = { id: crypto.randomUUID(), realName };
 
     await executeOwnerOperation({
       operation: () => addOwnerToDb(owner, cryptoKey),

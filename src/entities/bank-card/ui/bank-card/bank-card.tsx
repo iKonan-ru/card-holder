@@ -17,6 +17,7 @@ interface IBankCardProps {
   onFlip?: (pan: string) => void;
   onEdit?: (card: IBankCard) => void;
   isReorderMode?: boolean;
+  typeName?: string | null;
 }
 
 export const BankCard: FC<IBankCardProps> = ({
@@ -25,6 +26,7 @@ export const BankCard: FC<IBankCardProps> = ({
   onFlip,
   onEdit,
   isReorderMode = DEFAULT_IS_REORDER_MODE,
+  typeName,
 }) => {
   const {
     bank,
@@ -57,6 +59,7 @@ export const BankCard: FC<IBankCardProps> = ({
           card={card}
           bank={bank}
           paymentSystem={paymentSystem}
+          typeName={typeName}
         />
         <BankCardBack
           card={card}

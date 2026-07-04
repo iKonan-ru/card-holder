@@ -129,6 +129,7 @@ export const CardToolbar: FC = () => {
             options={SORT_KEY_OPTIONS}
             onChange={handleSortKeyChange}
             placeholder={SORT_KEY_PLACEHOLDER}
+            ariaLabel={SORT_KEY_PLACEHOLDER}
           />
           <IconButton
             icon={directionIcon}
@@ -140,6 +141,7 @@ export const CardToolbar: FC = () => {
             options={GROUP_BY_OPTIONS}
             onChange={handleGroupByChange}
             placeholder={GROUP_BY_PLACEHOLDER}
+            ariaLabel={GROUP_BY_PLACEHOLDER}
           />
           <IconButton
             icon={FiFilter}

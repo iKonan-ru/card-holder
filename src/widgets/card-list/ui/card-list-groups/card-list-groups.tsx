@@ -1,6 +1,7 @@
 import { useCallback, type FC, type ReactElement } from 'react';
 import { AddCardButton } from '@features/add-card-button';
 import type { ICardGroup } from '@features/card-management';
+import type { ICardType } from '@entities/card-type';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import {
@@ -15,6 +16,7 @@ interface ICardListGroupsProps {
   collapsedGroups: string[];
   hasAnyCards: boolean;
   flippedPan: string | null;
+  cardTypes: ICardType[];
   onToggleCollapse: (groupId: string) => void;
   onShowForm: Procedure;
 }
@@ -24,6 +26,7 @@ export const CardListGroups: FC<ICardListGroupsProps> = ({
   collapsedGroups,
   hasAnyCards,
   flippedPan,
+  cardTypes,
   onToggleCollapse,
   onShowForm,
 }) => {
@@ -44,11 +47,12 @@ export const CardListGroups: FC<ICardListGroupsProps> = ({
           group={group}
           isCollapsed={isCollapsed}
           flippedPan={flippedPan}
+          cardTypes={cardTypes}
           onToggle={handleToggle}
         />
       );
     },
-    [collapsedGroups, flippedPan, onToggleCollapse],
+    [collapsedGroups, flippedPan, cardTypes, onToggleCollapse],
   );
 
   return (

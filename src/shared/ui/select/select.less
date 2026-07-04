@@ -38,6 +38,11 @@
   &__chevron {
     flex-shrink: 0;
     color: var(--text-muted);
+    transition: @transition-fast;
+
+    &_open {
+      transform: rotate(180deg);
+    }
   }
 
   &__dropdown {
@@ -59,18 +64,46 @@
   }
 
   &__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: @spacing-sm;
     padding: @spacing-sm @spacing-md;
     border-radius: @border-radius-sm;
     color: var(--text-primary);
     cursor: pointer;
 
-    &_active {
+    &:hover {
       background: var(--bg-tertiary);
     }
 
     &_selected {
       color: var(--accent);
       font-weight: @font-weight-medium;
+    }
+  }
+
+  &__option-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__option-edit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: @spacing-xs;
+    border: none;
+    border-radius: @border-radius-sm;
+    background: transparent;
+    color: var(--text-muted);
+    cursor: pointer;
+
+    &:hover {
+      background: var(--bg-tertiary);
+      color: var(--text-primary);
     }
   }
 

@@ -49,7 +49,11 @@ export const CheckboxGroup: FC<ICheckboxGroupProps> = ({
   );
 
   return (
-    <div className={className}>
+    <div
+      className={className}
+      role="group"
+      aria-label={title}
+    >
       {title && (
         <span className={bem(CHECKBOX_GROUP_BLOCK, 'title')}>{title}</span>
       )}

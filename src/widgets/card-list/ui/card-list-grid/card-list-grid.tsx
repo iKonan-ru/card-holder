@@ -1,6 +1,7 @@
 import { useCallback, type FC } from 'react';
 import { AddCardButton } from '@features/add-card-button';
 import type { IBankCard } from '@entities/bank-card';
+import type { ICardType } from '@entities/card-type';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import {
@@ -16,6 +17,7 @@ interface ICardListGridProps {
   hideAddButton?: boolean;
   flippedPan: string | null;
   isReorderMode: boolean;
+  cardTypes: ICardType[];
   onShowForm?: Procedure;
 }
 
@@ -25,6 +27,7 @@ export const CardListGrid: FC<ICardListGridProps> = ({
   hideAddButton = false,
   flippedPan,
   isReorderMode,
+  cardTypes,
   onShowForm,
 }) => {
   const className = useClassName({
@@ -43,10 +46,11 @@ export const CardListGrid: FC<ICardListGridProps> = ({
           card={card}
           isFlipped={isFlipped}
           isReorderMode={isReorderMode}
+          cardTypes={cardTypes}
         />
       );
     },
-    [flippedPan, isReorderMode],
+    [flippedPan, isReorderMode, cardTypes],
   );
 
   return (

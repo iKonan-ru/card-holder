@@ -1,30 +1,13 @@
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  type ChangeEvent,
-  type FC,
-  type KeyboardEvent,
-  type ReactElement,
-} from 'react';
-import {
-  matchOwners,
-  useOwnersManagementStore,
-} from '@features/owners-management';
+import { useCallback, useEffect, useMemo, type FC } from 'react';
+import { useOwnersManagementStore } from '@features/owners-management';
 import type { IOwner } from '@entities/card-owner';
-import {
-  bem,
-  KEY_ESC,
-  useClassName,
-  useFormContext,
-  useModal,
-} from '@shared/lib';
+import { bem, useClassName, useFormContext, useModal } from '@shared/lib';
+import { Select, type ISelectOption } from '@shared/ui';
 import { FIELD_NAME_OWNER_ID, OWNER_ID_LABEL } from '../../constants';
-import { OwnerQuickCreateModal } from '../owner-quick-create-modal';
+import { OwnerFormModal } from '../owner-form-modal';
 import {
   OWNER_ADD_BUTTON_LABEL,
+  OWNER_EDIT_MODAL_TITLE,
   OWNER_FIELD_BLOCK,
   OWNER_MODAL_TITLE,
   OWNER_PLACEHOLDER,
@@ -43,160 +26,112 @@ export const OwnerSelectField: FC<IOwnerSelectFieldProps> = ({
   const owners = useOwnersManagementStore((state) => state.owners);
   const loadOwners = useOwnersManagementStore((state) => state.loadOwners);
   const addOwner = useOwnersManagementStore((state) => state.addOwner);
+  const updateOwner = useOwnersManagementStore((state) => state.updateOwner);
+  const deleteOwner = useOwnersManagementStore((state) => state.deleteOwner);
   const { onChange } = useFormContext();
   const { open, close } = useModal();
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [query, setQuery] = useState('');
-  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     loadOwners();
   }, [loadOwners]);
 
-  const selectedOwner = useMemo(
-    () => owners.find((owner) => owner.id === value) ?? null,
-    [owners, value],
-  );
-
-  useEffect(() => {
-    if (isOpen) {
-      return;
-    }
-
-    setQuery(selectedOwner ? selectedOwner.realName : '');
-  }, [isOpen, selectedOwner]);
-
-  const filteredOwners = useMemo(
-    () => matchOwners(query, owners),
-    [query, owners],
+  const options = useMemo<ISelectOption[]>(
+    () => owners.map((owner) => ({ value: owner.id, label: owner.realName })),
+    [owners],
   );
 
   const handleChange = useCallback(
-    (ownerId: string) => {
-      onChange?.(FIELD_NAME_OWNER_ID, ownerId);
+    (nextValue: string) => {
+      onChange?.(FIELD_NAME_OWNER_ID, nextValue);
     },
     [onChange],
   );
 
-  const handleSelect = useCallback(
-    (ownerId: string) => {
-      handleChange(ownerId);
-      setIsOpen(false);
-    },
-    [handleChange],
-  );
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-
-    setQuery(inputValue);
-    setIsOpen(true);
-
-    if (!inputValue) {
-      handleChange('');
-    }
-  };
-
-  const handleInputFocus = () => {
-    setIsOpen(true);
-  };
-
-  const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === KEY_ESC && isOpen) {
-      event.stopPropagation();
-      setIsOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!isOpen) {
-      return;
-    }
-
-    const handlePointerDown = (event: MouseEvent) => {
-      const target = event.target as Node;
-      const isInside = containerRef.current?.contains(target) ?? false;
-
-      if (!isInside) {
-        setIsOpen(false);
-      }
-    };
-
-    // Capture phase: Modal stops mousedown propagation on bubble, which
-    // would otherwise prevent this listener from ever seeing clicks inside it.
-    document.addEventListener('mousedown', handlePointerDown, true);
-
-    return () => {
-      document.removeEventListener('mousedown', handlePointerDown, true);
-    };
-  }, [isOpen]);
-
   const handleCreate = useCallback(
-    async (realName: string, aliases: string[]) => {
-      const owner = await addOwner(realName, aliases);
+    async (realName: string) => {
+      const owner = await addOwner(realName);
       handleChange(owner.id);
-      setIsOpen(false);
       close();
     },
     [addOwner, handleChange, close],
   );
 
   const handleOpenCreate = useCallback(() => {
-    open(<OwnerQuickCreateModal onCreate={handleCreate} />, OWNER_MODAL_TITLE);
+    open(<OwnerFormModal onSubmit={handleCreate} />, OWNER_MODAL_TITLE);
   }, [open, handleCreate]);
 
-  const renderOption = useCallback(
-    (owner: IOwner): ReactElement => {
-      const handleClick = () => {
-        handleSelect(owner.id);
-      };
+  const handleUpdate = useCallback(
+    async (owner: IOwner, realName: string) => {
+      await updateOwner({ ...owner, realName });
+      close();
+    },
+    [updateOwner, close],
+  );
 
-      return (
-        <li
-          key={owner.id}
-          className={bem(OWNER_FIELD_BLOCK, 'option')}
-          onClick={handleClick}
-        >
-          {owner.realName}
-        </li>
+  const handleDelete = useCallback(
+    async (owner: IOwner) => {
+      await deleteOwner(owner.id);
+
+      if (value === owner.id) {
+        handleChange('');
+      }
+
+      close();
+    },
+    [deleteOwner, value, handleChange, close],
+  );
+
+  const handleEditOption = useCallback(
+    (optionValue: string) => {
+      const owner = owners.find((item) => item.id === optionValue);
+
+      if (!owner) {
+        return;
+      }
+
+      const handleSubmit = (realName: string) => handleUpdate(owner, realName);
+      const handleModalDelete = () => handleDelete(owner);
+
+      open(
+        <OwnerFormModal
+          owner={owner}
+          onSubmit={handleSubmit}
+          onDelete={handleModalDelete}
+        />,
+        OWNER_EDIT_MODAL_TITLE,
       );
     },
-    [handleSelect],
+    [owners, open, handleUpdate, handleDelete],
+  );
+
+  const footer = useMemo(
+    () => (
+      <button
+        type="button"
+        className={bem(OWNER_FIELD_BLOCK, 'add-button')}
+        onClick={handleOpenCreate}
+      >
+        {OWNER_ADD_BUTTON_LABEL}
+      </button>
+    ),
+    [handleOpenCreate],
   );
 
   const className = useClassName({ blockName: OWNER_FIELD_BLOCK });
 
   return (
-    <div
-      className={className}
-      ref={containerRef}
-    >
+    <div className={className}>
       <span className={bem(OWNER_FIELD_BLOCK, 'label')}>{OWNER_ID_LABEL}</span>
-      <input
-        type="text"
-        className={bem(OWNER_FIELD_BLOCK, 'input')}
-        value={query}
-        onChange={handleInputChange}
-        onFocus={handleInputFocus}
-        onKeyDown={handleInputKeyDown}
+      <Select
+        value={value || null}
+        options={options}
+        onChange={handleChange}
+        onEditOption={handleEditOption}
         placeholder={OWNER_PLACEHOLDER}
+        ariaLabel={OWNER_ID_LABEL}
         disabled={disabled}
+        footer={footer}
       />
-      {isOpen && (
-        <ul className={bem(OWNER_FIELD_BLOCK, 'dropdown')}>
-          {filteredOwners.map(renderOption)}
-          <li className={bem(OWNER_FIELD_BLOCK, 'footer')}>
-            <button
-              type="button"
-              className={bem(OWNER_FIELD_BLOCK, 'add-button')}
-              onClick={handleOpenCreate}
-            >
-              {OWNER_ADD_BUTTON_LABEL}
-            </button>
-          </li>
-        </ul>
-      )}
     </div>
   );
 };

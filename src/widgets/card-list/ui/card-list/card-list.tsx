@@ -24,6 +24,7 @@ export const CardList: FC = () => {
     collapsedGroups,
     flippedPan,
     isReorderMode,
+    cardTypes,
     handleShowForm,
     handleDragEnd: handleDragEndStore,
     handleToggleGroupCollapsed,
@@ -80,6 +81,7 @@ export const CardList: FC = () => {
                 collapsedGroups={collapsedGroups}
                 hasAnyCards={hasAnyCards}
                 flippedPan={flippedPan}
+                cardTypes={cardTypes}
                 onToggleCollapse={handleToggleGroupCollapsed}
                 onShowForm={handleShowForm}
               />
@@ -89,13 +91,17 @@ export const CardList: FC = () => {
                 hasAnyCards={hasAnyCards}
                 flippedPan={flippedPan}
                 isReorderMode={isReorderMode}
+                cardTypes={cardTypes}
                 onShowForm={handleShowForm}
               />
             )}
           </SortableContext>
 
           <DragOverlay dropAnimation={DROP_ANIMATION}>
-            <CardListDragOverlay activeCard={activeCard} />
+            <CardListDragOverlay
+              activeCard={activeCard}
+              cardTypes={cardTypes}
+            />
           </DragOverlay>
         </DndContext>
       </ParentClassProvider>

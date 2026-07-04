@@ -15,6 +15,7 @@ const { mockUseCardManagementStore, mockOpenEditCardForm } = vi.hoisted(() => ({
 
 vi.mock('@features/card-management', () => ({
   useCardManagementStore: mockUseCardManagementStore,
+  getCardTypeName: () => null,
 }));
 
 vi.mock('@features/card-form', () => ({
@@ -73,6 +74,7 @@ describe('CardListGrid', () => {
             cards={MOCK_CARDS}
             flippedPan={null}
             isReorderMode={false}
+            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -92,6 +94,7 @@ describe('CardListGrid', () => {
             cards={MOCK_CARDS}
             flippedPan={null}
             isReorderMode={false}
+            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -110,6 +113,7 @@ describe('CardListGrid', () => {
             cards={MOCK_CARDS}
             flippedPan={null}
             isReorderMode={false}
+            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -128,6 +132,7 @@ describe('CardListGrid', () => {
             cards={[]}
             flippedPan={null}
             isReorderMode={false}
+            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>
@@ -149,6 +154,7 @@ describe('CardListGrid', () => {
             cards={MOCK_CARDS}
             flippedPan={null}
             isReorderMode={false}
+            cardTypes={[]}
             onShowForm={vi.fn()}
           />
         </DndWrapper>

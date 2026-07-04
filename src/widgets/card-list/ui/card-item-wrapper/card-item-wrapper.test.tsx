@@ -17,6 +17,7 @@ const { mockUseCardManagementStore, mockOpenEditCardForm, mockFlipCard } =
 
 vi.mock('@features/card-management', () => ({
   useCardManagementStore: mockUseCardManagementStore,
+  getCardTypeName: () => null,
 }));
 
 vi.mock('@features/card-form', () => ({
@@ -88,6 +89,7 @@ describe('CardItemWrapper', () => {
           card={MOCK_CARD}
           isFlipped={false}
           isReorderMode={false}
+          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -111,6 +113,7 @@ describe('CardItemWrapper', () => {
           card={MOCK_CARD}
           isFlipped={true}
           isReorderMode={false}
+          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -128,6 +131,7 @@ describe('CardItemWrapper', () => {
           card={MOCK_CARD}
           isFlipped={false}
           isReorderMode={true}
+          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -145,6 +149,7 @@ describe('CardItemWrapper', () => {
           card={MOCK_CARD}
           isFlipped={false}
           isReorderMode={false}
+          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -159,6 +164,7 @@ describe('CardItemWrapper', () => {
           card={MOCK_CARD}
           isFlipped={false}
           isReorderMode={false}
+          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -183,6 +189,7 @@ describe('CardItemWrapper', () => {
           card={anotherCard}
           isFlipped={true}
           isReorderMode={true}
+          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -203,6 +210,7 @@ describe('CardItemWrapper', () => {
           card={MOCK_CARD}
           isFlipped={false}
           isReorderMode={false}
+          cardTypes={[]}
         />
       </DndWrapper>,
     );
@@ -215,6 +223,7 @@ describe('CardItemWrapper', () => {
           card={MOCK_CARD}
           isFlipped={false}
           isReorderMode={false}
+          cardTypes={[]}
         />
       </DndWrapper>,
     );

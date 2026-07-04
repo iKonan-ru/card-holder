@@ -1,7 +1,6 @@
 @import '@shared/assets/styles/variables.less';
 
 .owner-field {
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: @spacing-xs;
@@ -9,54 +8,6 @@
   &__label {
     font-size: @font-size-sm;
     color: var(--text-secondary);
-  }
-
-  &__input {
-    padding: @spacing-sm @spacing-md;
-    border-radius: @border-radius-md;
-    border: 1px solid var(--border-color);
-    background: var(--bg-tertiary-50);
-    color: var(--text-primary);
-    font-size: @font-size-base;
-
-    &:disabled {
-      opacity: @opacity-high;
-      cursor: not-allowed;
-    }
-  }
-
-  &__dropdown {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    margin: @spacing-xs 0 0;
-    padding: @spacing-xs;
-    list-style: none;
-    border-radius: @border-radius-md;
-    border: 1px solid var(--border-color);
-    background: var(--bg-secondary);
-    box-shadow: @shadow-lg;
-    max-height: 12rem;
-    overflow-y: auto;
-  }
-
-  &__option {
-    padding: @spacing-sm @spacing-md;
-    border-radius: @border-radius-sm;
-    color: var(--text-primary);
-    cursor: pointer;
-
-    &:hover {
-      background: var(--bg-tertiary);
-    }
-  }
-
-  &__footer {
-    margin-top: @spacing-xs;
-    padding-top: @spacing-xs;
-    border-top: 1px solid var(--border-color);
   }
 
   &__add-button {

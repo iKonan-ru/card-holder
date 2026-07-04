@@ -40,6 +40,7 @@ export const IconButton: FC<IIconButtonProps> = ({
   });
 
   const hasBadge = badge !== undefined && badge > 0;
+  const accessibleLabel = label ? undefined : title;
 
   return (
     <button
@@ -48,6 +49,7 @@ export const IconButton: FC<IIconButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       title={title}
+      aria-label={accessibleLabel}
       aria-pressed={ariaPressed}
     >
       <IconComponent

@@ -7,7 +7,7 @@ export interface IOwnersManagementState {
 
 export interface IOwnersManagementActions {
   loadOwners: () => Promise<void>;
-  addOwner: (realName: string, aliases: string[]) => Promise<IOwner>;
+  addOwner: (realName: string) => Promise<IOwner>;
   updateOwner: (owner: IOwner) => Promise<void>;
   deleteOwner: (id: string) => Promise<void>;
 }

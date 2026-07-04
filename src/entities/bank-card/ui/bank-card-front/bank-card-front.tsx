@@ -10,12 +10,14 @@ import { BankCardHeader } from '../bank-card-header';
 
 interface IBankCardFrontProps extends IBankCardCommonProps {
   card: IBankCard;
+  typeName?: string | null;
 }
 
 export const BankCardFront: FC<IBankCardFrontProps> = ({
   card,
   bank,
   paymentSystem,
+  typeName,
 }) => {
   return (
     <div className={bem(BANK_CARD_BLOCK, 'front')}>
@@ -23,7 +25,10 @@ export const BankCardFront: FC<IBankCardFrontProps> = ({
         bank={bank}
         paymentSystem={paymentSystem}
       />
-      <BankCardContent card={card} />
+      <BankCardContent
+        card={card}
+        typeName={typeName}
+      />
     </div>
   );
 };

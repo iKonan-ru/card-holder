@@ -1,13 +1,10 @@
 import { type FC } from 'react';
 import { FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import type { ICardGroup } from '@features/card-management';
+import type { ICardType } from '@entities/card-type';
 import { bem, ParentClassProvider, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
-import {
-  CARD_LIST_GROUP_BLOCK,
-  CARD_LIST_GROUP_COLLAPSE_ARIA_LABEL_COLLAPSED,
-  CARD_LIST_GROUP_COLLAPSE_ARIA_LABEL_EXPANDED,
-} from '../../constants';
+import { CARD_LIST_GROUP_BLOCK } from '../../constants';
 import { CardListGrid } from '../card-list-grid';
 import './card-list-group-section.less';
 
@@ -15,6 +12,7 @@ interface ICardListGroupSectionProps {
   group: ICardGroup;
   isCollapsed: boolean;
   flippedPan: string | null;
+  cardTypes: ICardType[];
   onToggle: Procedure;
 }
 
@@ -22,13 +20,11 @@ export const CardListGroupSection: FC<ICardListGroupSectionProps> = ({
   group,
   isCollapsed,
   flippedPan,
+  cardTypes,
   onToggle,
 }) => {
   const className = useClassName({ blockName: CARD_LIST_GROUP_BLOCK });
   const ChevronIcon = isCollapsed ? FiChevronRight : FiChevronDown;
-  const collapseAriaLabel = isCollapsed
-    ? CARD_LIST_GROUP_COLLAPSE_ARIA_LABEL_COLLAPSED
-    : CARD_LIST_GROUP_COLLAPSE_ARIA_LABEL_EXPANDED;
 
   return (
     <section className={className}>
@@ -38,7 +34,6 @@ export const CardListGroupSection: FC<ICardListGroupSectionProps> = ({
           className={bem(CARD_LIST_GROUP_BLOCK, 'header')}
           onClick={onToggle}
           aria-expanded={!isCollapsed}
-          aria-label={collapseAriaLabel}
         >
           <ChevronIcon
             className={bem(CARD_LIST_GROUP_BLOCK, 'chevron')}
@@ -57,6 +52,7 @@ export const CardListGroupSection: FC<ICardListGroupSectionProps> = ({
             cards={group.cards}
             flippedPan={flippedPan}
             isReorderMode={false}
+            cardTypes={cardTypes}
             hideAddButton
           />
         )}

@@ -10,6 +10,7 @@ import {
 import { useCardTypesManagementStore } from '@features/card-types-management';
 import { useOwnersManagementStore } from '@features/owners-management';
 import type { IBankCard } from '@entities/bank-card';
+import type { ICardType } from '@entities/card-type';
 import type { Procedure } from '@shared/types';
 
 interface IUseCardListResult {
@@ -21,6 +22,7 @@ interface IUseCardListResult {
   flippedPan: string | null;
   isLoading: boolean;
   isReorderMode: boolean;
+  cardTypes: ICardType[];
   handleShowForm: Procedure;
   handleDragEnd: (reorderedCards: IBankCard[]) => void;
   handleToggleReorderMode: Procedure;
@@ -100,6 +102,7 @@ export const useCardList = (): IUseCardListResult => {
     flippedPan,
     isLoading,
     isReorderMode,
+    cardTypes,
     handleShowForm: openAddCardForm,
     handleDragEnd,
     handleToggleReorderMode: toggleReorderMode,
