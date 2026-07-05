@@ -1574,7 +1574,7 @@
       <div class="hero__meta">
         <span class="metachip"><span class="dot" style="background: var(--good)"></span> <b>Offline &amp; зашифровано</b> — данные не покидают устройство</span>
         <span class="metachip"><span class="dot" style="background: var(--accent)"></span> <b>Связь подписка ↔ карта</b> — то, чего нет у конкурентов</span>
-        <span class="metachip"><span class="dot" style="background: var(--violet)"></span> <b>6 этапов</b> — от навигации до аналитики</span>
+        <span class="metachip"><span class="dot" style="background: var(--violet)"></span> <b>7 этапов</b> — от навигации до push и аналитики</span>
       </div>
     </section>
   </div>
@@ -1669,8 +1669,8 @@
             <li><b>Период</b>: нед. / мес. / кв. / год / произвольный</li>
             <li><b>Дата следующего</b> списания</li>
             <li><b>Внешняя ссылка</b> на управление подпиской ↗</li>
-            <li><b>Привязанная карта</b> — внутренняя ссылка на карту</li>
-            <li><b>Категория</b> сервиса</li>
+            <li><b>Способ списания</b> (обязателен): карта · SMS · наличные · кошелёк</li>
+            <li><b>Категория</b> сервиса (свой справочник)</li>
           </ul>
         </div>
         <div class="card">
@@ -1687,8 +1687,9 @@
           </ul>
         </div>
         <div class="card card--accent">
-          <span class="lbl" style="color: var(--violet)">Карточный слой — только у нас</span>
+          <span class="lbl" style="color: var(--violet)">Способ = карта → карточный слой</span>
           <ul class="ticks" style="margin-top: 14px">
+            <li><b>Способ списания обязателен</b>; карта — один из вариантов</li>
             <li><b>Маска карты</b> •• 1234 в цвете карты прямо в строке</li>
             <li><b>«Подписки на этой карте»</b> — блок на экране карты</li>
             <li><b>Сумма на карту</b>: сколько списывается с каждой карты</li>
@@ -1761,7 +1762,7 @@
               <div class="tab"><span class="ti"><svg class="i" viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 14l3-3 3 2 4-5"/></svg></span>Обзор</div>
             </div>
           </div></div>
-          <figcaption class="mock__cap"><span class="n">3.1</span><h4>Вход в приложение → «Ближайшие списания»</h4><p>Именно то, что вы просили: сводка предстоящих списаний вверху главной. Плюс красный бейдж на табе «Подписки».</p></figcaption>
+          <figcaption class="mock__cap"><span class="n">3.1</span><h4>Вход в приложение → «Ближайшие списания»</h4><p>Баннер-сводка вверху главной + красный бейдж на табе — универсальная база. Плюс настоящие системные push к дате списания (этап 4).</p></figcaption>
         </figure>
 
         <!-- 3.2 LIST -->
@@ -1835,7 +1836,7 @@
                 <a class="abtn"><svg class="i mi" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Открыть карту</a>
               </div>
               <div style="margin-top:14px">
-                <div class="drow"><span class="k">Карта оплаты</span><span class="v"><span class="minicard mc-tbank">•• 4271</span></span></div>
+                <div class="drow"><span class="k">Способ списания</span><span class="v"><span class="minicard mc-tbank">•• 4271</span></span></div>
                 <div class="drow"><span class="k">В год выходит</span><span class="v">₽7&nbsp;188</span></div>
                 <div class="drow"><span class="k">С вами</span><span class="v sans">14 мес · всего ₽8&nbsp;386</span></div>
                 <div class="drow"><span class="k">Напоминание</span><span class="v sans">за 2 дня</span></div>
@@ -1874,7 +1875,7 @@
               </div>
               <div class="field"><label>Следующее списание</label><div class="input"><svg class="i" viewBox="0 0 24 24" style="width:15px;height:15px;color:var(--text-muted)"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 10h18M8 2v4M16 2v4"/></svg><span style="font-family:var(--mono)">11 июля 2026</span></div></div>
               <div class="field">
-                <label>Карта оплаты</label>
+                <label>Способ списания</label>
                 <div class="input"><span class="minicard mc-alfa" style="font-size:10px">•• 0119</span>Альфа-Банк<span class="caret"><svg class="i" viewBox="0 0 24 24" style="width:14px;height:14px"><path d="m6 9 6 6 6-6"/></svg></span></div>
               </div>
               <div class="field"><label>Ссылка на управление</label><div class="input"><span class="ph">spotify.com/account</span></div></div>
@@ -1884,7 +1885,7 @@
               <div class="abtn abtn--primary" style="flex:2">Сохранить подписку</div>
             </div>
           </div></div>
-          <figcaption class="mock__cap"><span class="n">3.4</span><h4>Добавление — карта выбирается из ваших карт</h4><p>Форма на тех же паттернах, что и форма карты. Поле «Карта оплаты» — селект из реально сохранённых карт: вот где рождается связь.</p></figcaption>
+          <figcaption class="mock__cap"><span class="n">3.4</span><h4>Добавление — способ списания обязателен</h4><p>Форма на паттернах формы карты. «Способ списания» — карта из сохранённых или SMS / наличные / кошелёк. Сервис и категория создаются на лету (каталог изначально пуст).</p></figcaption>
         </figure>
 
         <!-- 3.5 CARD IMPACT -->
@@ -1998,7 +1999,7 @@
       <p class="sec-sub">
         Приложение построено по Feature-Sliced Design, и подписки идеально в неё встают: подписка — это ещё
         одна зашифрованная сущность рядом с картами. Огромная часть уже готова к переиспользованию —
-        генерик-шифрование записей, слой IndexedDB, паттерн Zustand-стора, модалки, селекты, sort/filter/group.
+        генерик-шифрование записей, слой IndexedDB, паттерн Zustand-стора, справочники owners/card-types, модалки, селекты, sort/filter/group.
       </p>
 
       <div class="code">
@@ -2016,14 +2017,14 @@
   <span class="p">id</span>: <span class="t">string</span>;
   <span class="p">order</span>: <span class="t">number</span>;              <span class="c">// как у карт — для DnD-сортировки</span>
   <span class="p">name</span>: <span class="t">string</span>;
-  <span class="p">serviceId</span>?: <span class="t">string</span>;        <span class="c">// каталог → логотип и цвет</span>
-  <span class="p">categoryId</span>?: <span class="t">string</span>;
+  <span class="p">serviceId</span>?: <span class="t">string</span>;        <span class="c">// пользовательский справочник сервисов</span>
+  <span class="p">categoryId</span>?: <span class="t">string</span>;     <span class="c">// пользовательский справочник категорий</span>
   <span class="p">amount</span>: <span class="t">number</span>;
   <span class="p">currency</span>: <span class="t">string</span>;          <span class="c">// ISO-4217: 'RUB', 'USD'</span>
   <span class="p">billingCycle</span>: <span class="t">IBillingCycle</span>;
   <span class="p">anchorDate</span>: <span class="t">string</span>;        <span class="c">// известная дата списания → считаем график</span>
   <span class="p">status</span>: <span class="t">TSubStatus</span>;
-  <span class="p">cardId</span>?: <span class="t">IBankCard</span>[<span class="s">'id'</span>]; <span class="c">// ← СВЯЗЬ С КАРТОЙ (наш ров)</span>
+  <span class="p">paymentMethod</span>: <span class="t">IPaymentMethod</span>; <span class="c">// ← ОБЯЗАТЕЛЬНО: карта | SMS | нал | кошелёк | др.</span>
   <span class="p">manageUrl</span>?: <span class="t">string</span>;        <span class="c">// внешняя ссылка на управление</span>
   <span class="p">reminderDaysBefore</span>?: <span class="t">number</span>;
   <span class="p">trialEndsAt</span>?: <span class="t">string</span>;
@@ -2031,6 +2032,8 @@
   <span class="p">notes</span>?: <span class="t">string</span>;
   <span class="p">color</span>?: <span class="t">string</span>;             <span class="c">// переопределение цвета</span>
 }
+<span class="c">// IPaymentMethod = { type:'card'|'sms'|'cash'|'wallet'|'other', cardId?, label? }</span>
+<span class="c">// serviceId / categoryId → пользовательские справочники (пусты по умолчанию).</span>
 <span class="c">// Производные (nextChargeDate, monthlyEquivalent, daysLeft) —</span>
 <span class="c">// НЕ храним, считаем чистыми функциями в shared/lib/subscriptions.</span></pre>
       </div>
@@ -2046,6 +2049,7 @@
           <div class="layer__h"><span class="lt">app</span> <b>Оболочка и навигация</b> <span class="ln">точка входа</span></div>
           <div class="layer__b">
             <span class="mod touch">app-content · роутинг табов</span>
+            <span class="mod touch">service worker · injectManifest (push / periodicsync)</span>
             <span class="mod new">widgets/app-nav (Карты · Подписки · Обзор)</span>
           </div>
         </div>
@@ -2072,17 +2076,19 @@
           <div class="layer__h"><span class="lt">features</span> <b>Функциональность</b> <span class="ln">формы, стор, связи</span></div>
           <div class="layer__b">
             <span class="mod new">subscription-management (стор + view)</span>
-            <span class="mod new">subscription-form (+ card/service/category select)</span>
+            <span class="mod new">subscription-form (способ списания + сервис/категория)</span>
+            <span class="mod new">services-management · categories-management</span>
+            <span class="mod new">notifications (push + баннер)</span>
             <span class="mod new">card-subscriptions-link (карта → подписки)</span>
-            <span class="mod reuse">card-management (эталон стора)</span>
+            <span class="mod reuse">card-management · owners/card-types (эталоны)</span>
             <span class="mod reuse">app-lock (cryptoKey)</span>
           </div>
         </div>
         <div class="layer">
           <div class="layer__h"><span class="lt">entities</span> <b>Бизнес-сущности</b> <span class="ln">модель и UI-примитивы</span></div>
           <div class="layer__b">
-            <span class="mod new">subscription (типы, row, logo, badges)</span>
-            <span class="mod new">subscription-category</span>
+            <span class="mod new">subscription (типы, row, logo, badges, method-chip)</span>
+            <span class="mod new">service · subscription-category (справочники)</span>
             <span class="mod reuse">bank-card (для связи и переходов)</span>
           </div>
         </div>
@@ -2091,9 +2097,9 @@
           <div class="layer__b">
             <span class="mod reuse">crypto · encryptRecordFields&lt;T&gt;</span>
             <span class="mod reuse">indexeddb · executeIndexedDBOperation</span>
-            <span class="mod touch">indexeddb · +store 'subscriptions' (v7)</span>
+            <span class="mod touch">indexeddb · +3 стора (subscriptions/services/categories, v7)</span>
             <span class="mod new">lib/subscriptions · schedule / normalize (чистые + тесты)</span>
-            <span class="mod new">data/services-config · data/categories-config</span>
+            <span class="mod new">lib/notifications · Notification Triggers + periodic sync</span>
             <span class="mod reuse">ui · Modal, Select, FabButton, FormField…</span>
           </div>
         </div>
@@ -2105,8 +2111,8 @@
           <p>В <code>at-rest.ts</code> уже есть генерик <code>encryptRecordFields&lt;T&gt;</code> / <code>decryptRecordFields&lt;T&gt;</code> — им пользуются owners. Для подписок повторяем один-в-один: новый стор, те же AES-GCM записи.</p>
         </div>
         <div class="card">
-          <h3>IndexedDB — +1 стор</h3>
-          <p><code>onupgradeneeded</code> уже дропает и пересоздаёт сторы. Добавляем <code>subscriptions</code>, поднимаем версию 6→7. Никаких миграций — чистый лист, как вы просили.</p>
+          <h3>IndexedDB — +3 стора</h3>
+          <p><code>onupgradeneeded</code> уже дропает и пересоздаёт сторы. Добавляем <code>subscriptions</code>, <code>services</code>, <code>subscription-categories</code>, поднимаем версию 6→7. Никаких миграций — чистый лист.</p>
         </div>
         <div class="card">
           <h3>Sort / Filter / Group — даром</h3>
@@ -2121,8 +2127,8 @@
     <div class="wrap">
       <div class="sec-head"><span class="sec-num">05</span><h2 class="sec-title">Поэтапный план реализации</h2></div>
       <p class="sec-sub">
-        Шесть этапов, каждый — самостоятельный вертикальный срез с рабочим результатом и критерием приёмки.
-        Порядок снимает риски: сперва структурный сдвиг (навигация), потом данные, потом UI, и только затем «умные» фичи.
+        Семь этапов, каждый — самостоятельный вертикальный срез с рабочим результатом и критерием приёмки.
+        Порядок снимает риски: сперва структурный сдвиг (навигация), потом данные и справочники, потом UI, связи, push и аналитика.
         Детальная разбивка по файлам — в <code>docs/subscriptions/README.md</code>.
       </p>
 
@@ -2149,11 +2155,11 @@
             <h3>Модель, хранилище, движок расписаний</h3>
             <p>Невидимый, но фундаментальный слой. Всё покрыто тестами (планка проекта &gt;90%).</p>
             <ul class="tasklist">
-              <li>Сущность <code>subscription</code>: типы <code>ISubscription</code>, <code>IBillingCycle</code></li>
-              <li>IndexedDB: стор <code>subscriptions</code>, версия 7, CRUD поверх генерик-шифрования</li>
-              <li><code>subscriptions-store</code> (Zustand) — зеркало <code>cards-store</code></li>
+              <li>Сущности <code>subscription</code>, <code>service</code>, <code>subscription-category</code>; типы <code>ISubscription</code>, <code>IPaymentMethod</code>, <code>IBillingCycle</code></li>
+              <li>IndexedDB: 3 стора, версия 7, CRUD поверх генерик-шифрования</li>
+              <li><code>subscriptions-store</code> + сторы справочников (Zustand) — зеркало <code>cards-store</code> / owners</li>
               <li><b>Чистые функции</b> <code>lib/subscriptions</code>: <code>getNextChargeDate</code>, <code>getUpcomingCharges</code>, <code>toMonthly</code>, <code>toYearly</code></li>
-              <li>Конфиги <code>services-config</code> + <code>categories-config</code> + ассеты логотипов (по образцу banks-config)</li>
+              <li>Справочники <b>сервисов</b> и <b>категорий</b> — свои сторы (зеркало owners/card-types), пустые по умолчанию</li>
             </ul>
             <div class="accept"><b>Готово, когда</b> &nbsp;подписку можно создать/прочитать/обновить/удалить из консоли, даты списаний считаются верно, юнит-тесты зелёные.</div>
           </div>
@@ -2166,8 +2172,9 @@
             <p>Первый осязаемый для пользователя результат: подписками можно управлять целиком из UI.</p>
             <ul class="tasklist">
               <li><code>subscription-form</code> (модалка add/edit/delete) на паттернах <code>card-form</code></li>
-              <li>Поля-селекты: <b>карта</b> (из сохранённых), сервис, категория, период, валюта</li>
-              <li><code>subscription-list</code> + богатая строка <code>subscription-row</code> (лого, маска карты, статус, отсчёт)</li>
+              <li>Поле <b>«Способ списания»</b> (обязательно): карта / SMS / наличные / кошелёк / другое</li>
+              <li>Селекты сервиса и категории <b>с созданием на лету</b> (пустой справочник)</li>
+              <li><code>subscription-list</code> + строка <code>subscription-row</code> (лого, чип способа списания, статус, отсчёт)</li>
               <li>Пустое состояние + FAB «Добавить подписку»</li>
             </ul>
             <div class="accept"><b>Готово, когда</b> &nbsp;пользователь добавляет, редактирует и удаляет подписку, привязывает карту, видит её в списке.</div>
@@ -2185,22 +2192,22 @@
               <li><code>card-subscriptions-link</code>: блок «Подписки на этой карте» + сумма на карту</li>
               <li>Баннер миграции «Перевыпустили карту? Обновите подписки»</li>
             </ul>
-            <div class="accept"><b>Готово, когда</b> &nbsp;из подписки открывается карта и наоборот; на карте виден список её подписок и сумма.</div>
+            <div class="accept"><b>Готово, когда</b> &nbsp;из подписки со способом «карта» открывается карта и наоборот; на карте виден список её подписок и сумма.</div>
           </div>
         </div>
 
         <div class="phase">
-          <div class="phase__id"><div class="p">ЭТАП 4</div><div class="goal">Ближайшие списания</div></div>
+          <div class="phase__id"><div class="p">ЭТАП 4</div><div class="goal">Реальные уведомления</div></div>
           <div>
-            <h3>Уведомление при входе &amp; таб-бейдж</h3>
-            <p>Ровно то, что вы просили: сводка ближайших списаний на входе. Для offline-PWA v1 — внутриэкранная (без сервера).</p>
+            <h3>Настоящие push + сводка на входе</h3>
+            <p>Локально запланированные системные уведомления (без сервера) плюс универсальный внутриэкранный баннер как база.</p>
             <ul class="tasklist">
-              <li>Виджет <code>upcoming-charges</code> — баннер вверху главной, считается на каждом открытии</li>
-              <li>Красный бейдж-счётчик на табе «Подписки» (как <code>fab-button__indicator</code>)</li>
-              <li>Представление «Календарь / скоро» с цветными метками сервисов</li>
-              <li>Обработка пробных периодов: «успеть отменить до …»</li>
+              <li><code>features/notifications</code>: запрос разрешения (не на старте), планирование через <b>Notification Triggers API</b> + <b>Periodic Background Sync</b></li>
+              <li>Кастомный SW (<code>vite-plugin-pwa</code> · injectManifest): <code>notificationclick</code>, <code>periodicsync</code></li>
+              <li>Баннер <code>upcoming-charges</code> + красный бейдж на табе (как <code>fab-button__indicator</code>)</li>
+              <li>«Календарь / скоро» и пробные периоды «успеть отменить до …»</li>
             </ul>
-            <div class="accept"><b>Готово, когда</b> &nbsp;при открытии видна сводка списаний за N дней с корректными суммами и датами.</div>
+            <div class="accept"><b>Готово, когда</b> &nbsp;где поддерживается — приходит системный push к дате списания; везде работают баннер и бейдж; клик открывает подписку.</div>
           </div>
         </div>
 
@@ -2210,27 +2217,27 @@
             <h3>Сортировка, фильтры, обзор трат</h3>
             <p>Обобщаем существующую инфраструктуру вида карт на подписки и добавляем экран «Обзор».</p>
             <ul class="tasklist">
-              <li>Sort / filter / group для подписок (переиспускаем <code>card-view</code>-паттерн)</li>
-              <li>Группировка по категории и <b>по карте</b></li>
-              <li><code>overview-page</code>: итоги месяц/год по валютам, траты по категориям, календарь</li>
-              <li>Экспорт/импорт расширяем на подписки (в существующий формат)</li>
+              <li>Sort / filter / group для подписок (переиспользуем <code>card-view</code>-паттерн)</li>
+              <li>Группировка по категории, <b>по карте</b> и по способу списания</li>
+              <li><code>overview-page</code>: итоги месяц/год <b>раздельно по валютам</b>, траты по категориям, календарь</li>
+              <li>Экспорт/импорт расширяем на подписки и справочники</li>
             </ul>
             <div class="accept"><b>Готово, когда</b> &nbsp;список сортируется/фильтруется/группируется; обзор показывает верные итоги; бэкап включает подписки.</div>
           </div>
         </div>
 
         <div class="phase">
-          <div class="phase__id"><div class="p">ЭТАП 6</div><div class="goal">Полировка &amp; расширения</div></div>
+          <div class="phase__id"><div class="p">ЭТАП 6</div><div class="goal">Полировка</div></div>
           <div>
-            <h3>Реальные напоминания и приятные мелочи</h3>
-            <p>Опциональный слой, который выводит продукт за рамки MVP там, где позволяет платформа.</p>
+            <h3>Продакшн-качество и приятные мелочи</h3>
+            <p>Доводим до релиза уже согласованный объём.</p>
             <ul class="tasklist">
-              <li>OS-напоминания через Notifications API + Service Worker Periodic Sync (где поддерживается)</li>
-              <li>Конвертация валют по локальной обновляемой таблице курсов (без сети по умолчанию)</li>
-              <li>История цен и индикатор подорожания</li>
-              <li>DnD-сортировка подписок (переиспользуем <code>@dnd-kit</code>), i18n-копирайт, покрытие тестами &gt;90%</li>
+              <li>История цен и индикатор подорожания ↑, подсказка выгоды годовой оплаты</li>
+              <li>Загрузка/замена логотипа сервиса (data-URI), редактирование справочников</li>
+              <li>DnD-сортировка подписок (переиспользуем <code>@dnd-kit</code>)</li>
+              <li>i18n-копирайт, доступность, покрытие тестами &gt;90%</li>
             </ul>
-            <div class="accept"><b>Готово, когда</b> &nbsp;включены выбранные расширения без регрессов; сборка, линт, тесты зелёные.</div>
+            <div class="accept"><b>Готово, когда</b> &nbsp;включены расширения без регрессов; сборка, линт, тесты зелёные.</div>
           </div>
         </div>
 
@@ -2241,16 +2248,16 @@
   <!-- ═══════════ 6. OPEN QUESTIONS ═══════════ -->
   <section class="block" id="questions">
     <div class="wrap">
-      <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">Открытые вопросы — с моими рекомендациями</h2></div>
-      <p class="sec-sub">Решения, которые стоит подтвердить до старта. По каждому — дефолт, с которым можно идти уже сейчас.</p>
+      <div class="sec-head"><span class="sec-num">06</span><h2 class="sec-title">Подтверждённые решения</h2></div>
+      <p class="sec-sub">Продуктовые развилки согласованы — идём по ним. Ниже финальные решения, уже зашитые в модель данных и план.</p>
 
       <div class="grid cols-2">
-        <div class="qa"><div class="q">Навигация: таб-бар или что-то другое?</div><div class="a"><b>Рекомендую нижний таб-бар</b> (Карты · Подписки · Обзор): нативно для установленного PWA, масштабируется, на десктопе — боковой рельс.</div></div>
-        <div class="qa"><div class="q">Напоминания: реальные push или внутри приложения?</div><div class="a"><b>v1 — внутри приложения</b> (сводка на входе). Настоящие OS-уведомления в offline-PWA ненадёжны кросс-браузерно — выносим в Этап 6.</div></div>
-        <div class="qa"><div class="q">Мультивалютность: конвертировать или нет?</div><div class="a"><b>v1 — раздельные итоги по валютам</b> (offline, без курсов). Конвертация по локальной таблице — опция Этапа 6.</div></div>
-        <div class="qa"><div class="q">Категории: фиксированный набор или справочник?</div><div class="a"><b>v1 — встроенный набор</b> с иконками/цветами (Развлечения, Музыка, Видео, Облако, Игры, Продуктивность…). Пользовательские — позже, по паттерну owners.</div></div>
-        <div class="qa"><div class="q">Каталог сервисов: сколько логотипов в v1?</div><div class="a"><b>~15–20 популярных</b> (RU + глобальные), остальное — цветная монограмма-фолбэк, как для банков без логотипа.</div></div>
-        <div class="qa"><div class="q">Подписка без карты — разрешаем?</div><div class="a"><b>Да, карта опциональна.</b> Наличная/чужая подписка тоже учитывается; связь с картой — бонус, а не обязанность.</div></div>
+        <div class="qa"><div class="q">Навигация</div><div class="a"><b>Нижний таб-бар</b> (Карты · Подписки · Обзор): нативно для установленного PWA, на десктопе — боковой рельс.</div></div>
+        <div class="qa"><div class="q">Напоминания</div><div class="a"><b>Реальные push</b> — локально запланированные уведомления (Notification Triggers + Periodic Sync), без сервера; баннер и бейдж — универсальная база.</div></div>
+        <div class="qa"><div class="q">Мультивалютность</div><div class="a"><b>Да, без конвертации.</b> Итоги раздельно по валютам. Локальная таблица курсов отклонена (устаревает), внешних запросов не делаем.</div></div>
+        <div class="qa"><div class="q">Категории</div><div class="a"><b>Пользовательский справочник</b> (паттерн owners/card-types), изначально пустой, пополняется на лету.</div></div>
+        <div class="qa"><div class="q">Каталог сервисов</div><div class="a"><b>Пользовательский справочник</b>, наполняется вручную, изначально пустой. Логотип — загружаемое изображение, фолбэк — монограмма.</div></div>
+        <div class="qa"><div class="q">Способ списания</div><div class="a"><b>Обязателен.</b> Карта опциональна; варианты: карта · SMS/моб. платёж · наличные · кошелёк · другое.</div></div>
       </div>
     </div>
   </section>
