@@ -5,7 +5,6 @@ import { Button, FormField } from '@shared/ui';
 import { ENTITY_FORM_MODAL_BLOCK } from './constants';
 import './entity-form-modal.less';
 
-// Общий набор текстов формы «сущность с именем» (тип карты, владелец и т.п.)
 export interface IEntityFormModalTexts {
   fieldId: string;
   fieldName: string;

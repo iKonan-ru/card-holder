@@ -22,6 +22,7 @@
     font-size: @font-size-sm;
     cursor: pointer;
     transition: @transition-fast;
+    white-space: nowrap;
 
     &:hover:not(:disabled) {
       background: var(--bg-tertiary);
@@ -30,6 +31,7 @@
 
     &_selected {
       background: var(--accent);
+      color: var(--bg-tertiary);
     }
 
     &:disabled {

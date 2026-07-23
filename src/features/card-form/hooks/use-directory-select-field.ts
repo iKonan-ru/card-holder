@@ -32,8 +32,6 @@ export interface IUseDirectorySelectFieldResult {
   handleOpenCreate: Procedure;
 }
 
-// Общая CRUD-логика полей выбора «справочника» (тип карты, владелец):
-// список опций, создание/редактирование/удаление через модалку, привязка к полю формы.
 export const useDirectorySelectField = <T extends { id: string }>({
   value,
   fieldName,
@@ -73,9 +71,6 @@ export const useDirectorySelectField = <T extends { id: string }>({
 
   const handleCreate = useCallback(
     async (name: string) => {
-      // Не создаём дубль по имени (без учёта регистра) - вместо ошибки
-      // молча выбираем уже существующий вариант, как будто пользователь
-      // выбрал его из списка сам.
       const existingItem = items.find(
         (item) => getLabel(item).trim().toLowerCase() === name.toLowerCase(),
       );

@@ -1,5 +1,7 @@
 import { useCallback, useState, type ReactNode } from 'react';
 import type { IBankCard } from '@entities/bank-card';
+import type { IOwner } from '@entities/card-owner';
+import type { ICardType } from '@entities/card-type';
 import {
   createBlobFromPayload,
   downloadFile,
@@ -16,12 +18,14 @@ import {
 import { PasswordModal } from '../ui';
 import {
   handleError,
-  prepareCardsForExport,
+  prepareExportData,
   validateCardsForExport,
 } from '../utils';
 
 interface IUseExportCardsParams {
   cards: IBankCard[];
+  cardTypes: ICardType[];
+  owners: IOwner[];
 }
 
 interface IUseExportCardsResult {
@@ -32,7 +36,7 @@ interface IUseExportCardsResult {
 export const useExportCards = (
   params: IUseExportCardsParams,
 ): IUseExportCardsResult => {
-  const { cards } = params;
+  const { cards, cardTypes, owners } = params;
   const [isExporting, setIsExporting] = useState(false);
   const { openModal } = useModalContext();
 
@@ -47,12 +51,9 @@ export const useExportCards = (
 
         validateCardsForExport(cards);
 
-        const cardsJson = prepareCardsForExport(cards);
-
-        const encryptedPayload = await encryptData(cardsJson, password);
-
+        const exportDataJson = prepareExportData({ cards, cardTypes, owners });
+        const encryptedPayload = await encryptData(exportDataJson, password);
         const blob = createBlobFromPayload(encryptedPayload);
-
         const fileName = generateExportFileName();
 
         downloadFile(blob, fileName);
@@ -65,7 +66,7 @@ export const useExportCards = (
         setIsExporting(false);
       }
     },
-    [cards],
+    [cards, cardTypes, owners],
   );
 
   const exportCards = useCallback(async () => {

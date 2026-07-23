@@ -18,7 +18,6 @@ export const LOCK_SCREEN_ERROR_MISMATCH = 'Пароли не совпадают'
 export const LOCK_SCREEN_ERROR_TOO_SIMPLE =
   'Пароль должен содержать хотя бы одну цифру';
 
-/** Проверяет наличие хотя бы одной цифры в пароле */
 export const PASSWORD_DIGIT_PATTERN = /\d/;
 
 export const LOCK_SCREEN_TITLE_UNLOCK = 'Введите мастер-пароль';

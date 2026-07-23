@@ -6,9 +6,11 @@ import {
   deleteCardType as deleteCardTypeFromDb,
   ERROR_FAILED_TO_ADD_CARD_TYPE,
   ERROR_FAILED_TO_DELETE_CARD_TYPE,
+  ERROR_FAILED_TO_IMPORT_CARD_TYPES,
   ERROR_FAILED_TO_UPDATE_CARD_TYPE,
   getAllCardTypes,
   logError,
+  putCardTypes as putCardTypesInDb,
   updateCardType as updateCardTypeInDb,
 } from '@shared/lib';
 import {
@@ -100,6 +102,20 @@ export const useCardTypesManagementStore: UseBoundStore<
       operation: () => deleteCardTypeFromDb(id),
       errorMessage: ERROR_FAILED_TO_DELETE_CARD_TYPE,
       context: 'CardTypesManagementStore.deleteCardType',
+      cryptoKey,
+      onSuccess: (cardTypes) => {
+        set({ cardTypes });
+      },
+    });
+  },
+
+  importCardTypes: async (cardTypes: ICardType[]) => {
+    const cryptoKey = getCryptoKey();
+
+    return executeCardTypeOperation({
+      operation: () => putCardTypesInDb(cardTypes, cryptoKey),
+      errorMessage: ERROR_FAILED_TO_IMPORT_CARD_TYPES,
+      context: 'CardTypesManagementStore.importCardTypes',
       cryptoKey,
       onSuccess: (cardTypes) => {
         set({ cardTypes });

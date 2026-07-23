@@ -20,7 +20,7 @@
     align-items: center;
     justify-content: space-between;
     gap: @spacing-sm;
-    padding: @border-radius-card;
+    padding: @border-radius @border-radius-card;
     border-radius: @spacing-sm;
     border: 1px solid var(--border-color);
     background: var(--bg-secondary);
@@ -102,7 +102,7 @@
     justify-content: space-between;
     gap: @spacing-sm;
     padding: @spacing-sm @spacing-md;
-    border-radius: @border-radius-sm;
+    border-radius: @spacing-xs;
     color: var(--text-primary);
     cursor: pointer;
     transition: @transition-fast;

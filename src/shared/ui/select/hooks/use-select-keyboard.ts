@@ -30,9 +30,6 @@ export interface IUseSelectKeyboardResult {
   handleListRef: (node: HTMLUListElement | null) => void;
 }
 
-// Навигация по списку с клавиатуры: открытие стрелками/Enter на триггере,
-// перемещение активного пункта и выбор/закрытие внутри списка, фокус и
-// прокрутка к выбранному пункту при открытии.
 export const useSelectKeyboard = ({
   isOpen,
   options,

@@ -32,13 +32,9 @@
 
   &__title {
     flex: 1;
+    color: var(--text-secondary);
   }
 
-  // Та же техника, что и у сворачивания сгруппированных карт
-  // (card-list-group-section.less): контент не монтируется/размонтируется,
-  // высота анимируется через grid-template-rows (0fr свёрнуто, 1fr
-  // развёрнуто), отступ от заголовка - внутри content-inner, а не снаружи
-  // gap/margin, иначе он не участвовал бы в анимации схлопывания.
   &__content {
     display: grid;
     grid-template-rows: 0fr;

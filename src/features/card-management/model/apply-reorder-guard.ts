@@ -9,9 +9,6 @@ interface IReorderGuardParams {
   filters: ICardFilters;
 }
 
-// Сбрасывает режим перестановки карт (живёт в cards-store), если новое
-// состояние отображения (sort/group/filter, живёт в card-view-store) больше
-// его не допускает.
 export const resetReorderModeIfNeeded = (next: IReorderGuardParams): void => {
   const { isReorderMode } = useCardsStore.getState();
 

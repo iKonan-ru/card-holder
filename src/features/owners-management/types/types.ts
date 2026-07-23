@@ -10,4 +10,5 @@ export interface IOwnersManagementActions {
   addOwner: (realName: string) => Promise<IOwner>;
   updateOwner: (owner: IOwner) => Promise<void>;
   deleteOwner: (id: string) => Promise<void>;
+  importOwners: (owners: IOwner[]) => Promise<void>;
 }

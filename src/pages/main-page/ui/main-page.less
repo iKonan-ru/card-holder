@@ -1,6 +1,8 @@
 @import '@shared/assets/styles/variables.less';
 
 .main-page {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   background: var(--bg-primary);
   color: var(--text-primary);
@@ -10,11 +12,14 @@
     display: flex;
     flex-direction: column;
     gap: @spacing-md;
-    margin-left: auto;
-    margin-right: auto;
     padding: @spacing-lg;
     transition: @transition;
     will-change: padding-left;
+    flex-grow: 1;
+  }
+
+  &__card-list {
+    flex-grow: 1;
   }
 
   &__action-buttons {
@@ -34,17 +39,7 @@
 
   &_panel-open &__content {
     @media (min-width: @tablet) {
-      // Чтобы сетка карт потеряла ровно одну колонку без изменения ширины
-      // остальных, нужно убрать место под колонку И под зазор между
-      // колонками (gap сетки = @spacing-lg на этих же ширинах экрана) -
-      // иначе оставшиеся колонки чуть растягиваются лишним пространством.
       padding-left: calc(@spacing-lg + var(--card-column-width));
-    }
-  }
-
-  &_panel-open &__action-buttons {
-    @media (min-width: @tablet) {
-      //left: calc(@spacing-xl + var(--card-column-width));
     }
   }
 }

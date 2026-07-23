@@ -20,9 +20,4 @@ export const CARD_LIST_MODIFIERS_EMPTY: string[] = [];
 
 export const CARD_LIST_FILTER_EMPTY_MESSAGE = 'Нет карт по заданным фильтрам';
 
-/**
- * Имя глобальной CSS-переменной с реальной отрисованной шириной одной
- * колонки сетки карт - пишется на document.documentElement, читается
- * панелью настроек, чтобы её ширина точно совпадала с колонкой
- */
 export const CARD_COLUMN_WIDTH_CSS_VAR = '--card-column-width';

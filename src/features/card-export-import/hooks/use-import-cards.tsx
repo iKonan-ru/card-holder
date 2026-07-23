@@ -1,5 +1,7 @@
 import { useCallback, useState, type ReactNode } from 'react';
 import type { IBankCard } from '@entities/bank-card';
+import type { IOwner } from '@entities/card-owner';
+import type { ICardType } from '@entities/card-type';
 import {
   checkIsFileSelectionCancelled,
   decryptData,
@@ -22,14 +24,20 @@ import {
   createImportSuccessMessage,
   handleError,
   mergeCards,
-  parseDecryptedCards,
+  mergeCardTypes,
+  mergeOwners,
+  parseImportedData,
   parseImportedFile,
   validateImportedPayload,
 } from '../utils';
 
 interface IUseImportCardsParams {
   cards: IBankCard[];
+  cardTypes: ICardType[];
+  owners: IOwner[];
   onImport: (cards: IBankCard[]) => Promise<void>;
+  onImportCardTypes: (cardTypes: ICardType[]) => Promise<void>;
+  onImportOwners: (owners: IOwner[]) => Promise<void>;
   onUnflipCards: Procedure;
 }
 
@@ -41,7 +49,15 @@ interface IUseImportCardsResult {
 export const useImportCards = (
   params: IUseImportCardsParams,
 ): IUseImportCardsResult => {
-  const { cards, onImport, onUnflipCards } = params;
+  const {
+    cards,
+    cardTypes,
+    owners,
+    onImport,
+    onImportCardTypes,
+    onImportOwners,
+    onUnflipCards,
+  } = params;
   const [isImporting, setIsImporting] = useState(false);
   const { openModal } = useModalContext();
 
@@ -69,14 +85,23 @@ export const useImportCards = (
             return decryptData(payload, password);
           });
 
-          const importedCards = parseDecryptedCards(decryptedData);
+          const importedData = parseImportedData(decryptedData);
 
           const { cards: mergedCards, stats } = mergeCards(
             cards,
-            importedCards,
+            importedData.cards,
           );
+          const mergedCardTypes = mergeCardTypes(
+            cardTypes,
+            importedData.cardTypes,
+          );
+          const mergedOwners = mergeOwners(owners, importedData.owners);
 
-          await onImport(mergedCards);
+          await Promise.all([
+            onImport(mergedCards),
+            onImportCardTypes(mergedCardTypes),
+            onImportOwners(mergedOwners),
+          ]);
           onUnflipCards();
 
           closePasswordModal();
@@ -122,7 +147,17 @@ export const useImportCards = (
 
       handleError(error, FALLBACK_ERROR_IMPORT);
     }
-  }, [cards, onImport, onUnflipCards, openModal, isImporting]);
+  }, [
+    cards,
+    cardTypes,
+    owners,
+    onImport,
+    onImportCardTypes,
+    onImportOwners,
+    onUnflipCards,
+    openModal,
+    isImporting,
+  ]);
 
   return {
     isImporting,

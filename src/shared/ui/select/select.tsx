@@ -73,8 +73,6 @@ export const Select: FC<ISelectProps> = ({
     [onChange, closeDropdown],
   );
 
-  // Escape дополнительно возвращает фокус на триггер - в отличие от закрытия
-  // по клику вне списка или по скроллу.
   const handleEscapeClose = useCallback(() => {
     closeDropdown();
     triggerRef.current?.focus();

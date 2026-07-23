@@ -6,9 +6,11 @@ import {
   deleteOwner as deleteOwnerFromDb,
   ERROR_FAILED_TO_ADD_OWNER,
   ERROR_FAILED_TO_DELETE_OWNER,
+  ERROR_FAILED_TO_IMPORT_OWNERS,
   ERROR_FAILED_TO_UPDATE_OWNER,
   getAllOwners,
   logError,
+  putOwners as putOwnersInDb,
   updateOwner as updateOwnerInDb,
 } from '@shared/lib';
 import {
@@ -97,6 +99,20 @@ export const useOwnersManagementStore: UseBoundStore<
       operation: () => deleteOwnerFromDb(id),
       errorMessage: ERROR_FAILED_TO_DELETE_OWNER,
       context: 'OwnersManagementStore.deleteOwner',
+      cryptoKey,
+      onSuccess: (owners) => {
+        set({ owners });
+      },
+    });
+  },
+
+  importOwners: async (owners: IOwner[]) => {
+    const cryptoKey = getCryptoKey();
+
+    return executeOwnerOperation({
+      operation: () => putOwnersInDb(owners, cryptoKey),
+      errorMessage: ERROR_FAILED_TO_IMPORT_OWNERS,
+      context: 'OwnersManagementStore.importOwners',
       cryptoKey,
       onSuccess: (owners) => {
         set({ owners });

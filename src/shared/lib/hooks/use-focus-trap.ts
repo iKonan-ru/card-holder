@@ -8,6 +8,9 @@ interface IUseFocusTrapParams {
 const FOCUSABLE_ELEMENTS_SELECTOR =
   'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
+const FORM_FIELD_ELEMENTS_SELECTOR =
+  'input:not([type="hidden"]), select, textarea';
+
 export const useFocusTrap = ({
   contentRef,
   isTopModal,
@@ -28,7 +31,12 @@ export const useFocusTrap = ({
     const firstElement = focusableElements[0];
     const lastElement = focusableElements[focusableElements.length - 1];
 
-    firstElement.focus();
+    const formFieldElements = contentRef.current.querySelectorAll<HTMLElement>(
+      FORM_FIELD_ELEMENTS_SELECTOR,
+    );
+    const initialFocusElement = formFieldElements[0] ?? firstElement;
+
+    initialFocusElement.focus();
 
     const handleTabKey = (event: KeyboardEvent) => {
       if (event.key !== 'Tab') {

@@ -136,7 +136,7 @@ describe('useClearData', () => {
       try {
         await modalContent.props.onConfirm();
       } catch {
-        // игнорируем
+        //
       }
     });
 

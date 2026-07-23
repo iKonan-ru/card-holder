@@ -69,9 +69,6 @@ export const CardSettingsPanel: FC = () => {
       }
     };
 
-    // На широких экранах панель встроена сбоку и не перекрывает контент -
-    // скролл страницы должен работать как обычно. Блокировать его нужно
-    // только когда панель ведёт себя как оверлей (узкий экран).
     const narrowScreenQuery = window.matchMedia(
       `(max-width: ${TABLET_BREAKPOINT_PX - 1}px)`,
     );

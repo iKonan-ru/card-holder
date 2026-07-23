@@ -10,4 +10,5 @@ export interface ICardTypesManagementActions {
   addCardType: (name: string) => Promise<ICardType>;
   updateCardType: (cardType: ICardType) => Promise<void>;
   deleteCardType: (id: string) => Promise<void>;
+  importCardTypes: (cardTypes: ICardType[]) => Promise<void>;
 }

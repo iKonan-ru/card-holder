@@ -28,8 +28,6 @@ export interface IUseSelectDropdownResult {
   handleTriggerClick: Procedure;
 }
 
-// Открытие/закрытие выпадающего списка и его позиционирование относительно
-// триггера (через getBoundingClientRect), плюс закрытие по клику вне/скроллу.
 export const useSelectDropdown = ({
   disabled,
   triggerRef,
@@ -95,8 +93,6 @@ export const useSelectDropdown = ({
       closeDropdown();
     };
 
-    // При изменении размера окна триггер может сместиться (например, из-за
-    // смены раскладки страницы) - пересчитываем позицию, а не закрываем список.
     const handleResize = () => {
       const triggerElement = triggerRef.current;
 
@@ -109,8 +105,6 @@ export const useSelectDropdown = ({
       setPosition({ top: rect.bottom, left: rect.left, width: rect.width });
     };
 
-    // Фаза перехвата: Modal останавливает всплытие mousedown на bubble-фазе,
-    // из-за чего этот обработчик иначе не увидел бы клики внутри него.
     document.addEventListener('mousedown', handlePointerDown, true);
     window.addEventListener('scroll', handleScroll, true);
     window.addEventListener('resize', handleResize);

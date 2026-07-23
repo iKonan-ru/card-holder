@@ -11,8 +11,6 @@ import {
   getOwnerName,
 } from './resolve-card-facet';
 
-// Единый реестр «фасетов» (Банк / Платёжная система / Тип / Владелец) -
-// источник правды для сортировки, группировки, фильтрации и опций тулбара.
 export const FACET_IDS = [
   SortKey.Bank,
   SortKey.PaymentSystem,
@@ -22,11 +20,6 @@ export const FACET_IDS = [
 
 export type TFacetId = (typeof FACET_IDS)[number];
 
-/**
- * Сентинел-идентификатор карт без значения фасета - используется и в
- * группировке (бакет "без банка/типа/..."), и в фильтрации (чекбокс
- * "без типа/владельца")
- */
 export const UNASSIGNED_FACET_ID = '__unassigned__';
 
 export interface IFacetContext {
@@ -40,11 +33,8 @@ export interface IFacetDescriptor {
   optionLabel: string;
   unassignedLabel: string;
   filterKey: keyof ICardFilters;
-  // Значение для сортировки/группировки
   resolveValue: (card: IBankCard, ctx: IFacetContext) => string | null;
-  // Идентификатор для сопоставления с выбранными значениями фильтра
   resolveFilterId: (card: IBankCard) => string | null;
-  // Подпись для отображения в списке опций фильтра
   resolveFilterLabel: (card: IBankCard, ctx: IFacetContext) => string | null;
 }
 
@@ -82,8 +72,6 @@ export const FACETS: Record<TFacetId, IFacetDescriptor> = {
     unassignedLabel: 'Без типа',
     filterKey: 'typeIds',
     resolveValue: (card, ctx) => getCardTypeName(card.typeId, ctx.cardTypes),
-    // typeId сохраняется формой как '' при отсутствии выбора (не undefined) -
-    // трактуем пустую строку так же, как и отсутствие значения
     resolveFilterId: (card) => card.typeId || null,
     resolveFilterLabel: (card, ctx) =>
       getCardTypeName(card.typeId, ctx.cardTypes),
@@ -95,8 +83,6 @@ export const FACETS: Record<TFacetId, IFacetDescriptor> = {
     unassignedLabel: 'Без владельца',
     filterKey: 'ownerIds',
     resolveValue: (card, ctx) => getOwnerName(card.ownerId, ctx.owners),
-    // ownerId сохраняется формой как '' при отсутствии выбора (не undefined) -
-    // трактуем пустую строку так же, как и отсутствие значения
     resolveFilterId: (card) => card.ownerId || null,
     resolveFilterLabel: (card, ctx) => getOwnerName(card.ownerId, ctx.owners),
   },

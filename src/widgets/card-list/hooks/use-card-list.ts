@@ -83,10 +83,6 @@ export const useCardList = (): IUseCardListResult => {
 
   const handleDragEnd = useCallback(
     (reorderedCards: IBankCard[]) => {
-      // Присваиваем свежий order сразу, синхронно с тем, что всё равно
-      // вычислит updateCardsOrder - иначе selectVisibleCards пересортирует
-      // список по устаревшему order и визуально откатит его до завершения
-      // асинхронной записи, ломая анимацию отпускания карты в DragOverlay.
       const cardsWithFreshOrder = reorderedCards.map((card, index) => ({
         ...card,
         order: index,

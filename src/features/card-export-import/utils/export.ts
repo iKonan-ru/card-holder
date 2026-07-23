@@ -1,5 +1,6 @@
 import type { IBankCard } from '@entities/bank-card';
 import { ERROR_NO_CARDS_TO_EXPORT } from '../constants';
+import type { IExportData } from '../types';
 
 export const validateCardsForExport = (cards: IBankCard[]): void => {
   const hasCards = cards.length > 0;
@@ -9,6 +10,6 @@ export const validateCardsForExport = (cards: IBankCard[]): void => {
   }
 };
 
-export const prepareCardsForExport = (cards: IBankCard[]): string => {
-  return JSON.stringify(cards);
+export const prepareExportData = (data: IExportData): string => {
+  return JSON.stringify(data);
 };

@@ -1,6 +1,8 @@
 import { type FC } from 'react';
 import { FiDownload } from 'react-icons/fi';
 import { useCardsStore } from '@features/card-management';
+import { useCardTypesManagementStore } from '@features/card-types-management';
+import { useOwnersManagementStore } from '@features/owners-management';
 import { FabButton } from '@shared/ui';
 import { IMPORT_BUTTON_ARIA_LABEL } from '../../constants';
 import { useImportCards } from '../../hooks';
@@ -10,9 +12,20 @@ export const ImportButton: FC = () => {
   const reorderCards = useCardsStore((state) => state.reorderCards);
   const unflipCards = useCardsStore((state) => state.unflipCards);
 
+  const cardTypes = useCardTypesManagementStore((state) => state.cardTypes);
+  const importCardTypes = useCardTypesManagementStore(
+    (state) => state.importCardTypes,
+  );
+  const owners = useOwnersManagementStore((state) => state.owners);
+  const importOwners = useOwnersManagementStore((state) => state.importOwners);
+
   const { isImporting, importCards } = useImportCards({
     cards,
+    cardTypes,
+    owners,
     onImport: reorderCards,
+    onImportCardTypes: importCardTypes,
+    onImportOwners: importOwners,
     onUnflipCards: unflipCards,
   });
 

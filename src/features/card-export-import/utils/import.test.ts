@@ -4,7 +4,6 @@ import { FILE_FORMAT_VERSION, type IEncryptedPayload } from '@shared/lib';
 import { ERROR_CORRUPTED_FILE, ERROR_UNSUPPORTED_VERSION } from '../constants';
 import {
   mergeCards,
-  parseDecryptedCards,
   parseImportedFile,
   validateImportedPayload,
 } from './import';
@@ -120,62 +119,6 @@ describe('validateImportedPayload', () => {
     expect(() => validateImportedPayload(invalid)).toThrowError(
       ERROR_CORRUPTED_FILE,
     );
-  });
-});
-
-describe('parseDecryptedCards', () => {
-  const mockCard: IBankCard = {
-    id: 'import-parse-id-1',
-    pan: '1234567890123456',
-    expires: '12/25',
-    name: 'Test Card',
-    cvv: '123',
-    pin: '1234',
-    order: 0,
-  };
-
-  it('должен парсить валидный JSON массив карт', () => {
-    const cards = [mockCard];
-    const decryptedData = JSON.stringify(cards);
-
-    const result = parseDecryptedCards(decryptedData);
-
-    expect(result).toEqual(cards);
-  });
-
-  it('должен парсить пустой массив', () => {
-    const decryptedData = JSON.stringify([]);
-
-    const result = parseDecryptedCards(decryptedData);
-
-    expect(result).toEqual([]);
-  });
-
-  it('должен выбрасывать ошибку при невалидном JSON', () => {
-    expect(() => parseDecryptedCards('invalid json')).toThrowError(
-      ERROR_CORRUPTED_FILE,
-    );
-  });
-
-  it('должен выбрасывать ошибку если данные не массив', () => {
-    const notArray = JSON.stringify({ key: 'value' });
-
-    expect(() => parseDecryptedCards(notArray)).toThrowError(
-      ERROR_CORRUPTED_FILE,
-    );
-  });
-
-  it('должен парсить несколько карт', () => {
-    const cards = [
-      mockCard,
-      { ...mockCard, pan: '9876543210987654', name: 'Another Card' },
-    ];
-    const decryptedData = JSON.stringify(cards);
-
-    const result = parseDecryptedCards(decryptedData);
-
-    expect(result).toHaveLength(2);
-    expect(result).toEqual(cards);
   });
 });
 

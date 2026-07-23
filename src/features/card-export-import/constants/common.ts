@@ -17,7 +17,6 @@ export const ERROR_PASSWORD_MISMATCH = 'Пароли не совпадают';
 export const ERROR_PASSWORD_TOO_SIMPLE =
   'Пароль должен содержать хотя бы одну цифру';
 
-/** Проверяет наличие хотя бы одной цифры в пароле */
 export const PASSWORD_DIGIT_PATTERN = /\d/;
 
 export const ERROR_CORRUPTED_FILE = 'Файл поврежден';

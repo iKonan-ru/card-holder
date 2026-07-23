@@ -4,9 +4,11 @@
   display: grid;
   grid-template-columns: @card-grid-columns;
   gap: @spacing-lg;
+  padding-bottom: @spacing-lg;
 
   @media (max-width: @mobile) {
     gap: @spacing-md;
+    padding-bottom: @spacing-md;
   }
 
   .card-list-empty-state {
