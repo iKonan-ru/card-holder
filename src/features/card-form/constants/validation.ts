@@ -27,6 +27,5 @@ export const LUHN_THRESHOLD = 9;
 export const MONTH_VALIDATION_PATTERN = /^(0[1-9]|1[0-2])$/;
 export const NON_DIGIT_REMOVAL_PATTERN = /\D/g;
 export const DIGITS_ONLY_PATTERN = /^\d+$/;
-export const ALPHANUMERIC_PATTERN = /[^a-zA-Zа-яА-ЯёЁ0-9]/g;
 export const LATIN_LETTERS_SPACES_PATTERN = /[^a-zA-Z\s]/g;
 export const SPACES_PATTERN = /\s/g;

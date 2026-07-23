@@ -33,3 +33,5 @@ export * from './select';
 export * from './checkbox';
 
 export * from './checkbox-group';
+
+export * from './collapsible-section';

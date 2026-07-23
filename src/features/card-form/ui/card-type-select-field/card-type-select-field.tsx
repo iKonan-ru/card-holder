@@ -27,17 +27,11 @@ export const CardTypeSelectField: FC<ICardTypeSelectFieldProps> = ({
   value,
   disabled,
 }) => {
-  const cardTypes = useCardTypesManagementStore((state) => state.cardTypes);
-  const loadCardTypes = useCardTypesManagementStore(
-    (state) => state.loadCardTypes,
-  );
-  const addCardType = useCardTypesManagementStore((state) => state.addCardType);
-  const updateCardType = useCardTypesManagementStore(
-    (state) => state.updateCardType,
-  );
-  const deleteCardType = useCardTypesManagementStore(
-    (state) => state.deleteCardType,
-  );
+  const cardTypes = useCardTypesManagementStore((state) => state.items);
+  const loadCardTypes = useCardTypesManagementStore((state) => state.load);
+  const addCardType = useCardTypesManagementStore((state) => state.add);
+  const updateCardType = useCardTypesManagementStore((state) => state.update);
+  const deleteCardType = useCardTypesManagementStore((state) => state.remove);
 
   const renderCreateModal = useCallback(
     (onSubmit: (name: string) => Promise<void>) => (

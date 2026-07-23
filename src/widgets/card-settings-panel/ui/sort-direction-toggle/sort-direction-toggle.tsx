@@ -1,6 +1,6 @@
 import { useCallback, type FC, type ReactElement } from 'react';
 import type { TSortDirection } from '@features/card-management';
-import { bem, useClassName } from '@shared/lib';
+import { bem, buildModifiers, useClassName } from '@shared/lib';
 import { SORT_DIRECTION_OPTIONS } from '../../constants';
 import { SORT_DIRECTION_TOGGLE_BLOCK } from './constants';
 import './sort-direction-toggle.less';
@@ -16,7 +16,7 @@ export const SortDirectionToggle: FC<ISortDirectionToggleProps> = ({
   disabled,
   onChange,
 }) => {
-  const modifiers = [disabled && 'disabled'].filter(Boolean) as string[];
+  const modifiers = buildModifiers(disabled && 'disabled');
   const className = useClassName({
     blockName: SORT_DIRECTION_TOGGLE_BLOCK,
     modifiers,

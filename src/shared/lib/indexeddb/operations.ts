@@ -35,3 +35,37 @@ export const executeIndexedDBOperation = async <T>({
     };
   });
 };
+
+interface IExecuteBulkPutParams<T> {
+  storeName: string;
+  records: T[];
+  errorMessage: string;
+}
+
+export const executeIndexedDBBulkPut = async <T>({
+  storeName,
+  records,
+  errorMessage,
+}: IExecuteBulkPutParams<T>): Promise<void> => {
+  const database = await getDatabase();
+
+  return new Promise((resolve, reject) => {
+    const transaction = database.transaction(
+      [storeName],
+      INDEXEDDB_MODE_READWRITE,
+    );
+    const store = transaction.objectStore(storeName);
+
+    records.forEach((record) => {
+      store.put(record);
+    });
+
+    transaction.oncomplete = () => {
+      resolve();
+    };
+
+    transaction.onerror = () => {
+      reject(new Error(errorMessage));
+    };
+  });
+};

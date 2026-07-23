@@ -4,6 +4,11 @@ import {
   SPACE_CHAR,
 } from '../constants';
 
+export const buildModifiers = (
+  ...candidates: (string | false | null | undefined)[]
+): string[] =>
+  candidates.filter((candidate): candidate is string => Boolean(candidate));
+
 export const bem = (
   blockName: string,
   className?: string | string[],

@@ -1,5 +1,4 @@
-export const MIN_PASSWORD_LENGTH = 8;
-export const MAX_PASSWORD_LENGTH = 128;
+import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from '@shared/lib';
 
 export const PLACEHOLDER_IMPORTED = '{imported}';
 export const PLACEHOLDER_REPLACED = '{replaced}';

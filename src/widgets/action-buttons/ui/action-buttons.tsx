@@ -14,8 +14,12 @@ import { ACTION_BUTTONS_BLOCK } from '../constants';
 import './action-buttons.less';
 
 export const ActionButtons: FC = () => {
-  const { cards, isReorderMode, toggleReorderMode } = useCardsStore();
-  const { sortKey, groupBy, filters } = useCardViewStore();
+  const cards = useCardsStore((state) => state.cards);
+  const isReorderMode = useCardsStore((state) => state.isReorderMode);
+  const toggleReorderMode = useCardsStore((state) => state.toggleReorderMode);
+  const sortKey = useCardViewStore((state) => state.sortKey);
+  const groupBy = useCardViewStore((state) => state.groupBy);
+  const filters = useCardViewStore((state) => state.filters);
 
   const hasCards = cards.length > 0;
   const isReorderAllowed = canReorder({ sortKey, groupBy, filters });

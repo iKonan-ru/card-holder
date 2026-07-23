@@ -1,6 +1,10 @@
 import { useRef, type FC } from 'react';
-import { MAX_PASSWORD_LENGTH } from '@features/card-export-import';
-import { bem, useClassName, useFocusTrap } from '@shared/lib';
+import {
+  bem,
+  MAX_PASSWORD_LENGTH,
+  useClassName,
+  useFocusTrap,
+} from '@shared/lib';
 import { Button, PasswordField } from '@shared/ui';
 import {
   LOCK_SCREEN_BLOCK,
@@ -36,22 +40,28 @@ export const LockScreen: FC = () => {
 
   useFocusTrap({ contentRef, isTopModal: true });
 
+  const screenTitle = isFirstSetup
+    ? LOCK_SCREEN_TITLE_CREATE
+    : LOCK_SCREEN_TITLE_UNLOCK;
+  const passwordAutoComplete = isFirstSetup
+    ? 'new-password'
+    : 'current-password';
+  const submitButtonLabel = isFirstSetup
+    ? LOCK_SCREEN_BUTTON_CREATE
+    : LOCK_SCREEN_BUTTON_UNLOCK;
+
   return (
     <div
       className={className}
       role="dialog"
       aria-modal="true"
-      aria-label={
-        isFirstSetup ? LOCK_SCREEN_TITLE_CREATE : LOCK_SCREEN_TITLE_UNLOCK
-      }
+      aria-label={screenTitle}
     >
       <div
         ref={contentRef}
         className={bem(LOCK_SCREEN_BLOCK, 'content')}
       >
-        <h1 className={bem(LOCK_SCREEN_BLOCK, 'title')}>
-          {isFirstSetup ? LOCK_SCREEN_TITLE_CREATE : LOCK_SCREEN_TITLE_UNLOCK}
-        </h1>
+        <h1 className={bem(LOCK_SCREEN_BLOCK, 'title')}>{screenTitle}</h1>
 
         {isFirstSetup && (
           <p className={bem(LOCK_SCREEN_BLOCK, 'subtitle')}>
@@ -70,7 +80,7 @@ export const LockScreen: FC = () => {
             value={password}
             error={passwordError}
             onChange={handlePasswordChange}
-            autoComplete={isFirstSetup ? 'new-password' : 'current-password'}
+            autoComplete={passwordAutoComplete}
             autoFocus={true}
             required={true}
             disabled={isSubmitting}
@@ -103,9 +113,7 @@ export const LockScreen: FC = () => {
             isLoading={isSubmitting}
             disabled={isSubmitting || !isSubmitEnabled}
           >
-            {isFirstSetup
-              ? LOCK_SCREEN_BUTTON_CREATE
-              : LOCK_SCREEN_BUTTON_UNLOCK}
+            {submitButtonLabel}
           </Button>
         </form>
       </div>

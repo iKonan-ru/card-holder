@@ -5,7 +5,6 @@ import {
   SPACE_CHAR,
 } from '@shared/lib';
 import {
-  ALPHANUMERIC_PATTERN,
   LATIN_LETTERS_SPACES_PATTERN,
   MONTH_EXPIRES_SLICE_END,
   MONTH_EXPIRES_SLICE_START,
@@ -48,10 +47,6 @@ export const formatExpires = (value: string): string => {
 
 export const filterDigitsOnly = (value: string): string => {
   return value.replace(NON_DIGIT_PATTERN, EMPTY_STRING);
-};
-
-export const filterAlphanumeric = (value: string): string => {
-  return value.replace(ALPHANUMERIC_PATTERN, EMPTY_STRING);
 };
 
 export const filterNoSpaces = (value: string): string => {

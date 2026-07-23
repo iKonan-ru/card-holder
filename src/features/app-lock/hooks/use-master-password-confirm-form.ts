@@ -4,9 +4,9 @@ import {
   type ChangeEvent,
   type SubmitEvent,
 } from 'react';
-import { MIN_PASSWORD_LENGTH } from '@features/card-export-import';
 import {
   ERROR_WRONG_MASTER_PASSWORD,
+  MIN_PASSWORD_LENGTH,
   useModalClose,
   verifyMasterPassword,
   withRateLimit,

@@ -37,7 +37,6 @@ export const ReorderToggleButton: FC<IReorderToggleButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
       isActive={isActive}
-      ariaPressed={isActive}
     />
   );
 };

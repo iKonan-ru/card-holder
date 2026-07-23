@@ -21,12 +21,12 @@ const getStoredLockout = (): number | null => {
   return stored ? parseInt(stored, 10) : null;
 };
 
-export const resetFailedAttempts = (): void => {
+const resetFailedAttempts = (): void => {
   localStorage.removeItem(STORAGE_KEY_ATTEMPTS);
   localStorage.removeItem(STORAGE_KEY_LOCKOUT);
 };
 
-export const incrementFailedAttempts = (): void => {
+const incrementFailedAttempts = (): void => {
   const attempts = getStoredAttempts() + 1;
   localStorage.setItem(STORAGE_KEY_ATTEMPTS, String(attempts));
 
@@ -40,15 +40,7 @@ export const incrementFailedAttempts = (): void => {
   }
 };
 
-export const getFailedAttempts = (): number => {
-  return getStoredAttempts();
-};
-
-export const getLockoutUntil = (): number | null => {
-  return getStoredLockout();
-};
-
-export const checkIsLockedOut = (): boolean => {
+const checkIsLockedOut = (): boolean => {
   const lockoutUntil = getStoredLockout();
 
   if (lockoutUntil === null) {
@@ -67,7 +59,7 @@ export const checkIsLockedOut = (): boolean => {
   return true;
 };
 
-export const getRemainingLockoutTime = (): number => {
+const getRemainingLockoutTime = (): number => {
   const lockoutUntil = getStoredLockout();
 
   if (lockoutUntil === null) {
@@ -92,7 +84,7 @@ const calculateDelay = (attempts: number): number => {
   return DELAY_BASE_MS * Math.pow(DELAY_MULTIPLIER, attemptsOverThreshold);
 };
 
-export const applyRateLimit = async (): Promise<void> => {
+const applyRateLimit = async (): Promise<void> => {
   const isLocked = checkIsLockedOut();
 
   if (isLocked) {

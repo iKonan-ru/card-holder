@@ -4,10 +4,7 @@ import {
   type ChangeEvent,
   type SubmitEvent,
 } from 'react';
-import {
-  MAX_PASSWORD_LENGTH,
-  MIN_PASSWORD_LENGTH,
-} from '@features/card-export-import';
+import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from '@shared/lib';
 import {
   LOCK_SCREEN_ERROR_MISMATCH,
   LOCK_SCREEN_ERROR_TOO_LONG,

@@ -9,8 +9,8 @@ import { useExportCards } from '../../hooks';
 
 export const ExportButton: FC = () => {
   const cards = useCardsStore((state) => state.cards);
-  const cardTypes = useCardTypesManagementStore((state) => state.cardTypes);
-  const owners = useOwnersManagementStore((state) => state.owners);
+  const cardTypes = useCardTypesManagementStore((state) => state.items);
+  const owners = useOwnersManagementStore((state) => state.items);
   const { isExporting, exportCards } = useExportCards({
     cards,
     cardTypes,

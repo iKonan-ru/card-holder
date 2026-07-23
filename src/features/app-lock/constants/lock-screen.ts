@@ -1,7 +1,4 @@
-import {
-  MAX_PASSWORD_LENGTH,
-  MIN_PASSWORD_LENGTH,
-} from '@features/card-export-import';
+import { MAX_PASSWORD_LENGTH, MIN_PASSWORD_LENGTH } from '@shared/lib';
 
 export const LOCK_SCREEN_BLOCK = 'lock-screen';
 

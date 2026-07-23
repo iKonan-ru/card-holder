@@ -15,8 +15,10 @@ import {
   type IStoredEncryptedCard,
 } from '../crypto';
 import { CARDS_STORE_NAME } from './constants';
-import { getDatabase } from './database';
-import { executeIndexedDBOperation } from './operations';
+import {
+  executeIndexedDBBulkPut,
+  executeIndexedDBOperation,
+} from './operations';
 
 const sortCardsByOrder = (cards: IBankCard[]): IBankCard[] => {
   return [...cards].sort((cardA, cardB) => cardA.order - cardB.order);
@@ -95,25 +97,9 @@ export const updateCardsOrder = async (
     ),
   );
 
-  const database = await getDatabase();
-
-  return new Promise((resolve, reject) => {
-    const transaction = database.transaction(
-      [CARDS_STORE_NAME],
-      INDEXEDDB_MODE_READWRITE,
-    );
-    const store = transaction.objectStore(CARDS_STORE_NAME);
-
-    encryptedRecords.forEach((record) => {
-      store.put(record);
-    });
-
-    transaction.oncomplete = () => {
-      resolve();
-    };
-
-    transaction.onerror = () => {
-      reject(new Error(ERROR_FAILED_TO_UPDATE_CARDS_ORDER));
-    };
+  return executeIndexedDBBulkPut({
+    storeName: CARDS_STORE_NAME,
+    records: encryptedRecords,
+    errorMessage: ERROR_FAILED_TO_UPDATE_CARDS_ORDER,
   });
 };

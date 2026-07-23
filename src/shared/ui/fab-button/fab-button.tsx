@@ -1,6 +1,6 @@
 import { useMemo, type FC } from 'react';
 import type { IconType } from 'react-icons';
-import { bem, useClassName } from '@shared/lib';
+import { bem, buildModifiers, useClassName } from '@shared/lib';
 import type { Procedure } from '@shared/types';
 import { FAB_BUTTON_BLOCK } from './constants';
 import './fab-button.less';
@@ -11,7 +11,6 @@ interface IFabButtonProps {
   onClick: Procedure;
   disabled?: boolean;
   isActive?: boolean;
-  ariaPressed?: boolean;
   hasIndicator?: boolean;
 }
 
@@ -21,14 +20,10 @@ export const FabButton: FC<IFabButtonProps> = ({
   onClick,
   disabled,
   isActive,
-  ariaPressed,
   hasIndicator,
 }) => {
   const modifiers = useMemo(
-    () =>
-      [isActive && 'active', disabled && 'disabled'].filter(
-        Boolean,
-      ) as string[],
+    () => buildModifiers(isActive && 'active', disabled && 'disabled'),
     [isActive, disabled],
   );
 
@@ -45,7 +40,7 @@ export const FabButton: FC<IFabButtonProps> = ({
       disabled={disabled}
       title={ariaLabel}
       aria-label={ariaLabel}
-      aria-pressed={ariaPressed}
+      aria-pressed={isActive}
     >
       <IconComponent
         className={bem(FAB_BUTTON_BLOCK, 'icon')}

@@ -42,6 +42,11 @@ export const Button: FC<IButtonProps> = ({
   });
 
   const isDisabled = disabled || isLoading;
+  const textModifiers = useMemo(
+    () => (isLoading ? ['hidden'] : []),
+    [isLoading],
+  );
+  const textClassName = bem(bem(BUTTON_BLOCK, 'text'), textModifiers);
 
   return (
     <button
@@ -50,11 +55,7 @@ export const Button: FC<IButtonProps> = ({
       disabled={isDisabled}
       {...restProps}
     >
-      <span
-        className={bem(bem(BUTTON_BLOCK, 'text'), isLoading ? ['hidden'] : [])}
-      >
-        {children}
-      </span>
+      <span className={textClassName}>{children}</span>
       {isLoading && (
         <FiLoader
           className={bem(BUTTON_BLOCK, 'loader')}

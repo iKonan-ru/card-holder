@@ -15,5 +15,3 @@ export * from './filtering';
 export * from './grouping';
 
 export * from './selectors';
-
-export * from './execute-card-operation';

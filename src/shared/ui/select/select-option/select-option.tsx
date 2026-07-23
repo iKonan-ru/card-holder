@@ -4,6 +4,7 @@ import {
   ARIA_HIDDEN_TRUE,
   ARIA_ROLE_OPTION,
   bem,
+  buildModifiers,
   BUTTON_TYPE_BUTTON,
 } from '@shared/lib';
 import {
@@ -29,10 +30,10 @@ export const SelectOption: FC<ISelectOptionProps> = ({
   onSelect,
   onEdit,
 }) => {
-  const modifiers = [
+  const modifiers = buildModifiers(
     isSelected && SELECT_OPTION_MODIFIER_SELECTED,
     isActive && SELECT_OPTION_MODIFIER_ACTIVE,
-  ].filter(Boolean) as string[];
+  );
   const optionClassName = bem(bem(SELECT_BLOCK, 'option'), modifiers);
 
   const handleClick = () => {

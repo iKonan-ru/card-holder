@@ -1,6 +1,5 @@
+import { decryptWithIv, encryptWithIv } from './aes-gcm';
 import {
-  ENCRYPTION_ALGORITHM,
-  IV_LENGTH,
   MASTER_KEY_SALT_STORAGE_KEY,
   PASSWORD_VERIFY_STORAGE_KEY,
   VERIFY_PLAINTEXT,
@@ -26,24 +25,9 @@ export const loadOrCreateSalt = (): { salt: Uint8Array; isNew: boolean } => {
 };
 
 export const saveVerificationToken = async (key: CryptoKey): Promise<void> => {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(VERIFY_PLAINTEXT);
-  const iv = crypto.getRandomValues(new Uint8Array(IV_LENGTH));
+  const combined = await encryptWithIv(VERIFY_PLAINTEXT, key);
 
-  const ciphertext = await crypto.subtle.encrypt(
-    { name: ENCRYPTION_ALGORITHM, iv },
-    key,
-    data,
-  );
-
-  const combined = new Uint8Array(IV_LENGTH + ciphertext.byteLength);
-  combined.set(iv, 0);
-  combined.set(new Uint8Array(ciphertext), IV_LENGTH);
-
-  localStorage.setItem(
-    PASSWORD_VERIFY_STORAGE_KEY,
-    arrayBufferToBase64(combined.buffer as ArrayBuffer),
-  );
+  localStorage.setItem(PASSWORD_VERIFY_STORAGE_KEY, combined);
 };
 
 export const verifyMasterPassword = async (
@@ -58,19 +42,9 @@ export const verifyMasterPassword = async (
   try {
     const { salt } = loadOrCreateSalt();
     const key = await deriveKeyFromPassword(password, salt);
-    const combined = base64ToUint8Array(stored);
-    const iv = combined.slice(0, IV_LENGTH);
-    const ciphertext = combined.slice(IV_LENGTH);
+    const decrypted = await decryptWithIv(stored, key);
 
-    const decrypted = await crypto.subtle.decrypt(
-      { name: ENCRYPTION_ALGORITHM, iv },
-      key,
-      ciphertext,
-    );
-
-    const decoder = new TextDecoder();
-
-    return decoder.decode(decrypted) === VERIFY_PLAINTEXT;
+    return decrypted === VERIFY_PLAINTEXT;
   } catch {
     return false;
   }

@@ -9,6 +9,7 @@ import {
   ERROR_FAILED_TO_CLEAR_CARDS,
   ERROR_FAILED_TO_DELETE_CARD,
   ERROR_FAILED_TO_UPDATE_CARD,
+  executeEntityOperation,
   getAllCards,
   initDatabase,
   logError,
@@ -25,7 +26,6 @@ import {
   INITIAL_IS_LOADING,
   INITIAL_IS_REORDER_MODE,
 } from '../constants';
-import { executeCardOperation } from '../lib';
 import type { ICardsActions, ICardsState } from '../types';
 
 const getCryptoKey = (): CryptoKey => {
@@ -114,11 +114,11 @@ export const useCardsStore: UseBoundStore<
       order: maxOrder,
     };
 
-    return executeCardOperation({
+    return executeEntityOperation({
       operation: () => addCardToDb(cardWithOrder, cryptoKey),
+      refetch: () => getAllCards(cryptoKey),
       errorMessage: ERROR_FAILED_TO_ADD_CARD,
       context: 'CardManagementStore.addCard',
-      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },
@@ -136,11 +136,11 @@ export const useCardsStore: UseBoundStore<
       : (existingCard?.order ?? DEFAULT_CARD_ORDER);
     const cardWithOrder: IBankCard = { ...card, order: cardOrder };
 
-    return executeCardOperation({
+    return executeEntityOperation({
       operation: () => updateCardInDb(cardWithOrder, cryptoKey),
+      refetch: () => getAllCards(cryptoKey),
       errorMessage: ERROR_FAILED_TO_UPDATE_CARD,
       context: 'CardManagementStore.updateCard',
-      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },
@@ -150,11 +150,11 @@ export const useCardsStore: UseBoundStore<
   deleteCard: async (id: IBankCard['id']) => {
     const cryptoKey = getCryptoKey();
 
-    return executeCardOperation({
+    return executeEntityOperation({
       operation: () => deleteCardFromDb(id),
+      refetch: () => getAllCards(cryptoKey),
       errorMessage: ERROR_FAILED_TO_DELETE_CARD,
       context: 'CardManagementStore.deleteCard',
-      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },
@@ -164,11 +164,11 @@ export const useCardsStore: UseBoundStore<
   clearAllCards: async () => {
     const cryptoKey = getCryptoKey();
 
-    return executeCardOperation({
+    return executeEntityOperation({
       operation: () => clearAllCardsFromDb(),
+      refetch: () => getAllCards(cryptoKey),
       errorMessage: ERROR_FAILED_TO_CLEAR_CARDS,
       context: 'CardManagementStore.clearAllCards',
-      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },
@@ -182,11 +182,11 @@ export const useCardsStore: UseBoundStore<
   reorderCards: async (cards: IBankCard[]) => {
     const cryptoKey = getCryptoKey();
 
-    return executeCardOperation({
+    return executeEntityOperation({
       operation: () => updateCardsOrderInDb(cards, cryptoKey),
+      refetch: () => getAllCards(cryptoKey),
       errorMessage: ERROR_FAILED_TO_REORDER_CARDS,
       context: 'CardManagementStore.reorderCards',
-      cryptoKey,
       onSuccess: (updatedCards) => {
         set({ cards: updatedCards });
       },

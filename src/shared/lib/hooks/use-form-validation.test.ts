@@ -14,7 +14,6 @@ describe('useFormValidation', () => {
     const { result } = renderHook(() => useFormValidation<ITestFormErrors>());
 
     expect(result.current.errors).toEqual({});
-    expect(result.current.hasErrors()).toBe(false);
   });
 
   it('должен добавлять ошибку через handleFieldValidation', () => {
@@ -26,23 +25,6 @@ describe('useFormValidation', () => {
 
     expect(result.current.errors.email).toBe('Invalid email');
     expect(Object.keys(result.current.errors).length).toBeGreaterThan(0);
-  });
-
-  it('должен удалять ошибку при передаче undefined', () => {
-    const { result } = renderHook(() => useFormValidation<ITestFormErrors>());
-
-    act(() => {
-      result.current.handleFieldValidation('email', 'Invalid email');
-    });
-
-    expect(result.current.errors.email).toBe('Invalid email');
-
-    act(() => {
-      result.current.handleFieldValidation('email', undefined);
-    });
-
-    expect(result.current.errors.email).toBeUndefined();
-    expect(result.current.hasErrors()).toBe(false);
   });
 
   it('должен обновлять существующую ошибку', () => {
@@ -90,68 +72,6 @@ describe('useFormValidation', () => {
 
     expect(result.current.errors).toEqual({});
     expect(Object.keys(result.current.errors).length).toBe(0);
-  });
-
-  it('должен получать ошибку поля через getFieldError', () => {
-    const { result } = renderHook(() => useFormValidation<ITestFormErrors>());
-
-    act(() => {
-      result.current.handleFieldValidation('email', 'Invalid email');
-    });
-
-    expect(result.current.getFieldError('email')).toBe('Invalid email');
-    expect(result.current.getFieldError('password')).toBeUndefined();
-  });
-
-  it('должен устанавливать множественные ошибки через setMultipleErrors', () => {
-    const { result } = renderHook(() => useFormValidation<ITestFormErrors>());
-
-    act(() => {
-      result.current.setMultipleErrors({
-        email: 'Invalid email',
-        password: 'Password too short',
-      });
-    });
-
-    expect(result.current.errors.email).toBe('Invalid email');
-    expect(result.current.errors.password).toBe('Password too short');
-    expect(Object.keys(result.current.errors).length).toBeGreaterThan(0);
-  });
-
-  it('должен очищать ошибку поля через clearFieldError', () => {
-    const { result } = renderHook(() => useFormValidation<ITestFormErrors>());
-
-    act(() => {
-      result.current.handleFieldValidation('email', 'Invalid email');
-      result.current.handleFieldValidation('password', 'Password too short');
-    });
-
-    act(() => {
-      result.current.clearFieldError('email');
-    });
-
-    expect(result.current.errors.email).toBeUndefined();
-    expect(result.current.errors.password).toBe('Password too short');
-    expect(Object.keys(result.current.errors).length).toBeGreaterThan(0);
-  });
-
-  it('должен объединять ошибки при setMultipleErrors', () => {
-    const { result } = renderHook(() => useFormValidation<ITestFormErrors>());
-
-    act(() => {
-      result.current.handleFieldValidation('email', 'Invalid email');
-    });
-
-    act(() => {
-      result.current.setMultipleErrors({
-        password: 'Password too short',
-        username: 'Username required',
-      });
-    });
-
-    expect(result.current.errors.email).toBe('Invalid email');
-    expect(result.current.errors.password).toBe('Password too short');
-    expect(result.current.errors.username).toBe('Username required');
   });
 
   it('не должен изменять состояние при удалении несуществующей ошибки', () => {

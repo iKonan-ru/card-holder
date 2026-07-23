@@ -51,18 +51,4 @@ describe('CopyButton', () => {
 
     expect(utils.copyToClipboard).toHaveBeenCalledWith('copied-text');
   });
-
-  it('должен использовать кастомный aria-label', () => {
-    render(
-      <CopyButton
-        value="hello"
-        ariaLabel="Custom Label"
-      />,
-    );
-
-    expect(screen.getByRole('button')).toHaveAttribute(
-      'aria-label',
-      'Custom Label',
-    );
-  });
 });

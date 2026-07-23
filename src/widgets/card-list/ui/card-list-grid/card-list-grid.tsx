@@ -31,6 +31,7 @@ export const CardListGrid: FC<ICardListGridProps> = ({
   const gridRef = useCardGridColumnWidth();
 
   const showFilterEmptyState = hasAnyCards && cards.length === 0;
+  const showAddButton = !hideAddButton && Boolean(onShowForm);
 
   const getCard = useCallback(
     (card: IBankCard) => (
@@ -52,9 +53,9 @@ export const CardListGrid: FC<ICardListGridProps> = ({
       <ParentClassProvider parentClass={CARD_LIST_GRID_BLOCK}>
         {showFilterEmptyState && <CardListEmptyState />}
         {cards.map(getCard)}
-        {!hideAddButton && onShowForm && (
+        {showAddButton && (
           <div role="listitem">
-            <AddCardButton onClick={onShowForm} />
+            <AddCardButton onClick={onShowForm!} />
           </div>
         )}
       </ParentClassProvider>

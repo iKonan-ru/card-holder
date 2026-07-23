@@ -2,7 +2,7 @@ import { type FC } from 'react';
 import { bankLogos } from '@shared/assets/banks';
 import { paymentSystemLogos } from '@shared/assets/payment-systems';
 import { ARIA_HIDDEN_TRUE, bem } from '@shared/lib';
-import { Icon } from '@shared/ui/icon';
+import { Icon } from '@shared/ui';
 import { BANK_CARD_BLOCK } from '../../constants';
 import type { IBankCardCommonProps } from '../../types';
 

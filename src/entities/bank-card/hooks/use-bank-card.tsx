@@ -9,6 +9,7 @@ import type { TPaymentSystem } from '@entities/payment-system';
 import { BANKS_LIST, DEFAULT_BANK } from '@shared/data';
 import {
   bem,
+  buildModifiers,
   darkenColor,
   getBankByCardNumber,
   getPaymentSystem,
@@ -98,11 +99,11 @@ export const useBankCard = ({
 
   const modifiers = useMemo(
     () =>
-      [
+      buildModifiers(
         isFlipped && BANK_CARD_MODIFIER_FLIPPED,
         isReorderMode && BANK_CARD_MODIFIER_REORDER_MODE,
         isDarkText && BANK_CARD_MODIFIER_DARK_TEXT,
-      ].filter(Boolean) as string[],
+      ),
     [isFlipped, isReorderMode, isDarkText],
   );
 

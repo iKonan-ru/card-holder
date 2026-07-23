@@ -6,8 +6,11 @@ import { CARD_SETTINGS_TOGGLE_BUTTON_ARIA_LABEL } from '../../constants';
 import { useCardSettingsStore } from '../../store';
 
 export const CardSettingsToggleButton: FC = () => {
-  const { isOpen, toggle } = useCardSettingsStore();
-  const { sortKey, groupBy, filters } = useCardViewStore();
+  const isOpen = useCardSettingsStore((state) => state.isOpen);
+  const toggle = useCardSettingsStore((state) => state.toggle);
+  const sortKey = useCardViewStore((state) => state.sortKey);
+  const groupBy = useCardViewStore((state) => state.groupBy);
+  const filters = useCardViewStore((state) => state.filters);
 
   const hasActiveModifiers = !canReorder({ sortKey, groupBy, filters });
 
@@ -17,7 +20,6 @@ export const CardSettingsToggleButton: FC = () => {
       ariaLabel={CARD_SETTINGS_TOGGLE_BUTTON_ARIA_LABEL}
       onClick={toggle}
       isActive={isOpen}
-      ariaPressed={isOpen}
       hasIndicator={hasActiveModifiers}
     />
   );

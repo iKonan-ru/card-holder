@@ -58,6 +58,24 @@ export const CardList: FC = () => {
     modifiers,
   });
 
+  const listContent = isGrouped ? (
+    <CardListGroups
+      groups={groups}
+      groupBy={groupBy}
+      collapsedGroups={collapsedGroups}
+      hasAnyCards={hasAnyCards}
+      onToggleCollapse={handleToggleGroupCollapsed}
+      onShowForm={handleShowForm}
+    />
+  ) : (
+    <CardListGrid
+      cards={cards}
+      hasAnyCards={hasAnyCards}
+      isReorderMode={isReorderMode}
+      onShowForm={handleShowForm}
+    />
+  );
+
   return (
     <div
       className={className}
@@ -75,23 +93,7 @@ export const CardList: FC = () => {
             items={cardIds}
             strategy={rectSortingStrategy}
           >
-            {isGrouped ? (
-              <CardListGroups
-                groups={groups}
-                groupBy={groupBy}
-                collapsedGroups={collapsedGroups}
-                hasAnyCards={hasAnyCards}
-                onToggleCollapse={handleToggleGroupCollapsed}
-                onShowForm={handleShowForm}
-              />
-            ) : (
-              <CardListGrid
-                cards={cards}
-                hasAnyCards={hasAnyCards}
-                isReorderMode={isReorderMode}
-                onShowForm={handleShowForm}
-              />
-            )}
+            {listContent}
           </SortableContext>
 
           <DragOverlay dropAnimation={DROP_ANIMATION}>

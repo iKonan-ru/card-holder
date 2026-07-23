@@ -16,16 +16,9 @@ import './copy-button.less';
 interface ICopyButtonProps {
   value: string;
   disabled?: boolean;
-  title?: string;
-  ariaLabel?: string;
 }
 
-export const CopyButton: FC<ICopyButtonProps> = ({
-  value,
-  disabled,
-  title = COPY_BUTTON_TITLE,
-  ariaLabel = COPY_BUTTON_ARIA_LABEL,
-}) => {
+export const CopyButton: FC<ICopyButtonProps> = ({ value, disabled }) => {
   const { isCopied, handleClick } = useCopyableField({ value });
 
   const className = useClassName({
@@ -33,6 +26,11 @@ export const CopyButton: FC<ICopyButtonProps> = ({
   });
 
   const isDisabled = !value || disabled === true;
+  const icon = isCopied ? (
+    <FiCheck aria-hidden={ARIA_HIDDEN_TRUE} />
+  ) : (
+    <FiCopy aria-hidden={ARIA_HIDDEN_TRUE} />
+  );
 
   return (
     <button
@@ -40,14 +38,10 @@ export const CopyButton: FC<ICopyButtonProps> = ({
       className={className}
       onClick={handleClick}
       disabled={isDisabled}
-      title={title}
-      aria-label={ariaLabel}
+      title={COPY_BUTTON_TITLE}
+      aria-label={COPY_BUTTON_ARIA_LABEL}
     >
-      {isCopied ? (
-        <FiCheck aria-hidden={ARIA_HIDDEN_TRUE} />
-      ) : (
-        <FiCopy aria-hidden={ARIA_HIDDEN_TRUE} />
-      )}
+      {icon}
     </button>
   );
 };

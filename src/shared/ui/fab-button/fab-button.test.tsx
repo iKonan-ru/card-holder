@@ -159,13 +159,13 @@ describe('FabButton', () => {
     expect(button.className).toContain('disabled');
   });
 
-  it('должен устанавливать aria-pressed', () => {
+  it('должен устанавливать aria-pressed из isActive', () => {
     render(
       <FabButton
         icon={MockIcon}
         ariaLabel="Test button"
         onClick={vi.fn()}
-        ariaPressed={true}
+        isActive={true}
       />,
     );
 

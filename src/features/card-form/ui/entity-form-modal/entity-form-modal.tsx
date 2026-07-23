@@ -1,8 +1,17 @@
 import { useState, type ChangeEvent, type FC, type SubmitEvent } from 'react';
 import { MasterPasswordConfirmModal } from '@features/app-lock';
-import { bem, ParentClassProvider, useClassName, useModal } from '@shared/lib';
+import {
+  bem,
+  logError,
+  ParentClassProvider,
+  useClassName,
+  useModal,
+} from '@shared/lib';
 import { Button, FormField } from '@shared/ui';
-import { ENTITY_FORM_MODAL_BLOCK } from './constants';
+import {
+  ENTITY_FORM_MODAL_BLOCK,
+  ERROR_FAILED_TO_SUBMIT_ENTITY_FORM,
+} from './constants';
 import './entity-form-modal.less';
 
 export interface IEntityFormModalTexts {
@@ -44,7 +53,18 @@ export const EntityFormModal: FC<IEntityFormModalProps> = ({
   const handleSubmit = async (event: SubmitEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
-    await onSubmit(value.trim());
+
+    try {
+      await onSubmit(value.trim());
+    } catch (error) {
+      logError({
+        message: ERROR_FAILED_TO_SUBMIT_ENTITY_FORM,
+        error,
+        context: 'EntityFormModal.handleSubmit',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleDeleteClick = () => {

@@ -27,11 +27,11 @@ export const OwnerSelectField: FC<IOwnerSelectFieldProps> = ({
   value,
   disabled,
 }) => {
-  const owners = useOwnersManagementStore((state) => state.owners);
-  const loadOwners = useOwnersManagementStore((state) => state.loadOwners);
-  const addOwner = useOwnersManagementStore((state) => state.addOwner);
-  const updateOwner = useOwnersManagementStore((state) => state.updateOwner);
-  const deleteOwner = useOwnersManagementStore((state) => state.deleteOwner);
+  const owners = useOwnersManagementStore((state) => state.items);
+  const loadOwners = useOwnersManagementStore((state) => state.load);
+  const addOwner = useOwnersManagementStore((state) => state.add);
+  const updateOwner = useOwnersManagementStore((state) => state.update);
+  const deleteOwner = useOwnersManagementStore((state) => state.remove);
 
   const renderCreateModal = useCallback(
     (onSubmit: (realName: string) => Promise<void>) => (

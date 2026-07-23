@@ -1,6 +1,5 @@
 import { describe, expect, it } from 'vitest';
 import {
-  filterAlphanumeric,
   filterDigitsOnly,
   filterNoSpaces,
   formatExpires,
@@ -59,24 +58,6 @@ describe('filterDigitsOnly', () => {
 
   it('должна обрабатывать пустую строку', () => {
     expect(filterDigitsOnly('')).toBe('');
-  });
-});
-
-describe('filterAlphanumeric', () => {
-  it('должна оставлять только буквы и цифры', () => {
-    expect(filterAlphanumeric('abc123!@#')).toBe('abc123');
-  });
-
-  it('должна оставлять кириллицу', () => {
-    expect(filterAlphanumeric('Тест123')).toBe('Тест123');
-  });
-
-  it('должна удалять спецсимволы', () => {
-    expect(filterAlphanumeric('test-123_abc')).toBe('test123abc');
-  });
-
-  it('должна обрабатывать пустую строку', () => {
-    expect(filterAlphanumeric('')).toBe('');
   });
 });
 

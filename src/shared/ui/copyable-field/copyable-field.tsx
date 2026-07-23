@@ -12,7 +12,6 @@ import './copyable-field.less';
 
 interface ICopyableFieldProps {
   value: string;
-  title?: string;
   label?: string;
   modifier?: string;
   maskFn?: (value: string, showValue?: boolean) => string;
@@ -21,7 +20,6 @@ interface ICopyableFieldProps {
 export const CopyableField: FC<ICopyableFieldProps> = ({
   value,
   label,
-  title = COPY_TITLE_TEXT,
   maskFn,
   modifier,
 }) => {
@@ -29,7 +27,6 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
     useCopyableField({
       value,
       label,
-      title,
       maskFn,
     });
 
@@ -49,10 +46,11 @@ export const CopyableField: FC<ICopyableFieldProps> = ({
       <div className={bem(COPYABLE_FIELD_BLOCK, 'copy-wrapper')}>
         <div
           role={ARIA_ROLE_BUTTON}
+          tabIndex={0}
           className={bem(COPYABLE_FIELD_BLOCK, 'value')}
           onClick={handleClick}
           onKeyDown={handleKeyDown}
-          title={title}
+          title={COPY_TITLE_TEXT}
           aria-label={ariaLabel}
         >
           {displayValue}

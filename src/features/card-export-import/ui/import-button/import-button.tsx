@@ -12,12 +12,12 @@ export const ImportButton: FC = () => {
   const reorderCards = useCardsStore((state) => state.reorderCards);
   const unflipCards = useCardsStore((state) => state.unflipCards);
 
-  const cardTypes = useCardTypesManagementStore((state) => state.cardTypes);
+  const cardTypes = useCardTypesManagementStore((state) => state.items);
   const importCardTypes = useCardTypesManagementStore(
-    (state) => state.importCardTypes,
+    (state) => state.importItems,
   );
-  const owners = useOwnersManagementStore((state) => state.owners);
-  const importOwners = useOwnersManagementStore((state) => state.importOwners);
+  const owners = useOwnersManagementStore((state) => state.items);
+  const importOwners = useOwnersManagementStore((state) => state.importItems);
 
   const { isImporting, importCards } = useImportCards({
     cards,

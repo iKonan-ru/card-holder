@@ -8,6 +8,6 @@ export * from './owners';
 
 export * from './operations';
 
-export * from './constants';
+export * from './create-record-store';
 
-export type { IStoredEncryptedCard, IStoredEncryptedRecord } from '../crypto';
+export * from './constants';

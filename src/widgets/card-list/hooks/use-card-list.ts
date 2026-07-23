@@ -21,22 +21,18 @@ interface IUseCardListResult {
   groupBy: TGroupBy;
   groups: ICardGroup[];
   collapsedGroups: string[];
-  isLoading: boolean;
   isReorderMode: boolean;
   handleShowForm: Procedure;
   handleDragEnd: (reorderedCards: IBankCard[]) => void;
-  handleToggleReorderMode: Procedure;
   handleToggleGroupCollapsed: (groupId: string) => void;
 }
 
 export const useCardList = (): IUseCardListResult => {
   const cards = useCardsStore((state) => state.cards);
-  const isLoading = useCardsStore((state) => state.isLoading);
   const isReorderMode = useCardsStore((state) => state.isReorderMode);
   const loadCards = useCardsStore((state) => state.loadCards);
   const reorderCards = useCardsStore((state) => state.reorderCards);
   const setCards = useCardsStore((state) => state.setCards);
-  const toggleReorderMode = useCardsStore((state) => state.toggleReorderMode);
 
   const sortKey = useCardViewStore((state) => state.sortKey);
   const sortDirection = useCardViewStore((state) => state.sortDirection);
@@ -47,12 +43,10 @@ export const useCardList = (): IUseCardListResult => {
     (state) => state.toggleGroupCollapsed,
   );
 
-  const cardTypes = useCardTypesManagementStore((state) => state.cardTypes);
-  const loadCardTypes = useCardTypesManagementStore(
-    (state) => state.loadCardTypes,
-  );
-  const owners = useOwnersManagementStore((state) => state.owners);
-  const loadOwners = useOwnersManagementStore((state) => state.loadOwners);
+  const cardTypes = useCardTypesManagementStore((state) => state.items);
+  const loadCardTypes = useCardTypesManagementStore((state) => state.load);
+  const owners = useOwnersManagementStore((state) => state.items);
+  const loadOwners = useOwnersManagementStore((state) => state.load);
 
   const { openAddCardForm } = useCardFormModal();
 
@@ -101,11 +95,9 @@ export const useCardList = (): IUseCardListResult => {
     groupBy,
     groups,
     collapsedGroups,
-    isLoading,
     isReorderMode,
     handleShowForm: openAddCardForm,
     handleDragEnd,
-    handleToggleReorderMode: toggleReorderMode,
     handleToggleGroupCollapsed: toggleGroupCollapsed,
   };
 };

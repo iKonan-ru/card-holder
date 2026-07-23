@@ -20,9 +20,7 @@ const RGB_BLUE_END = 6;
 const PERCENT_BASE = 100;
 const HASH_CHAR = '#';
 
-export const hexToRgb = (
-  hex: string,
-): { r: number; g: number; b: number } | null => {
+const hexToRgb = (hex: string): { r: number; g: number; b: number } | null => {
   const cleanHex = hex.replace(HASH_CHAR, EMPTY_STRING);
   const isValidHex = HEX_COLOR_PATTERN.test(cleanHex);
 
@@ -43,7 +41,7 @@ export const hexToRgb = (
   return { r, g, b };
 };
 
-export const rgbToHex = (r: number, g: number, b: number): string => {
+const rgbToHex = (r: number, g: number, b: number): string => {
   const convertToHex = (value: number) => {
     const clampedValue = Math.round(
       Math.max(MIN_RGB_VALUE, Math.min(MAX_RGB_VALUE, value)),

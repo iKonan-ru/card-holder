@@ -3,14 +3,19 @@ import { ActionButtons } from '@widgets/action-buttons';
 import { CardList } from '@widgets/card-list';
 import { CardSettingsPanel } from '@widgets/card-settings-panel';
 import { useCardSettingsStore } from '@features/card-settings';
-import { bem, ParentClassProvider, useClassName } from '@shared/lib';
+import {
+  bem,
+  buildModifiers,
+  ParentClassProvider,
+  useClassName,
+} from '@shared/lib';
 import { MAIN_PAGE_BLOCK } from '../constants';
 import './main-page.less';
 
 export const MainPage: FC = () => {
   const isPanelOpen = useCardSettingsStore((state) => state.isOpen);
 
-  const modifiers = [isPanelOpen && 'panel-open'].filter(Boolean) as string[];
+  const modifiers = buildModifiers(isPanelOpen && 'panel-open');
   const className = useClassName({ blockName: MAIN_PAGE_BLOCK, modifiers });
 
   return (

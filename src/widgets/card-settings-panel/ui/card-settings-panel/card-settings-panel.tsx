@@ -6,6 +6,7 @@ import {
   ARIA_MODAL_TRUE,
   ARIA_ROLE_DIALOG,
   bem,
+  buildModifiers,
   KEY_ESC,
   ParentClassProvider,
   useFocusTrap,
@@ -91,7 +92,7 @@ export const CardSettingsPanel: FC = () => {
     };
   }, [isOpen, close]);
 
-  const panelModifiers = [isOpen && 'open'].filter(Boolean) as string[];
+  const panelModifiers = buildModifiers(isOpen && 'open');
   const panelClassName = bem(CARD_SETTINGS_PANEL_BLOCK, panelModifiers);
 
   return (

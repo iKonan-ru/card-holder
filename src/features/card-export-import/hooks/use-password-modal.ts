@@ -5,10 +5,13 @@ import {
   type ChangeEvent,
   type SubmitEvent,
 } from 'react';
-import { useAnimatedModalClose, useModalClose } from '@shared/lib';
-import type { Procedure } from '@shared/types';
 import {
   MIN_PASSWORD_LENGTH,
+  useAnimatedModalClose,
+  useModalClose,
+} from '@shared/lib';
+import type { Procedure } from '@shared/types';
+import {
   PASSWORD_MODAL_BUTTON_EXPORT,
   PASSWORD_MODAL_BUTTON_IMPORT,
   PASSWORD_MODAL_TITLE_EXPORT,

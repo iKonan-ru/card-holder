@@ -7,7 +7,6 @@ import { CopyableField } from './copyable-field';
 const TEST_VALUE = 'test-value';
 const TEST_PARENT_CLASS = 'parent-class';
 const TEST_LABEL = 'Test Label';
-const TEST_TITLE = 'Test Title';
 
 describe('CopyableField', () => {
   beforeEach(() => {
@@ -56,20 +55,6 @@ describe('CopyableField', () => {
     );
 
     expect(screen.queryByText(TEST_LABEL)).not.toBeInTheDocument();
-  });
-
-  it('должна использовать кастомный title', () => {
-    render(
-      <ParentClassProvider parentClass={TEST_PARENT_CLASS}>
-        <CopyableField
-          value={TEST_VALUE}
-          title={TEST_TITLE}
-        />
-      </ParentClassProvider>,
-    );
-
-    const element = screen.getByTitle(TEST_TITLE);
-    expect(element).toBeInTheDocument();
   });
 
   it('должна использовать maskFn для отображения значения', () => {

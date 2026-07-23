@@ -1,125 +1,33 @@
-import { create, type StoreApi, type UseBoundStore } from 'zustand';
-import { useCryptoStore } from '@features/app-lock';
+import { createDirectoryStore } from '@features/directory-store';
 import type { ICardType } from '@entities/card-type';
 import {
-  addCardType as addCardTypeToDb,
-  deleteCardType as deleteCardTypeFromDb,
+  addCardType,
+  deleteCardType,
   ERROR_FAILED_TO_ADD_CARD_TYPE,
   ERROR_FAILED_TO_DELETE_CARD_TYPE,
   ERROR_FAILED_TO_IMPORT_CARD_TYPES,
   ERROR_FAILED_TO_UPDATE_CARD_TYPE,
   getAllCardTypes,
-  logError,
-  putCardTypes as putCardTypesInDb,
-  updateCardType as updateCardTypeInDb,
+  putCardTypes,
+  updateCardType,
 } from '@shared/lib';
-import {
-  ERROR_FAILED_TO_LOAD_CARD_TYPES,
-  INITIAL_CARD_TYPES,
-  INITIAL_IS_LOADING,
-} from '../constants';
-import { executeCardTypeOperation } from '../utils';
-import type {
-  ICardTypesManagementActions,
-  ICardTypesManagementState,
-} from './types';
+import { ERROR_FAILED_TO_LOAD_CARD_TYPES } from '../constants';
 
-const getCryptoKey = (): CryptoKey => {
-  const key = useCryptoStore.getState().cryptoKey;
-
-  if (!key) {
-    throw new Error('CryptoKey not available');
-  }
-
-  return key;
-};
-
-export const useCardTypesManagementStore: UseBoundStore<
-  StoreApi<ICardTypesManagementState & ICardTypesManagementActions>
-> = create((set) => ({
-  cardTypes: INITIAL_CARD_TYPES,
-  isLoading: INITIAL_IS_LOADING,
-
-  loadCardTypes: async () => {
-    const { isUnlocked } = useCryptoStore.getState();
-
-    if (!isUnlocked) {
-      return;
-    }
-
-    set({ isLoading: true });
-
-    try {
-      const cryptoKey = getCryptoKey();
-      const cardTypes = await getAllCardTypes(cryptoKey);
-
-      set({ cardTypes, isLoading: false });
-    } catch (error) {
-      logError({
-        message: ERROR_FAILED_TO_LOAD_CARD_TYPES,
-        error,
-        context: 'CardTypesManagementStore.loadCardTypes',
-      });
-      set({ isLoading: false });
-    }
+export const useCardTypesManagementStore = createDirectoryStore<ICardType>({
+  crud: {
+    getAll: getAllCardTypes,
+    add: addCardType,
+    update: updateCardType,
+    remove: deleteCardType,
+    put: putCardTypes,
   },
-
-  addCardType: async (name: string) => {
-    const cryptoKey = getCryptoKey();
-    const cardType: ICardType = { id: crypto.randomUUID(), name };
-
-    await executeCardTypeOperation({
-      operation: () => addCardTypeToDb(cardType, cryptoKey),
-      errorMessage: ERROR_FAILED_TO_ADD_CARD_TYPE,
-      context: 'CardTypesManagementStore.addCardType',
-      cryptoKey,
-      onSuccess: (cardTypes) => {
-        set({ cardTypes });
-      },
-    });
-
-    return cardType;
+  createItem: (id, name) => ({ id, name }),
+  errorMessages: {
+    load: ERROR_FAILED_TO_LOAD_CARD_TYPES,
+    add: ERROR_FAILED_TO_ADD_CARD_TYPE,
+    update: ERROR_FAILED_TO_UPDATE_CARD_TYPE,
+    remove: ERROR_FAILED_TO_DELETE_CARD_TYPE,
+    importItems: ERROR_FAILED_TO_IMPORT_CARD_TYPES,
   },
-
-  updateCardType: async (cardType: ICardType) => {
-    const cryptoKey = getCryptoKey();
-
-    return executeCardTypeOperation({
-      operation: () => updateCardTypeInDb(cardType, cryptoKey),
-      errorMessage: ERROR_FAILED_TO_UPDATE_CARD_TYPE,
-      context: 'CardTypesManagementStore.updateCardType',
-      cryptoKey,
-      onSuccess: (cardTypes) => {
-        set({ cardTypes });
-      },
-    });
-  },
-
-  deleteCardType: async (id: string) => {
-    const cryptoKey = getCryptoKey();
-
-    return executeCardTypeOperation({
-      operation: () => deleteCardTypeFromDb(id),
-      errorMessage: ERROR_FAILED_TO_DELETE_CARD_TYPE,
-      context: 'CardTypesManagementStore.deleteCardType',
-      cryptoKey,
-      onSuccess: (cardTypes) => {
-        set({ cardTypes });
-      },
-    });
-  },
-
-  importCardTypes: async (cardTypes: ICardType[]) => {
-    const cryptoKey = getCryptoKey();
-
-    return executeCardTypeOperation({
-      operation: () => putCardTypesInDb(cardTypes, cryptoKey),
-      errorMessage: ERROR_FAILED_TO_IMPORT_CARD_TYPES,
-      context: 'CardTypesManagementStore.importCardTypes',
-      cryptoKey,
-      onSuccess: (cardTypes) => {
-        set({ cardTypes });
-      },
-    });
-  },
-}));
+  context: 'CardTypesManagementStore',
+});

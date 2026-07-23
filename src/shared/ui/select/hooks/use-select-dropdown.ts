@@ -14,6 +14,12 @@ interface ISelectPosition {
   width?: number;
 }
 
+const measureTriggerPosition = (element: HTMLElement): ISelectPosition => {
+  const rect = element.getBoundingClientRect();
+
+  return { top: rect.bottom, left: rect.left, width: rect.width };
+};
+
 interface IUseSelectDropdownParams {
   disabled?: boolean;
   triggerRef: RefObject<HTMLButtonElement | null>;
@@ -51,9 +57,7 @@ export const useSelectDropdown = ({
       return;
     }
 
-    const rect = triggerElement.getBoundingClientRect();
-
-    setPosition({ top: rect.bottom, left: rect.left, width: rect.width });
+    setPosition(measureTriggerPosition(triggerElement));
     setIsOpen(true);
   }, [disabled, triggerRef]);
 
@@ -100,9 +104,7 @@ export const useSelectDropdown = ({
         return;
       }
 
-      const rect = triggerElement.getBoundingClientRect();
-
-      setPosition({ top: rect.bottom, left: rect.left, width: rect.width });
+      setPosition(measureTriggerPosition(triggerElement));
     };
 
     document.addEventListener('mousedown', handlePointerDown, true);

@@ -1,7 +1,6 @@
 import { type FC } from 'react';
 import { useCardFormModal } from '@features/card-form';
-import { getCardTypeName, useCardsStore } from '@features/card-management';
-import { useCardTypesManagementStore } from '@features/card-types-management';
+import { useCardsStore, useCardTypeName } from '@features/card-management';
 import { SortableCardItem } from '@features/sortable-card-item';
 import { BankCard, type IBankCard } from '@entities/bank-card';
 
@@ -16,10 +15,9 @@ export const CardItemWrapper: FC<ICardItemWrapperProps> = ({
 }) => {
   const flipCard = useCardsStore((state) => state.flipCard);
   const flippedPan = useCardsStore((state) => state.flippedPan);
-  const cardTypes = useCardTypesManagementStore((state) => state.cardTypes);
+  const typeName = useCardTypeName(card.typeId);
   const { openEditCardForm } = useCardFormModal();
   const isFlipped = flippedPan === card.pan;
-  const typeName = getCardTypeName(card.typeId, cardTypes);
 
   return (
     <SortableCardItem

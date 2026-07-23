@@ -1,11 +1,8 @@
 import { type FC } from 'react';
-import {
-  BankCardContent,
-  type IBankCard,
-  type IBankCardCommonProps,
-} from '@entities/bank-card';
 import { bem } from '@shared/lib';
 import { BANK_CARD_BLOCK } from '../../constants';
+import type { IBankCard, IBankCardCommonProps } from '../../types';
+import { BankCardContent } from '../bank-card-content';
 import { BankCardHeader } from '../bank-card-header';
 
 interface IBankCardFrontProps extends IBankCardCommonProps {

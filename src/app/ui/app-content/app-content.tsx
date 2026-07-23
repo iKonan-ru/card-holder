@@ -26,11 +26,12 @@ const AppInner: FC = () => {
 
 export const AppContent: FC = () => {
   const isUnlocked = useCryptoStore((state) => state.isUnlocked);
+  const content = isUnlocked ? <AppInner /> : <LockScreen />;
 
   return (
     <>
       {!isSecure && <HttpWarningBanner />}
-      {isUnlocked ? <AppInner /> : <LockScreen />}
+      {content}
     </>
   );
 };

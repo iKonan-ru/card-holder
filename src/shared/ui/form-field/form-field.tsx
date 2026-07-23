@@ -1,5 +1,10 @@
 import { useMemo, type ChangeEvent, type FC } from 'react';
-import { bem, ParentClassProvider, useClassName } from '@shared/lib';
+import {
+  bem,
+  buildModifiers,
+  ParentClassProvider,
+  useClassName,
+} from '@shared/lib';
 import type { IBaseInputFieldProps } from '@shared/types';
 import { FORM_FIELD_BLOCK } from './constants';
 import './form-field.less';
@@ -39,12 +44,12 @@ export const FormField: FC<IFormFieldProps> = ({
 
   const modifiers = useMemo<string[]>(
     () =>
-      [
+      buildModifiers(
         hasValue && 'has-value',
         hasError && 'has-error',
         hasLeftContent && 'has-left-content',
         hasRightContent && 'has-right-content',
-      ].filter(Boolean) as string[],
+      ),
     [hasValue, hasError, hasLeftContent, hasRightContent],
   );
 
@@ -58,6 +63,7 @@ export const FormField: FC<IFormFieldProps> = ({
     () => (hasError ? errorId : undefined),
     [hasError, errorId],
   );
+  const showRequiredMark = required && !hasError;
 
   return (
     <div className={className}>
@@ -112,7 +118,7 @@ export const FormField: FC<IFormFieldProps> = ({
               aria-live={hasError ? 'polite' : undefined}
             >
               {error || label}
-              {required && !error && ' *'}
+              {showRequiredMark && ' *'}
             </label>
           </div>
 

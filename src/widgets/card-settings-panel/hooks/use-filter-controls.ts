@@ -35,12 +35,10 @@ export const useFilterControls = (): IUseFilterControlsResult => {
   const filters = useCardViewStore((state) => state.filters);
   const setFilters = useCardViewStore((state) => state.setFilters);
 
-  const cardTypes = useCardTypesManagementStore((state) => state.cardTypes);
-  const loadCardTypes = useCardTypesManagementStore(
-    (state) => state.loadCardTypes,
-  );
-  const owners = useOwnersManagementStore((state) => state.owners);
-  const loadOwners = useOwnersManagementStore((state) => state.loadOwners);
+  const cardTypes = useCardTypesManagementStore((state) => state.items);
+  const loadCardTypes = useCardTypesManagementStore((state) => state.load);
+  const owners = useOwnersManagementStore((state) => state.items);
+  const loadOwners = useOwnersManagementStore((state) => state.load);
 
   useEffect(() => {
     loadCardTypes();
