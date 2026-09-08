@@ -1,6 +1,7 @@
 import type { FC } from 'react';
 import type { TBankKeys } from '@shared/data';
 import Alfabank from './alfabank.svg?react';
+import Cbw from './cbw.svg?react';
 import Citibank from './citibank.svg?react';
 import Domrf from './domrf.svg?react';
 import Gazprombank from './gazprombank.svg?react';
@@ -22,6 +23,7 @@ import Wb from './wb.svg?react';
 export const bankLogos: Partial<Record<TBankKeys, FC<{ className?: string }>>> =
   {
     alfabank: Alfabank,
+    cbw: Cbw,
     citibank: Citibank,
     domrf: Domrf,
     gazprombank: Gazprombank,

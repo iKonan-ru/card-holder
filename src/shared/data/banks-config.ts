@@ -92,6 +92,11 @@ export const BANKS_LIST: IBank[] = [
     name: 'МТС Деньги',
     color: '#8f8fff',
   },
+  {
+    id: 'cbw',
+    name: 'CBW Bank',
+    color: '#164391',
+  },
 ];
 
 export const DEFAULT_BANK: IBank = {
